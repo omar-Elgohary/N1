@@ -24,7 +24,7 @@
                 <hr>
 
                 <div class="form-group">
-                    <p class="text-black"> السجل التجاري: 10465461854</p>
+                    <p class="text-black"><i class="fa-solid fa-eye"></i> السجل التجاري: 10465461854</p>
                 </div> <!-- 2 -->
 
                 <div class="form-group">

@@ -1,6 +1,26 @@
 @extends('front.layouts.app')
 @section('content')
 
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
+@if(Session::has('Success'))
+    <script>
+        toastr.options ={
+            "progressBar" : true,
+            "closeButton" : true,
+        }
+        toastr.success("{{Session::get('Success')}}")
+    </script>
+@endif
+
 <section id="hero" class="d-flex justify-cntent-center align-items-center">
     <div id="heroCarousel" class="container carousel carousel-fade">
         <h3 class="text-white text-center">Lorem ipsum dolor sit consectetur</h3>
@@ -12,7 +32,6 @@
 <main id="main">
 <section id="icon-boxes" class="icon-boxes">
     <div class="container">
-
     <div class="row d-flex flex-row-reverse">
         <div class="col-md-6 col-lg-4 d-flex align-items-stretch mb-5 mb-lg-0">
         <div class="icon-box">
@@ -54,7 +73,7 @@
                 <div class="card p-3 mb-5">
                     Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolore minus ex obcaecati pariatur. Soluta perspiciatis culpa modi veniam beatae recusandae quis deserunt quam. Adipisci enim expedita repellendus reiciendis quos iusto dolorum cupiditate, qui maxime quae. Illo alias neque nihil corrupti! Quasi, beatae tempora. Veniam a beatae quo eligendi natus? Tenetur quidem rerum quis dicta aliquid odio quia, ipsa, exercitationem tempore est id illum. Porro, nemo maiores? Temporibus architecto enim voluptas animi ea nesciunt consectetur, accusamus ratione! Iste quibusdam rem vel dolor!
                     Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolore minus ex obcaecati pariatur. Soluta perspiciatis culpa modi veniam beatae recusandae quis deserunt quam. Adipisci enim expedita repellendus reiciendis quos iusto dolorum cupiditate, qui maxime quae. Illo alias neque nihil corrupti! Quasi, beatae tempora. Veniam a beatae quo eligendi natus? Tenetur quidem rerum quis dicta aliquid odio quia, ipsa, exercitationem tempore est id illum. Porro, nemo maiores? Temporibus architecto enim voluptas animi ea nesciunt consectetur, accusamus ratione! Iste quibusdam rem vel dolor!
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolore minus ex obcaecati pariatur. Soluta perspiciatis culpa modi veniam beatae recusandae quis deserunt quam. Adipisci enim expedita repellendus reiciendis quos iusto dolorum cupiditate, qui maxime quae. Illo alias neque nihil corrupti! 
+                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolore minus ex obcaecati pariatur. Soluta perspiciatis culpa modi veniam beatae recusandae quis deserunt quam. Adipisci enim expedita repellendus reiciendis quos iusto dolorum cupiditate, qui maxime quae. Illo alias neque nihil corrupti!
                 </div>
             </div>
         </div>

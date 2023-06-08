@@ -9,9 +9,12 @@
     <!-- Favicons -->
     <link href="assets/img/favicon.png" rel="icon">
     <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+    {{-- toastr --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA==" crossorigin="anonymous" referrerpolicy="no-referrer" /></head>
+
     <!-- Google Fonts -->
-    <link
-        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"rel="stylesheet">
     <link href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://kit.fontawesome.com/cfe6bc4ca1.css" crossorigin="anonymous">
     <!-- Vendor CSS Files -->
@@ -25,9 +28,6 @@
     <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
     <!-- Template Main CSS File -->
     <link href="assets/css/style.css" rel="stylesheet">
-</head>
-<!-- //new -->
-
 <body>
     <div class="container d-flex align-items-center justify-content-between">
     <a class="btn px-4" id="login" data-bs-toggle="modal" href="#exampleModalToggle" role="button">تسجيل الدخول <i class="fa-solid fa-circle-user"></i></i></a>
@@ -43,7 +43,7 @@
         </nav><!-- .navbar -->
     </div>
 
-
+@guest
 {{-- loging modal --}}
 <div class="modal fade border-0" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1" dir="rtl">
     <div class="modal-dialog modal-dialog-centered">
@@ -56,27 +56,30 @@
         <div class="modal-body">
             <div class="col-lg-6 mt-5 mt-lg-0 text-end" data-aos-delay="100">
                 <h2 class="text-bold" style="color: #ff8000">تسجيل الدخول</h2>
-                <form action="forms/contact.php" method="post" role="form" class="php-email-form">
 
+                <form action="{{ route('login') }}" method="post">
+                    @csrf
                     <div class="form-group mt-3">
                         <label class="mb-3">البريد الالكتروني</label>
-                        <input type="email" class="form-control rounded-0" name="email" id="email" required>
+                        <input type="email" class="form-control rounded-0" name="email">
                     </div>
 
                     <div class="form-group mt-3">
                         <label class="mb-3">كلمة المرور</label>
-                        <input type="text" class="form-control rounded-0" name="subject" id="subject" required>
+                        <input type="password" class="form-control rounded-0" name="password">
                     </div>
 
-                    <div class="form-group mt-3">
+                    {{-- <div class="form-group mt-3">
                         <input type="checkbox"> تذكرني
+                    </div> --}}
+
+                    <div class="form-group mt-3 text-center mx-auto">
+                        {{-- <button type="submit" class="btn px-5 mb-3" id="">تسجيل الدخول</button><br> --}}
+                        <input type="submit" value="تسجيل الدخول" class="btn px-5 mb-3" id="login"><br>
+                        <a data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" style="cursor: pointer;">لا تمتلك حسابا بعد؟ <span class="text-danger text-decoration-underline">انشاء حساب تاجر</span></a>
                     </div>
                 </form>
-            </div>
 
-            <div class="form-group mt-3 text-center">
-                <a class="btn px-5 mb-3" id="login" href="admin">تسجيل الدخول</a> <br>
-                <a data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" style="cursor: pointer;">لا تمتلك حسابا بعد؟ <span class="text-danger text-decoration-underline">انشاء حساب تاجر</span></a>
             </div>
         </div>
         </div>
@@ -94,35 +97,35 @@
 
         <div class="modal-body mt-5 mt-lg-0 text-end">
             <h2 class="fw-bold" style="color: #ff8000">انشاء حساب تاجر</h2>
-            <form action="forms/contact.php" method="post" role="form" class="php-email-form" autocomplete="off">
-
+            <form action="{{ route('register') }}" method="post" role="form" class="php-email-form" autocomplete="off">
+                @csrf
                 <div class="row">
                 <div class="col-lg-6">
                     <div class="form-group mt-3">
                         <label class="mb-3">اسم الشركة</label>
-                        <input type="text" class="form-control rounded-0" name="CompanyName" id="CompanyName" required>
+                        <input type="text" class="form-control rounded-0" name="company_name" required>
                     </div>
 
                     <div class="form-group mt-3">
                         <label class="mb-3">رقم السجل التجاري/ معروف</label>
-                        <input type="text" class="form-control rounded-0" name="number" id="number" required>
+                        <input type="text" class="form-control rounded-0" name="commercial_registration_number" required>
                     </div>
 
                     <div class="form-group mt-3">
                         <label class="mb-3">رقم الجوال</label>
-                        <input type="text" class="form-control rounded-0" name="phone" id="phone" required>
+                        <input type="text" class="form-control rounded-0" name="phone" required>
                     </div>
 
                     <div class="form-group mt-3">
                         <label class="mb-3">كلمة المرور</label>
-                        <input type="password" class="form-control rounded-0" name="password" id="password" required>
+                        <input type="password" class="form-control rounded-0" name="password" required>
                     </div>
                 </div> <!-- col-6 -->
 
                 <div class="col-lg-6">
                     <div class="form-group mt-3">
                         <label class="mb-3">نوع النشاط</label>
-                        <select class="form-control rounded-0" name="ActiveType">
+                        <select class="form-control rounded-0" name="activity_type">
                             <option value="">اختر نوع النشاط</option>
                             <option value=""> </option>
                         </select>
@@ -131,17 +134,17 @@
                     <div class="form-group mt-3">
                         <label class="mb-3">صورة السجل التجاري/ معروف</label><br>
                         <label for="file" class="upload form-control d-flex flex-row-reverse"><i class="fa fa-duotone fa-cloud-arrow-up text-secondary"></i> ارفع السجل التجاري\ معروف</label>
-                        <input type="file" class="form-control rounded-0" name="image" id="file" required>
+                        <input type="file" class="form-control rounded-0 hidden" name="commercial_registration_image" required>
                     </div>
 
                     <div class="form-group mt-3">
                         <label class="mb-3">البريد الالكتروني</label>
-                        <input type="email" class="form-control rounded-0" name="email" id="email" required>
+                        <input type="email" class="form-control rounded-0" name="email" required>
                     </div>
 
                     <div class="form-group mt-3">
                         <label class="mb-3">تأكيد كلمة المرور</label>
-                        <input type="password" class="form-control rounded-0" name="confirmPassword" id="confirmPassword" required>
+                        <input type="password" class="form-control rounded-0" name="confirmed_password" required>
                     </div>
                 </div> <!-- col-6 -->
             </div> <!-- row -->
@@ -155,8 +158,6 @@
     </div> <!-- modal-content -->
 </div> <!-- modal-dialog -->
 </div> <!-- modal-fade -->
-
-
 
 
 {{-- Confirm Number --}}
@@ -195,5 +196,4 @@
         </div>
     </div>
 </div>
-
-
+@endguest

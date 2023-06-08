@@ -6,6 +6,26 @@
 
 <section>
     <div class="container">
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
+    @if(session()->has('Success'))
+        <script>
+            toastr.options ={
+                "progressBar" : true,
+                "closeButton" : true,
+            }
+            toastr.success("{{session()->get('Success')}}")
+        </script>
+    @endif
+
         <div class="row text-center d-flex flex-row-reverse">
             <div class="col-lg-6">
                 <h2 class="text-black text-end fw-bold">الاحصائيات</h2>

@@ -1,10 +1,19 @@
 <?php
+use App\Http\Controllers\Auth\AuthController;
 use Illuminate\Support\Facades\Route;
+
+Route::controller(AuthController::class)->group(function(){
+    Route::post('register', 'register')->name('register');
+    Route::post('login', 'login')->name('login');
+    Route::get('logOut', 'logOut')->name('logOut');
+});
+
+##############################################################################################################
 
 // Front
 Route::get('/', function () {
     return view('front.home');
-});
+})->name('home');
 
 Route::get('contact', function () {
     return view('front.contact');
@@ -19,7 +28,7 @@ Route::get('about', function () {
 // Admin
 Route::get('/admin', function () {
     return view('admin.parts.statistics');
-});
+})->name('admin');
 
 Route::get('/personalInfo', function () {
     return view('admin.parts.personalInfo');
