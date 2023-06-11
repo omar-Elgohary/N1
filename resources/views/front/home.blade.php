@@ -11,15 +11,61 @@
     </div>
 @endif
 
-@if(Session::has('Success'))
+@if (session()->has('logout'))
     <script>
-        toastr.options ={
-            "progressBar" : true,
-            "closeButton" : true,
+        window.onload = function() {
+            notif({
+                msg: "تم تسجيل الخروج بنجاح",
+                type: "success"
+            })
         }
-        toastr.success("{{Session::get('Success')}}")
     </script>
 @endif
+
+@if (Session::has('Invalid verification code entered!'))
+    <script>
+        window.onload = function() {
+            notif({
+                msg: "يجب عليك تسجيل الدخول أولا",
+                type: "error"
+            })
+        }
+    </script>
+@endif
+
+@if (Session::has('mustLogin'))
+    <script>
+        window.onload = function() {
+            notif({
+                msg: "يجب عليك تسجيل الدخول أولا",
+                type: "error"
+            })
+        }
+    </script>
+@endif
+
+@if (session()->has('ErrorLogin'))
+    <script>
+        window.onload = function() {
+            notif({
+                msg: "هناك خطأ في تسجيل الدخول",
+                type: "error"
+            })
+        }
+    </script>
+@endif
+
+@if (session()->has('ErrorRegister'))
+    <script>
+        window.onload = function() {
+            notif({
+                msg: "هناك خطأ في انشاء الحساب",
+                type: "error"
+            })
+        }
+    </script>
+@endif
+
 
 <section id="hero" class="d-flex justify-cntent-center align-items-center">
     <div id="heroCarousel" class="container carousel carousel-fade">

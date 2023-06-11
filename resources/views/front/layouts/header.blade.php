@@ -10,8 +10,8 @@
     <link href="assets/img/favicon.png" rel="icon">
     <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
-    {{-- toastr --}}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA==" crossorigin="anonymous" referrerpolicy="no-referrer" /></head>
+    <!--Internal   Notify -->
+    <link href="{{ URL::asset('assets/plugins/notify/css/notifIt.css') }}" rel="stylesheet" />
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"rel="stylesheet">
@@ -97,64 +97,87 @@
 
         <div class="modal-body mt-5 mt-lg-0 text-end">
             <h2 class="fw-bold" style="color: #ff8000">انشاء حساب تاجر</h2>
-            <form action="{{ route('register') }}" method="post" role="form" class="php-email-form" autocomplete="off">
+            <form action="{{route('verify')}}" method="post" autocomplete="off">
                 @csrf
                 <div class="row">
-                <div class="col-lg-6">
-                    <div class="form-group mt-3">
-                        <label class="mb-3">اسم الشركة</label>
-                        <input type="text" class="form-control rounded-0" name="company_name" required>
-                    </div>
+                    <div class="col-lg-6">
 
-                    <div class="form-group mt-3">
-                        <label class="mb-3">رقم السجل التجاري/ معروف</label>
-                        <input type="text" class="form-control rounded-0" name="commercial_registration_number" required>
-                    </div>
+                        <div class="form-group mt-3">
+                            <label class="mb-3">اسم الشركة</label>
+                            <input type="text" class="form-control rounded-0" name="company_name">
+                        </div>
 
-                    <div class="form-group mt-3">
-                        <label class="mb-3">رقم الجوال</label>
-                        <input type="text" class="form-control rounded-0" name="phone" required>
-                    </div>
+                        <div class="form-group mt-3">
+                            <label class="mb-3">رقم السجل التجاري/ معروف</label>
+                            <input type="text" class="form-control rounded-0" name="commercial_registration_number">
+                        </div>
 
-                    <div class="form-group mt-3">
-                        <label class="mb-3">كلمة المرور</label>
-                        <input type="password" class="form-control rounded-0" name="password" required>
-                    </div>
-                </div> <!-- col-6 -->
+                        <div class="form-group mt-3">
+                            <div class="row">
+                                <div class="col-lg-9">
+                                    <label class="mb-3">رقم الجوال</label>
+                                    <input type="text" class="form-control rounded-0" name="phone">
+                                </div>
 
-                <div class="col-lg-6">
-                    <div class="form-group mt-3">
-                        <label class="mb-3">نوع النشاط</label>
-                        <select class="form-control rounded-0" name="activity_type">
-                            <option value="">اختر نوع النشاط</option>
-                            <option value=""> </option>
-                        </select>
-                    </div>
+                                <div class="col-lg-3">
+                                    <select name="country_code" id="inputState" class="rounded-0 mt-5">
+                                        <option selected="" value="+20">20+</option>
+                                        <option value="+966">966+</option>
+                                        <option value="+971">971+</option>
+                                        <option value="+968">968+</option>
+                                        <option value="+965">965+</option>
+                                        <option value="+974">974+</option>
+                                        <option value="+973">973+</option>
+                                        <option value="+970">970+</option>
+                                        <option value="+962">962+</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
 
-                    <div class="form-group mt-3">
-                        <label class="mb-3">صورة السجل التجاري/ معروف</label><br>
-                        <label for="file" class="upload form-control d-flex flex-row-reverse"><i class="fa fa-duotone fa-cloud-arrow-up text-secondary"></i> ارفع السجل التجاري\ معروف</label>
-                        <input type="file" class="form-control rounded-0 hidden" name="commercial_registration_image" required>
-                    </div>
+                        <div class="form-group mt-3">
+                            <label class="mb-3">كلمة المرور</label>
+                            <input type="password" class="form-control rounded-0" name="password">
+                        </div>
+                    </div> <!-- col-6 -->
 
-                    <div class="form-group mt-3">
-                        <label class="mb-3">البريد الالكتروني</label>
-                        <input type="email" class="form-control rounded-0" name="email" required>
-                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group mt-3">
+                            <label class="mb-3">نوع النشاط</label>
+                            <select class="form-control rounded-0" name="activity_type">
+                                <option value="">اختر نوع النشاط</option>
+                                <option value="متجر منتجات">متجر منتجات</option>
+                                <option value="الترفيه">الترفيه</option>
+                                <option value="المطاعم والكافيهات">المطاعم والكافيهات</option>
+                            </select>
+                        </div>
 
-                    <div class="form-group mt-3">
-                        <label class="mb-3">تأكيد كلمة المرور</label>
-                        <input type="password" class="form-control rounded-0" name="confirmed_password" required>
+                        <div class="form-group mt-3">
+                            <label class="mb-3">صورة السجل التجاري/ معروف</label><br>
+                            <label for="file" class="upload form-control d-flex flex-row-reverse"><i class="fa fa-duotone fa-cloud-arrow-up text-secondary"></i> ارفع السجل التجاري\ معروف</label>
+                            <input type="file" class="form-control rounded-0" id="file" name="commercial_registration_image">
+                        </div>
+
+                        <div class="form-group mt-3">
+                            <label class="mb-3">البريد الالكتروني</label>
+                            <input type="email" class="form-control rounded-0" name="email">
+                        </div>
+
+                        <div class="form-group mt-3">
+                            <label class="mb-3">تأكيد كلمة المرور</label>
+                            <input type="password" class="form-control rounded-0" name="confirmed_password">
+                        </div>
+                    </div> <!-- col-6 -->
+
+                    <div class="form-group mt-4 text-center">
+                        <input type="submit" class="btn px-5 mb-3" id="login" value="انشاء الحساب"><br>
+                        {{-- <a class="btn px-5 mb-3" id="login" data-bs-target="#exampleModalToggle3" data-bs-toggle="modal">انشاء الحساب</a> <br> --}}
+                        <a data-bs-target="#exampleModalToggle" data-bs-toggle="modal" style="cursor: pointer;"> تمتلك حسابا؟ <span class="text-danger text-decoration-underline">تسجيل الدخول</span></a>
                     </div>
-                </div> <!-- col-6 -->
+                </div>
             </div> <!-- row -->
             </form>
 
-            <div class="form-group mt-4 text-center">
-                <a class="btn px-5 mb-3" id="login" data-bs-target="#exampleModalToggle3" data-bs-toggle="modal">انشاء الحساب</a> <br>
-                <a data-bs-target="#exampleModalToggle" data-bs-toggle="modal" style="cursor: pointer;"> تمتلك حسابا؟ <span class="text-danger text-decoration-underline">تسجيل الدخول</span></a>
-            </div>
-        </div>
     </div> <!-- modal-content -->
 </div> <!-- modal-dialog -->
 </div> <!-- modal-fade -->
@@ -167,25 +190,35 @@
 
         <div class="modal-body">
             <div class="mt-5 mt-lg-0 text-end" data-aos-delay="100">
-                <form action="forms/contact.php" method="post" role="form" class="php-email-form">
-
+                <form action="{{route('verify')}}" method="post" role="form" class="php-email-form">
+                    @csrf
                     <div class="form-group mt-3">
                         <div class="container height-100 d-flex justify-content-center align-items-center">
                             <div class="position-relative">
                                 <h2 class="fw-bold" style="color: #e57504">التحقق من رقم الجوال</h2>
-                                <div> <span class="mb-3">ادخل الكود المرسل الى</span> <small>+*******9897</small>
+                                <div> <span class="mb-3">ادخل الكود المرسل الى</span>
+                                    <small>
+                                        @auth
+                                            {{auth()->user()->phone}}
+                                        @endauth
+                                    </small>
                                 </div>
 
                                 <div id="otp" class="inputs d-flex flex-row justify-content-center mt-2">
-                                    <input class="m-2 text-center form-control rounded-0" type="text" id="first" maxlength="1" />
-                                    <input class="m-2 text-center form-control rounded-0" type="text" id="second" maxlength="1" />
-                                    <input class="m-2 text-center form-control rounded-0" type="text" id="third" maxlength="1" />
-                                    <input class="m-2 text-center form-control rounded-0" type="text" id="fourth" maxlength="1" />
+                                    {{-- <input class="m-2 text-center form-control rounded-0" type="text" name ="first" id="first" maxlength="1" /> --}}
+                                    {{-- <input class="m-2 text-center form-control rounded-0" type="text" name ="second" id="second" maxlength="1" /> --}}
+                                    {{-- <input class="m-2 text-center form-control rounded-0" type="text" name ="third" id="third" maxlength="1" /> --}}
+                                    {{-- <input class="m-2 text-center form-control rounded-0" type="text" name ="fourth" id="fourth" maxlength="1" /> --}}
+                                    <input type="text form-cotrol" type="text">
                                 </div>
 
                                 <div class="text-center mt-3">
-                                    <div class="countdown">59:00</div>
+                                    <button type="submit" class="btn btn-success">ارسال الكود</button>
                                 </div>
+
+                                {{-- <div class="text-center mt-3">
+                                    <div class="countdown">59:00</div>
+                                </div> --}}
 
                             </div> <!-- position-relative -->
                         </div> <!-- container -->

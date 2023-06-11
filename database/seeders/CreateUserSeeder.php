@@ -10,7 +10,8 @@ class CreateUserSeeder extends Seeder
         $user = User::create([
             'name' => 'Admin',
             'email' => 'admin@org.com',
-            'phone' => '+201234657890',
+            'phone' => '1234657890',
+            'country_code' => '+20',
             'password' => bcrypt('12345678'),
             'confirmed_password' => bcrypt('12345678'),
             'type' => 'admin',
@@ -19,7 +20,8 @@ class CreateUserSeeder extends Seeder
         $user = User::create([
             'name' => 'Mhmd Ghareeb',
             'email' => 'mhmd@grareeb.com',
-            'phone' => '+201234577890',
+            'phone' => '1234577890',
+            'country_code' => '+20',
             'password' => bcrypt('12345678'),
             'confirmed_password' => bcrypt('12345678'),
             'type' => 'seller',
@@ -32,7 +34,8 @@ class CreateUserSeeder extends Seeder
         $user = User::create([
             'name' => 'sara Mhmd',
             'email' => 'sara@mhmd.com',
-            'phone' => '+201234167890',
+            'phone' => '1234167890',
+            'country_code' => '+20',
             'password' => bcrypt('12345678'),
             'confirmed_password' => bcrypt('12345678'),
             'type' => 'user',

@@ -6,25 +6,29 @@
 
 <section>
     <div class="container">
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
 
-    @if(session()->has('Success'))
+    @if (session()->has('login'))
         <script>
-            toastr.options ={
-                "progressBar" : true,
-                "closeButton" : true,
+            window.onload = function() {
+                notif({
+                    msg: "تم تسجيل الدخول بنجاح",
+                    type: "success"
+                })
             }
-            toastr.success("{{session()->get('Success')}}")
         </script>
     @endif
+
+    @if (session()->has('register'))
+        <script>
+            window.onload = function() {
+                notif({
+                    msg: "تم انشاء حساب التاجر بنجاح",
+                    type: "success"
+                })
+            }
+        </script>
+    @endif
+
 
         <div class="row text-center d-flex flex-row-reverse">
             <div class="col-lg-6">
@@ -176,3 +180,4 @@
 </section>
 
 @endsection
+
