@@ -22,11 +22,33 @@
     </script>
 @endif
 
+@if (session()->has('isVerified'))
+    <script>
+        window.onload = function() {
+            notif({
+                msg: "يجب تفعيل الايميل أولا",
+                type: "success"
+            })
+        }
+    </script>
+@endif
+
 @if (Session::has('Invalid verification code entered!'))
     <script>
         window.onload = function() {
             notif({
-                msg: "يجب عليك تسجيل الدخول أولا",
+                msg: "تأكد من كود التفعيل",
+                type: "error"
+            })
+        }
+    </script>
+@endif
+
+@if (Session::has('OTP'))
+    <script>
+        window.onload = function() {
+            notif({
+                msg: "يجب عليك ادخال كود التفعيل",
                 type: "error"
             })
         }

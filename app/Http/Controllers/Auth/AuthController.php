@@ -11,7 +11,6 @@ class AuthController extends Controller
 {
     public function register(Request $request)
     {
-        // dd($request->validated());
         $request->validate([
             'company_name' => 'required',
             'activity_type' => 'required',
@@ -23,14 +22,13 @@ class AuthController extends Controller
             'confirmed_password' => 'required_with:password|same:password|min:6'
         ]);
 
-        // dd($request->phone);
-
         $user = User::create([
             'name' => $request->company_name,
             'company_name' => $request->company_name,
             'activity_type' => $request->activity_type,
             'phone'=> $request->phone,
             'country_code'=> $request->country_code,
+            'isVerified'=> 0,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'confirmed_password' => Hash::make($request->confirmed_password),
@@ -39,57 +37,55 @@ class AuthController extends Controller
             'type' => 'seller',
         ]);
 
-        Auth::login($user);
+        return $this->verify($user);
     }
+
+
+
+    public function verify($user)
+    {
+        try{
+            /* Get credentials from .env */
+            $twilio_sid = getenv("TWILIO_SID");
+            $token = getenv("TWILIO_TOKEN");
+            $twilio_verify_sid = getenv("TWILIO_FROM");
+            $twilio = new Client($twilio_sid, $token);
+            $verification = $twilio->verify->v2->services($twilio_verify_sid)
+            ->verificationChecks
+            ->create(['code' => $user['verification_code'], 'to' => $user['phone']]);
+
+            if ($verification->valid) {
+                $user = tap(User::where('phone', $user['phone']))->update(['isVerified' => true]);
+                /* Authenticate user */
+                $user = Auth::login($user->first());
+                session()->flash('login');
+                return redirect()->route('admin');
+            }
+        }catch(\Exception $e){
+            echo $e;
+            session()->flash('Invalid verification code entered!');
+            return back();
+        }
+    }
+
+
+
 
 
     // public function verify(Request $request)
     // {
-    //     try{
-    //         $data = $request->validate([
-    //             'phone' => ['required'],
-    //             'verification_code' => ['required'],
-    //         ]);
-
-    //         /* Get credentials from .env */
-    //         $twilio_sid = getenv("TWILIO_SID");
-    //         $token = getenv("TWILIO_TOKEN");
-    //         $twilio_verify_sid = getenv("TWILIO_FROM");
-    //         $twilio = new Client($twilio_sid, $token);
-    //         $verification = $twilio->verify->v2->services($twilio_verify_sid)
-    //         ->verificationChecks
-    //         ->create(['code' => $data['verification_code'], 'to' => $data['phone']]);
-
-    //         if ($verification->valid) {
-    //             $user = tap(User::where('phone', $data['phone']))->update(['isVerified' => true]);
-    //             /* Authenticate user */
-    //             $user = Auth::login($user->first());
-    //             session()->flash('login');
-    //             return redirect()->route('admin');
-    //         }
-    //     }catch(\Exception $e){
-    //         echo $e;
-    //         session()->flash('Invalid verification code entered!');
-    //         return back();
-    //     }
+    //     $user = User::where('phone', $request->phone)->first();
+    //     $user->update(['isVerified', 1]);
+    //     Auth::login($user);
+    //     session()->flash('register');
+    //     return redirect()->route('admin');
     // }
 
-    public function verify(Request $request)
-    {
-        $sid = getenv("TWILIO_SID");
-        $token = getenv("TWILIO_TOKEN");
-        $senderNumber = getenv("TWILIO_FROM");
-        $twilio = new Client($sid, $token);
 
-        $message = $twilio->messages
-            ->create("+20 115 651 3661", // to
-                [
-                    "body" => "Welcome From N1 Project",
-                    "from" => $senderNumber,
-                ]);
 
-        dd("OTP Sent Successfully");
-    }
+
+
+
 
 
     public function login(Request $request)

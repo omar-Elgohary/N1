@@ -1,5 +1,6 @@
 <?php
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\SellerController;
 use Illuminate\Support\Facades\Route;
 
 Route::controller(AuthController::class)->group(function(){
@@ -32,15 +33,15 @@ Route::middleware(['authenticated'])->group(function(){   // User Must Be Authen
     Route::get('/admin', function () {
         return view('admin.parts.statistics');
     })->name('admin');
-});
+
 
 Route::get('/personalInfo', function () {
     return view('admin.parts.personalInfo');
-});
+})->name('personalInfo');
 
-Route::get('/editPersonalInfo', function () {
-    return view('admin.parts.editPersonalInfo');
-});
+Route::get('/editSellerPage/{id}', [SellerController::class, 'editSellerPage'])->name('editSellerPage');
+
+Route::post('/editSellerInfo/{id}', [SellerController::class, 'editSellerInfo'])->name('editSellerInfo');
 
 Route::get('/changePassword', function () {
     return view('admin.parts.changePassword');
@@ -275,3 +276,7 @@ Route::get('/EntertainmentAdmin', function () {
 Route::get('/EntertainmentAdminDetails', function () {
     return view('admin.branches.admins.Entertainment.details');
 });
+
+
+
+}); // middleware authenticated

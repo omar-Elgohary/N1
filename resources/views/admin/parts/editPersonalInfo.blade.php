@@ -13,11 +13,12 @@
         </div> <!-- row -->
 
 
-        <form action="#" method="post">
+        <form action="{{ route('editSellerInfo', $user->id) }}" method="post" enctype="multipart/form-data">
+            @csrf
             <div class="mt-lg-0 text-end">
 
                 <div class="form-group text-center mt-3">
-                    <img src="{{ asset("images/NoPath - Copy (35).png") }}" width="150" height="150" alt="">
+                    <img src="{{ asset('assets/images/users/'.$user->commercial_registration_image) }}" width="150" height="150" alt="">
                 </div>
 
                 <div class="row d-flex justify-content-center flex-row-reverse col-12">
@@ -25,47 +26,50 @@
                 <div class="col-lg-4">
                     <div class="form-group mt-3">
                         <label class="mb-3">اسم الشركة</label>
-                        <input type="text" class="form-control rounded-0" name="CompanyName" id="CompanyName" required>
+                        <input type="text" class="form-control rounded-0" name="company_name" value="{{$user->company_name}}">
                     </div>
 
                     <div class="form-group mt-3">
                         <label class="mb-3">رقم السجل التجاري/ معروف</label>
-                        <input type="text" class="form-control rounded-0" name="number" id="number" required>
+                        <input type="text" class="form-control rounded-0" name="commercial_registration_number" value="{{$user->commercial_registration_number}}">
                     </div>
 
                     <div class="form-group mt-3">
                         <label class="mb-3">رقم الجوال</label>
-                        <input type="text" class="form-control rounded-0" name="phone" id="phone" required>
+                        <input type="text" class="form-control rounded-0" name="phone" value="{{$user->phone}}">
                     </div>
                 </div> <!-- col-4 -->
 
                 <div class="col-lg-4">
                     <div class="form-group mt-3">
                         <label class="mb-3">نوع النشاط</label>
-                        <select class="form-control rounded-0" name="ActiveType">
-                            <option value="">اختر نوع النشاط</option>
-                            <option value=""> </option>
+                        <select class="form-control rounded-0" name="activity_type">
+                            <option value="{{ $user->activity_type }}">{{ $user->activity_type }}</option>
+                            <option value="متجر منتجات">متجر منتجات</option>
+                            <option value="الترفيه">الترفيه</option>
+                            <option value="المطاعم والكافيهات">المطاعم والكافيهات</option>
                         </select>
                     </div>
 
                     <div class="form-group mt-3">
                         <label class="mb-3">صورة السجل التجاري/ معروف</label><br>
-                        <label for="file" class="upload form-control"><i class="fa fa-duotone fa-cloud-arrow-up text-secondary"></i> ارفع السجل التجاري\ معروف</label>
-                        <input type="file" class="form-control rounded-0" name="image" id="file" required>
+                        <label for="file" value="{{$user->commercial_registration_image}}" class="upload form-control"><i class="fa fa-duotone fa-cloud-arrow-up text-secondary"></i> ارفع السجل التجاري\ معروف</label>
+                        <input type="file" class="form-control rounded-0" name="commercial_registration_image" id="file">
                     </div>
 
                     <div class="form-group mt-3">
                         <label class="mb-3">البريد الالكتروني</label>
-                        <input type="email" class="form-control rounded-0" name="email" id="email" required>
+                        <input type="email" class="form-control rounded-0" name="email" value="{{$user->email}}">
                     </div>
                 </div> <!-- col-6 -->
             </div> <!-- row -->
+            <div class="mt-5 text-center">
+                <button type="submit" id="login" class="btn px-5 mx-5">حفظ التعديلات</button>
+                {{-- <a id="login" href="admin" class="btn px-5 mx-5">حفظ التعديلات</a> --}}
+            </div>
             </form>
         </div>
 
-        <div class="mt-5 text-center">
-            <a id="login" href="admin" class="btn px-5 mx-5">حفظ التعديلات</a>
-        </div>
     </div> <!-- container -->
 </section>
 

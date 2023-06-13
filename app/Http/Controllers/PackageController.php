@@ -3,9 +3,17 @@ namespace App\Http\Controllers;
 use App\Models\Package;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Interfaces\PackageRepositoryInterface;
 
 class PackageController extends Controller
 {
+    private PackageRepositoryInterface $packageRepository;
+
+    public function getAllPackages()
+    {
+        $this->packageRepository->getAllPackages();
+    }
+
     public function create()
     {
         return view('admin.packages.addPackage');
@@ -33,11 +41,11 @@ class PackageController extends Controller
 //             'users_count' => 'required|numeric',
 //             'number_of_uses' => 'required|numeric',
 //         ]);
-        
+
 //         $file_extention = $request->file("image")->getCLientOriginalExtension();
 //         $image = time(). "." .$file_extention;
 //         $request->file("image")->move(public_path('assets/images/offers/'), $image);
-        
+
 
 //         Package::create([
 //             'image' => $image,

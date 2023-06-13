@@ -26,7 +26,7 @@ class CreateUserSeeder extends Seeder
             'confirmed_password' => bcrypt('12345678'),
             'type' => 'seller',
             'company_name' => 'Ghareeb Company',
-            'activity_type' => 'market',
+            'activity_type' => 'متجر منتجات',
             'commercial_registration_number' => '47544125646',
             'commercial_registration_image' => 'image.jpg',
         ]);
