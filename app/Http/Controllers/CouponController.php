@@ -9,12 +9,6 @@ use Illuminate\Support\Facades\Storage;
 
 class CouponController extends Controller
 {
-    public function create()
-    {
-        return view('admin.coupons.addCoupon');
-    }
-
-
     public function store(Request $request)
     {
         $this->validate($request, [
@@ -24,22 +18,29 @@ class CouponController extends Controller
             'start_date' => 'required|date',
             'end_date' => 'required|date',
             'users_count' => 'required|numeric',
-            'number_of_uses' => 'required|numeric',
+            'how_many_times_user_use_this_coupon' => 'required|numeric',
         ]);
-        
+
         $file_extention = $request->file("image")->getCLientOriginalExtension();
-        $image = time(). "." .$file_extention;
-        $request->file("image")->move(public_path('assets/images/offers/'), $image);
-        
+        $image_name = time(). ".".$file_extention;
+        $request->file("image")->move(public_path('assets/images/offers/'), $image_name);
+
+
+        $random_id = strtoupper('#'.substr(str_shuffle(uniqid()),0,6));
+        while(Coupon::where('random_id', $random_id )->exists()){
+            $random_id = strtoupper('#'.substr(str_shuffle(uniqid()),0,4));
+        }
 
         Coupon::create([
-            'image' => $image,
+            'random_id' => $random_id,
+            'image' => $image_name,
             'discount_coupon' => $request->discount_coupon,
             'discount_percentage' => $request->discount_percentage,
             'start_date' => $request->start_date,
             'end_date' => $request->end_date,
             'users_count' => $request->users_count,
-            'number_of_uses' => $request->number_of_uses,
+            'how_many_times_user_use_this_coupon' => $request->how_many_times_user_use_this_coupon,
+            'status' => 'مفعل',
         ]);
 
         $coupon_id = Coupon::latest()->first()->id;
@@ -53,7 +54,7 @@ class CouponController extends Controller
             'package_id' => null,
         ]);
 
-        session()->flash('Add', 'تم اضافة الكوبون بنجاح ');
+        session()->flash('addCoupon');
         return redirect()->route('alloffers');
     }
 
@@ -93,7 +94,7 @@ class CouponController extends Controller
             $request->file("image")->move(public_path('assets/images/offers/'), $image);
             $coupon->image = $image;
         }
-    
+
         $coupon->update([
             // 'image' => $image,
             'discount_coupon' => $request->discount_coupon,
@@ -114,7 +115,7 @@ class CouponController extends Controller
             'coupon_id' => $id,
             'package_id' => null,
         ]);
-        
+
         session()->flash('Add', 'تم تعديل الكوبون بنجاح ');
         return redirect()->route('alloffers');
     }

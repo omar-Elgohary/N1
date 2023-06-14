@@ -3,8 +3,18 @@
     العروض
 @endsection
 
-@section('content')
+@if (session()->has('addCoupon'))
+    <script>
+        window.onload = function() {
+            notif({
+                msg: 'تم اضافة الكوبون بنجاح ',
+                type: "warning"
+            })
+        }
+    </script>
+@endif
 
+@section('content')
 <section>
     <div class="container">
         <div class="row text-center d-flex flex-row-reverse">
@@ -64,7 +74,7 @@
             </div>
 
             <div class="d-flex justify-content-around my-4">
-                <a href="addCoupon" id="coupon" type="button" class="btn btn-block btn-bordered px-5">عرض</a>
+                <a href="{{ route('addCouponPage') }}" id="coupon" type="button" class="btn btn-block btn-bordered px-5">عرض</a>
                 <a href="addPackage" id="package" type="button" class="btn btn-block px-5 text-white">بكج</a>
             </div>
         </div> <!-- modal-content -->

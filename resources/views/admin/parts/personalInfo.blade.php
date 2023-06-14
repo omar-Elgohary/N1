@@ -15,6 +15,19 @@
     </script>
 @endif
 
+@if (session()->has('passwordCorrect'))
+    <script>
+        window.onload = function() {
+            notif({
+                msg: "تم تعديل كلمة المرور بنجاح",
+                type: "success"
+            })
+        }
+    </script>
+@endif
+
+
+
 <section>
     <div class="container">
         <div class="row text-center d-flex flex-row-reverse">
@@ -27,7 +40,7 @@
             <form action="#" method="post">
 
                 <div class="form-group">
-                    <img src="{{ asset('assets/images/user/'.auth()->user()->commercial_registration_image) }}" width="150" height="150" alt="">
+                    <img src="{{ asset('assets/images/users/'.auth()->user()->commercial_registration_image) }}" width="150" height="150" alt="">
                     <h3 class="text-black mt-4">{{ auth()->user()->company_name }}</h3>
                     <h5>{{ auth()->user()->country_code }} {{ auth()->user()->phone }}</h5>
                     <p>{{ auth()->user()->email }}</p>
@@ -45,7 +58,7 @@
 
             <div class="d-flex justify-content-around mt-5 bttn">
                 <a id="login" href="{{ route('editSellerPage', auth()->user()->id) }}" class="btn">تعديل المعلومات الشخصية</a>
-                <a id="coupon" href="changePassword" class="btn">تغيير كلمة المرور</a>
+                <a id="coupon" href="{{ route('changePasswordPage') }}" class="btn">تغيير كلمة المرور</a>
             </div>
         </div>
     </div> <!-- container -->

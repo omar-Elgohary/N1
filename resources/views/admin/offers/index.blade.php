@@ -28,7 +28,7 @@
             </div>
 
             <div class="modal-footer d-flex justify-content-around">
-                <a href="addCoupon" id="coupon" type="button" class="btn btn-block px-5">عرض</a>
+                <a href="{{ route('addCouponPage') }}" id="coupon" class="btn btn-block px-5">عرض</a>
                 <a href="addPackage" id="package" type="button" class="btn btn-block px-5 text-white">بكج</a>
             </div>
         </div> <!-- modal-content -->

@@ -1,5 +1,6 @@
 <?php
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\CouponController;
 use App\Http\Controllers\SellerController;
 use Illuminate\Support\Facades\Route;
 
@@ -30,22 +31,21 @@ Route::get('about', function () {
 // Admin
 Route::middleware(['authenticated'])->group(function(){   // User Must Be Authenticated
 
-    Route::get('/admin', function () {
+    Route::get('admin', function () {
         return view('admin.parts.statistics');
     })->name('admin');
 
 
-Route::get('/personalInfo', function () {
+Route::get('personalInfo', function () {
     return view('admin.parts.personalInfo');
 })->name('personalInfo');
 
-Route::get('/editSellerPage/{id}', [SellerController::class, 'editSellerPage'])->name('editSellerPage');
+Route::get('editSellerPage/{id}', [SellerController::class, 'editSellerPage'])->name('editSellerPage');
+Route::post('editSellerInfo/{id}', [SellerController::class, 'editSellerInfo'])->name('editSellerInfo');
 
-Route::post('/editSellerInfo/{id}', [SellerController::class, 'editSellerInfo'])->name('editSellerInfo');
+Route::get('changePasswordPage', [SellerController::class, 'changePasswordPage'])->name('changePasswordPage');
+Route::post('changePassword/{id}', [SellerController::class, 'changePassword'])->name('changePassword');
 
-Route::get('/changePassword', function () {
-    return view('admin.parts.changePassword');
-});
 
 
 ##############################################################################################################
@@ -74,9 +74,12 @@ Route::get('/EditBranchDetails', function () {
 ##############################################################################################################
 
 // Coupons
-Route::get('/addCoupon', function () {
+Route::get('addCouponPage', function () {
     return view('admin.coupons.addCoupon');
-});
+})->name('addCouponPage');
+
+Route::post('addCoupon', [CouponController::class, 'store'])->name('addCoupon');
+
 
 Route::get('/editCoupon', function () {
     return view('admin.coupons.editCoupon');
