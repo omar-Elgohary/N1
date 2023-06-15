@@ -1,8 +1,9 @@
 <?php
-use App\Http\Controllers\Auth\AuthController;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\OfferController;
 use App\Http\Controllers\CouponController;
 use App\Http\Controllers\SellerController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\AuthController;
 
 Route::controller(AuthController::class)->group(function(){
     Route::post('register', 'register')->name('register');
@@ -53,11 +54,14 @@ Route::post('changePassword/{id}', [SellerController::class, 'changePassword'])-
 // Offers
 Route::get('/allOffers', function () {
     return view('admin.offers.allOffers');
-});
+})->name('alloffers');
 
 Route::get('/homeOffers', function () {
     return view('admin.offers.index');
 });
+
+Route::get('editOfferPage/{id}', [OfferController::class, 'editOfferPage'])->name('editOfferPage');
+Route::get('deleteOffer/{id}', [OfferController::class, 'deleteOffer'])->name('deleteOffer');
 
 
 ##############################################################################################################
@@ -81,9 +85,8 @@ Route::get('addCouponPage', function () {
 Route::post('addCoupon', [CouponController::class, 'store'])->name('addCoupon');
 
 
-Route::get('/editCoupon', function () {
-    return view('admin.coupons.editCoupon');
-});
+Route::get('editCoupon/{id}', [CouponController::class, 'edit'])->name('editCoupon');
+Route::post('updateCoupon/{id}', [CouponController::class, 'update'])->name('updateCoupon');
 
 Route::get('/couponDetails', function () {
     return view('admin.coupons.couponDetails');
@@ -97,13 +100,13 @@ Route::get('/deactivationCoupon', function () {
 ##############################################################################################################
 
 // Packages
-Route::get('/addPackage', function () {
+Route::get('addPackage', function () {
     return view('admin.packages.addPackage');
 });
 
-Route::get('/editPackage', function () {
+Route::get('editPackage/{id}', function () {
     return view('admin.packages.editPackage');
-});
+})->name('editPackage');
 
 Route::get('/packageDetails', function () {
     return view('admin.packages.packageDetails');

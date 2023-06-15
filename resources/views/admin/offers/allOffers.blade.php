@@ -8,10 +8,54 @@
         window.onload = function() {
             notif({
                 msg: 'تم اضافة الكوبون بنجاح ',
-                type: "warning"
+                type: "success"
             })
         }
     </script>
+@endif
+
+@if (session()->has('editCoupon'))
+    <script>
+        window.onload = function() {
+            notif({
+                msg: 'تم تعديل الكوبون بنجاح ',
+                type: "primary"
+            })
+        }
+    </script>
+@endif
+
+@if (session()->has('addPackage'))
+    <script>
+        window.onload = function() {
+            notif({
+                msg: 'تم اضافة الباكدج بنجاح ',
+                type: "success"
+            })
+        }
+    </script>
+@endif
+
+@if (session()->has('editPackage'))
+    <script>
+        window.onload = function() {
+            notif({
+                msg: 'تم تعديل الباكدج بنجاح ',
+                type: "primary"
+            })
+        }
+    </script>
+@endif
+
+@if(session()->has('deleteOffer'))
+<script>
+    window.onload = function() {
+        notif({
+            msg: 'تم حذف العرض بنجاح ',
+            type: "primary"
+        })
+    }
+</script>
 @endif
 
 @section('content')
@@ -41,20 +85,28 @@
                         <th>التحكم بالعرض</th>
                     </tr>
                 </thead>
+
+                @foreach(\App\Models\Offer::all() as $key => $offer)
                 <tbody>
                     <tr>
-                        <th>1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                        <td>Mark</td>
-                        <td>Otto</td>
+                        <th>{{ $key+1 }}</th>
+                        <td>{{ $offer->offer_type }}</td>
+                        <td>{{ $offer->users_count }}</td>
+                        @if ($offer->status == 'مفعل')
+                            <td class="text-success">{{ $offer->status }}</td>
+                        @else
+                            <td class="text-danger">{{ $offer->status }}</td>
+                        @endif
+                        <td>{{ $offer->start_date }}</td>
+                        <td>{{ $offer->end_date }}</td>
                         <td>
-                            <a href="editCoupon" class="btn bg-white text-success"><i class="fa fa-edit"></i></a>
+                            <a href="{{ route('editOfferPage', $offer->id) }}" class="btn bg-white text-success"><i class="fa fa-edit"></i></a>
                             <a href="#deleteOffer" class="btn bg-white text-danger" data-bs-toggle="modal"><i class="fa fa-trash"></i></a>
                         </td>
                     </tr>
                 </tbody>
+                @endforeach
+
             </table>
         </div>
     </div> <!-- container -->
@@ -98,7 +150,7 @@
 
             <div class="d-flex justify-content-around my-4">
                 <button type="button" id="coupon" class="btn px-5" data-bs-dismiss="modal">تراجع</button>
-                <a href="#" id="package" type="button" class="btn btn-block px-5 text-white">حذف</a>
+                <a href="{{route('deleteOffer', $offer->id)}}" id="package" type="button" class="btn btn-block px-5 text-white">حذف</a>
 
             </div>
         </div> <!-- modal-content -->

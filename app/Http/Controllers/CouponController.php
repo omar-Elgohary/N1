@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 use App\Models\Offer;
 use App\Models\Coupon;
+use App\Models\Package;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
@@ -21,15 +22,14 @@ class CouponController extends Controller
             'how_many_times_user_use_this_coupon' => 'required|numeric',
         ]);
 
-        $file_extention = $request->file("image")->getCLientOriginalExtension();
-        $image_name = time(). ".".$file_extention;
-        $request->file("image")->move(public_path('assets/images/offers/'), $image_name);
-
-
         $random_id = strtoupper('#'.substr(str_shuffle(uniqid()),0,6));
         while(Coupon::where('random_id', $random_id )->exists()){
             $random_id = strtoupper('#'.substr(str_shuffle(uniqid()),0,4));
         }
+
+        $file_extention = $request->file("image")->getCLientOriginalExtension();
+        $image_name = time(). ".".$file_extention;
+        $request->file("image")->move(public_path('assets/images/offers/'), $image_name);
 
         Coupon::create([
             'random_id' => $random_id,
@@ -77,7 +77,7 @@ class CouponController extends Controller
         //     'start_date' => 'required|date',
         //     'end_date' => 'required|date',
         //     'users_count' => 'required|numeric',
-        //     'number_of_uses' => 'required|numeric',
+        //     'how_many_times_user_use_this_coupon' => 'required|numeric',
         // ]);
 
         $coupon = Coupon::find($id);
@@ -102,7 +102,7 @@ class CouponController extends Controller
             'start_date' => $request->start_date,
             'end_date' => $request->end_date,
             'users_count' => $request->users_count,
-            'number_of_uses' => $request->number_of_uses,
+            'how_many_times_user_use_this_coupon' => $request->how_many_times_user_use_this_coupon,
         ]);
 
         $offer = Offer::where('coupon_id', $id)->first();
@@ -116,7 +116,27 @@ class CouponController extends Controller
             'package_id' => null,
         ]);
 
-        session()->flash('Add', 'تم تعديل الكوبون بنجاح ');
+        session()->flash('editCoupon');
         return redirect()->route('alloffers');
     }
+
+
+
+
+    // public function delete($id)
+    // {
+    //     // $offer = Offer::find($id)->delete();
+    //     $offer = Offer::find($id);
+    //     if($offer->coupon_id){
+    //         dd('coupon');
+    //         // $coupon = Coupon::find($offer->coupon_id);
+    //         // $coupon->delete();
+    //     }else{
+    //         dd('package');
+    //         // $package = Package::find($offer->package_id);
+    //         // $package->delete();
+    //     }
+    //     session()->flash('deleteOffer');
+    //     return redirect()->route('alloffers');
+    // }
 }

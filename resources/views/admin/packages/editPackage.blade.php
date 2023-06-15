@@ -1,6 +1,9 @@
 @extends('admin.layouts.app')
-@section('content')
+@section('title')
+    تعديل باكدج
+@endsection
 
+@section('content')
 <section>
     <div class="container mt-2" dir="rtl">
         <div class="section-title text-end">

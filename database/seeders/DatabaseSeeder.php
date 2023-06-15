@@ -1,7 +1,5 @@
 <?php
-
 namespace Database\Seeders;
-
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -23,6 +21,9 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             CreateUserSeeder::class,
+            CouponSeeder::class,
+            PackageSeeder::class,
+            OfferSeeder::class,
         ]);
     }
 }
