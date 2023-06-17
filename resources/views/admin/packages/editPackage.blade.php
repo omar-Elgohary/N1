@@ -14,7 +14,7 @@
 
             <div class="row col-lg-12">
                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6">
-                    <img src="{{ asset('images/NoPath - Copy (14).png') }}" style="width: 100%" alt="">
+                    <img src="{{ asset('assets/images/offers/'.$package->image) }}" style="width: 100%" alt="">
                 </div>
 
                 <div class="col-lg-6 mt-3">
@@ -30,7 +30,7 @@
                         <div class="form-group">
                     <label>الوجبة الأولى</label>
                     <select class="form-control rounded-0 mb-4 mt-2">
-                        <option>اسم الوجبة</option>
+                        <option>{{ $package->first_meal }}</option>
                         <option></option>
                     </select>
                 </div> <!-- 1 -->

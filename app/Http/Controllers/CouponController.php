@@ -123,6 +123,38 @@ class CouponController extends Controller
 
 
 
+
+
+    public function couponDetails(Request $request, $id)
+    {
+        $coupon = Coupon::find($id);
+        return view('admin.coupons.couponDetails', compact('coupon'));
+    }
+
+
+
+
+
+
+    public function deactivationCoupon($id)
+    {
+        $coupon = Coupon::find($id);
+        $coupon->update([
+            'status' => 'غير مفعل',
+        ]);
+
+        $offer = Offer::where('coupon_id', $id)->first();
+        $offer->update([
+            'status' => 'غير مفعل',
+        ]);
+
+        session()->flash('deactivationCoupon');
+        return back();
+    }
+
+
+
+
     // public function delete($id)
     // {
     //     // $offer = Offer::find($id)->delete();

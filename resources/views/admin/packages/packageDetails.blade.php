@@ -1,6 +1,9 @@
 @extends('admin.layouts.app')
-@section('content')
+@section('title')
+    تفاصيل الباكدج
+@endsection
 
+@section('content')
 <section>
     <div class="container" dir="rtl">
         <div class="section-title text-end">
@@ -9,7 +12,7 @@
 
         <div class="row col-12">
             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6">
-                <img src="{{ asset('images/NoPath - Copy (14).png') }}" style="width: 100%" alt="">
+                <img src="{{ asset('assets/images/offers/'.$package->image) }}" style="width: 100%" alt="">
             </div>
         </div>
 
@@ -22,35 +25,35 @@
                 <div class="form-group my-4">
                     <label><img src="{{ asset('images/NoPath - Copy (2).png') }}" alt=""></label>
                     <label class="mx-5">
-                        <h5 class="text-black">اسم الوجبة</h5>
+                        <h5 class="text-black">{{ $package->first_meal }}</h5>
                     </label>
                 </div> <!-- 2 -->
 
                 <div class="form-group my-4">
                     <label><img src="{{ asset('images/NoPath - Copy (2).png') }}" alt=""></label>
                     <label class="mx-5">
-                        <h5 class="text-black">اسم الوجبة</h5>
+                        <h5 class="text-black">{{ $package->second_meal }}</h5>
                     </label>
                 </div> <!-- 3 -->
 
                 <div class="form-group my-4">
                     <label class="text-black">تاريخ البداية</label>
-                    <label class="text-black mx-5">0000/00/00</label>
+                    <label class="text-black mx-5">{{ $package->start_date }}</label>
                 </div> <!-- 4 -->
 
                 <div class="form-group my-4">
                     <label class="text-black">تاريخ النهاية</label>
-                    <label class="text-black mx-5">0000/00/00</label>
+                    <label class="text-black mx-5">{{ $package->end_date }}</label>
                 </div> <!-- 5 -->
 
                 <div class="form-group my-4">
                     <label class="text-black">السعر</label>
-                    <label class="text-black mx-5">20 رس</label>
+                    <label class="text-black mx-5">{{ $package->price }} رس</label>
                 </div> <!-- 6 -->
             </div> <!-- col-4 -->
 
         <div class="col-4 d-grid mx-auto mt-5">
-            <a id="login" href="editPackage" class="btn mb-3">تعديل</a>
+            <a id="login" href="{{ route('editPackage', $package->id) }}" class="btn mb-3">تعديل</a>
             <a href="#Deactivation" id="coupon" class="btn" data-bs-toggle="modal">الغاء التفعيل</a>
         </div>
     </div> <!-- container -->

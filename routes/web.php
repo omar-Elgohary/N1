@@ -3,6 +3,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OfferController;
 use App\Http\Controllers\CouponController;
 use App\Http\Controllers\SellerController;
+use App\Http\Controllers\PackageController;
 use App\Http\Controllers\Auth\AuthController;
 
 Route::controller(AuthController::class)->group(function(){
@@ -63,7 +64,6 @@ Route::get('/homeOffers', function () {
 Route::get('editOfferPage/{id}', [OfferController::class, 'editOfferPage'])->name('editOfferPage');
 Route::get('deleteOffer/{id}', [OfferController::class, 'deleteOffer'])->name('deleteOffer');
 
-
 ##############################################################################################################
 
 // Branches
@@ -88,14 +88,9 @@ Route::post('addCoupon', [CouponController::class, 'store'])->name('addCoupon');
 Route::get('editCoupon/{id}', [CouponController::class, 'edit'])->name('editCoupon');
 Route::post('updateCoupon/{id}', [CouponController::class, 'update'])->name('updateCoupon');
 
-Route::get('/couponDetails', function () {
-    return view('admin.coupons.couponDetails');
-});
+Route::get('couponDetails/{id}', [CouponController::class, 'couponDetails'])->name('couponDetails');
 
-Route::get('/deactivationCoupon', function () {
-    return view('admin.coupons.DeactivationCoupon');
-});
-
+Route::get('deactivationCoupon/{id}',[CouponController::class, 'deactivationCoupon'])->name('deactivationCoupon');
 
 ##############################################################################################################
 
@@ -108,9 +103,7 @@ Route::get('editPackage/{id}', function () {
     return view('admin.packages.editPackage');
 })->name('editPackage');
 
-Route::get('/packageDetails', function () {
-    return view('admin.packages.packageDetails');
-});
+Route::get('packageDetails/{id}',[PackageController::class, 'packageDetails'])->name('packageDetails');
 
 Route::get('/DeactivationPackage', function () {
     return view('admin.packages.DeactivationPackage');

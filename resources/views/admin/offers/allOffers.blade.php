@@ -93,9 +93,21 @@
                         <td>{{ $offer->offer_type }}</td>
                         <td>{{ $offer->users_count }}</td>
                         @if ($offer->status == 'مفعل')
-                            <td class="text-success">{{ $offer->status }}</td>
+                            <td>
+                                @if ($offer->offer_type == 'coupon')
+                                    <a href="{{ route('couponDetails', $offer->coupon_id) }}" class="text-success">{{ $offer->status }}</a>
+                                @else
+                                    <a href="{{ route('packageDetails', $offer->package_id) }}" class="text-success">{{ $offer->status }}</a>
+                                @endif
+                            </td>
                         @else
-                            <td class="text-danger">{{ $offer->status }}</td>
+                            <td>
+                                @if ($offer->offer_type == 'coupon')
+                                    <a href="{{ route('couponDetails', $offer->coupon_id) }}" class="text-danger">{{ $offer->status }}</a>
+                                @else
+                                    <a href="{{ route('packageDetails', $offer->package_id) }}" class="text-danger">{{ $offer->status }}</a>
+                                @endif
+                            </td>
                         @endif
                         <td>{{ $offer->start_date }}</td>
                         <td>{{ $offer->end_date }}</td>

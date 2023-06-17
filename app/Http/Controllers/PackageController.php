@@ -91,4 +91,14 @@ class PackageController extends Controller
 //         session()->flash('Edit', 'تم تعديل الكوبون بنجاح ');
 //         return redirect()->route('alloffers');
 //     }
+
+
+
+
+    public function packageDetails($id)
+    {
+        $package = Package::find($id);
+        return view('admin.packages.packageDetails', compact('package'));
+    }
 }
+
