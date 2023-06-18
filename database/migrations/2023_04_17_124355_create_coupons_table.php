@@ -14,7 +14,7 @@ return new class extends Migration
             $table->string('discount_coupon');
             $table->string('discount_percentage');
             $table->date('start_date');
-            $table->date('end_date');   
+            $table->date('end_date');
             $table->string('users_count');
             $table->integer('how_many_times_user_use_this_coupon');
             $table->enum('status', ['مفعل', 'غير مفعل'])->default('مفعل');

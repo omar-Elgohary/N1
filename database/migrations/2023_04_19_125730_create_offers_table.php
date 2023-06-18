@@ -15,7 +15,7 @@ return new class extends Migration
             $table->date('start_date');
             $table->date('end_date');
             $table->foreignId('coupon_id')->nullable()->constrained('coupons');
-            $table->foreignId('package_id')->nullable()->constrained('coupons');
+            $table->foreignId('package_id')->nullable()->constrained('packages');
             $table->timestamps();
         });
     }

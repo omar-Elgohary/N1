@@ -61,9 +61,6 @@ Route::get('/homeOffers', function () {
     return view('admin.offers.index');
 });
 
-Route::get('editOfferPage/{id}', [OfferController::class, 'editOfferPage'])->name('editOfferPage');
-Route::get('deleteOffer/{id}', [OfferController::class, 'deleteOffer'])->name('deleteOffer');
-
 ##############################################################################################################
 
 // Branches
@@ -91,17 +88,18 @@ Route::post('updateCoupon/{id}', [CouponController::class, 'update'])->name('upd
 Route::get('couponDetails/{id}', [CouponController::class, 'couponDetails'])->name('couponDetails');
 
 Route::get('deactivationCoupon/{id}',[CouponController::class, 'deactivationCoupon'])->name('deactivationCoupon');
+Route::get('activationCoupon/{id}',[CouponController::class, 'activationCoupon'])->name('activationCoupon');
+
+Route::get('deleteCoupon/{id}', [CouponController::class, 'deleteCoupon'])->name('deleteCoupon');
 
 ##############################################################################################################
 
 // Packages
-Route::get('addPackage', function () {
-    return view('admin.packages.addPackage');
-});
+Route::get('addPackagePage', [PackageController::class, 'index'])->name('addPackagePage');
+Route::post('addPackage', [PackageController::class, 'addPackage'])->name('addPackage');
 
-Route::get('editPackage/{id}', function () {
-    return view('admin.packages.editPackage');
-})->name('editPackage');
+Route::get('editPackage/{id}', [PackageController::class, 'editPackage'])->name('editPackage');
+Route::post('updatePackage/{id}', [PackageController::class, 'updatePackage'])->name('updatePackage');
 
 Route::get('packageDetails/{id}',[PackageController::class, 'packageDetails'])->name('packageDetails');
 
@@ -109,6 +107,7 @@ Route::get('/DeactivationPackage', function () {
     return view('admin.packages.DeactivationPackage');
 });
 
+Route::get('deletePackage/{id}', [PackageController::class, 'deletePackage'])->name('deletePackage');
 
 ##############################################################################################################
 

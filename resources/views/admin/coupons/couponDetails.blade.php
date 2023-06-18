@@ -72,13 +72,13 @@
             @if($coupon->status == 'مفعل')
                 <a id="login" href="{{ route('editCoupon', $coupon->id) }}" class="btn mb-3">تعديل</a>
             @else
-                <a id="login" href="{{ route('deleteCoupon', $coupon->id) }}" class="btn mb-3">حذف</a>
+                <a href="{{ route('activationCoupon', $coupon->id) }}" id="login" class="btn">تفعيل</a>
             @endif
 
             @if($coupon->status == 'مفعل')
                 <a href="#Deactivation" id="coupon" class="btn" data-bs-toggle="modal">الغاء التفعيل</a>
             @else
-                <a href="#Activation" id="coupon" class="btn" data-bs-toggle="modal">تفعيل</a>
+                <a id="coupon" href="{{ route('deleteCoupon', $coupon->id) }}" class="btn mb-3">حذف</a>
             @endif
         </div>
     </div> <!-- container -->

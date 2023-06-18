@@ -112,18 +112,50 @@
                         <td>{{ $offer->start_date }}</td>
                         <td>{{ $offer->end_date }}</td>
                         <td>
-                            <a href="{{ route('editOfferPage', $offer->id) }}" class="btn bg-white text-success"><i class="fa fa-edit"></i></a>
-                            <a href="#deleteOffer" class="btn bg-white text-danger" data-bs-toggle="modal"><i class="fa fa-trash"></i></a>
+                            @if ($offer->offer_type == 'coupon')
+                                <a href="{{ route('editCoupon', $offer->coupon_id) }}" class="btn bg-white text-success"><i class="fa fa-edit"></i></a>
+                            @else
+                                <a href="{{ route('editPackage', $offer->package_id) }}" class="btn bg-white text-success"><i class="fa fa-edit"></i></a>
+                            @endif
+
+                            <a href="#deleteOffer{{ $offer->id }}" class="btn bg-white text-danger" data-bs-toggle="modal"><i class="fa fa-trash"></i></a>
                         </td>
                     </tr>
                 </tbody>
+
+                {{-- delete offer --}}
+                <div class="modal fade border-0" id="deleteOffer{{ $offer->id }}" aria-hidden="true" aria-labelledby="deleteOfferLabel" tabindex="-1" dir="rtl">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="btn-x modal-header">
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+
+                            <div class="modal-body text-center my-5">
+                                <h2>هل أنت متأكد من حذف هذا العرض؟</h2>
+                            </div>
+
+                            <div class="d-flex justify-content-around my-4">
+                                <button type="button" id="coupon" class="btn px-5" data-bs-dismiss="modal">تراجع</button>
+
+                                @if ($offer->offer_type == 'coupon')
+                                    <a href="{{route('deleteCoupon', $offer->coupon_id) }}" id="package" type="button" class="btn btn-block px-5 text-white">حذف</a>
+                                @else
+                                    <a href="{{route('deletePackage', $offer->package_id) }}" id="package" type="button" class="btn btn-block px-5 text-white">حذف</a>
+                                @endif
+
+                            </div>
+                        </div> <!-- modal-content -->
+                    </div> <!-- modal-dialog -->
+                </div> <!-- modal fade -->
+
                 @endforeach
-
             </table>
-        </div>
-    </div> <!-- container -->
-</section>
 
+
+    </div>
+</div> <!-- container -->
+</section>
 
 {{-- modal --}}
 <div class="modal fade border-0" id="staticBackdrop" aria-hidden="true" aria-labelledby="staticBackdropLabel" tabindex="-1" dir="rtl">
@@ -139,31 +171,7 @@
 
             <div class="d-flex justify-content-around my-4">
                 <a href="{{ route('addCouponPage') }}" id="coupon" type="button" class="btn btn-block btn-bordered px-5">عرض</a>
-                <a href="addPackage" id="package" type="button" class="btn btn-block px-5 text-white">بكج</a>
-            </div>
-        </div> <!-- modal-content -->
-    </div> <!-- modal-dialog -->
-</div> <!-- modal fade -->
-
-
-
-
-{{-- delete offer --}}
-<div class="modal fade border-0" id="deleteOffer" aria-hidden="true" aria-labelledby="deleteOfferLabel" tabindex="-1" dir="rtl">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="btn-x modal-header">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-
-            <div class="modal-body text-center my-5">
-                <h2>هل أنت متأكد من حذف هذا العرض؟</h2>
-            </div>
-
-            <div class="d-flex justify-content-around my-4">
-                <button type="button" id="coupon" class="btn px-5" data-bs-dismiss="modal">تراجع</button>
-                <a href="{{route('deleteOffer', $offer->id)}}" id="package" type="button" class="btn btn-block px-5 text-white">حذف</a>
-
+                <a href="{{ route('addPackagePage') }}" id="package" type="button" class="btn btn-block px-5 text-white">بكج</a>
             </div>
         </div> <!-- modal-content -->
     </div> <!-- modal-dialog -->

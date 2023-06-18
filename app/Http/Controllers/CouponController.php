@@ -46,8 +46,8 @@ class CouponController extends Controller
         $coupon_id = Coupon::latest()->first()->id;
         Offer::create([
             'offer_type' => 'coupon',
-            'status' => 'مفعل',
             'users_count' => $request->users_count,
+            'status' => 'مفعل',
             'start_date' => $request->start_date,
             'end_date' => $request->end_date,
             'coupon_id' => $coupon_id,
@@ -153,22 +153,31 @@ class CouponController extends Controller
     }
 
 
+    public function activationCoupon($id)
+    {
+        $coupon = Coupon::find($id);
+        $coupon->update([
+            'status' => 'مفعل',
+        ]);
+
+        $offer = Offer::where('coupon_id', $id)->first();
+        $offer->update([
+            'status' => 'مفعل',
+        ]);
+
+        return view('admin.coupons.editCoupon', compact('coupon'));
+    }
 
 
-    // public function delete($id)
-    // {
-    //     // $offer = Offer::find($id)->delete();
-    //     $offer = Offer::find($id);
-    //     if($offer->coupon_id){
-    //         dd('coupon');
-    //         // $coupon = Coupon::find($offer->coupon_id);
-    //         // $coupon->delete();
-    //     }else{
-    //         dd('package');
-    //         // $package = Package::find($offer->package_id);
-    //         // $package->delete();
-    //     }
-    //     session()->flash('deleteOffer');
-    //     return redirect()->route('alloffers');
-    // }
+
+
+
+    public function deleteCoupon($id)
+    {
+        Coupon::find($id)->delete();
+        $offer = Offer::where('coupon_id', $id)->delete();
+
+        session()->flash('deleteOffer');
+        return back();
+    }
 }

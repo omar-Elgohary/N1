@@ -11,8 +11,10 @@ return new class extends Migration
             $table->id();
             $table->string('random_id');
             $table->string('image');
-            $table->string('first_meal');
-            $table->string('second_meal');
+
+            $table->string('first_meal')->constrained('meals');
+            $table->string('second_meal')->constrained('meals');
+
             $table->date('start_date');
             $table->date('end_date');
             $table->double('price');
