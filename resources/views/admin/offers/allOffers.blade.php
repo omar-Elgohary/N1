@@ -58,6 +58,50 @@
 </script>
 @endif
 
+@if (session()->has('activationCoupon'))
+    <script>
+        window.onload = function() {
+            notif({
+                msg: "تم تفعيل الكوبون بنجاح",
+                type: "success"
+            })
+        }
+    </script>
+@endif
+
+@if (session()->has('deactivationCoupon'))
+    <script>
+        window.onload = function() {
+            notif({
+                msg: "تم الغاء تفعيل الكوبون بنجاح",
+                type: "error"
+            })
+        }
+    </script>
+@endif
+
+@if (session()->has('activationPackage'))
+    <script>
+        window.onload = function() {
+            notif({
+                msg: "تم تفعيل الباكدج بنجاح",
+                type: "success"
+            })
+        }
+    </script>
+@endif
+
+@if (session()->has('deactivationPackage'))
+    <script>
+        window.onload = function() {
+            notif({
+                msg: "تم الغاء تفعيل الباكدج بنجاح",
+                type: "error"
+            })
+        }
+    </script>
+@endif
+
 @section('content')
 <section>
     <div class="container">

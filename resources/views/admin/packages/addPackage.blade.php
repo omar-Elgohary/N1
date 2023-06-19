@@ -27,7 +27,7 @@
                     <select name="first_meal" class="form-control rounded-0 mb-4 mt-2">
                         <option>حدد اسم الوجبة</option>
                         @foreach ($meals as $meal)
-                            <option value="{{ $meal->id }}">{{ $meal->name }}</option>
+                            <option value="{{ $meal->name }}">{{ $meal->name }}</option>
                         @endforeach
                     </select>
                 </div> <!-- 1 -->
@@ -37,7 +37,7 @@
                     <select name="second_meal" class="form-control rounded-0 mb-4 mt-2">
                         <option>حدد اسم الوجبة</option>
                         @foreach ($meals as $meal)
-                            <option value="{{ $meal->id}}">{{ $meal->name }}</option>
+                            <option value="{{ $meal->name}}">{{ $meal->name }}</option>
                         @endforeach
                     </select>
                 </div> <!-- 2 -->

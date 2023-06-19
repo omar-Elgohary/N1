@@ -46,7 +46,7 @@
             <img class="p-3" src="{{ asset('images/logo.png') }}" alt="logo">
             <ul>
                 <li><a class="nav-link text-black scrollto <?= 'title' == 'الرئيسية' ? 'active' : ''?>" href="/admin">الرئيسية</a></li>
-                <li><a class="nav-link text-black scrollto <?= 'title' == 'اتصل بنا' ? 'active' : ''?>" href="/contact">اتصل بنا</a></li>
+                <li><a class="nav-link text-black scrollto <?= 'title' == 'اتصل بنا' ? 'active' : ''?>" href="{{ route('contact_us') }}">اتصل بنا</a></li>
                 <li><a class="nav-link text-black scrollto <?= 'title' == 'عن N1' ? 'active' : ''?>" href="/about">عن N1</a></li>
                 <li><a class="nav-link text-black scrollto <?= 'title' == 'المنتجات' ? 'active' : ''?>" href="/products">المنتجات</a></li>
                 <li><a class="nav-link text-black scrollto <?= 'title' == 'العروض' ? 'active' : ''?>" href="/allOffers">العروض</a></li>

@@ -6,6 +6,7 @@ use App\Models\Coupon;
 use App\Models\Package;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\File;
 use App\Interfaces\PackageRepositoryInterface;
 
 class PackageController extends Controller
@@ -100,8 +101,9 @@ class PackageController extends Controller
 
     public function editPackage ($id)
     {
+        $meals = Meal::all();
         $package = Package::find($id);
-        return view('admin.packages.editPackage', compact('package'));
+        return view('admin.packages.editPackage', compact('package', 'meals'));
     }
 
 
@@ -110,22 +112,46 @@ class PackageController extends Controller
 
 
 
-    // public function editPackage(Request $request, $id)
-    // {
-    //     $this->validate($request, [
-    //         'title_en' => 'required',
-    //         'title_ar' => 'required',
-    //         'logo' => 'sometimes|image',
-    //     ]);
+    public function updatePackage(Request $request, $id)
+    {
+        $package = Package::find($id);
+        if($request->hasFile('image'))
+        {
+            $oldImage = 'assets/images/offers/'.$package->image;
+            if(File::exists($oldImage))
+            {
+                File::delete($oldImage);
+            }
+            $file_extention = $request->file("image")->getCLientOriginalExtension();
+            $newImage = time(). "." .$file_extention;
+            $request->file("image")->move(public_path('assets/images/offers/'), $newImage);
+            $package->image = $newImage;
+        }
 
-    //     $data = $request->only('title_en', 'title_ar');
-    //     if($request->hasFile('logo')){
-    //         $data['logo'] = Storage::disk('public')->put('logos', $request->file('logo'));
-    //     }
-    //     Coupon::find($id)->update($data);
-    //     session()->flash('Edit', 'تم تعديل الكوبون بنجاح ');
-    //     return redirect()->route('alloffers');
-    // }
+        $package->update([
+            'first_meal' => $request->first_meal,
+            'second_meal' => $request->second_meal,
+            'start_date' => $request->start_date,
+            'end_date' => $request->end_date,
+            'price' => $request->price,
+            'users_count' => $request->users_count,
+            'how_many_times_user_use_this_coupon' => $request->how_many_times_user_use_this_coupon,
+        ]);
+
+        $offer = Offer::where('package_id', $id)->first();
+        $offer->update([
+            'offer_type' => 'package',
+            'status' => 'مفعل',
+            'users_count' => $request->users_count,
+            'start_date' => $request->start_date,
+            'end_date' => $request->end_date,
+            'coupon_id' => null,
+            'package_id' => $id,
+        ]);
+
+        session()->flash('editPackage');
+        return redirect()->route('alloffers');
+    }
 
 
 
@@ -138,10 +164,46 @@ class PackageController extends Controller
 
 
 
+    public function deactivationPackage($id)
+    {
+        $package = Package::find($id);
+        $package->update([
+            'status' => 'غير مفعل',
+        ]);
+
+        $offer = Offer::where('package_id', $id)->first();
+        $offer->update([
+            'status' => 'غير مفعل',
+        ]);
+
+        session()->flash('deactivationPackage');
+        return redirect()->route('alloffers');
+    }
+
+
+    public function activationPackage($id)
+    {
+        $package = Package::find($id);
+        $package->update([
+            'status' => 'مفعل',
+        ]);
+
+        $offer = Offer::where('package_id', $id)->first();
+        $offer->update([
+            'status' => 'مفعل',
+        ]);
+
+        session()->flash('activationPackage');
+        return redirect()->route('alloffers');
+    }
+
+
+
+
 
     public function deletePackage($id)
     {
-        Package::find($id)->delete();
+        $package = Package::find($id)->delete();
         $offer = Offer::where('package_id', $id)->delete();
 
         session()->flash('deleteOffer');

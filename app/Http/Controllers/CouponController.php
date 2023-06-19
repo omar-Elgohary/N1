@@ -2,11 +2,9 @@
 namespace App\Http\Controllers;
 use App\Models\Offer;
 use App\Models\Coupon;
-use App\Models\Package;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
 
 class CouponController extends Controller
 {
@@ -70,29 +68,19 @@ class CouponController extends Controller
 
     public function update(Request $request, $id)
     {
-        // $this->validate($request, [
-        //     'image' => 'required',
-        //     'discount_coupon' => 'required',
-        //     'discount_percentage' => 'required',
-        //     'start_date' => 'required|date',
-        //     'end_date' => 'required|date',
-        //     'users_count' => 'required|numeric',
-        //     'how_many_times_user_use_this_coupon' => 'required|numeric',
-        // ]);
-
         $coupon = Coupon::find($id);
 
         if($request->hasFile('image'))
         {
-            $oldImage = 'public/assets/images/offers/'.$coupon->image;
+            $oldImage = 'assets/images/offers/'.$coupon->image;
             if(File::exists($oldImage))
             {
                 File::delete($oldImage);
             }
             $file_extention = $request->file("image")->getCLientOriginalExtension();
-            $image = time(). "." .$file_extention;
-            $request->file("image")->move(public_path('assets/images/offers/'), $image);
-            $coupon->image = $image;
+            $newImage = time(). "." .$file_extention;
+            $request->file("image")->move(public_path('assets/images/offers/'), $newImage);
+            $coupon->image = $newImage;
         }
 
         $coupon->update([
@@ -149,7 +137,7 @@ class CouponController extends Controller
         ]);
 
         session()->flash('deactivationCoupon');
-        return back();
+        return redirect()->route('alloffers');
     }
 
 
@@ -165,7 +153,8 @@ class CouponController extends Controller
             'status' => 'مفعل',
         ]);
 
-        return view('admin.coupons.editCoupon', compact('coupon'));
+        session()->flash('activationCoupon');
+        return redirect()->route('alloffers');
     }
 
 
@@ -174,7 +163,7 @@ class CouponController extends Controller
 
     public function deleteCoupon($id)
     {
-        Coupon::find($id)->delete();
+        $coupon = Coupon::find($id)->delete();
         $offer = Offer::where('coupon_id', $id)->delete();
 
         session()->flash('deleteOffer');

@@ -36,7 +36,7 @@
             <img class="p-3" src="{{ asset('images/logo.png') }}" alt="logo">
             <ul>
                 <li><a class="nav-link text-black  active" href="/">الرئيسية</a></li>
-                <li><a class="nav-link text-black scrollto" href="/contact">اتصل بنا</a></li>
+                <li><a class="nav-link text-black scrollto" href="{{ route('contact_us') }}">اتصل بنا</a></li>
                 <li><a class="nav-link text-black scrollto" href="/about">عن N1</a></li>
             </ul>
             <i class="bi bi-list mobile-nav-toggle" style="background-color: #ff8914"></i>

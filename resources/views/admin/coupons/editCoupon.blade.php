@@ -15,11 +15,11 @@
 
             <div class="row mt-3">
                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6">
-                    <img src="{{ asset('assets/images/offers/'.$coupon->image) }}" style="width: 100%" alt="">
+                    <img src="{{ asset('assets/images/offers/'.$coupon->image) }}" name="image" style="width: 100%" alt="">
                 </div>
 
                 <div class="col-lg-6 mt-3">
-                    <input type="file" name="CouponPic" id="upload-custom">
+                    <input type="file" name="image" id="upload-custom">
                     <label for="upload-custom" class="upload-lable text-center w-50">
                         <i class="fa-solid fa-file-image"></i>
                         <h4 class="drag-text">تغيير الصورة</h4>

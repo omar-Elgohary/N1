@@ -19,7 +19,11 @@
             <div class="col-lg-4 mt-5">
                 <div class="form-group my-4">
                     <label class="text-black">حالة العرض</label>
+                    @if($package->status == 'مفعل')
                     <label class="text-success mx-5" style="font-weight: bold;">مفعل</label>
+                @else
+                    <label class="text-danger mx-5" style="font-weight: bold;">غير مفعل</label>
+                @endif
                 </div> <!-- 1 -->
 
                 <div class="form-group my-4">
@@ -53,8 +57,17 @@
             </div> <!-- col-4 -->
 
         <div class="col-4 d-grid mx-auto mt-5">
-            <a id="login" href="{{ route('editPackage', $package->id) }}" class="btn mb-3">تعديل</a>
+            @if($package->status == 'مفعل')
+                <a id="login" href="{{ route('editPackage', $package->id) }}" class="btn mb-3">تعديل</a>
+            @else
+                <a href="{{ route('activationPackage', $package->id) }}" id="login" class="btn">تفعيل</a>
+            @endif
+
+            @if($package->status == 'مفعل')
             <a href="#Deactivation" id="coupon" class="btn" data-bs-toggle="modal">الغاء التفعيل</a>
+            @else
+                <a id="coupon" href="{{ route('deletePackage', $package->id) }}" class="btn mb-3">حذف</a>
+            @endif
         </div>
     </div> <!-- container -->
 </section>
@@ -74,7 +87,7 @@
 
             <div class="modal-footer d-flex justify-content-around">
                 <button type="button" id="coupon" class="btn px-5" data-bs-dismiss="modal">تراجع</button>
-                <a id="package" href="DeactivationPackage" class="btn btn-block px-5 text-white">الغاء التفعيل</a>
+                <a id="package" href="{{route('deactivationPackage', $package->id)}}" class="btn btn-block px-5 text-white">الغاء التفعيل</a>
             </div>
         </div> <!-- modal-content -->
     </div> <!-- modal-dialog -->

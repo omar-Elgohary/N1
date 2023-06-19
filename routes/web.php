@@ -5,6 +5,7 @@ use App\Http\Controllers\CouponController;
 use App\Http\Controllers\SellerController;
 use App\Http\Controllers\PackageController;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\MainController;
 
 Route::controller(AuthController::class)->group(function(){
     Route::post('register', 'register')->name('register');
@@ -20,9 +21,8 @@ Route::get('/', function () {
     return view('front.home');
 })->name('home');
 
-Route::get('contact', function () {
-    return view('front.contact');
-});
+Route::get('contact_us', [MainController::class, 'index'])->name('contact_us');
+Route::post('contact_us', [MainController::class, 'store'])->name('contact_us.store');
 
 Route::get('about', function () {
     return view('front.questions');
@@ -102,6 +102,10 @@ Route::get('editPackage/{id}', [PackageController::class, 'editPackage'])->name(
 Route::post('updatePackage/{id}', [PackageController::class, 'updatePackage'])->name('updatePackage');
 
 Route::get('packageDetails/{id}',[PackageController::class, 'packageDetails'])->name('packageDetails');
+
+Route::get('deactivationPackage/{id}',[PackageController::class, 'deactivationPackage'])->name('deactivationPackage');
+Route::get('activationPackage/{id}',[PackageController::class, 'activationPackage'])->name('activationPackage');
+
 
 Route::get('/DeactivationPackage', function () {
     return view('admin.packages.DeactivationPackage');
