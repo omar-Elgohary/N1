@@ -15,13 +15,13 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('phone')->unique();
             $table->string('password');
-            $table->string('verfied_password');
-            
+            $table->string('confirmed_password');
+
             // edit
             $table->string('image', 50)->nullable();
             $table->time('start_time')->nullable();
             $table->time('end_time')->nullable();
-            $table->enum('delivery', ['خدمة الاستلام من الفرع', 'خدمة التوصيل الى العميل'])->nullable();
+            $table->enum('delivery', [1, 0])->nullable();   // 1-delivery   // 2-pickup
             $table->timestamps();
         });
     }

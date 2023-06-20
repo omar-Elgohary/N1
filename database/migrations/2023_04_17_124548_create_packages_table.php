@@ -12,8 +12,8 @@ return new class extends Migration
             $table->string('random_id');
             $table->string('image');
 
-            $table->string('first_meal')->constrained('meals');
-            $table->string('second_meal')->constrained('meals');
+            $table->foreignId('first_meal_id')->constrained('meals');
+            $table->foreignId('second_meal_id')->nullable()->constrained('meals');
 
             $table->date('start_date');
             $table->date('end_date');

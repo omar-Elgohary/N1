@@ -1,11 +1,12 @@
 <?php
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MainController;
 use App\Http\Controllers\OfferController;
+use App\Http\Controllers\BranchController;
 use App\Http\Controllers\CouponController;
 use App\Http\Controllers\SellerController;
 use App\Http\Controllers\PackageController;
 use App\Http\Controllers\Auth\AuthController;
-use App\Http\Controllers\MainController;
 
 Route::controller(AuthController::class)->group(function(){
     Route::post('register', 'register')->name('register');
@@ -64,13 +65,12 @@ Route::get('/homeOffers', function () {
 ##############################################################################################################
 
 // Branches
-Route::get('/allBranches', function () {
-    return view('admin.branches.allBranches');
-});
+Route::get('allBranches', [BranchController::class, 'allBranches'])->name('allBranches');
+Route::post('createBranche', [BranchController::class, 'createBranche'])->name('createBranche');
 
-Route::get('/EditBranchDetails', function () {
-    return view('admin.branches.EditBranchDetails');
-});
+Route::get('EditBranchPage/{id}', [BranchController::class, 'EditBranchPage'])->name('EditBranchPage');
+Route::post('updateBranch/{id}', [BranchController::class, 'updateBranch'])->name('updateBranch');
+Route::get('deleteBranch/{id}', [BranchController::class, 'deleteBranch'])->name('deleteBranch');
 
 ##############################################################################################################
 

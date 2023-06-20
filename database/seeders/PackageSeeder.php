@@ -11,8 +11,8 @@ class PackageSeeder extends Seeder
         $package = Package::create([
             'random_id' => '#DFSG48',
             'image' => '1686825194.jfif',
-            'first_meal' => 'meat',
-            'second_meal' => 'fried chicken',
+            'first_meal_id' => 1,
+            'second_meal_id' => 2,
             'start_date' => '2023-06-16',
             'end_date' => '2023-06-19',
             'price' => '300',
@@ -24,8 +24,8 @@ class PackageSeeder extends Seeder
         $package = Package::create([
             'random_id' => '#DSG564',
             'image' => '1686825194.jfif',
-            'first_meal' => 'koshary',
-            'second_meal' => 'rice',
+            'first_meal_id' => 3,
+            'second_meal_id' => 4,
             'start_date' => '2023-06-19',
             'end_date' => '2023-06-22',
             'price' => '450',
@@ -37,8 +37,8 @@ class PackageSeeder extends Seeder
         $package = Package::create([
             'random_id' => '#SDG647',
             'image' => '1686825194.jfif',
-            'first_meal' => 'kofta',
-            'second_meal' => 'shawerma',
+            'first_meal_id' => 5,
+            'second_meal_id' => 6,
             'start_date' => '2023-06-22',
             'end_date' => '2023-06-24',
             'price' => '70',
@@ -50,8 +50,8 @@ class PackageSeeder extends Seeder
         $package = Package::create([
             'random_id' => '#FDSG12',
             'image' => '1686825194.jfif',
-            'first_meal' => 'shawerma',
-            'second_meal' => 'meat',
+            'first_meal_id' => 2,
+            'second_meal_id' => 4,
             'start_date' => '2023-06-23',
             'end_date' => '2023-06-26',
             'price' => '520',

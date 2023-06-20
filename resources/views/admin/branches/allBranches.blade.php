@@ -3,7 +3,50 @@
     الفروع
 @endsection
 
+@if (session()->has('addBranch'))
+    <script>
+        window.onload = function() {
+            notif({
+                msg: "تم انشاء حساب الفرع بنجاح",
+                type: "success"
+            })
+        }
+    </script>
+@endif
+
+@if (session()->has('editBranch'))
+    <script>
+        window.onload = function() {
+            notif({
+                msg: "تم تعديل حساب الفرع بنجاح",
+                type: "success"
+            })
+        }
+    </script>
+@endif
+
+@if (session()->has('deleteBranch'))
+    <script>
+        window.onload = function() {
+            notif({
+                msg: "تم حذف حساب الفرع بنجاح",
+                type: "info"
+            })
+        }
+    </script>
+@endif
+
 @section('content')
+
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 
 <section>
     <div class="container">
@@ -30,83 +73,18 @@
                     </tr>
                 </thead>
 
+                @forelse ($branches as $key => $branch)
                 <tbody>
                     <tr>
-                        <th>1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
+                        <th>{{ $branch->random_id }}</th>
+                        <td>{{ $branch->branche_title }}</td>
+                        <td>{{ $branch->phone }}</td>
+                        <td>{{ $branch->email }}</td>
                         <td>
-                            <a href="EditBranchDetails" class="btn bg-white text-success"><i class="fa fa-edit"></i></a>
+                            <a href="{{ route('EditBranchPage', $branch->id) }}" class="btn bg-white text-success"><i class="fa fa-edit"></i></a>
                             <a href="#deleteBranch" class="btn bg-white text-danger" data-bs-toggle="modal"><i class="fa fa-trash"></i></a>
                         </td>
                     </tr>
-                </tbody>
-            </table>
-        </div>
-    </div> <!-- container -->
-</section>
-
-
-{{-- add branch --}}
-<div class="modal fade border-0" id="staticBackdrop" aria-hidden="true" aria-labelledby="staticBackdropLabel" tabindex="-1" dir="rtl">
-    <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-        <div class="d-flex justify-content-between p-3 mb-2">
-            <h3 class="modal-title font-bold" style="color: #ed7802; font: x-large">انشاء حساب فرع</h3>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-
-        <div class="modal-body">
-        <form action="#" method="post">
-            <div class="mt-lg-0 text-end">
-                <div class="row d-flex justify-content-center flex-row-reverse col-12">
-
-                <div class="col-lg-6">
-                    <div class="form-group mt-3">
-                        <label class="text-black mb-3">موقع الفرع</label>
-                        <input type="text" class="form-control rounded-0" name="location" required>
-                    </div>
-
-                    <div class="form-group mt-3">
-                        <label class="text-black mb-3">رقم الجوال</label>
-                        <input type="number" class="form-control rounded-0" name="phone" required>
-                    </div>
-
-                    <div class="form-group mt-3">
-                        <label class="text-black mb-3">تأكيد كلمة المرور</label>
-                        <input type="password" class="form-control rounded-0" name="password" required>
-                    </div>
-                </div> <!-- col-4 -->
-
-                <div class="col-lg-6">
-                    <div class="form-group mt-3">
-                        <label class="text-black mb-3">عنوان الفرع</label>
-                        <input type="text" class="form-control rounded-0" name="brach_address" required>
-                    </div>
-
-                    <div class="form-group mt-3">
-                        <label class="text-black mb-3">البريد الالكتروني</label>
-                        <input type="email" class="form-control rounded-0" name="email" required>
-                    </div>
-
-                    <div class="form-group mt-3">
-                        <label class="text-black mb-3">كلمة المرور</label>
-                        <input type="password" class="form-control rounded-0" name="password" required>
-                    </div>
-                </div> <!-- col-6 -->
-            </div> <!-- row -->
-            </form>
-        </div>
-    </div>
-
-        <div class="d-flex justify-content-around mt-4 mb-5">
-            <a href="#" id="package" type="button" class="btn btn-block px-5 text-white">انشاء حساب فرع</a>
-        </div>
-    </div>
-</div>
-</div>
-
 
 {{-- delete branch --}}
 <div class="modal fade border-0" id="deleteBranch" aria-hidden="true" aria-labelledby="deleteBranchLabel" tabindex="-1" dir="rtl">
@@ -122,10 +100,85 @@
 
             <div class="modal-footer d-flex justify-content-around">
                 <button type="button" id="coupon" class="btn px-5" data-bs-dismiss="modal">تراجع</button>
-                <a href="#" id="package" type="button" class="btn btn-block px-5 text-white">حذف</a>
+                <a href="{{ route('deleteBranch', $branch->id) }}" id="package" type="button" class="btn btn-block px-5 text-white">حذف</a>
             </div>
         </div> <!-- modal-content -->
     </div> <!-- modal-dialog -->
 </div> <!-- modal fade -->
+
+            @empty
+            <tr>
+                <th class="text-danger" colspan="5">
+                    لا يوجد بيانات
+                </th>
+            </tr>
+        @endforelse
+        </tbody>
+        </table>
+    </div>
+</div> <!-- container -->
+</section>
+
+
+{{-- add branch --}}
+<div class="modal fade border-0" id="staticBackdrop" aria-hidden="true" aria-labelledby="staticBackdropLabel" tabindex="-1" dir="rtl">
+    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+        <div class="d-flex justify-content-between p-3 mb-2">
+            <h3 class="modal-title font-bold" style="color: #ed7802; font: x-large">انشاء حساب فرع</h3>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body">
+        <form action="{{ route('createBranche') }}" method="post" autocomplete="off">
+            @csrf
+
+            <div class="mt-lg-0 text-end">
+                <div class="row d-flex justify-content-center flex-row-reverse col-12">
+
+                <div class="col-lg-6">
+                    <div class="form-group mt-3">
+                        <label class="text-black mb-3">موقع الفرع</label>
+                        <input type="text" class="form-control rounded-0" name="branche_location">
+                    </div>
+
+                    <div class="form-group mt-3">
+                        <label class="text-black mb-3">رقم الجوال</label>
+                        <input type="text" class="form-control rounded-0" name="phone">
+                    </div>
+
+                    <div class="form-group mt-3">
+                        <label class="text-black mb-3">تأكيد كلمة المرور</label>
+                        <input type="password" class="form-control rounded-0" name="password">
+                    </div>
+                </div> <!-- col-4 -->
+
+                <div class="col-lg-6">
+                    <div class="form-group mt-3">
+                        <label class="text-black mb-3">اسم الفرع</label>
+                        <input type="text" class="form-control rounded-0" name="branche_title">
+                    </div>
+
+                    <div class="form-group mt-3">
+                        <label class="text-black mb-3">البريد الالكتروني</label>
+                        <input type="email" class="form-control rounded-0" name="email">
+                    </div>
+
+                    <div class="form-group mt-3">
+                        <label class="text-black mb-3">كلمة المرور</label>
+                        <input type="password" class="form-control rounded-0" name="confirmed_password">
+                    </div>
+                </div> <!-- col-6 -->
+            </div> <!-- row -->
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-around mt-4 mb-5">
+        <button id="package" type="submit" class="btn btn-block px-5 text-white">انشاء حساب فرع</button>
+    </div>
+</form>
+    </div>
+</div>
+</div>
 
 @endsection

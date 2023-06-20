@@ -29,14 +29,14 @@
                 <div class="form-group my-4">
                     <label><img src="{{ asset('images/NoPath - Copy (2).png') }}" alt=""></label>
                     <label class="mx-5">
-                        <h5 class="text-black">{{ $package->first_meal }}</h5>
+                        <h5 class="text-black">{{ \App\Models\Meal::where('id', $package->first_meal_id)->first()->name }}</h5>
                     </label>
                 </div> <!-- 2 -->
 
                 <div class="form-group my-4">
                     <label><img src="{{ asset('images/NoPath - Copy (2).png') }}" alt=""></label>
                     <label class="mx-5">
-                        <h5 class="text-black">{{ $package->second_meal }}</h5>
+                        <h5 class="text-black">{{ \App\Models\Meal::where('id', $package->second_meal_id)->first()->name }}</h5>
                     </label>
                 </div> <!-- 3 -->
 
