@@ -11,15 +11,15 @@ class DepartmentSeeder extends Seeder
     public function run()
     {
         Department::create([
-            'name' => 'Restaurents',
+            'name' => 'مطاعم',
         ]);
 
         Department::create([
-            'name' => 'Shops',
+            'name' => 'متجر منتجات',
         ]);
 
         Department::create([
-            'name' => 'Entertainments',
+            'name' => 'ترفيه',
         ]);
     }
 }

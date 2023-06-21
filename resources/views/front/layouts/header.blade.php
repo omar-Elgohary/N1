@@ -144,11 +144,11 @@
                     <div class="col-lg-6">
                         <div class="form-group mt-3">
                             <label class="mb-3">نوع النشاط</label>
-                            <select class="form-control rounded-0" name="activity_type">
+                            <select class="form-control rounded-0" name="department_id">
                                 <option value="">اختر نوع النشاط</option>
-                                <option value="متجر منتجات">متجر منتجات</option>
-                                <option value="الترفيه">الترفيه</option>
-                                <option value="المطاعم والكافيهات">المطاعم والكافيهات</option>
+                                @foreach (\App\Models\Department::all() as $department)
+                                    <option value="{{ $department->id }}">{{ $department->name }}</option>
+                                @endforeach
                             </select>
                         </div>
 

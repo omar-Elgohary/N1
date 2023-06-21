@@ -9,27 +9,27 @@ class MealSeeder extends Seeder
     public function run()
     {
         Meal::create([
-            'name' => 'meat',
+            'name' => 'لحمة',
         ]);
 
         Meal::create([
-            'name' => 'fried chicken',
+            'name' => 'فرايد اتشيكين',
         ]);
 
         Meal::create([
-            'name' => 'koshary',
+            'name' => 'كشري',
         ]);
 
         Meal::create([
-            'name' => 'rice',
+            'name' => 'أرز',
         ]);
 
         Meal::create([
-            'name' => 'kofta',
+            'name' => 'كفته',
         ]);
 
         Meal::create([
-            'name' => 'shawerma',
+            'name' => 'شاورما',
         ]);
     }
 }

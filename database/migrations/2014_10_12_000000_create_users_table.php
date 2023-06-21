@@ -11,6 +11,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email');
+            $table->foreignId('department_id')->nullable()->constrained('departments');
             $table->string('phone');
             $table->string('country_code')->default('+20');
             $table->boolean('isVerified')->default(false);
@@ -19,7 +20,6 @@ return new class extends Migration
             $table->enum('type', ['admin', 'seller', 'user'])->default('user');
 
             $table->string('company_name')->nullable();
-            $table->string('activity_type')->nullable();
             $table->string('commercial_registration_number', 20)->nullable();
             $table->string('commercial_registration_image')->nullable();
             $table->timestamps();

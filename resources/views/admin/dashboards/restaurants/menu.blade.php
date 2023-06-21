@@ -1,6 +1,9 @@
 @extends('admin.layouts.app')
-@section('content')
+@section('title')
+    المنيو
+@endsection
 
+@section('content')
 <div class="col-12 d-flex flex-row-reverse text-end">
     <div class="app">
 		<div class="menu-toggle">
@@ -13,7 +16,6 @@
 			<h3 class="text-black">المنيو</h3>
 			<nav class="menu">
 				<a href="#" class="menu-item">لا توجد أقسام</a>
-
 			</nav>
 		</aside>
 	</div>
@@ -42,15 +44,19 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
-            <div class="modal-body col-6 text-end m-auto my-5">
-                <label><h3>اسم القسم</h3></label>
-                <input type="text" name="section-name" class="form-control rounded-0">
-            </div>
+            <form action="{{ route('createCategory') }}" method="POST">
+                @csrf
+                <div class="modal-body col-6 text-end m-auto my-5">
+                    <label><h3>اسم القسم</h3></label>
+                    <input type="text" name="name" class="form-control rounded-0">
+                </div>
 
-            <div class="d-flex justify-content-around mb-5">
-                <button type="button" id="coupon" class="btn px-5" data-bs-dismiss="modal">الغاء</button>
-                <a href="FoodMenu" id="package" type="button" class="btn btn-block px-5 text-white">اضف</a>
-            </div>
+                <div class="d-flex justify-content-around mb-5">
+                    <button type="button" id="coupon" class="btn px-5" data-bs-dismiss="modal">الغاء</button>
+                    <button type="submit" id="package" type="button" class="btn btn-block px-5 text-white">اضف</button>
+                </div>
+            </form>
+
         </div> <!-- modal-content -->
     </div> <!-- modal-dialog -->
 </div> <!-- modal fade -->

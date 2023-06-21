@@ -9,22 +9,22 @@ class CategorySeeder extends Seeder
     public function run()
     {
         Category::create([
-            'name' => 'mashwiat',
+            'name' => 'مشويات',
             'department_id' => 1,
         ]);
 
         Category::create([
-            'name' => 'sea foods',
+            'name' => 'أسماك',
             'department_id' => 1,
         ]);
 
         Category::create([
-            'name' => 'pizza',
+            'name' => 'بيتزا',
             'department_id' => 1,
         ]);
 
         Category::create([
-            'name' => 'drinks',
+            'name' => 'مشروبات',
             'department_id' => 1,
         ]);
     }

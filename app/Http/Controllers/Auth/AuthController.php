@@ -13,7 +13,7 @@ class AuthController extends Controller
     {
         $request->validate([
             'company_name' => 'required',
-            'activity_type' => 'required',
+            'department_id' => 'required',
             'commercial_registration_number' => 'required',
             'commercial_registration_image' => 'required',
             'phone' => 'required|unique:users,phone',
@@ -25,7 +25,7 @@ class AuthController extends Controller
         $user = User::create([
             'name' => $request->company_name,
             'company_name' => $request->company_name,
-            'activity_type' => $request->activity_type,
+            'department_id' => $request->department_id,
             'phone'=> $request->phone,
             'country_code'=> $request->country_code,
             'isVerified'=> 0,

@@ -9,22 +9,22 @@ class SubCategorySeeder extends Seeder
     public function run()
     {
         SubCategory::create([
-            'name' => 'la7ma mashwia',
+            'name' => 'كباب',
             'category_id' => 1,
         ]);
 
         SubCategory::create([
-            'name' => 'pizza ransh',
+            'name' => 'بيتزا رانش',
             'category_id' => 3,
         ]);
 
         SubCategory::create([
-            'name' => 'samak mashwey',
+            'name' => 'سمك مشوي',
             'category_id' => 2,
         ]);
 
         SubCategory::create([
-            'name' => 'cola',
+            'name' => 'كولا',
             'category_id' => 4,
         ]);
     }

@@ -7,6 +7,7 @@ use App\Http\Controllers\CouponController;
 use App\Http\Controllers\SellerController;
 use App\Http\Controllers\PackageController;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\RestaurantController;
 
 Route::controller(AuthController::class)->group(function(){
     Route::post('register', 'register')->name('register');
@@ -117,17 +118,16 @@ Route::get('deletePackage/{id}', [PackageController::class, 'deletePackage'])->n
 
 // Restaurant Dashboard
 
-Route::get('/restaurantMenu', function () {
-    return view('admin.dashboards.restaurants.menu');
-});
+Route::get('restaurantMenu', [RestaurantController::class, 'restaurantMenu'])->name('restaurantMenu');
 
-Route::get('/FoodMenu', function () {
-    return view('admin.dashboards.restaurants.FoodMenu');
-});
+Route::post('createCategory', [RestaurantController::class, 'createCategory'])->name('createCategory');
+Route::post('editCategory/{id}', [RestaurantController::class, 'editCategory'])->name('editCategory');
 
-Route::get('/createProduct', function () {
-    return view('admin.dashboards.restaurants.create');
-});
+Route::get('foodMenu', [RestaurantController::class, 'foodMenu'])->name('foodMenu');
+
+Route::get('createRestaurentProduct', [RestaurantController::class, 'createRestaurentProduct'])->name('createRestaurentProduct');
+Route::post('storeRestaurentProduct', [RestaurantController::class, 'storeRestaurentProduct'])->name('storeRestaurentProduct');
+
 
 Route::get('/editProduct', function () {
     return view('admin.dashboards.restaurants.edit');
