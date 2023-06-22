@@ -15,41 +15,53 @@
 
             <div class="col-lg-12">
                 <input type="file" name="product_image" id="upload-custom" multiple>
-                <label for="upload-custom" class="upload-lable text-center">
+                <label for="upload-custom" class="upload-lable text-center @error('product_image') is-invalid @enderror">
                     <i class="fa-solid fa-file-image"></i>
                     <h4 class="drag-text">اضغط أو اسحب الصورة الى هنا</h4>
                 </label>
+                @error('product_image')<div class="alert alert-danger">{{ $message }}</div>@enderror
             </div>
 
             <div class="col-lg-4 mt-4">
                 <div class="form-group">
                     <label>القسم</label>
-                    <select name="category_id" class="form-control rounded-0 mb-4 mt-2">
+                    <select name="category_id" class="form-control rounded-0 mb-4 mt-2 @error('category_id') is-invalid @enderror">
                         @foreach (\App\Models\Category::where('department_id', auth()->user()->department_id)->get() as $category)
                         {{-- @foreach (\App\Models\Category::all() as $category) --}}
                             <option value="{{ $category->id }}">{{ $category->name }}</option>
                         @endforeach
                     </select>
+                    @error('category_id')<div class="alert alert-danger">{{ $message }}</div>@enderror
                 </div> <!-- 1 -->
 
                 <div class="form-group">
                     <label>الاسم</label>
-                    <input type="text" name="product_name" class="form-control rounded-0 mb-4 mt-2">
+                    <input type="text" name="product_name" class="form-control rounded-0 mb-4 mt-2 @error('product_name') is-invalid @enderror">
+                    @error('product_name')<div class="alert alert-danger">{{ $message }}</div>@enderror
                 </div> <!-- 1 -->
 
                 <div class="form-group">
                     <label>الوصف</label>
-                    <input type="text" name="description" class="form-control rounded-0 mb-4 mt-2">
+                    <input type="text" name="description" class="form-control rounded-0 mb-4 mt-2 @error('description') is-invalid @enderror">
+                    @error('description')<div class="alert alert-danger">{{ $message }}</div>@enderror
                 </div> <!-- 2 -->
 
                 <div class="form-group">
                     <label>السعر</label>
-                    <input type="text" name="price" placeholder="ريال سعودي" class="form-control rounded-0 mb-4 mt-2">
+                    <input type="text" name="price" placeholder="ريال سعودي" class="form-control rounded-0 mb-4 mt-2 @error('price') is-invalid @enderror">
+                    @error('price')<div class="alert alert-danger">{{ $message }}</div>@enderror
                 </div> <!-- 3 -->
 
                 <div class="form-group">
                     <label>عدد السعرات الحرارية</label>
-                    <input type="text" name="calories" placeholder="كالوري" class="form-control rounded-0 mb-5 mt-2">
+                    <input type="text" name="calories" placeholder="كالوري" class="form-control rounded-0 mb-4 mt-2 @error('calories') is-invalid @enderror">
+                    @error('calories')<div class="alert alert-danger">{{ $message }}</div>@enderror
+                </div> <!-- 4 -->
+
+                <div class="form-group">
+                    <label>الكمية</label>
+                    <input type="text" name="quantity" placeholder="الكمية" class="form-control rounded-0 mb-4 mt-2 @error('quantity') is-invalid @enderror">
+                    @error('quantity')<div class="alert alert-danger">{{ $message }}</div>@enderror
                 </div> <!-- 4 -->
 
                 <hr>
@@ -59,7 +71,7 @@
                     @foreach (\App\Models\Extra::all() as $extra)
                         <div class="form-group mt-3">
                             <label class="custom-checks text-black">{{ $extra->name }}
-                                <input name="extra_id[]" type="checkbox">
+                                <input name="extra_id[]" value="{{$extra->id}}" type="checkbox">
                                 <span class="checkmark"></span>
                             </label>
                         </div>
@@ -80,9 +92,9 @@
                     @endforeach
                 </div> <!-- without -->
 
-                <div class="form-group">
+                <div class="form-group mt-5">
                     <label class="switch">
-                        <input type="checkbox" checked>
+                        <input type="checkbox" name="status" checked>
                         <span class="slider round"></span>
                     </label>
                     <label>نشر المنتج</label>
@@ -93,9 +105,9 @@
                 <h5 class="fw-bold">الفروع التي توفر المنتج:</h5>
                 <div class="branches">
                     @forelse (\App\Models\Branch::all() as $branch)
-                        <div class="form-group mt-3">
-                            <label class="custom-checks text-black">{{ $branch->name}}
-                                <input name="branche_id" value="{{ $branch->id }}" type="checkbox">
+                        <div class="form-group mb-3">
+                            <label class="custom-checks text-black">{{ $branch->branche_title}}
+                                <input name="branche_id[]" value="{{ $branch->id }}" type="checkbox">
                                 <span class="checkmark"></span>
                             </label>
                         </div>

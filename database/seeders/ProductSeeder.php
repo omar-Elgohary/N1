@@ -17,7 +17,7 @@ class ProductSeeder extends Seeder
             'price' => '80',
             'calories' => 99,
             'status' => 'متوفر',
-            'extra_id' =>  1,
+            'extra_id' => 1,
             'without_id' => 3,
             'branche_id' => 1,
             'quantity' => 800,

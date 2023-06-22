@@ -119,27 +119,23 @@ Route::get('deletePackage/{id}', [PackageController::class, 'deletePackage'])->n
 // Restaurant Dashboard
 
 Route::get('restaurantMenu', [RestaurantController::class, 'restaurantMenu'])->name('restaurantMenu');
+Route::get('foodMenu', [RestaurantController::class, 'foodMenu'])->name('foodMenu');
 
 Route::post('createCategory', [RestaurantController::class, 'createCategory'])->name('createCategory');
 Route::post('editCategory/{id}', [RestaurantController::class, 'editCategory'])->name('editCategory');
 
-Route::get('foodMenu', [RestaurantController::class, 'foodMenu'])->name('foodMenu');
 
 Route::get('createRestaurentProduct', [RestaurantController::class, 'createRestaurentProduct'])->name('createRestaurentProduct');
 Route::post('storeRestaurentProduct', [RestaurantController::class, 'storeRestaurentProduct'])->name('storeRestaurentProduct');
 
+Route::get('editRestaurentProduct/{id}', [RestaurantController::class, 'editRestaurentProduct'])->name('editRestaurentProduct');
+Route::post('updateRestaurentProduct/{id}', [RestaurantController::class, 'updateRestaurentProduct'])->name('updateRestaurentProduct');
 
-Route::get('/editProduct', function () {
-    return view('admin.dashboards.restaurants.edit');
-});
+Route::get('RestaurentProductDetails/{id}', [RestaurantController::class, 'RestaurentProductDetails'])->name('RestaurentProductDetails');
+Route::get('deleteRestaurentProduct/{id}', [RestaurantController::class, 'deleteRestaurentProduct'])->name('deleteRestaurentProduct');
 
-Route::get('/menuDetails', function () {
-    return view('admin.dashboards.restaurants.productDetails');
-});
-
-Route::get('/DeactivationProduct', function () {
-    return view('admin.dashboards.restaurants.DeactivationProduct');
-});
+Route::get('DeactiviteRestaurentProduct/{id}', [RestaurantController::class, 'DeactiviteRestaurentProduct'])->name('DeactiviteRestaurentProduct');
+Route::get('unDeactiviteRestaurentProduct/{id}', [RestaurantController::class, 'unDeactiviteRestaurentProduct'])->name('unDeactiviteRestaurentProduct');
 
 
 ##############################################################################################################

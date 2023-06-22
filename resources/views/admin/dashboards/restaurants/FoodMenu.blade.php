@@ -14,6 +14,28 @@
     </script>
 @endif
 
+@if (session()->has('editRestaurentProduct'))
+    <script>
+        window.onload = function() {
+            notif({
+                msg: 'تم تعديل المنتج بنجاح ',
+                type: "success"
+            })
+        }
+    </script>
+@endif
+
+@if (session()->has('deleteRestaurentProduct'))
+    <script>
+        window.onload = function() {
+            notif({
+                msg: 'تم حذف المنتج بنجاح ',
+                type: "error"
+            })
+        }
+    </script>
+@endif
+
 @if (session()->has('addCategory'))
     <script>
         window.onload = function() {
@@ -35,6 +57,7 @@
         }
     </script>
 @endif
+
 
 @section('content')
 <div class="col-12 d-flex flex-row-reverse text-end">
@@ -79,7 +102,7 @@
                     <tr>
                         <th>#</th>
                         <th>اسم المنتج</th>
-                        <th>الفئة</th>
+                        <th>القسم</th>
                         <th>السعر</th>
                         <th>الكمية المباعة</th>
                         <th>الكمية المتبقية</th>
@@ -87,20 +110,53 @@
                         <th>التحكم بالمنتج</th>
                     </tr>
                 </thead>
+
                 <tbody>
+                @forelse ($products as $key => $product)
                     <tr>
-                        <th>10365464</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                        <td>Mark</td>
-                        <td>Otto</td>
+                        <th>{{ $key+1}}</th>
+                        <td>
+                            <a href="{{ route('RestaurentProductDetails', $product->id) }}" class="text-warning">{{ $product->product_name}}</a>
+                        </td>
+                        <td>{{ $product->category->name}}</td>
+                        <td>{{ $product->price}}</td>
+                        <td>{{ $product->sold_quantity}}</td>
+                        <td>{{ $product->remaining_quantity}}</td>
                         <td><i class="fa fa-thin fa-star text-warning"></i> 4.5</td>
                         <td>
-                            <a href="editProduct" class="btn bg-white text-success"><i class="fa fa-edit"></i></a>
-                            <a href="#deleteProduct" class="btn bg-white text-danger" data-bs-toggle="modal"><i class="fa fa-trash"></i></a>
+                            <a href="{{ route('editRestaurentProduct', $product->id) }}" class="btn bg-white text-success"><i class="fa fa-edit"></i></a>
+                            <a href="#deleteProduct{{$product->id}}" class="btn bg-white text-danger" data-bs-toggle="modal"><i class="fa fa-trash"></i></a>
                         </td>
                     </tr>
+
+                    {{-- deleteProduct --}}
+                    <div class="modal fade border-0" id="deleteProduct{{$product->id}}" aria-hidden="true" aria-labelledby="deleteProductLabel" tabindex="-1" dir="rtl">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="btn-x modal-header">
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+
+                                <div class="modal-body text-center my-5">
+                                    <h2>هل أنت متأكد من حذف هذا المنتج؟</h2>
+                                </div>
+
+                                <div class="d-flex justify-content-around mb-5">
+                                    <button type="button" id="coupon" class="btn px-5" data-bs-dismiss="modal">تراجع</button>
+                                    <a href="{{ route('deleteRestaurentProduct', $product->id) }}" id="package" type="button" class="btn btn-block px-5 text-white">حذف</a>
+
+                                </div>
+                            </div> <!-- modal-content -->
+                        </div> <!-- modal-dialog -->
+                    </div> <!-- modal fade -->
+
+                @empty
+                    <tr>
+                        <th class="text-danger" colspan="10">
+                            لا يوجد بيانات
+                        </th>
+                    </tr>
+                @endforelse
                 </tbody>
             </table>
         </div>
@@ -156,27 +212,5 @@
     </div> <!-- modal-dialog -->
 </div> <!-- modal fade --> --}}
 
-
-
-{{-- deleteProduct --}}
-<div class="modal fade border-0" id="deleteProduct" aria-hidden="true" aria-labelledby="deleteProductLabel" tabindex="-1" dir="rtl">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="btn-x modal-header">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-
-            <div class="modal-body text-center my-5">
-                <h2>هل أنت متأكد من حذف هذا المنتج؟</h2>
-            </div>
-
-            <div class="d-flex justify-content-around mb-5">
-                <button type="button" id="coupon" class="btn px-5" data-bs-dismiss="modal">تراجع</button>
-                <a href="#" id="package" type="button" class="btn btn-block px-5 text-white">حذف</a>
-
-            </div>
-        </div> <!-- modal-content -->
-    </div> <!-- modal-dialog -->
-</div> <!-- modal fade -->
 
 @endsection

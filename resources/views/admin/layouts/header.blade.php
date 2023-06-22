@@ -33,7 +33,7 @@
     <div class="container d-flex align-items-center justify-content-between">
         <div class="dropdown">
             <button class="btn dropdown-toggle fw-bold border-0" dir="rtl" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="fa-solid fa-circle-user fa-lg text-warning"></i>اسم المتجر
+                <i class="fa-solid fa-circle-user fa-lg text-warning"></i> اسم المتجر
             </button>
 
             <ul class="dropdown-menu text-center border-0" style="background: transparent;">

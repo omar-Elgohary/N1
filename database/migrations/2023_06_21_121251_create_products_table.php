@@ -18,9 +18,9 @@ return new class extends Migration
             $table->string('calories');
             $table->enum('status', ['متوفر', 'غير متوفر'])->default('متوفر');
 
-            $table->foreignId('extra_id')->constrained('extras')->cascadeOnDelete();
-            $table->foreignId('without_id')->constrained('withouts')->cascadeOnDelete();
-            $table->foreignId('branche_id')->constrained('branches')->cascadeOnDelete();
+            $table->string('extra_id')->nullable();
+            $table->string('without_id')->nullable();
+            $table->string('branche_id')->nullable();
 
             $table->string('quantity');
             $table->string('sold_quantity')->nullable();

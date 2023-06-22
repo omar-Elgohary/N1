@@ -1,9 +1,11 @@
 <?php
 namespace App\Http\Controllers;
-use App\Models\Meal;
+use App\Models\Extra;
 use App\Models\Product;
+use App\Models\Without;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 class RestaurantController extends Controller
 {
@@ -43,9 +45,7 @@ class RestaurantController extends Controller
 
     public function storeRestaurentProduct(Request $request)
     {
-        return $request;
         $this->validate($request, [
-            'image' => 'required',
             'category_id' => 'required',
             'product_image' => 'required',
             'product_name' => 'required',
@@ -69,25 +69,173 @@ class RestaurantController extends Controller
         $image_name = time(). ".".$file_extention;
         $request->file("product_image")->move(public_path('assets/images/products/'), $image_name);
 
-        Product::create([
-            'random_id' => $random_id,
-            'product_image' => $image_name,
-            'category_id' => $request->category_id,
-            'product_name' => $request->product_name,
-            'description' => $request->description,
-            'price' => $request->price,
-            'status' => $request->status,
-            'calories' => $request->calories,
-            'extra_id' => $request->extra_id,
-            'without_id' => $request->without_id,
-            'branche_id' => $request->branche_id,
-            'quantity' => $request->quantity,
-            'sold_quantity' => 50,
-            'remaining_quantity' => $request->remaining_quantity - 50,
-        ]);
+        $extra = implode(',', $request->extra_id) ;
+        $without = implode(',', $request->without_id) ;
+        $branche = implode(',', $request->branche_id) ;
+
+        if($request->status == 'on')
+        {
+            Product::create([
+                'random_id' => $random_id,
+                'product_image' => $image_name,
+                'category_id' => $request->category_id,
+                'product_name' => $request->product_name,
+                'description' => $request->description,
+                'price' => $request->price,
+                'status' => 'متوفر',
+                'calories' => $request->calories,
+                'extra_id' => $extra,
+                'without_id' => $without,
+                'branche_id' => $branche,
+                'quantity' => $request->quantity,
+                'sold_quantity' => 50,
+                'remaining_quantity' => $request->remaining_quantity - $request->sold_quantity,
+            ]);
+        }else{
+            Product::create([
+                'random_id' => $random_id,
+                'product_image' => $image_name,
+                'category_id' => $request->category_id,
+                'product_name' => $request->product_name,
+                'description' => $request->description,
+                'price' => $request->price,
+                'status' => 'غير متوفر',
+                'calories' => $request->calories,
+                'extra_id' => $extra,
+                'without_id' => $without,
+                'branche_id' => $branche,
+                'quantity' => $request->quantity,
+                'sold_quantity' => 50,
+                'remaining_quantity' => $request->remaining_quantity - $request->sold_quantity,
+            ]);
+        }
 
         session()->flash('addRestaurentProduct');
         return redirect()->route('foodMenu');
     }
 
+
+
+
+
+    public function RestaurentProductDetails($id)
+    {
+        $product = Product::find($id);
+        $extra   = explode(',', $product->extra_id);
+        $extras = Extra::whereIn('id', $extra)->get();
+
+        $without   = explode(',', $product->without_id);
+        $withouts = Without::whereIn('id', $without)->get();
+        return view('admin.dashboards.restaurants.productDetails', compact('product', 'extras', 'withouts'));
+    }    
+
+
+
+
+
+
+    public function editRestaurentProduct(Request $request, $id)
+    {
+        $product = Product::find($id);
+        return view('admin.dashboards.restaurants.edit', compact('product'));
+    }
+
+
+
+
+    public function updateRestaurentProduct(Request $request, $id)
+    {
+        $product = Product::find($id);
+
+        if($request->hasFile('product_image'))
+        {
+            $oldImage = 'assets/images/offers/'.$product->image;
+            if(File::exists($oldImage))
+            {
+                File::delete($oldImage);
+            }
+            $file_extention = $request->file("product_image")->getCLientOriginalExtension();
+            $newImage = time(). "." .$file_extention;
+            $request->file("product_image")->move(public_path('assets/images/products/'), $newImage);
+            $product->product_image = $newImage;
+        }
+
+        $extra   = implode(',', $request->extra_id);
+        $without = implode(',', $request->without_id);
+        $branche = implode(',', $request->branche_id);
+
+        if($request->status == 'off')
+        {
+            $product->update([
+                'category_id' => $request->category_id,
+                'product_name' => $request->product_name,
+                'description' => $request->description,
+                'price' => $request->price,
+                'status' => 'غير متوفر',
+                'calories' => $request->calories,
+                'extra_id' => $extra,
+                'without_id' => $without,
+                'branche_id' => $branche,
+                'quantity' => $request->quantity,
+                'sold_quantity' => 50,
+                'remaining_quantity' => $request->remaining_quantity - $request->sold_quantity,
+            ]);
+        }else{
+            $product->update([
+                'category_id' => $request->category_id,
+                'product_name' => $request->product_name,
+                'description' => $request->description,
+                'price' => $request->price,
+                'status' => 'متوفر',
+                'calories' => $request->calories,
+                'extra_id' => $extra,
+                'without_id' => $without,
+                'branche_id' => $branche,
+                'quantity' => $request->quantity,
+                'sold_quantity' => 50,
+                'remaining_quantity' => $request->remaining_quantity - $request->sold_quantity,
+            ]);
+        }
+
+        session()->flash('editRestaurentProduct');
+        return redirect()->route('foodMenu');
+    }
+
+
+
+
+
+    public function DeactiviteRestaurentProduct($id)
+    {
+        $product = Product::find($id);
+        $product->update([
+            'status' => 'غير متوفر',
+        ]);
+        session()->flash('DeactiveRestaurentProduct');
+        return back();
+    }
+
+
+
+
+    public function unDeactiviteRestaurentProduct($id)
+    {
+        $product = Product::find($id);
+        $product->update([
+            'status' => 'متوفر',
+        ]);
+        session()->flash('unDeactiveRestaurentProduct');
+        return back();
+    }
+
+
+
+
+
+    public function deleteRestaurentProduct($id)
+    {
+        Product::find($id)->delete();
+        session()->flash('deleteRestaurentProduct');
+        return redirect()->route('foodMenu');
+    }
 }
