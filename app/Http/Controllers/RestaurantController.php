@@ -1,9 +1,11 @@
 <?php
 namespace App\Http\Controllers;
 use App\Models\Extra;
+use App\Models\Order;
 use App\Models\Product;
 use App\Models\Without;
 use App\Models\Category;
+use App\Models\Purchase;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 
@@ -127,7 +129,7 @@ class RestaurantController extends Controller
         $without   = explode(',', $product->without_id);
         $withouts = Without::whereIn('id', $without)->get();
         return view('admin.dashboards.restaurants.productDetails', compact('product', 'extras', 'withouts'));
-    }    
+    }
 
 
 
@@ -237,5 +239,39 @@ class RestaurantController extends Controller
         Product::find($id)->delete();
         session()->flash('deleteRestaurentProduct');
         return redirect()->route('foodMenu');
+    }
+
+
+
+    // Restaurant Purchases
+    public function restaurantPurchases()
+    {
+        $purchases = Purchase::all();
+        return view('admin.purchases.RestaurantPurchases.index', compact('purchases'));
+    }
+
+
+    public function restaurantPurchasesDetails($id)
+    {
+        $purchase = Purchase::find($id);
+        return view('admin.purchases.RestaurantPurchases.details', compact('purchase'));
+    }
+
+
+    public function changePurchaseStatus($id)
+    {
+        $purchase = Purchase::find($id);
+        $order = Order::where('id', $purchase->order_id)->first();
+
+        if($purchase->order->order_status == 'جديد'){
+            $order->update([
+                'order_status' => 'قيد التجهيز'
+            ]);
+        }elseif($purchase->order->order_status == 'قيد التجهيز'){
+            $order->update([
+                'order_status' => 'تم الاستلام'
+            ]);
+        }
+        return back();
     }
 }

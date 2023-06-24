@@ -1,6 +1,9 @@
 @extends('admin.layouts.app')
-@section('content')
+@section('title')
+    تفاصيل عملية الشراء
+@endsection
 
+@section('content')
 <section>
     <div class="container mt-2" dir="rtl">
         <div class="col-12 d-flex p-0">
@@ -17,22 +20,32 @@
         <div class="col-lg-4 mt-3">
             <div class="form-group my-4">
                 <label style="margin-left: 70px">رقم الطالب</label>
-                <strong>1095454654</strong> | <strong class="text-danger">جديد</strong>
+                <strong>{{ $purchase->order->user->phone }}</strong> |
+
+                @if($purchase->order->order_status == 'جديد')
+                    <strong class="text-danger">{{ $purchase->order->order_status }}</strong>
+                @elseif($purchase->order->order_status == 'قيد التجهيز')
+                    <strong class="text-warning">{{ $purchase->order->order_status }}</strong>
+                @elseif($purchase->order->order_status == 'تم الاستلام')
+                    <strong class="text-success">{{ $purchase->order->order_status }}</strong>
+                @else
+                    <strong class="text-dark">{{ $purchase->order->order_status }}</strong>
+                @endif
             </div> <!-- 1 -->
 
             <div class="form-group my-4">
                 <label>اسم المستخدم</label>
-                <strong class="mx-5">اسم المستخدم</strong>
+                <strong class="mx-5">{{ $purchase->order->user->name }}</strong>
             </div> <!-- 2 -->
 
             <div class="form-group my-4">
                 <label style="margin-left: 20px">تاريخ الطلب</label>
-                <strong class="mx-5">0000/00/00</strong>
+                <strong class="mx-5">{{ $purchase->order->created_at }}</strong>
             </div> <!-- 3 -->
 
             <div class="form-group my-4">
                 <label>اجمالي السعر</label>
-                <strong class="mx-5">540 رس</strong>
+                <strong class="mx-5">{{ $purchase->order->total_price }} رس</strong>
             </div> <!-- 4 -->
         </div> <!-- col-4 -->
 
@@ -42,17 +55,21 @@
             <strong>تفاصيل الطلب</strong>
             <div class="form-group my-4">
                 <label>اسم الوجبة</label>
-                <label class="mx-5">اسم الوجبة</label>
+                <label class="mx-5">{{ \App\Models\Product::where('id', $purchase->order->product_id)->first()->product_name }}</label>
             </div> <!-- 1 -->
 
             <div class="form-group my-4">
-                <label>سعر الاضافة</label>
-                <label class="mx-5">60 رس</label>
+                <label>سعر الوجبة</label>
+                <label class="mx-5">{{ \App\Models\Product::where('id', $purchase->order->product_id)->first()->price }} رس</label>
             </div> <!-- 2 -->
         </div> <!-- col-4 -->
 
         <div class="col-4 d-grid mx-auto mt-5">
-            <a id="login" href="restaurantPurchasesBeingProcessed" class="btn mb-3">قيد التجهيز</a>
+            @if($purchase->order->order_status == 'جديد')
+                <a id="login" href="{{ route('changePurchaseStatus', $purchase->id) }}" class="btn mb-3">قيد التجهيز</a>
+            @elseif($purchase->order->order_status == 'قيد التجهيز')
+                <a id="login" href="{{ route('changePurchaseStatus', $purchase->id) }}" class="btn mb-3">تم الاستلام</a>
+            @endif
         </div>
     </div> <!-- container -->
 </section>

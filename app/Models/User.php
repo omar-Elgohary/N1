@@ -1,6 +1,7 @@
 <?php
 namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Order;
 use Twilio\Rest\Client;
 use App\Models\Department;
 use Laravel\Sanctum\HasApiTokens;
@@ -62,5 +63,12 @@ class User extends Authenticatable
     public function department()
     {
         return $this->hasOne(Department::class);
+    }
+
+
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
     }
 }

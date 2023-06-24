@@ -194,17 +194,12 @@ Route::get('/eventDetails', function () {
 
 // RestaurantPurchases
 
-Route::get('/restaurantPurchases', function () {
-    return view('admin.purchases.RestaurantPurchases.index');
-});
+Route::get('restaurantPurchases', [RestaurantController::class, 'restaurantPurchases'])->name('restaurantPurchases');
 
-Route::get('/restaurantPurchasesDetails', function () {
-    return view('admin.purchases.RestaurantPurchases.details');
-});
+Route::get('restaurantPurchasesDetails/{id}', [RestaurantController::class, 'restaurantPurchasesDetails'])->name('restaurantPurchasesDetails');
 
-Route::get('/restaurantPurchasesBeingProcessed', function () {
+Route::get('changePurchaseStatus/{id}', [RestaurantController::class, 'changePurchaseStatus'])->name('changePurchaseStatus');
     return view('admin.purchases.RestaurantPurchases.BeingProcessed');
-});
 
 
 ##############################################################################################################
