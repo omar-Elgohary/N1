@@ -14,6 +14,17 @@
     </script>
 @endif
 
+@if (session()->has('addShopProduct'))
+    <script>
+        window.onload = function() {
+            notif({
+                msg: 'تم اضافة المنتج بنجاح ',
+                type: "success"
+            })
+        }
+    </script>
+@endif
+
 @section('content')
 <div class="col-12 d-flex flex-row-reverse text-end">
     <div class="app">
