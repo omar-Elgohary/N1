@@ -8,6 +8,7 @@ class SubCategorySeeder extends Seeder
 {
     public function run()
     {
+        // Shops
         SubCategory::create([
             'name' => 'كباب',
             'category_id' => 1,
@@ -18,13 +19,14 @@ class SubCategorySeeder extends Seeder
             'category_id' => 3,
         ]);
 
+        // Restaurents
         SubCategory::create([
-            'name' => 'سمك مشوي',
-            'category_id' => 2,
+            'name' => 'تيشرتات اطفالي',
+            'category_id' => 3,
         ]);
 
         SubCategory::create([
-            'name' => 'كولا',
+            'name' => 'عبابات خروج',
             'category_id' => 4,
         ]);
     }

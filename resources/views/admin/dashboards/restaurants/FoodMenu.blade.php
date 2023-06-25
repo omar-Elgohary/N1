@@ -72,8 +72,8 @@
 			<h3 class="text-black">المنيو</h3>
 			<nav class="menu">
 				<a href="#" class="menu-item is-active">الكل</a>
-                @foreach (\App\Models\Category::all() as $category)
-                    <a href="#" class="menu-item">{{ $category->name }}</a>
+                @foreach ($products as $product)
+                    <a href="#" class="menu-item">{{ $product->category->name}}</a>
                 @endforeach
                 <a href="#addCategoryName" id="package" class="btn mt-3" data-bs-toggle="modal">اضافة قسم جديد</a>
             </nav>
@@ -114,7 +114,7 @@
                 <tbody>
                 @forelse ($products as $key => $product)
                     <tr>
-                        <th>{{ $key+1}}</th>
+                        <th>{{ $product->random_id }}</th>
                         <td>
                             <a href="{{ route('RestaurentProductDetails', $product->id) }}" class="text-warning">{{ $product->product_name}}</a>
                         </td>

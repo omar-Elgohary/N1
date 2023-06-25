@@ -51,6 +51,7 @@
 
     <hr>
 
+    {{-- @foreach (\App\Models\Product::where('id', $purchase->order->product_id)->get() as $product) --}}
         <div class="col-lg-4 mt-3">
             <strong>تفاصيل الطلب</strong>
             <div class="form-group my-4">
@@ -63,6 +64,7 @@
                 <label class="mx-5">{{ \App\Models\Product::where('id', $purchase->order->product_id)->first()->price }} رس</label>
             </div> <!-- 2 -->
         </div> <!-- col-4 -->
+    {{-- @endforeach --}}
 
         <div class="col-4 d-grid mx-auto mt-5">
             @if($purchase->order->order_status == 'جديد')

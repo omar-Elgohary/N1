@@ -1,6 +1,9 @@
 @extends('admin.layouts.app')
-@section('content')
+@section('title')
+    قائمة الفعاليات
+@endsection
 
+@section('content')
 <div class="col-12 d-flex flex-row-reverse text-end">
     <div class="app">
 		<div class="menu-toggle">

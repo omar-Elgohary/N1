@@ -14,18 +14,20 @@ class CategorySeeder extends Seeder
         ]);
 
         Category::create([
-            'name' => 'أسماك',
-            'department_id' => 1,
-        ]);
-
-        Category::create([
             'name' => 'بيتزا',
             'department_id' => 1,
         ]);
 
+
+        // Shop
         Category::create([
-            'name' => 'مشروبات',
-            'department_id' => 1,
+            'name' => 'اطفالي',
+            'department_id' => 2,
+        ]);
+
+        Category::create([
+            'name' => 'حريمي',
+            'department_id' => 2,
         ]);
     }
 }

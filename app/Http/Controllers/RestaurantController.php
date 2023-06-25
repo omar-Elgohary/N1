@@ -2,10 +2,10 @@
 namespace App\Http\Controllers;
 use App\Models\Extra;
 use App\Models\Order;
-use App\Models\Product;
 use App\Models\Without;
 use App\Models\Category;
 use App\Models\Purchase;
+use App\Models\RestaurentProduct;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 
@@ -32,7 +32,7 @@ class RestaurantController extends Controller
 
     public function foodMenu()
     {
-        $products = Product::all();
+        $products = RestaurentProduct::where('department_id', auth()->user()->department_id)->get();
         return view('admin.dashboards.restaurants.FoodMenu', compact('products'));
     }
 
@@ -63,7 +63,7 @@ class RestaurantController extends Controller
         ]);
 
         $random_id = strtoupper('#'.substr(str_shuffle(uniqid()),0,4));
-        while(Product::where('random_id', $random_id )->exists()){
+        while(RestaurentProduct::where('random_id', $random_id )->exists()){
             $random_id = strtoupper('#'.substr(str_shuffle(uniqid()),0,4));
         }
 
@@ -77,7 +77,7 @@ class RestaurantController extends Controller
 
         if($request->status == 'on')
         {
-            Product::create([
+            RestaurentProduct::create([
                 'random_id' => $random_id,
                 'product_image' => $image_name,
                 'category_id' => $request->category_id,
@@ -94,7 +94,7 @@ class RestaurantController extends Controller
                 'remaining_quantity' => $request->remaining_quantity - $request->sold_quantity,
             ]);
         }else{
-            Product::create([
+            RestaurentProduct::create([
                 'random_id' => $random_id,
                 'product_image' => $image_name,
                 'category_id' => $request->category_id,
@@ -122,7 +122,7 @@ class RestaurantController extends Controller
 
     public function RestaurentProductDetails($id)
     {
-        $product = Product::find($id);
+        $product = RestaurentProduct::find($id);
         $extra   = explode(',', $product->extra_id);
         $extras = Extra::whereIn('id', $extra)->get();
 
@@ -138,7 +138,7 @@ class RestaurantController extends Controller
 
     public function editRestaurentProduct(Request $request, $id)
     {
-        $product = Product::find($id);
+        $product = RestaurentProduct::find($id);
         return view('admin.dashboards.restaurants.edit', compact('product'));
     }
 
@@ -147,7 +147,7 @@ class RestaurantController extends Controller
 
     public function updateRestaurentProduct(Request $request, $id)
     {
-        $product = Product::find($id);
+        $product = RestaurentProduct::find($id);
 
         if($request->hasFile('product_image'))
         {
@@ -209,7 +209,7 @@ class RestaurantController extends Controller
 
     public function DeactiviteRestaurentProduct($id)
     {
-        $product = Product::find($id);
+        $product = RestaurentProduct::find($id);
         $product->update([
             'status' => 'غير متوفر',
         ]);
@@ -222,7 +222,7 @@ class RestaurantController extends Controller
 
     public function unDeactiviteRestaurentProduct($id)
     {
-        $product = Product::find($id);
+        $product = RestaurentProduct::find($id);
         $product->update([
             'status' => 'متوفر',
         ]);
@@ -236,7 +236,7 @@ class RestaurantController extends Controller
 
     public function deleteRestaurentProduct($id)
     {
-        Product::find($id)->delete();
+        RestaurentProduct::find($id)->delete();
         session()->flash('deleteRestaurentProduct');
         return redirect()->route('foodMenu');
     }

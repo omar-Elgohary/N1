@@ -1,6 +1,7 @@
 <?php
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MainController;
+use App\Http\Controllers\ShopController;
 use App\Http\Controllers\OfferController;
 use App\Http\Controllers\BranchController;
 use App\Http\Controllers\CouponController;
@@ -124,7 +125,6 @@ Route::get('foodMenu', [RestaurantController::class, 'foodMenu'])->name('foodMen
 Route::post('createCategory', [RestaurantController::class, 'createCategory'])->name('createCategory');
 Route::post('editCategory/{id}', [RestaurantController::class, 'editCategory'])->name('editCategory');
 
-
 Route::get('createRestaurentProduct', [RestaurantController::class, 'createRestaurentProduct'])->name('createRestaurentProduct');
 Route::post('storeRestaurentProduct', [RestaurantController::class, 'storeRestaurentProduct'])->name('storeRestaurentProduct');
 
@@ -141,17 +141,14 @@ Route::get('unDeactiviteRestaurentProduct/{id}', [RestaurantController::class, '
 ##############################################################################################################
 
 // Shop Dashboard
-Route::get('/shopMenu', function () {
-    return view('admin.dashboards.shops.menu');
-});
+Route::get('shopMenu', [ShopController::class, 'shopMenu'])->name('shopMenu');
+Route::get('products', [ShopController::class, 'products'])->name('products');
 
-Route::get('/products', function () {
-    return view('admin.dashboards.shops.products');
-});
+Route::post('createShopCategory', [ShopController::class, 'createShopCategory'])->name('createShopCategory');
 
-Route::get('/createShopProduct', function () {
-    return view('admin.dashboards.shops.create');
-});
+Route::get('createShopProduct', [ShopController::class, 'createShopProduct'])->name('createShopProduct');
+Route::post('storeShopProduct', [ShopController::class, 'storeShopProduct'])->name('storeShopProduct');
+
 
 Route::get('/editShopProduct', function () {
     return view('admin.dashboards.shops.edit');
@@ -173,9 +170,9 @@ Route::get('/entertainmentsMenu', function () {
     return view('admin.dashboards.Entertainments.menu');
 });
 
-Route::get('/events', function () {
+Route::get('events', function () {
     return view('admin.dashboards.Entertainments.events');
-});
+})->name('events');
 
 Route::get('/createEvents', function () {
     return view('admin.dashboards.Entertainments.create');

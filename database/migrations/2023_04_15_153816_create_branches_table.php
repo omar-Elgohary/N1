@@ -10,6 +10,7 @@ return new class extends Migration
         Schema::create('branches', function (Blueprint $table) {
             $table->id();
             $table->string('random_id');
+            $table->foreignId('department_id')->constrained('departments')->cascadeOnDelete();
             $table->string('branche_title');
             $table->string('branche_location')->nullable();
             $table->string('email')->unique();

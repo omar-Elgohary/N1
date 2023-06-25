@@ -48,7 +48,15 @@
                 <li><a class="nav-link text-black scrollto <?= 'title' == 'الرئيسية' ? 'active' : ''?>" href="/admin">الرئيسية</a></li>
                 <li><a class="nav-link text-black scrollto <?= 'title' == 'اتصل بنا' ? 'active' : ''?>" href="{{ route('contact_us') }}">اتصل بنا</a></li>
                 <li><a class="nav-link text-black scrollto <?= 'title' == 'عن N1' ? 'active' : ''?>" href="/about">عن N1</a></li>
-                <li><a class="nav-link text-black scrollto <?= 'title' == 'المنتجات' ? 'active' : ''?>" href="/products">المنتجات</a></li>
+
+                @if(auth()->user()->department_id == 1)
+                    <li><a class="nav-link text-black scrollto <?= 'title' == 'القائمة' ? 'active' : ''?>" href="{{route('foodMenu')}}">القائمة</a></li>
+                @elseif(auth()->user()->department_id == 2)
+                    <li><a class="nav-link text-black scrollto <?= 'title' == 'المنتجات' ? 'active' : ''?>" href="{{route('products')}}">المنتجات</a></li>
+                @else
+                    <li><a class="nav-link text-black scrollto <?= 'title' == 'الفعاليات' ? 'active' : ''?>" href="{{route('events')}}">الفعاليات</a></li>
+                @endif
+
                 <li><a class="nav-link text-black scrollto <?= 'title' == 'العروض' ? 'active' : ''?>" href="/allOffers">العروض</a></li>
                 <li><a class="nav-link text-black scrollto <?= 'title' == 'عمليات الشراء' ? 'active' : ''?>" href="/restaurantPurchases">عمليات الشراء</a></li>
                 <li><a class="nav-link text-black scrollto <?= 'title' == 'الفروع' ? 'active' : ''?>" href="/allBranches">الفروع</a></li>

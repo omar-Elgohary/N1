@@ -20,14 +20,17 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         $this->call([
-            BrancheSeeder::class,
             DepartmentSeeder::class,
+            BrancheSeeder::class,
             CreateUserSeeder::class,
             ExtraSeeder::class,
             WithoutSeeder::class,
             CategorySeeder::class,
             SubCategorySeeder::class,
-            ProductSeeder::class,
+            ColorSeeder::class,
+            SizeSeeder::class,
+            RestaurentMealSeeder::class,
+            ShopProductSeeder::class,
             MealSeeder::class,
             CouponSeeder::class,
             PackageSeeder::class,

@@ -1,6 +1,20 @@
 @extends('admin.layouts.app')
-@section('content')
+@section('title')
+    قائمة المنتجات
+@endsection
 
+@if (session()->has('addCategory'))
+    <script>
+        window.onload = function() {
+            notif({
+                msg: 'تم اضافة القسم بنجاح ',
+                type: "success"
+            })
+        }
+    </script>
+@endif
+
+@section('content')
 <div class="col-12 d-flex flex-row-reverse text-end">
     <div class="app">
 		<div class="menu-toggle">
@@ -13,9 +27,9 @@
 			<h3 class="text-black">الفئات</h3>
 			<nav class="menu">
 				<a href="#" class="menu-item is-active">الكل</a>
-				<a href="#" class="menu-item">الفئة الفرعية 2</a>
-				<a href="#" class="menu-item">الفئة الفرعية 2</a>
-				<a href="#" class="menu-item">الفئة الفرعية 2</a>
+                @foreach (\App\Models\Category::where('department_id', auth()->user()->department_id)->get() as $category)
+                    <a href="#" class="menu-item">{{ $category->name}}</a>
+                @endforeach
                 <a href="#addCategoryName" id="package" class="btn mt-3" data-bs-toggle="modal">اضافة فئة جديد</a>
 			</nav>
 		</aside>
@@ -31,8 +45,8 @@
         <div class="col-6 text-start">
             <a href="#" id="pdf" class="btn btn-success btns">PDF <i class="fa fa-thin fa-print fa-xl"></i></a>
             <a id="login" class="btn btns" data-bs-toggle="modal" href="#" role="button">استيراد من اكسل<i class="fa-solid fa-file-excel fa-xl"></i></a>
-            <a id="login" class="btn btns" href="createShopProduct">اضافة منتج جديد</a>
-            <a href="#editCategoryName" id="coupon" class="btn btn-block btn-bordered btns" data-bs-toggle="modal">تعديل اسم الفئة</a>
+            <a id="login" class="btn btns" href="{{ route('createShopProduct') }}">اضافة منتج جديد</a>
+            {{-- <a href="#editCategoryName" id="coupon" class="btn btn-block btn-bordered btns" data-bs-toggle="modal">تعديل اسم الفئة</a> --}}
         </div>
     </div> <!-- col-12 -->
 
@@ -46,25 +60,42 @@
                         <th>الحالة</th>
                         <th>السعر</th>
                         <th>الكمية المباعة</th>
-                        <th>الفئة</th>
+                        <th>الكمية المتبقية</th>
+                        <th>القسم</th>
                         <th>تقييم المنتج</th>
                         <th>التحكم بالمنتج</th>
                     </tr>
                 </thead>
+
                 <tbody>
-                    <tr data-href="productDetails">
-                        <td>1</td>
-                        <td>Mark</td>
-                        <td>متوفر</td>
-                        <td>@mdo</td>
-                        <td>Otto</td>
-                        <td>Mark</td>
+                @forelse ($products as $product)
+                    <tr>
+                        <td>{{ $product->random_id }}</td>
+                        <td>
+                            <a href="{{ route('RestaurentProductDetails', $product->id) }}" class="text-warning">{{ $product->product_name}}</a>
+                        </td>
+                        @if ($product->status == 'متوفر')
+                            <td class="text-success mx-5">{{ $product->status }}</td>
+                        @else
+                            <td class="text-danger mx-5">{{ $product->status }}</td>
+                        @endif
+                        <td>{{ $product->price }}</td>
+                        <td>{{ $product->sold_quantity }}</td>
+                        <td>{{ $product->remaining_quantity }}</td>
+                        <td>{{ $product->category->name }}</td>
                         <td><i class="fa fa-thin fa-star text-warning"></i> 4.5</td>
                         <td>
                             <a href="editShopProduct" class="btn bg-white text-success"><i class="fa fa-edit"></i></a>
                             <a href="#deleteProduct" class="btn bg-white text-danger" data-bs-toggle="modal"><i class="fa fa-trash"></i></a>
                         </td>
                     </tr>
+                @empty
+                    <tr>
+                        <th class="text-danger" colspan="10">
+                            لا يوجد بيانات
+                        </th>
+                    </tr>
+                @endforelse
                 </tbody>
             </table>
         </div>
@@ -81,17 +112,19 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
+        <form action="{{route('createShopCategory')}}" method="POST">
+            @csrf
+
             <div class="modal-body my-5">
                 <h4 class="text-end">اسم الفئة</h4>
-                <select type="text" name="CategoryName" class="form-control rounded-0">
-                    <option value="">اختر اسم الفئة</option>
-                </select>
+                <input type="text" name="name" class="form-control rounded-0">
             </div>
 
             <div class="d-flex justify-content-around mb-5">
                 <button href="#" id="coupon" class="btn px-5" data-bs-dismiss="modal">الغاء</button>
-                <a href="products" id="package" type="button" class="btn btn-block px-5 text-white">اضف</a>
+                <button id="package" type="submit" class="btn btn-block px-5 text-white">اضف</button>
             </div>
+        </form>
         </div> <!-- modal-content -->
     </div> <!-- modal-dialog -->
 </div> <!-- modal fade -->

@@ -9,15 +9,23 @@ return new class extends Migration
     {
         Schema::create('restaurent_products', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('branche_id')->constrained('branches')->cascadeOnDelete();
-            $table->string('images');
-            $table->string('name');
+            $table->string('random_id');
+            $table->foreignId('department_id')->constrained('departments')->cascadeOnDelete();
+            $table->foreignId('category_id')->constrained('categories')->cascadeOnDelete();
+            $table->string('product_image');
+            $table->string('product_name');
             $table->string('description');
-            $table->double('price');
-            $table->double('calories');
-            $table->string('extra');
-            $table->string('without');
-            $table->enum('status', ['منشور', 'غير منشور'])->default('منشور');
+            $table->string('price');
+            $table->string('calories')->nullable();
+            $table->enum('status', ['متوفر', 'غير متوفر'])->default('متوفر');
+
+            $table->string('extra_id')->nullable();
+            $table->string('without_id')->nullable();
+            $table->string('branche_id')->nullable();
+
+            $table->string('quantity');
+            $table->string('sold_quantity')->nullable();
+            $table->string('remaining_quantity')->nullable();
             $table->timestamps();
         });
     }

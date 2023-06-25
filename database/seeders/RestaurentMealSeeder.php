@@ -1,15 +1,16 @@
 <?php
 namespace Database\Seeders;
-use App\Models\Product;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\RestaurentProduct;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-class ProductSeeder extends Seeder
+class RestaurentMealSeeder extends Seeder
 {
     public function run()
     {
-        Product::create([
+        RestaurentProduct::create([
             'random_id' => '#DFSG48',
+            'department_id' => 1,
             'category_id' => 1,
             'product_image' => '1686825194.jfif',
             'product_name' => 'عصير برتقال',
@@ -25,8 +26,9 @@ class ProductSeeder extends Seeder
             'remaining_quantity' => 800 - 50,
         ]);
 
-        Product::create([
+        RestaurentProduct::create([
             'random_id' => '#G45D54',
+            'department_id' => 1,
             'category_id' => 3,
             'product_image' => '1686825194.jfif',
             'product_name' => 'بيتزا رانش',

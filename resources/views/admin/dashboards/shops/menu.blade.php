@@ -1,6 +1,9 @@
 @extends('admin.layouts.app')
-@section('content')
+@section('title')
+    قائمة المنتجات
+@endsection
 
+@section('content')
 <div class="col-12 d-flex flex-row-reverse text-end">
     <div class="app">
 		<div class="menu-toggle">
@@ -42,18 +45,19 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
+        <form action="{{ route('createShopCategory') }}" method="POST">
+            @csrf
             <div class="modal-body col-6 text-end m-auto my-5">
                 <label><h3>اسم الفئة</h3></label>
-                <select class="form-control rounded-0">
-                    <option value="">اختر اسم الفئة</option>
-                </select>
+                <input type="text" name="name" class="form-control rounded-0">
             </div>
 
             <div class="modal-footer d-flex justify-content-around">
                 <button type="button" id="coupon" class="btn px-5" data-bs-dismiss="modal">الغاء</button>
-                <a href="products" id="package" type="button" class="btn btn-block px-5 text-white">اضف</a>
+                <button type="submit" id="package" class="btn btn-block px-5 text-white">اضف</button>
             </div>
-        </div> <!-- modal-content -->
+        </form>
+    </div> <!-- modal-content -->
     </div> <!-- modal-dialog -->
 </div> <!-- modal fade -->
 
