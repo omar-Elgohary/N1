@@ -69,7 +69,7 @@ class RestaurantController extends Controller
 
         $file_extention = $request->file("product_image")->getCLientOriginalExtension();
         $image_name = time(). ".".$file_extention;
-        $request->file("product_image")->move(public_path('assets/images/products/'), $image_name);
+        $request->file("product_image")->move(public_path('assets/images/meals/'), $image_name);
 
         $extra = implode(',', $request->extra_id) ;
         $without = implode(',', $request->without_id) ;
@@ -79,6 +79,7 @@ class RestaurantController extends Controller
         {
             RestaurentProduct::create([
                 'random_id' => $random_id,
+                'department_id' => auth()->user()->department_id,
                 'product_image' => $image_name,
                 'category_id' => $request->category_id,
                 'product_name' => $request->product_name,
@@ -96,6 +97,7 @@ class RestaurantController extends Controller
         }else{
             RestaurentProduct::create([
                 'random_id' => $random_id,
+                'department_id' => auth()->user()->department_id,
                 'product_image' => $image_name,
                 'category_id' => $request->category_id,
                 'product_name' => $request->product_name,
@@ -151,14 +153,14 @@ class RestaurantController extends Controller
 
         if($request->hasFile('product_image'))
         {
-            $oldImage = 'assets/images/offers/'.$product->image;
+            $oldImage = 'assets/images/meals/'.$product->image;
             if(File::exists($oldImage))
             {
                 File::delete($oldImage);
             }
             $file_extention = $request->file("product_image")->getCLientOriginalExtension();
             $newImage = time(). "." .$file_extention;
-            $request->file("product_image")->move(public_path('assets/images/products/'), $newImage);
+            $request->file("product_image")->move(public_path('assets/images/meals/'), $newImage);
             $product->product_image = $newImage;
         }
 

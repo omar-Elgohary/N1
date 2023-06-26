@@ -1,6 +1,9 @@
 @extends('admin.layouts.app')
-@section('content')
+@section('title')
+    عمليات الشراء
+@endsection
 
+@section('content')
 <div class="col-12 d-flex flex-row-reverse text-end">
     <div class="app col-lg-2 col-md-1">
 		<div class="menu-toggle">
@@ -69,20 +72,23 @@
                         <th>التفاصيل</th>
                     </tr>
                 </thead>
+
+                @foreach(\App\Models\Order::where('department_id', auth()->user()->department_id)->get() as $order)
                 <tbody>
                     <tr>
-                        <th>10365464</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                        <td>Mark</td>
-                        <td>Mark</td>
+                        <th>{{$order->random_id}}</th>
+                        <td>{{$order->user->name}}</td>
+                        <td>{{$order->total_price}}</td>
+                        <td>{{$order->products_count}}</td>
+                        <td>{{$order->order_status}}</td>
+                        <td>{{$order->created_at}}</td>
                         <td><i class="fa fa-thin fa-star text-warning"></i> 4.5</td>
                         <td>
                             <a href="restaurantPurchasesDetails" class="btn bg-white text-warning"><i class="fa fa-eye"></i></a>
                         </td>
                     </tr>
                 </tbody>
+                @endforeach
             </table>
         </div>
     </div> <!-- container -->

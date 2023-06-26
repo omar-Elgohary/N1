@@ -25,6 +25,28 @@
     </script>
 @endif
 
+@if (session()->has('editShopProduct'))
+    <script>
+        window.onload = function() {
+            notif({
+                msg: 'تم تعديل المنتج بنجاح ',
+                type: "info"
+            })
+        }
+    </script>
+@endif
+
+@if (session()->has('deleteShopProduct'))
+    <script>
+        window.onload = function() {
+            notif({
+                msg: 'تم حذف المنتج بنجاح ',
+                type: "success"
+            })
+        }
+    </script>
+@endif
+
 @section('content')
 <div class="col-12 d-flex flex-row-reverse text-end">
     <div class="app">
@@ -83,7 +105,7 @@
                     <tr>
                         <td>{{ $product->random_id }}</td>
                         <td>
-                            <a href="{{ route('RestaurentProductDetails', $product->id) }}" class="text-warning">{{ $product->product_name}}</a>
+                            <a href="{{ route('shopProductDetails', $product->id) }}" class="text-warning">{{ $product->product_name}}</a>
                         </td>
                         @if ($product->status == 'متوفر')
                             <td class="text-success mx-5">{{ $product->status }}</td>
@@ -96,8 +118,8 @@
                         <td>{{ $product->category->name }}</td>
                         <td><i class="fa fa-thin fa-star text-warning"></i> 4.5</td>
                         <td>
-                            <a href="editShopProduct" class="btn bg-white text-success"><i class="fa fa-edit"></i></a>
-                            <a href="#deleteProduct" class="btn bg-white text-danger" data-bs-toggle="modal"><i class="fa fa-trash"></i></a>
+                            <a href="{{route('editShopProduct', $product->id)}}" class="btn bg-white text-success"><i class="fa fa-edit"></i></a>
+                            <a href="#deleteProduct{{$product->id}}" class="btn bg-white text-danger" data-bs-toggle="modal"><i class="fa fa-trash"></i></a>
                         </td>
                     </tr>
                 @empty
@@ -165,7 +187,7 @@
 
 
 {{-- deleteProduct --}}
-<div class="modal fade border-0" id="deleteProduct" aria-hidden="true" aria-labelledby="deleteProductLabel" tabindex="-1" dir="rtl">
+<div class="modal fade border-0" id="deleteProduct{{$product->id}}" aria-hidden="true" aria-labelledby="deleteProductLabel" tabindex="-1" dir="rtl">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="btn-x modal-header">
@@ -178,7 +200,7 @@
 
             <div class="modal-footer d-flex justify-content-around">
                 <button type="button" id="coupon" class="btn px-5" data-bs-dismiss="modal">تراجع</button>
-                <a href="#" id="package" type="button" class="btn btn-block px-5 text-white">حذف</a>
+                <a href="{{route('deleteShopProduct', $product->id)}}" id="package" type="button" class="btn btn-block px-5 text-white">حذف</a>
 
             </div>
         </div> <!-- modal-content -->

@@ -150,17 +150,16 @@ Route::get('createShopProduct', [ShopController::class, 'createShopProduct'])->n
 Route::post('storeShopProduct', [ShopController::class, 'storeShopProduct'])->name('storeShopProduct');
 
 
-Route::get('/editShopProduct', function () {
-    return view('admin.dashboards.shops.edit');
-});
+Route::get('editShopProduct/{id}', [ShopController::class, 'editShopProduct'])->name('editShopProduct');
+Route::post('updateShopProduct/{id}', [ShopController::class, 'updateShopProduct'])->name('updateShopProduct');
 
-Route::get('/productDetails', function () {
-    return view('admin.dashboards.shops.productDetails');
-});
+Route::get('shopProductDetails/{id}', [ShopController::class, 'shopProductDetails'])->name('shopProductDetails');
+Route::get('deleteShopProduct/{id}', [ShopController::class, 'deleteShopProduct'])->name('deleteShopProduct');
 
-Route::get('/DeactivationShopProduct', function () {
-    return view('admin.dashboards.shops.DeactivationProduct');
-});
+Route::get('DeactiviteShopProduct/{id}', [ShopController::class, 'DeactiviteShopProduct'])->name('DeactiviteShopProduct');
+Route::get('unDeactiviteShopProduct/{id}', [ShopController::class, 'unDeactiviteShopProduct'])->name('unDeactiviteShopProduct');
+
+
 
 ##############################################################################################################
 
@@ -196,20 +195,15 @@ Route::get('restaurantPurchases', [RestaurantController::class, 'restaurantPurch
 Route::get('restaurantPurchasesDetails/{id}', [RestaurantController::class, 'restaurantPurchasesDetails'])->name('restaurantPurchasesDetails');
 
 Route::get('changePurchaseStatus/{id}', [RestaurantController::class, 'changePurchaseStatus'])->name('changePurchaseStatus');
-    return view('admin.purchases.RestaurantPurchases.BeingProcessed');
-
 
 ##############################################################################################################
 
 // ShopPurchases
 
-Route::get('/shopPurchases', function () {
-    return view('admin.purchases.ShopPurchases.index');
-});
+Route::get('shopPurchases', [ShopController::class, 'shopPurchases'])->name('shopPurchases');
 
-Route::get('/shopPurchasesDetails', function () {
-    return view('admin.purchases.ShopPurchases.details');
-});
+Route::get('shopPurchasesDetails/{id}', [ShopController::class, 'shopPurchasesDetails'])->name('shopPurchasesDetails');
+
 
 
 ##############################################################################################################

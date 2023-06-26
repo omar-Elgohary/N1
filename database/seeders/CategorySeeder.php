@@ -29,5 +29,10 @@ class CategorySeeder extends Seeder
             'name' => 'حريمي',
             'department_id' => 2,
         ]);
+
+        Category::create([
+            'name' => 'رجالي',
+            'department_id' => 2,
+        ]);
     }
 }

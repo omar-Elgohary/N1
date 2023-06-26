@@ -22,13 +22,10 @@
 
         <form action="{{ route('storeShopProduct') }}" method="post" enctype="multipart/form-data">
             @csrf
-            <div class="col-lg-12">
-                <input type="file" name="product_image" id="upload-custom" multiple>
-                <label for="upload-custom" class="upload-lable text-center @error('product_image') is-invalid @enderror">
-                    <i class="fa-solid fa-file-image"></i>
-                    <h4 class="drag-text">اضغط أو اسحب الصورة الى هنا</h4>
-                </label>
-                @error('product_image')<div class="alert alert-danger">{{ $message }}</div>@enderror
+
+            <div class="drop-zone">
+                <span class="drop-zone__prompt">اضغط أو اسحب الصور الى هنا</span>
+                <input type="file" name="product_image" class="drop-zone__input" multiple>
             </div>
 
             <div class="col-lg-4 mt-3">
@@ -50,7 +47,12 @@
                     @error('price')<div class="alert alert-danger">{{ $message }}</div>@enderror
                 </div> <!-- 3 -->
 
-                <label>المقاس</label>
+                <div class="form-group">
+                    <label>عدد البضاعة المتوفرة</label>
+                        <input type="text" name="quantity" class="form-control rounded-0 mt-3">
+                </div>
+
+                <label class="mt-4">المقاس</label>
                 <div class="form-group d-flex justify-content-between">
                     @foreach ($sizes as $size)
                         <div class="form-group mt-3">
@@ -62,7 +64,7 @@
                     @endforeach
                 </div> <!-- 4 -->
 
-                <label>الألوان</label>
+                <label class="mt-4">الألوان</label>
                 <div class="form-group d-flex justify-content-between">
                     @foreach ($colors as $color)
                         <div class="form-group mt-3">
@@ -78,7 +80,7 @@
                 <hr>
 
                 <div>
-                    <label>هل من الممكن اعادة المنتج؟</label>
+                    <label class="mt-4">هل من الممكن اعادة المنتج؟</label>
 
                     <div class="form-group">
                         <input type="radio" name="returnable" class="mb-4 mt-4" value="نعم">
@@ -96,7 +98,7 @@
                     <label>فئة المنتج:</label>
                     @foreach (\App\Models\Category::where('department_id', auth()->user()->department_id)->get() as $category)
                         <div class="form-group">
-                            <input name="category_id" type="radio" class="mb-4 mt-4">
+                            <input name="category_id" value="{{ $category->id }}" type="radio" class="mb-4 mt-4">
                             <label>{{ $category->name }}</label>
                         </div>
                     @endforeach
@@ -114,12 +116,6 @@
                         <input type="radio" name="guarantee" value="لا" class="mb-4 mt-2">
                         <label>لا</label>
                     </div> <!-- 2 -->
-                </div>
-
-
-                <div class="mt-5">
-                    <label>عدد البضاعة المتوفرة</label>
-                        <input type="text" name="quantity" class="form-control rounded-0 mt-3">
                 </div>
 
                 <div class="form-group mt-5">
