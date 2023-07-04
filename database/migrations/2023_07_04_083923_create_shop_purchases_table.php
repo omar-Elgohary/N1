@@ -7,16 +7,16 @@ return new class extends Migration
 {
     public function up()
     {
-        Schema::create('purchases', function (Blueprint $table) {
+        Schema::create('shop_purchases', function (Blueprint $table) {
             $table->id();
             $table->string('random_id');
-            $table->foreignId('order_id')->constrained('orders')->cascadeOnDelete();
+            $table->foreignId('shop_order_id')->constrained('shop_orders')->cascadeOnDelete();
             $table->timestamps();
         });
     }
 
     public function down()
     {
-        Schema::dropIfExists('purchases');
+        Schema::dropIfExists('shop_purchases');
     }
 };

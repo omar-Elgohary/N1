@@ -5,8 +5,10 @@ use App\Models\Order;
 use App\Models\Without;
 use App\Models\Category;
 use App\Models\Purchase;
-use App\Models\RestaurentProduct;
 use Illuminate\Http\Request;
+use App\Models\RestaurentOrder;
+use App\Models\RestaurentProduct;
+use App\Models\RestaurentPurchase;
 use Illuminate\Support\Facades\File;
 
 class RestaurantController extends Controller
@@ -92,7 +94,7 @@ class RestaurantController extends Controller
                 'branche_id' => $branche,
                 'quantity' => $request->quantity,
                 'sold_quantity' => 50,
-                'remaining_quantity' => $request->remaining_quantity - $request->sold_quantity,
+                'remaining_quantity' => ($request->quantity - $request->sold_quantity),
             ]);
         }else{
             RestaurentProduct::create([
@@ -248,32 +250,80 @@ class RestaurantController extends Controller
     // Restaurant Purchases
     public function restaurantPurchases()
     {
-        $purchases = Purchase::all();
+        $purchases = RestaurentOrder::all();
         return view('admin.purchases.RestaurantPurchases.index', compact('purchases'));
     }
 
 
     public function restaurantPurchasesDetails($id)
     {
-        $purchase = Purchase::find($id);
+        $purchase = RestaurentOrder::find($id);
         return view('admin.purchases.RestaurantPurchases.details', compact('purchase'));
     }
 
 
     public function changePurchaseStatus($id)
     {
-        $purchase = Purchase::find($id);
-        $order = Order::where('id', $purchase->order_id)->first();
+        $order = RestaurentOrder::find($id);
 
-        if($purchase->order->order_status == 'جديد'){
+        if($order->order_status == 'جديد'){
             $order->update([
                 'order_status' => 'قيد التجهيز'
             ]);
-        }elseif($purchase->order->order_status == 'قيد التجهيز'){
+        }elseif($order->order_status == 'قيد التجهيز'){
             $order->update([
                 'order_status' => 'تم الاستلام'
             ]);
         }
         return back();
+    }
+
+
+
+
+    // RestaurantAdmin
+    public function RestaurantAdmin()
+    {
+        $products = RestaurentProduct::all();
+        return view('admin.branches.admins.Restaurant.index', compact('products'));
+    }
+
+
+
+    public function RestaurantAdminDetails($id)
+    {
+        $product = RestaurentProduct::find($id);
+
+        $extra   = explode(',', $product->extra_id);
+        $extras = Extra::whereIn('id', $extra)->get();
+
+        $without   = explode(',', $product->without_id);
+        $withouts = Without::whereIn('id', $without)->get();
+
+        return view('admin.branches.admins.Restaurant.details', compact('product', 'extras', 'withouts'));
+    }
+
+
+
+    public function changeStatus($id)
+    {
+        $product = RestaurentProduct::find($id);
+        $extra   = explode(',', $product->extra_id);
+        $extras = Extra::whereIn('id', $extra)->get();
+
+        $without   = explode(',', $product->without_id);
+        $withouts = Without::whereIn('id', $without)->get();
+
+        if($product->status == 'متوفر'){
+            $product->update([
+                'status' => 'غير متوفر'
+            ]);
+        return view('admin.branches.admins.Restaurant.details', compact('product', 'extras', 'withouts'));
+        }else{
+            $product->update([
+                'status' => 'متوفر'
+            ]);
+        return view('admin.branches.admins.Restaurant.details', compact('product', 'extras', 'withouts'));
+        }
     }
 }

@@ -88,6 +88,38 @@
     </script>
 @endif
 
+@if (session()->has('CheckRestaurent'))
+    <script>
+        window.onload = function() {
+            notif({
+                msg: "يجب أن يكون قسمك خاص بالمطاعم",
+                type: "error"
+            })
+        }
+    </script>
+@endif
+
+@if (session()->has('CheckShop'))
+    <script>
+        window.onload = function() {
+            notif({
+                msg: "يجب أن يكون قسمك خاص بالمحلات",
+                type: "error"
+            })
+        }
+    </script>
+@endif
+
+@if (session()->has('CheckEntertainment'))
+    <script>
+        window.onload = function() {
+            notif({
+                msg: "يجب أن يكون قسمك خاص بالترفيه",
+                type: "error"
+            })
+        }
+    </script>
+@endif
 
 <section id="hero" class="d-flex justify-cntent-center align-items-center">
     <div id="heroCarousel" class="container carousel carousel-fade">

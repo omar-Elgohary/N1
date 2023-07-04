@@ -78,21 +78,21 @@
                 <tbody>
                     <tr>
                         <th>{{ $purchase->random_id }}</th>
-                        <td>{{ $purchase->order->user->name }}</td>
-                        <td>{{ $purchase->order->total_price }}</td>
-                        <td>{{ $purchase->order->products_count }}</td>
+                        <td>{{ \App\Models\User::where('id', $purchase->user_id)->first()->name }}</td>
+                        <td>{{ $purchase->total_price }}</td>
+                        <td>{{ $purchase->products_count }}</td>
 
-                        @if($purchase->order->order_status == 'جديد')
-                            <td class="text-danger">{{ $purchase->order->order_status }}</td>
-                        @elseif($purchase->order->order_status == 'قيد التجهيز')
-                            <td class="text-warning">{{ $purchase->order->order_status }}</td>
+                        @if($purchase->order_status == 'جديد')
+                            <td class="text-danger">{{ $purchase->order_status }}</td>
+                        @elseif($purchase->order_status == 'قيد التجهيز')
+                            <td class="text-warning">{{ $purchase->order_status }}</td>
                         @elseif($purchase->order->order_status == 'تم الاستلام')
-                            <td class="text-success">{{ $purchase->order->order_status }}</td>
+                            <td class="text-success">{{ $purchase->order_status }}</td>
                         @else
-                            <td class="text-dark">{{ $purchase->order->order_status }}</td>
+                            <td class="text-dark">{{ $purchase->order_status }}</td>
                         @endif
 
-                        <td>{{ $purchase->order->created_at }}</td>
+                        <td>{{ $purchase->created_at }}</td>
                         <td><i class="fa fa-thin fa-star text-warning"></i> 4.5</td>
                         <td>
                             <a href="{{ route('restaurantPurchasesDetails', $purchase->id) }}" class="btn bg-white text-warning"><i class="fa fa-eye"></i></a>

@@ -2,8 +2,8 @@
 namespace App\Http\Controllers;
 use App\Models\Size;
 use App\Models\Color;
-use App\Models\Order;
 use App\Models\Category;
+use App\Models\ShopOrder;
 use App\Models\ShopProduct;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -93,7 +93,7 @@ class ShopController extends Controller
                 'branche_id' => $branches,
                 'quantity' => $request->quantity,
                 'sold_quantity' => 50,
-                'remaining_quantity' => $request->quantity - $request->sold_quantity,
+                'remaining_quantity' => ($request->quantity - $request->sold_quantity),
             ]);
         }else{
             ShopProduct::create([
@@ -249,7 +249,7 @@ class ShopController extends Controller
 
     public function shopPurchases()
     {
-        $purchases = Order::where('department_id', auth()->user()->department_id)->get();
+        $purchases = ShopOrder::where('department_id', auth()->user()->department_id)->get();
         return view('admin.purchases.ShopPurchases.index', compact('purchases'));
     }
 
@@ -257,8 +257,23 @@ class ShopController extends Controller
 
     public function shopPurchasesDetails($id)
     {
-        $purchase = Order::find($id);
-        return view('admin.purchases.ShopPurchases.details');
+        $purchase = ShopOrder::find($id);
+        return view('admin.purchases.ShopPurchases.details', compact('purchase'));
     }
 
+
+
+    // ShopAdmin
+    public function shopAdmin()
+    {
+        $products = ShopProduct::all();
+        return view('admin.branches.admins.Shop.index', compact('products'));
+    }
+
+
+    public function ShopAdminDetails($id)
+    {
+        $product = ShopProduct::find($id);
+        return view('admin.branches.admins.Shop.details', compact('product'));
+    }
 }

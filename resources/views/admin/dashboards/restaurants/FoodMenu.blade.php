@@ -72,8 +72,8 @@
 			<h3 class="text-black">المنيو</h3>
 			<nav class="menu">
 				<a href="#" class="menu-item is-active">الكل</a>
-                @foreach ($products as $product)
-                    <a href="#" class="menu-item">{{ $product->category->name}}</a>
+                @foreach (\App\Models\Category::where('department_id', auth()->user()->department_id)->get() as $category)
+                    <a href="#" class="menu-item">{{ $category->name}}</a>
                 @endforeach
                 <a href="#addCategoryName" id="package" class="btn mt-3" data-bs-toggle="modal">اضافة قسم جديد</a>
             </nav>

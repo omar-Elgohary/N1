@@ -73,18 +73,28 @@
                     </tr>
                 </thead>
 
-                @foreach(\App\Models\Order::where('department_id', auth()->user()->department_id)->get() as $order)
+                @foreach(\App\Models\ShopOrder::where('department_id', auth()->user()->department_id)->get() as $order)
                 <tbody>
                     <tr>
                         <th>{{$order->random_id}}</th>
                         <td>{{$order->user->name}}</td>
                         <td>{{$order->total_price}}</td>
                         <td>{{$order->products_count}}</td>
-                        <td>{{$order->order_status}}</td>
+
+                        @if($order->order_status == 'قيد التجهيز')
+                            <td class="text-warning">{{$order->order_status}}</td>
+                        @elseif($order->order_status == 'جاهز للاستلام')
+                            <td class="text-primary">{{$order->order_status}}</td>
+                        @elseif($order->order_status == 'تم الشحن')
+                            <td class="text-info">{{$order->order_status}}</td>
+                        @else
+                            <td class="text-success">{{$order->order_status}}</td>
+                        @endif
+                        
                         <td>{{$order->created_at}}</td>
                         <td><i class="fa fa-thin fa-star text-warning"></i> 4.5</td>
                         <td>
-                            <a href="restaurantPurchasesDetails" class="btn bg-white text-warning"><i class="fa fa-eye"></i></a>
+                            <a href="{{ route('shopPurchasesDetails', $order->id) }}" class="btn bg-white text-warning"><i class="fa fa-eye"></i></a>
                         </td>
                     </tr>
                 </tbody>

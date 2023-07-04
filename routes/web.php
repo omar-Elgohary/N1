@@ -8,6 +8,7 @@ use App\Http\Controllers\CouponController;
 use App\Http\Controllers\SellerController;
 use App\Http\Controllers\PackageController;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\EntertainmentController;
 use App\Http\Controllers\RestaurantController;
 
 Route::controller(AuthController::class)->group(function(){
@@ -119,135 +120,136 @@ Route::get('deletePackage/{id}', [PackageController::class, 'deletePackage'])->n
 
 // Restaurant Dashboard
 
-Route::get('restaurantMenu', [RestaurantController::class, 'restaurantMenu'])->name('restaurantMenu');
-Route::get('foodMenu', [RestaurantController::class, 'foodMenu'])->name('foodMenu');
+Route::middleware(['CheckRestaurent'])->group(function () {
 
-Route::post('createCategory', [RestaurantController::class, 'createCategory'])->name('createCategory');
-Route::post('editCategory/{id}', [RestaurantController::class, 'editCategory'])->name('editCategory');
+    Route::get('restaurantMenu', [RestaurantController::class, 'restaurantMenu'])->name('restaurantMenu');
+    Route::get('foodMenu', [RestaurantController::class, 'foodMenu'])->name('foodMenu');
 
-Route::get('createRestaurentProduct', [RestaurantController::class, 'createRestaurentProduct'])->name('createRestaurentProduct');
-Route::post('storeRestaurentProduct', [RestaurantController::class, 'storeRestaurentProduct'])->name('storeRestaurentProduct');
+    Route::post('createCategory', [RestaurantController::class, 'createCategory'])->name('createCategory');
+    Route::post('editCategory/{id}', [RestaurantController::class, 'editCategory'])->name('editCategory');
 
-Route::get('editRestaurentProduct/{id}', [RestaurantController::class, 'editRestaurentProduct'])->name('editRestaurentProduct');
-Route::post('updateRestaurentProduct/{id}', [RestaurantController::class, 'updateRestaurentProduct'])->name('updateRestaurentProduct');
+    Route::get('createRestaurentProduct', [RestaurantController::class, 'createRestaurentProduct'])->name('createRestaurentProduct');
+    Route::post('storeRestaurentProduct', [RestaurantController::class, 'storeRestaurentProduct'])->name('storeRestaurentProduct');
 
-Route::get('RestaurentProductDetails/{id}', [RestaurantController::class, 'RestaurentProductDetails'])->name('RestaurentProductDetails');
-Route::get('deleteRestaurentProduct/{id}', [RestaurantController::class, 'deleteRestaurentProduct'])->name('deleteRestaurentProduct');
+    Route::get('editRestaurentProduct/{id}', [RestaurantController::class, 'editRestaurentProduct'])->name('editRestaurentProduct');
+    Route::post('updateRestaurentProduct/{id}', [RestaurantController::class, 'updateRestaurentProduct'])->name('updateRestaurentProduct');
 
-Route::get('DeactiviteRestaurentProduct/{id}', [RestaurantController::class, 'DeactiviteRestaurentProduct'])->name('DeactiviteRestaurentProduct');
-Route::get('unDeactiviteRestaurentProduct/{id}', [RestaurantController::class, 'unDeactiviteRestaurentProduct'])->name('unDeactiviteRestaurentProduct');
+    Route::get('RestaurentProductDetails/{id}', [RestaurantController::class, 'RestaurentProductDetails'])->name('RestaurentProductDetails');
+    Route::get('deleteRestaurentProduct/{id}', [RestaurantController::class, 'deleteRestaurentProduct'])->name('deleteRestaurentProduct');
 
+    Route::get('DeactiviteRestaurentProduct/{id}', [RestaurantController::class, 'DeactiviteRestaurentProduct'])->name('DeactiviteRestaurentProduct');
+    Route::get('unDeactiviteRestaurentProduct/{id}', [RestaurantController::class, 'unDeactiviteRestaurentProduct'])->name('unDeactiviteRestaurentProduct');
+
+}); // CheckRestaurent middleware
 
 ##############################################################################################################
 
 // Shop Dashboard
-Route::get('shopMenu', [ShopController::class, 'shopMenu'])->name('shopMenu');
-Route::get('products', [ShopController::class, 'products'])->name('products');
+Route::middleware(['CheckShop'])->group(function () {
 
-Route::post('createShopCategory', [ShopController::class, 'createShopCategory'])->name('createShopCategory');
+    Route::get('shopMenu', [ShopController::class, 'shopMenu'])->name('shopMenu');
+    Route::get('products', [ShopController::class, 'products'])->name('products');
 
-Route::get('createShopProduct', [ShopController::class, 'createShopProduct'])->name('createShopProduct');
-Route::post('storeShopProduct', [ShopController::class, 'storeShopProduct'])->name('storeShopProduct');
+    Route::post('createShopCategory', [ShopController::class, 'createShopCategory'])->name('createShopCategory');
 
-
-Route::get('editShopProduct/{id}', [ShopController::class, 'editShopProduct'])->name('editShopProduct');
-Route::post('updateShopProduct/{id}', [ShopController::class, 'updateShopProduct'])->name('updateShopProduct');
-
-Route::get('shopProductDetails/{id}', [ShopController::class, 'shopProductDetails'])->name('shopProductDetails');
-Route::get('deleteShopProduct/{id}', [ShopController::class, 'deleteShopProduct'])->name('deleteShopProduct');
-
-Route::get('DeactiviteShopProduct/{id}', [ShopController::class, 'DeactiviteShopProduct'])->name('DeactiviteShopProduct');
-Route::get('unDeactiviteShopProduct/{id}', [ShopController::class, 'unDeactiviteShopProduct'])->name('unDeactiviteShopProduct');
+    Route::get('createShopProduct', [ShopController::class, 'createShopProduct'])->name('createShopProduct');
+    Route::post('storeShopProduct', [ShopController::class, 'storeShopProduct'])->name('storeShopProduct');
 
 
+    Route::get('editShopProduct/{id}', [ShopController::class, 'editShopProduct'])->name('editShopProduct');
+    Route::post('updateShopProduct/{id}', [ShopController::class, 'updateShopProduct'])->name('updateShopProduct');
+
+    Route::get('shopProductDetails/{id}', [ShopController::class, 'shopProductDetails'])->name('shopProductDetails');
+    Route::get('deleteShopProduct/{id}', [ShopController::class, 'deleteShopProduct'])->name('deleteShopProduct');
+
+    Route::get('DeactiviteShopProduct/{id}', [ShopController::class, 'DeactiviteShopProduct'])->name('DeactiviteShopProduct');
+    Route::get('unDeactiviteShopProduct/{id}', [ShopController::class, 'unDeactiviteShopProduct'])->name('unDeactiviteShopProduct');
+
+}); // CheckShop middleware
 
 ##############################################################################################################
 
 // Entertainments Dashboard
 
-Route::get('/entertainmentsMenu', function () {
-    return view('admin.dashboards.Entertainments.menu');
-});
+Route::middleware(['CheckEntertainment'])->group(function () {
 
-Route::get('events', function () {
-    return view('admin.dashboards.Entertainments.events');
-})->name('events');
+    Route::get('entertainmentsMenu', [EntertainmentController::class, 'entertainmentsMenu'])->name('entertainmentsMenu');
+    Route::post('createEntertainmentCategory', [EntertainmentController::class, 'createEntertainmentCategory'])->name('createEntertainmentCategory');
 
-Route::get('/createEvents', function () {
-    return view('admin.dashboards.Entertainments.create');
-});
+    Route::get('events', [EntertainmentController::class, 'events'])->name('events');
 
-Route::get('/editEvents', function () {
-    return view('admin.dashboards.Entertainments.edit');
-});
+    Route::get('createEvent', [EntertainmentController::class, 'createEvent'])->name('createEvent');
+    Route::post('storeEvent', [EntertainmentController::class, 'storeEvent'])->name('storeEvent');
 
-Route::get('/eventDetails', function () {
-    return view('admin.dashboards.Entertainments.eventDetails');
-});
 
+    Route::get('deleteEvent/{id}', [EntertainmentController::class, 'deleteEvent'])->name('deleteEvent');
+
+    Route::get('/createEvents', function () {
+        return view('admin.dashboards.Entertainments.create');
+    });
+
+    Route::get('/editEvents', function () {
+        return view('admin.dashboards.Entertainments.edit');
+    });
+
+    Route::get('/eventDetails', function () {
+        return view('admin.dashboards.Entertainments.eventDetails');
+    });
+
+}); // CheckEntertainment middleware
 
 ##############################################################################################################
 
 // RestaurantPurchases
+Route::middleware(['CheckRestaurent'])->group(function () {
 
-Route::get('restaurantPurchases', [RestaurantController::class, 'restaurantPurchases'])->name('restaurantPurchases');
+    Route::get('restaurantPurchases', [RestaurantController::class, 'restaurantPurchases'])->name('restaurantPurchases');
+    Route::get('restaurantPurchasesDetails/{id}', [RestaurantController::class, 'restaurantPurchasesDetails'])->name('restaurantPurchasesDetails');
+    Route::get('changePurchaseStatus/{id}', [RestaurantController::class, 'changePurchaseStatus'])->name('changePurchaseStatus');
 
-Route::get('restaurantPurchasesDetails/{id}', [RestaurantController::class, 'restaurantPurchasesDetails'])->name('restaurantPurchasesDetails');
-
-Route::get('changePurchaseStatus/{id}', [RestaurantController::class, 'changePurchaseStatus'])->name('changePurchaseStatus');
-
+}); // CheckRestaurent middleware
 ##############################################################################################################
 
 // ShopPurchases
+Route::middleware(['CheckShop'])->group(function () {
 
-Route::get('shopPurchases', [ShopController::class, 'shopPurchases'])->name('shopPurchases');
+    Route::get('shopPurchases', [ShopController::class, 'shopPurchases'])->name('shopPurchases');
+    Route::get('shopPurchasesDetails/{id}', [ShopController::class, 'shopPurchasesDetails'])->name('shopPurchasesDetails');
 
-Route::get('shopPurchasesDetails/{id}', [ShopController::class, 'shopPurchasesDetails'])->name('shopPurchasesDetails');
-
-
+}); // CheckShop middleware
 
 ##############################################################################################################
 
 // EntertainmentPurchases
+Route::middleware(['CheckEntertainment'])->group(function () {
 
-Route::get('/entertainmentPurchases', function () {
-    return view('admin.purchases.EntertainmentPurchases.index');
-});
+    Route::get('/entertainmentPurchases', function () {
+        return view('admin.purchases.EntertainmentPurchases.index');
+    });
 
-Route::get('/entertainmentPurchasesDetails', function () {
-    return view('admin.purchases.EntertainmentPurchases.details');
-});
+    Route::get('/entertainmentPurchasesDetails', function () {
+        return view('admin.purchases.EntertainmentPurchases.details');
+    });
 
+}); // CheckEntertainment middleware
 
 ##############################################################################################################
 
 // RestaurantAdmin
 
-Route::get('/RestaurantAdmin', function () {
-    return view('admin.branches.admins.Restaurant.index');
-});
+Route::get('RestaurantAdmin', [RestaurantController::class, 'RestaurantAdmin'])->name('RestaurantAdmin');
 
-Route::get('/RestaurantAdminDetails', function () {
-    return view('admin.branches.admins.Restaurant.details');
-});
+Route::get('RestaurantAdminDetails/{id}', [RestaurantController::class, 'RestaurantAdminDetails'])->name('RestaurantAdminDetails');
 
-Route::get('/deactivateRestaurantAdminDetails', function () {
-    return view('admin.branches.admins.Restaurant.deactivate');
-});
-
+Route::get('changeStatusRestaurantAdminDetails/{id}', [RestaurantController::class, 'changeStatus'])->name('changeStatus');
 
 ##############################################################################################################
 
 // ShopAdmin
 
-Route::get('/ShopAdmin', function () {
-    return view('admin.branches.admins.Shop.index');
-});
+Route::get('shopAdmin', [ShopController::class, 'shopAdmin'])->name('shopAdmin');
 
-Route::get('/ShopAdminDetails', function () {
-    return view('admin.branches.admins.Shop.details');
-});
-
+Route::get('ShopAdminDetails/{id}', [ShopController::class, 'ShopAdminDetails'])->name('ShopAdminDetails');
 
 ##############################################################################################################
 

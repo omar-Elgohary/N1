@@ -2,6 +2,7 @@
 namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class ShopProduct extends Model
 {
@@ -15,7 +16,7 @@ class ShopProduct extends Model
         return $this->belongsTo(Category::class);
     }
 
-    
+
     public function sizes()
     {
         return $this->belongsToMany(Size::class);
@@ -25,7 +26,6 @@ class ShopProduct extends Model
     // {
     //     return $this->hasMany(Size::class);
     // }
-
 
     public function colors()
     {

@@ -1,6 +1,9 @@
 @extends('admin.layouts.app')
-@section('content')
+@section('title')
+    أدمن المطعم
+@endsection
 
+@section('content')
 <div class="col-12 d-flex flex-row-reverse text-end">
     <div class="app">
 		<div class="menu-toggle">
@@ -13,10 +16,10 @@
 			<h3 class="text-black">المنيو</h3>
 			<nav class="menu">
 				<a href="#" class="menu-item is-active">الكل</a>
-				<a href="#" class="menu-item">الفئة الفرعية 2</a>
-				<a href="#" class="menu-item">الفئة الفرعية 2</a>
-				<a href="#" class="menu-item">الفئة الفرعية 2</a>
-			</nav>
+                @foreach ($products as $product)
+                    <a href="#" class="menu-item">{{ $product->category->name}}</a>
+                @endforeach
+            </nav>
 		</aside>
 	</div>
 
@@ -49,20 +52,31 @@
                         <th>التفاصيل</th>
                     </tr>
                 </thead>
+
                 <tbody>
-                    <tr>
-                        <th>10365464</th>
-                        <td>Mark</td>
-                        <th class="text-success">منشور</th>
-                        <td>@mdo</td>
-                        <td>Otto</td>
-                        <td>Mark</td>
-                        <td><i class="fa fa-thin fa-star text-warning"></i> 4.5</td>
-                        <td>
-                            <a href="RestaurantAdminDetails" class="btn bg-white text-warning"><i class="fa fa-eye"></i></a>
-                        </td>
-                    </tr>
-                </tbody>
+                    @forelse ($products as $key => $product)
+                        <tr>
+                            <th>{{ $product->random_id }}</th>
+                            <td>
+                                <a href="{{ route('RestaurentProductDetails', $product->id) }}" class="text-warning">{{ $product->product_name}}</a>
+                            </td>
+                            <td>{{ $product->category->name}}</td>
+                            <td>{{ $product->price}}</td>
+                            <td>{{ $product->sold_quantity}}</td>
+                            <td>{{ $product->remaining_quantity}}</td>
+                            <td><i class="fa fa-thin fa-star text-warning"></i> 4.5</td>
+                            <td>
+                                <a href="{{ route('RestaurantAdminDetails', $product->id) }}" class="btn bg-white text-warning"><i class="fa fa-eye"></i></a>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <th class="text-danger" colspan="10">
+                                لا يوجد بيانات
+                            </th>
+                        </tr>
+                    @endforelse
+                    </tbody>
             </table>
         </div>
     </div> <!-- container -->

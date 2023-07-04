@@ -1,6 +1,9 @@
 @extends('admin.layouts.app')
-@section('content')
+@section('title')
+    قائمة الفعاليات
+@endsection
 
+@section('content')
 <div class="col-12 d-flex flex-row-reverse text-end">
 <section class="container col-10">
     <div class="container">
@@ -24,17 +27,21 @@
         <div class="modal-content">
             <div class="btn-x modal-header">
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>  
+            </div>
 
+        <form action="{{ route('createEntertainmentCategory') }}" method="POST">
+        @csrf
             <div class="modal-body col-lg-6 col-md-6 col-sm-6 mx-auto my-5">
                 <h4 class="text-end">اسم المقر</h4>
-                <input type="text" class="form-control rounded-0">
+                <input type="text" name="name" class="form-control rounded-0">
             </div>
 
             <div class="d-flex justify-content-around mb-5">
                 <button type="button" id="coupon" class="btn px-5" data-bs-dismiss="modal">الغاء</button>
-                <a href="events" id="package" type="button" class="btn btn-block px-5 text-white">اضف</a>
+                <button type="submit" id="package" type="button" class="btn btn-block px-5 text-white">اضف</button>
             </div>
+        </form>
+
         </div> <!-- modal-content -->
     </div> <!-- modal-dialog -->
 </div> <!-- modal fade -->

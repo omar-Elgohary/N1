@@ -35,8 +35,12 @@ class DatabaseSeeder extends Seeder
             CouponSeeder::class,
             PackageSeeder::class,
             OfferSeeder::class,
-            OrderSeeder::class,
-            PurchaseSeeder::class,
+            RestaurentOrderSeeder::class,
+            RestaurentPurchaseSeeder::class,
+            ShopOrderSeeder::class,
+            ShopPurchaseSeeder::class,
+            ReservationTypeSeeder::class,
+            EventSeeder::class,
         ]);
     }
 }

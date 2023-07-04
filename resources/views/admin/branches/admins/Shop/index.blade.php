@@ -1,6 +1,9 @@
 @extends('admin.layouts.app')
-@section('content')
+@section('title')
+    أدمن متجر المحلات
+@endsection
 
+@section('content')
 <div class="col-12 d-flex flex-row-reverse text-end">
     <div class="app">
 		<div class="menu-toggle">
@@ -13,9 +16,9 @@
 			<h3 class="text-black">الفئات</h3>
 			<nav class="menu">
 				<a href="#" class="menu-item is-active">الكل</a>
-				<a href="#" class="menu-item">الفئة الفرعية 2</a>
-				<a href="#" class="menu-item">الفئة الفرعية 2</a>
-				<a href="#" class="menu-item">الفئة الفرعية 2</a>
+                @foreach (\App\Models\Category::where('department_id', auth()->user()->department_id)->get() as $category)
+                    <a href="#" class="menu-item">{{ $category->name}}</a>
+                @endforeach
 			</nav>
 		</aside>
 	</div>
@@ -45,23 +48,44 @@
                         <th>السعر</th>
                         <th>الكمية المباعة</th>
                         <th>الكمية المتبقية</th>
+                        <th>القسم</th>
                         <th>تقييم المنتج</th>
                         <th>التفاصيل</th>
                     </tr>
                 </thead>
+
                 <tbody>
+                @forelse ($products as $product)
                     <tr>
-                        <th>10365464</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                        <td>Otto</td>
-                        <td>Mark</td>
+                        <td>{{ $product->random_id }}</td>
+                        {{-- <td>
+                            <a href="{{ route('shopProductDetails', $product->id) }}" class="text-warning">{{ $product->product_name}}</a>
+                        </td> --}}
+                        <td>
+                            <a href="{{ route('ShopAdminDetails', $product->id) }}" class="text-warning">{{ $product->product_name}}</a>
+                        </td>
+                        @if ($product->status == 'متوفر')
+                            <td class="text-success mx-5">{{ $product->status }}</td>
+                        @else
+                            <td class="text-danger mx-5">{{ $product->status }}</td>
+                        @endif
+                        <td>{{ $product->price }}</td>
+                        <td>{{ $product->sold_quantity }}</td>
+                        <td>{{ $product->remaining_quantity }}</td>
+                        <td>{{ $product->category->name }}</td>
                         <td><i class="fa fa-thin fa-star text-warning"></i> 4.5</td>
                         <td>
-                            <a href="ShopAdminDetails" class="btn bg-white text-success"><i class="fa fa-eye text-warning"></i></a>
+                            <a href="{{route('editShopProduct', $product->id)}}" class="btn bg-white text-success"><i class="fa fa-edit"></i></a>
+                            <a href="#deleteProduct{{$product->id}}" class="btn bg-white text-danger" data-bs-toggle="modal"><i class="fa fa-trash"></i></a>
                         </td>
                     </tr>
+                @empty
+                    <tr>
+                        <th class="text-danger" colspan="10">
+                            لا يوجد بيانات
+                        </th>
+                    </tr>
+                @endforelse
                 </tbody>
             </table>
         </div>

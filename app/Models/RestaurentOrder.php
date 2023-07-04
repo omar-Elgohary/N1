@@ -1,11 +1,9 @@
 <?php
 namespace App\Models;
-use App\Models\User;
-use App\Models\Purchase;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
-class Order extends Model
+class RestaurentOrder extends Model
 {
     use HasFactory;
 
@@ -20,6 +18,6 @@ class Order extends Model
 
     public function purchase()
     {
-        return $this->hasOne(Purchase::class);
+        return $this->hasOne(RestaurentPurchase::class);
     }
 }

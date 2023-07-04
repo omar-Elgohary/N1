@@ -1,14 +1,14 @@
 <?php
 namespace Database\Seeders;
-use App\Models\Order;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\RestaurentOrder;
 use Illuminate\Database\Seeder;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-class OrderSeeder extends Seeder
+class RestaurentOrderSeeder extends Seeder
 {
     public function run()
     {
-        Order::create([
+        RestaurentOrder::create([
             'random_id' => '#D1F2T3',
             'user_id' => 2,
             'department_id' => 1,
@@ -17,7 +17,7 @@ class OrderSeeder extends Seeder
             'total_price' => 5 * 80,
         ]);
 
-        Order::create([
+        RestaurentOrder::create([
             'random_id' => '#R7I8E2',
             'user_id' => 2,
             'department_id' => 1,
