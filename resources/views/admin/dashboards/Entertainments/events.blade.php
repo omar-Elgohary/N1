@@ -30,6 +30,28 @@
         window.onload = function() {
             notif({
                 msg: 'تم تعديل الفعالية بنجاح ',
+                type: "primary"
+            })
+        }
+    </script>
+@endif
+
+@if (session()->has('deactivationEvent'))
+    <script>
+        window.onload = function() {
+            notif({
+                msg: 'تم ايقاف نشر الفعالية بنجاح',
+                type: "info"
+            })
+        }
+    </script>
+@endif
+
+@if (session()->has('activationEvent'))
+    <script>
+        window.onload = function() {
+            notif({
+                msg: 'تم اعادة نشر الفعالية بنجاح',
                 type: "info"
             })
         }
@@ -106,7 +128,7 @@
                         <tr>
                             <th>{{ $event->random_id }}</th>
                             <td>
-                                <a href="{{ route('RestaurentProductDetails', $event->id) }}" class="text-warning">{{ $event->event_name}}</a>
+                                <a href="{{ route('eventDetails', $event->id) }}" class="text-warning">{{ $event->event_name}}</a>
                             </td>
 
                             @if($event->status == 'لم يبدأ')
@@ -124,7 +146,7 @@
                             <td>{{ $event->ticket_price}}</td>
                             <td>{{ $event->tickets_sold_quantity}} / {{ $event->tickets_quantity}}</td>
                             <td>
-                                <a href="{{ route('editRestaurentProduct', $event->id) }}" class="btn bg-white text-success"><i class="fa fa-edit"></i></a>
+                                <a href="{{ route('editEvent', $event->id) }}" class="btn bg-white text-success"><i class="fa fa-edit"></i></a>
                                 <a href="#deleteEvent{{$event->id}}" class="btn bg-white text-danger" data-bs-toggle="modal"><i class="fa fa-trash"></i></a>
                             </td>
                         </tr>

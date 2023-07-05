@@ -1,6 +1,9 @@
 @extends('admin.layouts.app')
-@section('content')
+@section('title')
+    عمليات الحجز
+@endsection
 
+@section('content')
 <div class="col-12 d-flex flex-row-reverse text-end">
     <div class="app">
 		<div class="menu-toggle">
@@ -12,11 +15,9 @@
 		<aside class="sidebar">
 			<h3 class="text-black">الفعاليات</h3>
 			<nav class="menu">
-				<a href="#" class="menu-item is-active">اسم الفعالية</a>
-				<a href="#" class="menu-item">اسم الفعالية</a>
-				<a href="#" class="menu-item">اسم الفعالية</a>
-				<a href="#" class="menu-item">اسم الفعالية</a>
-				<a href="#" class="menu-item">اسم الفعالية</a>
+                @foreach ($events as $event)
+                    <a href="#" class="menu-item is-active">{{ $event->event_name }}</a>
+                @endforeach
 			</nav>
 		</aside>
 	</div>
@@ -49,18 +50,25 @@
                         <th>التفاصيل</th>
                     </tr>
                 </thead>
+
                 <tbody>
+                @forelse ($events as $key => $event)
                     <tr>
-                        <th>10365464</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                        <td>Mark</td>
+                        <th>{{ $event->random_id }}</th>
+                        <td>{{ \App\Models\User::where('id', $event->user_id)->first()->name }}</td>
+                        <td>{{ $event->category->name}}</td>
                         <td><i class="fa fa-thin fa-star text-warning"></i> 4.5</td>
                         <td>
-                            <a href="entertainmentPurchasesDetails" class="btn bg-white text-warning"><i class="fa fa-eye"></i></a>
+                            <a href="{{ route('eventDetails', $event->id) }}" class="btn bg-white text-warning"><i class="fa fa-eye"></i></a>
                         </td>
                     </tr>
+                @empty
+                    <tr>
+                        <th class="text-danger" colspan="10">
+                            لا يوجد بيانات
+                        </th>
+                    </tr>
+                @endforelse
                 </tbody>
             </table>
         </div>

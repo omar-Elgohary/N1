@@ -9,11 +9,11 @@ class ReservationTypeSeeder extends Seeder
     public function run()
     {
         ReservationType::create([
-            'name' => 'لا يوجد',
+            'name' => 'أطفال',
         ]);
 
         ReservationType::create([
-            'name' => 'ستاندرد',
+            'name' => 'شباب',
         ]);
 
         ReservationType::create([
@@ -22,5 +22,6 @@ class ReservationTypeSeeder extends Seeder
 
         ReservationType::create([
             'name' => 'كبار زوار',
-        ]);    }
+        ]);
+    }
 }

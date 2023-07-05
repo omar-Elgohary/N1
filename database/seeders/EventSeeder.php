@@ -16,7 +16,7 @@ class EventSeeder extends Seeder
             'event_name' => 'قطر الموت',
             'description' => 'لعبة رعب قطر الموت 3 كيلو متر',
             'ticket_price' => '90',
-            'reservations_type_id' => 1,
+            'reservations_type_id' => 2,
 
             'reservation_date' => '2023-07-20',
             'reservation_time' => '12:00',
@@ -36,7 +36,7 @@ class EventSeeder extends Seeder
             'event_name' => 'فيلم كيره والجن',
             'description' => 'فيلم تاريخي بطولة كريم عبد العزيز وأحمد عز',
             'ticket_price' => '135',
-            'reservations_type_id' => 3,
+            'reservations_type_id' => 4,
 
             'reservation_date' => '2023-07-08',
             'reservation_time' => '09:00',

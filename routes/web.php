@@ -181,20 +181,14 @@ Route::middleware(['CheckEntertainment'])->group(function () {
     Route::get('createEvent', [EntertainmentController::class, 'createEvent'])->name('createEvent');
     Route::post('storeEvent', [EntertainmentController::class, 'storeEvent'])->name('storeEvent');
 
+    Route::get('editEvent/{id}', [EntertainmentController::class, 'editEvent'])->name('editEvent');
+    Route::post('updateEvent/{id}', [EntertainmentController::class, 'updateEvent'])->name('updateEvent');
 
-    Route::get('deleteEvent/{id}', [EntertainmentController::class, 'deleteEvent'])->name('deleteEvent');
+    Route::get('eventDetails/{id}', [EntertainmentController::class, 'eventDetails'])->name('eventDetails');
+    Route::delete('deleteEvent/{id}', [EntertainmentController::class, 'deleteEvent'])->name('deleteEvent');
 
-    Route::get('/createEvents', function () {
-        return view('admin.dashboards.Entertainments.create');
-    });
-
-    Route::get('/editEvents', function () {
-        return view('admin.dashboards.Entertainments.edit');
-    });
-
-    Route::get('/eventDetails', function () {
-        return view('admin.dashboards.Entertainments.eventDetails');
-    });
+    Route::post('deactivationEvent/{id}', [EntertainmentController::class, 'deactivationEvent'])->name('deactivationEvent');
+    Route::get('activationEvent/{id}', [EntertainmentController::class, 'activationEvent'])->name('activationEvent');
 
 }); // CheckEntertainment middleware
 
@@ -223,9 +217,7 @@ Route::middleware(['CheckShop'])->group(function () {
 // EntertainmentPurchases
 Route::middleware(['CheckEntertainment'])->group(function () {
 
-    Route::get('/entertainmentPurchases', function () {
-        return view('admin.purchases.EntertainmentPurchases.index');
-    });
+    Route::get('entertainmentPurchases', [EntertainmentController::class, 'entertainmentPurchases'])->name('entertainmentPurchases');
 
     Route::get('/entertainmentPurchasesDetails', function () {
         return view('admin.purchases.EntertainmentPurchases.details');

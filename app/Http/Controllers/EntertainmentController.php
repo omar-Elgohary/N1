@@ -2,8 +2,9 @@
 namespace App\Http\Controllers;
 use App\Models\Event;
 use App\Models\Category;
-use App\Models\ReservationType;
 use Illuminate\Http\Request;
+use App\Models\ReservationType;
+use Illuminate\Support\Facades\File;
 
 class EntertainmentController extends Controller
 {
@@ -91,10 +92,102 @@ class EntertainmentController extends Controller
 
 
 
+
+    public function editEvent(Request $request, $id)
+    {
+        $event = Event::find($id);
+        return view('admin.dashboards.Entertainments.edit', compact('event'));
+    }
+
+
+
+
+    public function updateEvent(Request $request, $id)
+    {
+        $event = Event::find($id);
+
+        if($request->hasFile('event_image'))
+        {
+            $oldImage = 'assets/images/products/'.$event->image;
+            if(File::exists($oldImage))
+            {
+                File::delete($oldImage);
+            }
+            $file_extention = $request->file("event_image")->getCLientOriginalExtension();
+            $newImage = time(). "." .$file_extention;
+            $request->file("event_image")->move(public_path('assets/images/products/'), $newImage);
+            $event->event_image = $newImage;
+        }
+
+        $reservation_types = implode(',', $request->reservations_type_id);
+
+        $event->update([
+            'category_id' => $request->category_id,
+            'event_image' => $event->event_image,
+            'event_name' => $request->event_name,
+            'description' => $request->description,
+            'ticket_price' => $request->ticket_price,
+            'tickets_quantity' => $request->tickets_quantity,
+            'reservations_type_id' => $reservation_types,
+            'reservation_date' => $request->reservation_date,
+            'reservation_time' => $request->reservation_time,
+            'start_reservation_date' => $request->start_reservation_date,
+        ]);
+        session()->flash('editEvent');
+        return redirect()->route('events');
+    }
+
+
+
+
+    public function eventDetails($id)
+    {
+        $event = Event::find($id);
+        return view('admin.dashboards.Entertainments.eventDetails', compact('event'));
+    }
+
+
+
+
+
+    public function deactivationEvent($id)
+    {
+        Event::find($id)->update(['status' => 'متوقف']);
+        session()->flash('deactivationEvent');
+        return redirect()->route('events');
+    }
+
+
+
+
+    public function activationEvent($id)
+    {
+        Event::find($id)->update(['status' => 'متاح']);
+        session()->flash('activationEvent');
+        return redirect()->route('events');
+    }
+
+
+
+
+
     public function deleteEvent($id)
     {
         Event::find($id)->delete();
         session()->flash('deleteEvent');
         return redirect()->route('events');
     }
+
+
+
+
+
+
+    // EntertainmentPurchases
+    public function entertainmentPurchases()
+    {
+        $events = Event::all();
+        return view('admin.purchases.EntertainmentPurchases.index', compact('events'));
+    }
+
 }
