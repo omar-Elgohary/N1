@@ -8,7 +8,7 @@ class BranchController extends Controller
 {
     public function allBranches()
     {
-        $branches = Branch::all();
+        $branches = Branch::where('department_id', auth()->user()->department_id)->get();
         return view('admin.branches.allBranches', compact('branches'));
     }
 

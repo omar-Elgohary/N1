@@ -218,10 +218,7 @@ Route::middleware(['CheckShop'])->group(function () {
 Route::middleware(['CheckEntertainment'])->group(function () {
 
     Route::get('entertainmentPurchases', [EntertainmentController::class, 'entertainmentPurchases'])->name('entertainmentPurchases');
-
-    Route::get('/entertainmentPurchasesDetails', function () {
-        return view('admin.purchases.EntertainmentPurchases.details');
-    });
+    Route::get('eventOrderDetails/{id}', [EntertainmentController::class, 'eventOrderDetails'])->name('eventOrderDetails');
 
 }); // CheckEntertainment middleware
 
@@ -246,14 +243,12 @@ Route::get('ShopAdminDetails/{id}', [ShopController::class, 'ShopAdminDetails'])
 ##############################################################################################################
 
 // EntertainmentAdmin
+Route::middleware(['CheckEntertainment'])->group(function () {
 
-Route::get('/EntertainmentAdmin', function () {
-    return view('admin.branches.admins.Entertainment.index');
-});
+    Route::get('eventsBranchAdmin', [EntertainmentController::class, 'eventsBranchAdmin'])->name('eventsBranchAdmin');
+    Route::get('eventAdminDetails/{id}', [EntertainmentController::class, 'eventAdminDetails'])->name('eventAdminDetails');
 
-Route::get('/EntertainmentAdminDetails', function () {
-    return view('admin.branches.admins.Entertainment.details');
-});
+}); // CheckEntertainment middleware
 
 
 

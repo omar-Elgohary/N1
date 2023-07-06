@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 use App\Models\Event;
 use App\Models\Category;
+use App\Models\EventOrder;
 use Illuminate\Http\Request;
 use App\Models\ReservationType;
 use Illuminate\Support\Facades\File;
@@ -186,8 +187,36 @@ class EntertainmentController extends Controller
     // EntertainmentPurchases
     public function entertainmentPurchases()
     {
-        $events = Event::all();
-        return view('admin.purchases.EntertainmentPurchases.index', compact('events'));
+        $orders = EventOrder::all();
+        return view('admin.purchases.EntertainmentPurchases.index', compact('orders'));
     }
 
+
+
+
+    public function eventOrderDetails($id)
+    {
+        $order = EventOrder::find($id);
+        return view('admin.purchases.EntertainmentPurchases.details', compact('order'));
+    }
+
+
+
+
+
+
+    // Entertainment Branch Admin
+    public function eventsBranchAdmin()
+    {
+        $events = Event::all();
+        return view('admin.branches.admins.Entertainment.index', compact('events'));
+    }
+
+
+
+    public function eventAdminDetails($id)
+    {
+        $event = Event::find($id);
+        return view('admin.branches.admins.Entertainment.details', compact('event'));
+    }
 }

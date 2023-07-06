@@ -13,7 +13,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->foreignId('department_id')->constrained('departments')->cascadeOnDelete();
             $table->foreignId('event_id')->constrained('events')->cascadeOnDelete();
-            $table->string('products_count');
+            $table->string('tickets_count');
             $table->string('total_price');
             $table->enum('order_status', ['حجز مؤكد', 'لم يتم تأكيد الحضور', 'تم تأكيد الحضور' ])->default('لم يتم تأكيد الحضور' );
             $table->timestamps();

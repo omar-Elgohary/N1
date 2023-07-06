@@ -14,6 +14,10 @@ class EventOrder extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function Event()
+    {
+        return $this->belongsTo(Event::class);
+    }
 
     public function purchase()
     {

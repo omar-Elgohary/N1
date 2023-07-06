@@ -58,7 +58,15 @@
                 @endif
 
                 <li><a class="nav-link text-black scrollto <?= 'title' == 'العروض' ? 'active' : ''?>" href="/allOffers">العروض</a></li>
-                <li><a class="nav-link text-black scrollto <?= 'title' == 'عمليات الشراء' ? 'active' : ''?>" href="/restaurantPurchases">عمليات الشراء</a></li>
+
+                @if(auth()->user()->department_id == 1)
+                    <li><a class="nav-link text-black scrollto <?= 'title' == 'عمليات الشراء' ? 'active' : ''?>" href="{{route('restaurantPurchases')}}">عمليات الشراء</a></li>
+                @elseif(auth()->user()->department_id == 2)
+                <li><a class="nav-link text-black scrollto <?= 'title' == 'عمليات الشراء' ? 'active' : ''?>" href="{{route('shopPurchases')}}">عمليات الشراء</a></li>
+                @else
+                <li><a class="nav-link text-black scrollto <?= 'title' == 'عمليات الحجز' ? 'active' : ''?>" href="{{route('entertainmentPurchases')}}">عمليات الحجز</a></li>
+                @endif
+
                 <li><a class="nav-link text-black scrollto <?= 'title' == 'الفروع' ? 'active' : ''?>" href="/allBranches">الفروع</a></li>
             </ul>
             <i class="bi bi-list mobile-nav-toggle" style="background-color: #ff8914"></i>

@@ -15,8 +15,8 @@
 		<aside class="sidebar">
 			<h3 class="text-black">الفعاليات</h3>
 			<nav class="menu">
-                @foreach ($events as $event)
-                    <a href="#" class="menu-item is-active">{{ $event->event_name }}</a>
+                @foreach (\App\Models\Category::where('department_id', auth()->user()->department_id)->get() as $category)
+                    <a href="#" class="menu-item is-active">{{ $category->name }}</a>
                 @endforeach
 			</nav>
 		</aside>
@@ -52,14 +52,22 @@
                 </thead>
 
                 <tbody>
-                @forelse ($events as $key => $event)
+                @forelse ($orders as $order)
                     <tr>
-                        <th>{{ $event->random_id }}</th>
-                        <td>{{ \App\Models\User::where('id', $event->user_id)->first()->name }}</td>
-                        <td>{{ $event->category->name}}</td>
+                        <th>{{ $order->random_id }}</th>
+                        <td>{{ $order->user->name }}</td>
+                        <td>{{ $order->event->tickets_quantity }}</td>
+
+                        @foreach (\App\Models\ReservationType::where('id', $order->event->reservations_type_id)->get() as $type)
+                            <td>
+                                {{ $type->name }}
+                            </td>
+                        @endforeach
+
+                        <td>{{ \App\Models\Event::where('id', $order->event_id)->first()->ticket_price }}</td>
                         <td><i class="fa fa-thin fa-star text-warning"></i> 4.5</td>
                         <td>
-                            <a href="{{ route('eventDetails', $event->id) }}" class="btn bg-white text-warning"><i class="fa fa-eye"></i></a>
+                            <a href="{{ route('eventOrderDetails', $order->id) }}" class="btn bg-white text-warning"><i class="fa fa-eye"></i></a>
                         </td>
                     </tr>
                 @empty

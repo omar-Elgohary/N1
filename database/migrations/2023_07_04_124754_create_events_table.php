@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('description');
             $table->string('ticket_price');
             $table->string('reservations_type_id')->constrained('reservation_types')->cascadeOnDelete();
-            // $table->foreignId('reservations_type_id')->constrained('reservation_types')->cascadeOnDelete();
             $table->enum('status', ['لم يبدأ', 'متاح', 'متوقف', 'منتهي'])->default('لم يبدأ');
             $table->date('reservation_date');
             $table->time('reservation_time');

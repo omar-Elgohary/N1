@@ -1,6 +1,9 @@
 @extends('admin.layouts.app')
-@section('content')
+@section('title')
+    قائمة الفعاليات
+@endsection
 
+@section('content')
 <div class="col-12 d-flex flex-row-reverse text-end">
     <div class="app">
 		<div class="menu-toggle">
@@ -13,10 +16,9 @@
 			<h3 class="text-black">المقرات</h3>
 			<nav class="menu">
 				<a href="#" class="menu-item is-active">الكل</a>
-				<a href="#" class="menu-item">الفئة الفرعية 2</a>
-				<a href="#" class="menu-item">الفئة الفرعية 2</a>
-				<a href="#" class="menu-item">الفئة الفرعية 2</a>
-				<a href="#" class="menu-item">الفئة الفرعية 2</a>
+                @foreach (\App\Models\Category::where('department_id', auth()->user()->department_id)->get() as $category)
+                    <a href="#" class="menu-item">{{ $category->name }}</a>
+                @endforeach
 			</nav>
 		</aside>
 	</div>
@@ -49,18 +51,37 @@
                         <th>التفاصيل</th>
                     </tr>
                 </thead>
+
                 <tbody>
-                    <tr>
-                        <th>10365464</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                        <td>
-                            <a href="EntertainmentAdminDetails" class="btn"><i class="fa fa-eye text-warning"></i></a>
-                        </td>
-                    </tr>
+                    @forelse ($events as $key => $event)
+                        <tr>
+                            <th>{{ $event->random_id }}</th>
+                            <td>{{ $event->event_name}}</td>
+
+                            @if($event->status == 'لم يبدأ')
+                                <td class="text-secondary">{{ $event->status }}</td>
+                            @elseif($event->status == 'منتهي')
+                                <td class="text-dark">{{ $event->status }}</td>
+                            @elseif($event->status == 'متوقف')
+                                <td class="text-danger">{{ $event->status }}</td>
+                            @else
+                                <td class="text-success">{{ $event->status }}</td>
+                            @endif
+
+                            <td>{{ $event->start_reservation_date}}</td>
+                            <td>{{ $event->ticket_price}}</td>
+                            <td>{{ $event->tickets_sold_quantity}} / {{ $event->tickets_quantity}}</td>
+                            <td>
+                                <a href="{{ route('eventAdminDetails', $event->id) }}" class="btn bg-white text-warning"><i class="fa fa-eye"></i></a>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <th class="text-danger" colspan="10">
+                                لا يوجد بيانات
+                            </th>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>
@@ -68,74 +89,5 @@
     </div>
     </div> <!-- container -->
 </section>
-
-
-{{-- addCategoryName --}}
-<div class="modal fade border-0" id="addCategoryName" aria-hidden="true" aria-labelledby="addCategoryNameLabel" tabindex="-1" dir="rtl">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="btn-x modal-header">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-
-            <div class="modal-body my-5">
-                <h4 class="text-end">اسم الفئة</h4>
-                <select type="text" name="CategoryName" class="form-control">
-                    <option value="">اختر اسم الفئة</option>
-                </select>
-            </div>
-
-            <div class="modal-footer d-flex justify-content-around">
-                <button href="#" id="coupon" class="btn px-5" data-bs-dismiss="modal">الغاء</button>
-                <a href="products" id="package" type="button" class="btn btn-block px-5 text-white">اضف</a>
-            </div>
-        </div> <!-- modal-content -->
-    </div> <!-- modal-dialog -->
-</div> <!-- modal fade -->
-
-
-
-{{-- edit category name --}}
-<div class="modal fade border-0" id="editCategoryName" aria-hidden="true" aria-labelledby="editCategoryNameLabel" tabindex="-1" dir="rtl">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="btn-x modal-header">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-
-            <div class="modal-body my-5">
-                <h4 class="text-end">اسم القسم</h4>
-                <input type="text" name="CategoryName" class="form-control">
-            </div>
-
-            <div class="modal-footer d-flex justify-content-around">
-                <a href="#" id="coupon" class="btn px-5">حذف</a>
-                <a href="#" id="package" type="button" class="btn btn-block px-5 text-white">تعديل</a>
-            </div>
-        </div> <!-- modal-content -->
-    </div> <!-- modal-dialog -->
-</div> <!-- modal fade -->
-
-
-{{-- deleteProduct --}}
-<div class="modal fade border-0" id="deleteProduct" aria-hidden="true" aria-labelledby="deleteProductLabel" tabindex="-1" dir="rtl">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="btn-x modal-header">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-
-            <div class="modal-body text-center my-5">
-                <h2>هل أنت متأكد من حذف هذا المنتج؟</h2>
-            </div>
-
-            <div class="modal-footer d-flex justify-content-around">
-                <button type="button" id="coupon" class="btn px-5" data-bs-dismiss="modal">تراجع</button>
-                <a href="#" id="package" type="button" class="btn btn-block px-5 text-white">حذف</a>
-
-            </div>
-        </div> <!-- modal-content -->
-    </div> <!-- modal-dialog -->
-</div> <!-- modal fade -->
 
 @endsection

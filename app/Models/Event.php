@@ -13,4 +13,10 @@ class Event extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+
+    public function types()
+    {
+        return $this->hasone(ReservationType::class);
+    }
 }

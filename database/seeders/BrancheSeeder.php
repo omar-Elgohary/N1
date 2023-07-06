@@ -71,5 +71,35 @@ class BrancheSeeder extends Seeder
             'end_time' => '12:00',
             'delivery' => '0',
         ]);
+
+        Branch::create([
+            'random_id' => '#S6R2V7',
+            'department_id' => 3,
+            'branche_title' => 'سينما المعادي',
+            'branche_location' => 'القاهرة',
+            'email' => 'cinema@cairo.com',
+            'phone' => '01279584658',
+            'password' => Hash::make('12345678'),
+            'confirmed_password' => Hash::make('12345678'),
+            'image' => '1687163715.PNG',
+            'start_time' => '1:00',
+            'end_time' => '02:00',
+            'delivery' => '0',
+        ]);
+
+        Branch::create([
+            'random_id' => '#S6R2V7',
+            'department_id' => 3,
+            'branche_title' => 'ملاهي الشيخ زايد',
+            'branche_location' => 'التجمع',
+            'email' => 'malahy@tagamo3.com',
+            'phone' => '01125414530',
+            'password' => Hash::make('12345678'),
+            'confirmed_password' => Hash::make('12345678'),
+            'image' => '1687163715.PNG',
+            'start_time' => '11:00',
+            'end_time' => '12:00',
+            'delivery' => '0',
+        ]);
     }
 }

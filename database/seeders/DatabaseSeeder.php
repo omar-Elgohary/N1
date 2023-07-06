@@ -41,6 +41,7 @@ class DatabaseSeeder extends Seeder
             ShopPurchaseSeeder::class,
             ReservationTypeSeeder::class,
             EventSeeder::class,
+            EventOrderSeeder::class,
         ]);
     }
 }

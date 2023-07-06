@@ -1,6 +1,9 @@
 @extends('admin.layouts.app')
-@section('content')
+@section('title')
+    تفاصيل عملية الحجز
+@endsection
 
+@section('content')
 <section>
     <div class="container mt-2" dir="rtl">
         <div class="col-12 d-flex p-0">
@@ -16,32 +19,38 @@
 
         <div class="col-lg-4">
             <div class="form-group mt-4">
-                <input type="text" value="حجز مؤكد" class="form-control bg-secondary">
+                @if($order->order_status == 'حجز مؤكد')
+                    <input type="text" value="{{ $order->order_status }}" class="form-control bg-secondary">
+                @elseif($order->order_status == 'لم يتم تأكيد الحضور')
+                <input type="text" value="{{ $order->order_status }}" class="form-control bg-danger">
+                @else
+                    <input type="text" value="{{ $order->order_status }}" class="form-control bg-success">
+                @endif
             </div> <!-- 1 -->
 
             <div class="form-group my-4">
                 <label style="margin-left: 70px">رقم الطالب</label>
-                <strong>1095454654</strong>
+                <strong>{{ $order->user->phone }}</strong>
             </div> <!-- 2 -->
 
             <div class="form-group my-4">
                 <label>اسم المستخدم</label>
-                <strong class="mx-5">اسم المستخدم</strong>
+                <strong class="mx-5">{{ $order->user->name }}</strong>
             </div> <!-- 3 -->
 
             <div class="form-group my-4">
                 <label style="margin-left: 20px">عدد التذاكر</label>
-                <strong class="mx-5">4 تذاكر</strong>
+                <strong class="mx-5">{{ $order->tickets_count }} تذاكر</strong>
             </div> <!-- 4 -->
 
             <div class="form-group my-4">
                 <label>تاريخ الحجز</label>
-                <strong class="mx-5">0000/00/00</strong>
+                <strong class="mx-5">{{ $order->event->reservation_date }}</strong>
             </div> <!-- 5 -->
 
             <div class="form-group my-4">
                 <label>اجمالي السعر</label>
-                <strong class="mx-5">452 رس</strong>
+                <strong class="mx-5">({{ $order->total_price }}) رس</strong>
             </div> <!-- 6 -->
 
         </div> <!-- col-4 -->
