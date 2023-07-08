@@ -10,11 +10,16 @@ class RestaurentProduct extends Model
     protected $guarded = [];
 
 
+    public function getFormattedCreatedAtAttribute()
+    {
+        return $this->created_at->format('Y-m-d'); // Adjust the format as needed
+    }
+
     public function category()
     {
         return $this->belongsTo(Category::class);
     }
-    
+
     public function extras()
     {
         return $this->hasMany(Extra::class);

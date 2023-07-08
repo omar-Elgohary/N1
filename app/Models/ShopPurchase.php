@@ -9,6 +9,11 @@ class ShopPurchase extends Model
 
     protected $guarded = [];
 
+    public function getFormattedCreatedAtAttribute()
+    {
+        return $this->created_at->format('Y-m-d'); // Adjust the format as needed
+    }
+    
     public function order()
     {
         return $this->belongsTo(ShopOrder::class);

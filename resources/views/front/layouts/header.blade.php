@@ -30,7 +30,11 @@
     <link href="assets/css/style.css" rel="stylesheet">
 <body>
     <div class="container d-flex align-items-center justify-content-between">
-    <a class="btn px-4" id="login" data-bs-toggle="modal" href="#exampleModalToggle" role="button">تسجيل الدخول <i class="fa-solid fa-circle-user"></i></i></a>
+        @auth
+            <p></p>
+        @else
+            <a class="btn px-4" id="login" data-bs-toggle="modal" href="#exampleModalToggle" role="button">تسجيل الدخول <i class="fa-solid fa-circle-user"></i></i></a>
+        @endauth
 
         <nav id="navbar" class="navbar" dir="rtl">
             <img class="p-3" src="{{ asset('images/logo.png') }}" alt="logo">

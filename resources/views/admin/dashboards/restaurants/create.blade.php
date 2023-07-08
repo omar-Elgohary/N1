@@ -13,12 +13,9 @@
         <form action="{{route('storeRestaurentProduct')}}" method="post" enctype="multipart/form-data">
             @csrf
 
-            <div class="col-lg-12">
-                <input type="file" name="product_image" id="upload-custom" multiple>
-                <label for="upload-custom" class="upload-lable text-center @error('product_image') is-invalid @enderror">
-                    <i class="fa-solid fa-file-image"></i>
-                    <h4 class="drag-text">اضغط أو اسحب الصورة الى هنا</h4>
-                </label>
+            <div class="drop-zone">
+                <span class="drop-zone__prompt">اضغط أو اسحب الصور الى هنا</span>
+                <input type="file" name="product_image" class="drop-zone__input @error('product_image') is-invalid @enderror" multiple>
                 @error('product_image')<div class="alert alert-danger">{{ $message }}</div>@enderror
             </div>
 
@@ -104,7 +101,7 @@
 
                 <h5 class="fw-bold">الفروع التي توفر المنتج:</h5>
                 <div class="branches">
-                    @forelse (\App\Models\Branch::all() as $branch)
+                    @forelse (\App\Models\Branch::where('department_id', auth()->user()->department_id)->get() as $branch)
                         <div class="form-group mb-3">
                             <label class="custom-checks text-black">{{ $branch->branche_title}}
                                 <input name="branche_id[]" value="{{ $branch->id }}" type="checkbox">

@@ -48,11 +48,11 @@
                 <hr>
 
                 <div class="form-group">
-                    <p class="text-black"><i class="fa-solid fa-eye"></i> السجل التجاري: {{ auth()->user()->commercial_registration_number }}</p>
+                    <p class="text-black"> السجل التجاري: <span class="text-danger fw-bold">{{ auth()->user()->commercial_registration_number }}</span></p>
                 </div> <!-- 2 -->
 
                 <div class="form-group">
-                    <p class="text-black"> نوع النشاط: {{ auth()->user()->activity_type }} </p>
+                    <p class="text-black"> نوع النشاط: <span class="text-danger fw-bold">{{ auth()->user()->department->name }}</span></p>
                 </div> <!-- 3 -->
             </form>
 

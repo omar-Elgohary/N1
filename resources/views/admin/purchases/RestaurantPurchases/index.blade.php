@@ -15,7 +15,7 @@
 
 
 		<aside class="sidebar">
-            <div class="dropdown">
+            {{-- <div class="dropdown">
                 <a id="year" class="btn d-flex justify-content-around flex-row-reverse" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     2023 <i class="fas fa-regular fa-angle-down mt-1 mx-3"></i>
                 </a>
@@ -25,21 +25,12 @@
                     <li><a class="dropdown-item" href="#">2021</a></li>
                     <li><a class="dropdown-item" href="#">2020</a></li>
                 </ul>
-            </div>
+            </div> --}}
 
             <nav class="menu">
-				<a href="#" class="menu-item monthes is-active">يناير</a>
-				<a href="#" class="menu-item monthes">فبراير</a>
-				<a href="#" class="menu-item monthes">مارس</a>
-				<a href="#" class="menu-item monthes">ابريل</a>
-				<a href="#" class="menu-item monthes">مايو</a>
-				<a href="#" class="menu-item monthes">يونيو</a>
-				<a href="#" class="menu-item monthes">يوليو</a>
-				<a href="#" class="menu-item monthes">اغسطس</a>
-				<a href="#" class="menu-item monthes">سبتمبر</a>
-				<a href="#" class="menu-item monthes">اكتوبر</a>
-				<a href="#" class="menu-item monthes">نوفمبر</a>
-				<a href="#" class="menu-item monthes">ديسمبر</a>
+                @foreach(['يناير', 'فبراير', 'مارس', 'ابريل', 'مايو', 'يونيو', 'يوليو', 'اغسطس', 'سبتمبر', 'اكتوبر', 'نوفمبر', 'ديسمبر'] as $month)
+                    <a href="#" class="menu-item monthes">{{ $month }}</a>
+                @endforeach
 			</nav>
 		</aside>
 	</div>
@@ -92,7 +83,8 @@
                             <td class="text-dark">{{ $purchase->order_status }}</td>
                         @endif
 
-                        <td>{{ $purchase->created_at }}</td>
+                        <td>{{ $purchase->formatted_created_at }}</td>
+
                         <td><i class="fa fa-thin fa-star text-warning"></i> 4.5</td>
                         <td>
                             <a href="{{ route('restaurantPurchasesDetails', $purchase->id) }}" class="btn bg-white text-warning"><i class="fa fa-eye"></i></a>

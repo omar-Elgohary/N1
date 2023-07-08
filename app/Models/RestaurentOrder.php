@@ -9,12 +9,20 @@ class RestaurentOrder extends Model
 
     protected $guarded = [];
 
+    public function getFormattedCreatedAtAttribute()
+    {
+        return $this->created_at->format('Y-m-d'); // Adjust the format as needed
+    }
 
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
+    public function product()
+    {
+        return $this->hasOne(RestaurentProduct::class);
+    }
 
     public function purchase()
     {

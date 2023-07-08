@@ -16,11 +16,10 @@
 
             <div class="row col-12">
                 <div class="col-lg-6">
-                    <input type="file" name="product_image" id="upload-custom" multiple>
-                    <label for="upload-custom" class="upload-lable text-center">
-                        <i class="fa-solid fa-file-image"></i>
-                        <h4 class="drag-text">اضغط أو اسحب الصورة الى هنا</h4>
-                    </label>
+                    <div class="drop-zone">
+                        <span class="drop-zone__prompt">اضغط أو اسحب الصور الى هنا</span>
+                        <input type="file" name="product_image" class="drop-zone__input" multiple>
+                    </div>
                 </div>
 
                 <div class="col-lg-6">
@@ -33,7 +32,7 @@
                     <label>القسم</label>
                     <select name="category_id" class="form-control rounded-0 mb-4 mt-2 @error('category_id') is-invalid @enderror">
                         <option value="{{ $product->category->id }}">{{ $product->category->name }}</option>
-                        @foreach (\App\Models\Category::where('department_id', auth()->user()->department_id)->get() as $category)
+                        @foreach (\App\Models\Category::where('id', '!=', $product->category_id)->where('department_id', auth()->user()->department_id)->get() as $category)
                             <option value="{{ $category->id }}">{{ $category->name }}</option>
                         @endforeach
                     </select>
@@ -77,8 +76,8 @@
                     @foreach (\App\Models\Extra::all() as $extra)
                         <div class="form-group mt-3">
                             <label class="custom-checks text-black">{{ $extra->name }}
-                                <input name="extra_id[]" value="{{$extra->id}}" type="checkbox" 
-                                {{\App\Models\Product::where('id', $product->id)->where('extra_id', $extra->id)->first() ? 'checked' : ''}}>
+                                <input name="extra_id[]" value="{{$extra->id}}" type="checkbox"
+                                {{\App\Models\RestaurentProduct::where('id', $product->id)->where('extra_id', $extra->id)->first() ? 'checked' : ''}}>
                                 <span class="checkmark"></span>
                             </label>
                         </div>
@@ -93,7 +92,7 @@
                         <div class="form-group mt-3">
                             <label class="custom-checks text-black">{{ $without->name}}
                                 <input name="without_id[]" value="{{$without->id}}" type="checkbox"
-                                {{\App\Models\Product::where('id', $product->id)->where('without_id', $without->id)->first() ? 'checked' : ''}}>
+                                {{\App\Models\RestaurentProduct::where('id', $product->id)->where('without_id', $without->id)->first() ? 'checked' : ''}}>
                                 <span class="checkmark"></span>
                             </label>
                         </div>
@@ -102,8 +101,8 @@
 
                 <div class="form-group mt-5">
                     <label class="switch">
-                        <input type="checkbox" name="status" 
-                        {{\App\Models\Product::where('id', $product->id)->where('status', 'متوفر')->first() ? 'checked' : ''}}>>
+                        <input type="checkbox" name="status"
+                        {{\App\Models\RestaurentProduct::where('id', $product->id)->where('status', 'متوفر')->first() ? 'checked' : ''}}>>
                         <span class="slider round"></span>
                     </label>
                     <label>نشر المنتج</label>
@@ -113,11 +112,11 @@
 
                 <h5 class="fw-bold">الفروع التي توفر المنتج:</h5>
                 <div class="branches">
-                    @forelse (\App\Models\Branch::all() as $branch)
+                    @forelse (\App\Models\Branch::where('department_id', auth()->user()->department_id)->get() as $branch)
                         <div class="form-group mb-3">
                             <label class="custom-checks text-black">{{ $branch->branche_title}}
                                 <input name="branche_id[]" value="{{ $branch->id }}" type="checkbox"
-                                {{\App\Models\Product::where('id', $product->id)->where('branche_id', $branch->id)->first() ? 'checked' : ''}}>
+                                {{\App\Models\RestaurentProduct::where('id', $product->id)->where('branche_id', $branch->id)->first() ? 'checked' : ''}}>
                                 <span class="checkmark"></span>
                             </label>
                         </div>

@@ -40,18 +40,22 @@
 
             <div class="form-group my-4">
                 <label style="margin-left: 20px">تاريخ الطلب</label>
-                <strong class="mx-5">{{ $purchase->created_at }}</strong>
+                <strong class="mx-5">{{ $purchase->formatted_created_at }}</strong>
             </div> <!-- 3 -->
+
+            <div class="form-group my-4">
+                <label style="margin-left: 20px">الكمية المطلوبة</label>
+                <strong class="mx-5">{{ $purchase->products_count }}</strong>
+            </div> <!-- 4 -->
 
             <div class="form-group my-4">
                 <label>اجمالي السعر</label>
                 <strong class="mx-5">{{ $purchase->total_price }} رس</strong>
-            </div> <!-- 4 -->
+            </div> <!-- 5 -->
         </div> <!-- col-4 -->
 
     <hr>
 
-    {{-- @foreach (\App\Models\Product::where('id', $purchase->order->product_id)->get() as $product) --}}
         <div class="col-lg-4 mt-3">
             <strong>تفاصيل الطلب</strong>
             <div class="form-group my-4">
@@ -64,7 +68,6 @@
                 <label class="mx-5">{{ \App\Models\RestaurentProduct::where('id', $purchase->restaurent_product_id)->first()->price }} رس</label>
             </div> <!-- 2 -->
         </div> <!-- col-4 -->
-    {{-- @endforeach --}}
 
         <div class="col-4 d-grid mx-auto mt-5">
             @if($purchase->order_status == 'جديد')

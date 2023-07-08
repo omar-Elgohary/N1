@@ -1,6 +1,5 @@
 <?php
 namespace Database\Seeders;
-
 use App\Models\Branch;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -14,8 +13,8 @@ class BrancheSeeder extends Seeder
         Branch::create([
             'random_id' => '#Df54fd',
             'department_id' => 1,
-            'branche_title' => 'Kfc Branch',
-            'branche_location' => 'mansoura - ahmed maher',
+            'branche_title' => 'كنتاكي',
+            'branche_location' => 'المنصورة - أحمد ماهر',
             'email' => 'kfc@mans.com',
             'phone' => '01236547854',
             'password' => Hash::make('12345678'),
@@ -29,8 +28,8 @@ class BrancheSeeder extends Seeder
         Branch::create([
             'random_id' => '#H5G4D5',
             'department_id' => 1,
-            'branche_title' => 'Mac Branch',
-            'branche_location' => 'cairo - salah salem',
+            'branche_title' => 'ماكدونلز',
+            'branche_location' => 'القاهرة - مدينة نصر',
             'email' => 'mac@cairo.com',
             'phone' => '01278459651',
             'password' => Hash::make('12345678'),
@@ -45,8 +44,8 @@ class BrancheSeeder extends Seeder
         Branch::create([
             'random_id' => '#J4U6F2',
             'department_id' => 2,
-            'branche_title' => 'eltawheed w elnoor',
-            'branche_location' => 'cairo - giza',
+            'branche_title' => 'التوحيد والنور',
+            'branche_location' => 'الجيزة - حي أول',
             'email' => 'eltawheed@giza.com',
             'phone' => '01236548514',
             'password' => Hash::make('12345678'),
@@ -60,9 +59,9 @@ class BrancheSeeder extends Seeder
         Branch::create([
             'random_id' => '#S6R2V7',
             'department_id' => 2,
-            'branche_title' => 'elkorbs',
-            'branche_location' => 'alex',
-            'email' => 'elkorbs@alex.com',
+            'branche_title' => 'بيتي براند',
+            'branche_location' => 'الاسكندرية - سيدي جابر',
+            'email' => 'betey@alex.com',
             'phone' => '01023652010',
             'password' => Hash::make('12345678'),
             'confirmed_password' => Hash::make('12345678'),

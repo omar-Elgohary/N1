@@ -40,20 +40,20 @@
 
             <div class="form-group my-4">
                 <label>عدد المنتجات</label>
-                <strong class="mx-5">{{ \App\Models\ShopProduct::where('id', $purchase->shop_product_id)->first()->quantity }} منتج</strong>
+                <strong class="mx-5">{{ $purchase->products_count }} منتج</strong>
             </div> <!-- 2 -->
-
-            <div class="form-group my-4">
-                <label style="margin-left: 20px">تاريخ الطلب</label>
-                <strong class="mx-5">{{ $purchase->created_at }}</strong>
-            </div> <!-- 3 -->
 
             <div class="form-group my-4">
                 <label>اجمالي السعر</label>
                 <strong class="mx-5">{{ $purchase->total_price }} رس</strong>
+            </div> <!-- 3 -->
+
+            <div class="form-group my-4">
+                <label style="margin-left: 20px">تاريخ الطلب</label>
+                <strong class="mx-5">{{ $purchase->formatted_created_at }}</strong>
             </div> <!-- 4 -->
         </div> <!-- col-4 -->
-
+        
     <hr>
 
         <div class="col-lg-4 mt-3">

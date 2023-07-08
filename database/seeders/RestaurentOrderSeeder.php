@@ -13,8 +13,8 @@ class RestaurentOrderSeeder extends Seeder
             'user_id' => 2,
             'department_id' => 1,
             'restaurent_product_id' => 1,
-            'products_count' => 3,
-            'total_price' => 5 * 80,
+            'products_count' => 2,
+            'total_price' => 2 * 650,
         ]);
 
         RestaurentOrder::create([
@@ -22,7 +22,7 @@ class RestaurentOrderSeeder extends Seeder
             'user_id' => 2,
             'department_id' => 1,
             'restaurent_product_id' => 2,
-            'products_count' => 5,
+            'products_count' => 3,
             'total_price' => 3 * 160,
         ]);
     }

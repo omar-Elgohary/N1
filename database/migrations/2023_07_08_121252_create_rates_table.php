@@ -11,7 +11,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('department_id')->constrained('departments')->cascadeOnDelete();
             $table->foreignId('restaurent_product_id')->constrained('restaurent_products')->cascadeOnDelete();
-            $table->string('rate');
+            $table->double('rate');
             $table->timestamps();
         });
     }

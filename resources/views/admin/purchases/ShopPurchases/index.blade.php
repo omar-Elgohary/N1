@@ -90,8 +90,8 @@
                         @else
                             <td class="text-success">{{$order->order_status}}</td>
                         @endif
-                        
-                        <td>{{$order->created_at}}</td>
+
+                        <td>{{ $order->formatted_created_at }}</td>
                         <td><i class="fa fa-thin fa-star text-warning"></i> 4.5</td>
                         <td>
                             <a href="{{ route('shopPurchasesDetails', $order->id) }}" class="btn bg-white text-warning"><i class="fa fa-eye"></i></a>

@@ -4,11 +4,10 @@ use App\Models\Extra;
 use App\Models\Order;
 use App\Models\Without;
 use App\Models\Category;
-use App\Models\Purchase;
+use DateTime;
 use Illuminate\Http\Request;
 use App\Models\RestaurentOrder;
 use App\Models\RestaurentProduct;
-use App\Models\RestaurentPurchase;
 use Illuminate\Support\Facades\File;
 
 class RestaurantController extends Controller
@@ -251,6 +250,7 @@ class RestaurantController extends Controller
     public function restaurantPurchases()
     {
         $purchases = RestaurentOrder::all();
+
         return view('admin.purchases.RestaurantPurchases.index', compact('purchases'));
     }
 
