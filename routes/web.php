@@ -2,7 +2,6 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\ShopController;
-use App\Http\Controllers\OfferController;
 use App\Http\Controllers\BranchController;
 use App\Http\Controllers\CouponController;
 use App\Http\Controllers\SellerController;
@@ -11,6 +10,7 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\EntertainmentController;
 use App\Http\Controllers\RestaurantController;
 
+
 Route::controller(AuthController::class)->group(function(){
     Route::post('register', 'register')->name('register');
     Route::post('verify', 'verify')->name('verify');
@@ -18,7 +18,7 @@ Route::controller(AuthController::class)->group(function(){
     Route::get('logOut', 'logOut')->name('logOut');
 });
 
-##############################################################################################################
+###############################################################################################################################
 
 // Front
 Route::get('/', function () {
@@ -32,29 +32,28 @@ Route::get('about', function () {
     return view('front.questions');
 })->name('front.questions');
 
-##############################################################################################################
+###############################################################################################################################
 
 // Admin
 Route::middleware(['authenticated'])->group(function(){   // User Must Be Authenticated
+
+Route::middleware(['CheckUser'])->group(function () {
 
     Route::get('admin', function () {
         return view('admin.parts.statistics');
     })->name('admin');
 
+    Route::get('personalInfo', function () {
+        return view('admin.parts.personalInfo');
+    })->name('personalInfo');
 
-Route::get('personalInfo', function () {
-    return view('admin.parts.personalInfo');
-})->name('personalInfo');
+    Route::get('editSellerPage/{id}', [SellerController::class, 'editSellerPage'])->name('editSellerPage');
+    Route::post('editSellerInfo/{id}', [SellerController::class, 'editSellerInfo'])->name('editSellerInfo');
 
-Route::get('editSellerPage/{id}', [SellerController::class, 'editSellerPage'])->name('editSellerPage');
-Route::post('editSellerInfo/{id}', [SellerController::class, 'editSellerInfo'])->name('editSellerInfo');
+    Route::get('changePasswordPage', [SellerController::class, 'changePasswordPage'])->name('changePasswordPage');
+    Route::post('changePassword/{id}', [SellerController::class, 'changePassword'])->name('changePassword');
 
-Route::get('changePasswordPage', [SellerController::class, 'changePasswordPage'])->name('changePasswordPage');
-Route::post('changePassword/{id}', [SellerController::class, 'changePassword'])->name('changePassword');
-
-
-
-##############################################################################################################
+###############################################################################################################################
 
 // Offers
 Route::get('/allOffers', function () {
@@ -65,7 +64,7 @@ Route::get('/homeOffers', function () {
     return view('admin.offers.index');
 });
 
-##############################################################################################################
+###############################################################################################################################
 
 // Branches
 Route::get('allBranches', [BranchController::class, 'allBranches'])->name('allBranches');
@@ -75,7 +74,7 @@ Route::get('EditBranchPage/{id}', [BranchController::class, 'EditBranchPage'])->
 Route::post('updateBranch/{id}', [BranchController::class, 'updateBranch'])->name('updateBranch');
 Route::get('deleteBranch/{id}', [BranchController::class, 'deleteBranch'])->name('deleteBranch');
 
-##############################################################################################################
+###############################################################################################################################
 
 // Coupons
 Route::get('addCouponPage', function () {
@@ -83,7 +82,6 @@ Route::get('addCouponPage', function () {
 })->name('addCouponPage');
 
 Route::post('addCoupon', [CouponController::class, 'store'])->name('addCoupon');
-
 
 Route::get('editCoupon/{id}', [CouponController::class, 'edit'])->name('editCoupon');
 Route::post('updateCoupon/{id}', [CouponController::class, 'update'])->name('updateCoupon');
@@ -95,7 +93,7 @@ Route::get('activationCoupon/{id}',[CouponController::class, 'activationCoupon']
 
 Route::get('deleteCoupon/{id}', [CouponController::class, 'deleteCoupon'])->name('deleteCoupon');
 
-##############################################################################################################
+###############################################################################################################################
 
 // Packages
 Route::get('addPackagePage', [PackageController::class, 'index'])->name('addPackagePage');
@@ -109,17 +107,15 @@ Route::get('packageDetails/{id}',[PackageController::class, 'packageDetails'])->
 Route::get('deactivationPackage/{id}',[PackageController::class, 'deactivationPackage'])->name('deactivationPackage');
 Route::get('activationPackage/{id}',[PackageController::class, 'activationPackage'])->name('activationPackage');
 
-
 Route::get('/DeactivationPackage', function () {
     return view('admin.packages.DeactivationPackage');
 });
 
 Route::get('deletePackage/{id}', [PackageController::class, 'deletePackage'])->name('deletePackage');
 
-##############################################################################################################
+###############################################################################################################################
 
 // Restaurant Dashboard
-
 Route::middleware(['CheckRestaurent'])->group(function () {
 
     Route::get('restaurantMenu', [RestaurantController::class, 'restaurantMenu'])->name('restaurantMenu');
@@ -142,7 +138,7 @@ Route::middleware(['CheckRestaurent'])->group(function () {
 
 }); // CheckRestaurent middleware
 
-##############################################################################################################
+###############################################################################################################################
 
 // Shop Dashboard
 Route::middleware(['CheckShop'])->group(function () {
@@ -155,7 +151,6 @@ Route::middleware(['CheckShop'])->group(function () {
     Route::get('createShopProduct', [ShopController::class, 'createShopProduct'])->name('createShopProduct');
     Route::post('storeShopProduct', [ShopController::class, 'storeShopProduct'])->name('storeShopProduct');
 
-
     Route::get('editShopProduct/{id}', [ShopController::class, 'editShopProduct'])->name('editShopProduct');
     Route::post('updateShopProduct/{id}', [ShopController::class, 'updateShopProduct'])->name('updateShopProduct');
 
@@ -167,10 +162,9 @@ Route::middleware(['CheckShop'])->group(function () {
 
 }); // CheckShop middleware
 
-##############################################################################################################
+###############################################################################################################################
 
 // Entertainments Dashboard
-
 Route::middleware(['CheckEntertainment'])->group(function () {
 
     Route::get('entertainmentsMenu', [EntertainmentController::class, 'entertainmentsMenu'])->name('entertainmentsMenu');
@@ -192,7 +186,7 @@ Route::middleware(['CheckEntertainment'])->group(function () {
 
 }); // CheckEntertainment middleware
 
-##############################################################################################################
+###############################################################################################################################
 
 // RestaurantPurchases
 Route::middleware(['CheckRestaurent'])->group(function () {
@@ -202,7 +196,7 @@ Route::middleware(['CheckRestaurent'])->group(function () {
     Route::get('changePurchaseStatus/{id}', [RestaurantController::class, 'changePurchaseStatus'])->name('changePurchaseStatus');
 
 }); // CheckRestaurent middleware
-##############################################################################################################
+###############################################################################################################################
 
 // ShopPurchases
 Route::middleware(['CheckShop'])->group(function () {
@@ -212,7 +206,7 @@ Route::middleware(['CheckShop'])->group(function () {
 
 }); // CheckShop middleware
 
-##############################################################################################################
+###############################################################################################################################
 
 // EntertainmentPurchases
 Route::middleware(['CheckEntertainment'])->group(function () {
@@ -222,7 +216,7 @@ Route::middleware(['CheckEntertainment'])->group(function () {
 
 }); // CheckEntertainment middleware
 
-##############################################################################################################
+###############################################################################################################################
 
 // RestaurantAdmin
 
@@ -232,7 +226,7 @@ Route::get('RestaurantAdminDetails/{id}', [RestaurantController::class, 'Restaur
 
 Route::get('changeStatusRestaurantAdminDetails/{id}', [RestaurantController::class, 'changeStatus'])->name('changeStatus');
 
-##############################################################################################################
+###############################################################################################################################
 
 // ShopAdmin
 
@@ -240,7 +234,7 @@ Route::get('shopAdmin', [ShopController::class, 'shopAdmin'])->name('shopAdmin')
 
 Route::get('ShopAdminDetails/{id}', [ShopController::class, 'ShopAdminDetails'])->name('ShopAdminDetails');
 
-##############################################################################################################
+###############################################################################################################################
 
 // EntertainmentAdmin
 Route::middleware(['CheckEntertainment'])->group(function () {
@@ -250,6 +244,6 @@ Route::middleware(['CheckEntertainment'])->group(function () {
 
 }); // CheckEntertainment middleware
 
-
+}); // Middleware CheckUser
 
 }); // middleware authenticated

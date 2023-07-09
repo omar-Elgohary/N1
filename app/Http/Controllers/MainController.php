@@ -1,11 +1,14 @@
 <?php
 namespace App\Http\Controllers;
+use App\Models\Event;
 use App\Models\ContactUs;
+use App\Models\ShopProduct;
 use Illuminate\Http\Request;
+use App\Models\RestaurentProduct;
 
 class MainController extends Controller
 {
-    public function index() 
+    public function index()
     {
         return view('front.contact');
     }

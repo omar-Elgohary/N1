@@ -31,7 +31,7 @@
 <body>
     <div class="container d-flex align-items-center justify-content-between">
         @auth
-            <p></p>
+            <p>logout</p>
         @else
             <a class="btn px-4" id="login" data-bs-toggle="modal" href="#exampleModalToggle" role="button">تسجيل الدخول <i class="fa-solid fa-circle-user"></i></i></a>
         @endauth
@@ -124,7 +124,7 @@
                                 </div>
 
                                 <div class="col-lg-3">
-                                    <select name="country_code" id="inputState" class="rounded-0 mt-5">
+                                    <select name="country_code" id="inputState" class="form-control rounded-0 mt-5">
                                         <option selected="" value="+20">20+</option>
                                         <option value="+966">966+</option>
                                         <option value="+971">971+</option>

@@ -2,8 +2,9 @@
 namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-class CheckRestaurent
+class CheckUser
 {
     /**
      * Handle an incoming request.
@@ -14,11 +15,12 @@ class CheckRestaurent
      */
     public function handle(Request $request, Closure $next)
     {
-        if(auth()->user()->department_id == 1){
-            return $next($request);
-        }else{
-            session()->flash('CheckRestaurent');
+        if(auth()->user()->type == 'user'){
+            Auth::logout();
+            session()->flash('CheckUser');
             return redirect()->route('home');
-        }  
+        }else{
+            return $next($request);
+        }
     }
 }

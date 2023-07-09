@@ -12,14 +12,17 @@ class DepartmentSeeder extends Seeder
     {
         Department::create([
             'name' => 'مطاعم',
+            'image' => 'fgj.jfif',
         ]);
 
         Department::create([
             'name' => 'متجر منتجات',
+            'image' => 'vyugj.jfif',
         ]);
 
         Department::create([
             'name' => 'ترفيه',
+            'image' => 'ghk.jfif',
         ]);
     }
 }

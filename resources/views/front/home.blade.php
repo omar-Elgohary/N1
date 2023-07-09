@@ -121,6 +121,17 @@
     </script>
 @endif
 
+@if (session()->has('CheckUser'))
+    <script>
+        window.onload = function() {
+            notif({
+                msg: "يجب عليك تحميل التطبيق",
+                type: "error"
+            })
+        }
+    </script>
+@endif
+
 <section id="hero" class="d-flex justify-cntent-center align-items-center">
     <div id="heroCarousel" class="container carousel carousel-fade">
         <h3 class="text-white text-center">Lorem ipsum dolor sit consectetur</h3>
@@ -131,9 +142,19 @@
 
 <main id="main">
 <section id="icon-boxes" class="icon-boxes">
-    <div class="container">
+<div class="container">
     <div class="row d-flex flex-row-reverse">
-        <div class="col-md-6 col-lg-4 d-flex align-items-stretch mb-5 mb-lg-0">
+
+        @foreach (\App\Models\Department::all() as $department)
+            <div class="col-md-6 col-lg-4 d-flex align-items-center mb-5 mb-lg-0">
+                <div class="icon-box mx-auto">
+                    <h4 class="title text-center">{{ $department->name }}</h4>
+                    <img src="{{ asset('assets/images/departments/'.$department->image) }}" class="mx-auto d-block" alt="">
+                </div>
+            </div>
+        @endforeach
+
+        {{-- <div class="col-md-6 col-lg-4 d-flex align-items-stretch mb-5 mb-lg-0">
         <div class="icon-box">
             <h4 class="title text-center">الخدمة الأولى</h4>
             <img src="{{ asset('images/l1.png') }}" alt="">
@@ -152,7 +173,8 @@
             <h4 class="title text-center">الخدمة الثالثة</h4>
             <img src="{{ asset('images/l3.png') }}" alt="">
         </div>
-        </div>
+        </div> --}}
+
     </div>
     </div>
 </section>
