@@ -8,4 +8,15 @@ class Offer extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+
+    public function coupon()
+    {
+        return $this->belongsTo(Coupon::class);
+    }
+
+    public function package()
+    {
+        return $this->belongsTo(Package::class);
+    }
 }

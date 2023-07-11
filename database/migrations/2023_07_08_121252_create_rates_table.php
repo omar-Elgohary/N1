@@ -10,8 +10,10 @@ return new class extends Migration
         Schema::create('rates', function (Blueprint $table) {
             $table->id();
             $table->foreignId('department_id')->constrained('departments')->cascadeOnDelete();
-            $table->foreignId('restaurent_product_id')->constrained('restaurent_products')->cascadeOnDelete();
-            $table->double('rate');
+            $table->foreignId('restaurent_product_id')->nullable()->constrained('restaurent_products')->cascadeOnDelete();
+            $table->foreignId('shop_product_id')->nullable()->constrained('shop_products')->cascadeOnDelete();
+            $table->foreignId('event_product_id')->nullable()->constrained('events')->cascadeOnDelete();
+            $table->string('rate');
             $table->timestamps();
         });
     }

@@ -10,6 +10,7 @@ return new class extends Migration
         Schema::create('packages', function (Blueprint $table) {
             $table->id();
             $table->string('random_id');
+            $table->foreignId('department_id')->constrained('departments')->cascadeOnDelete();
             $table->string('image');
 
             $table->foreignId('first_meal_id')->constrained('meals');

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->date('end_date');
             $table->foreignId('coupon_id')->nullable()->constrained('coupons')->cascadeOnDelete();
             $table->foreignId('package_id')->nullable()->constrained('packages')->cascadeOnDelete();
+            $table->foreignId('department_id')->constrained('departments')->cascadeOnDelete();
             $table->timestamps();
         });
     }

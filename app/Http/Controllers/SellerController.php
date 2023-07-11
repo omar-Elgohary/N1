@@ -15,7 +15,6 @@ class SellerController extends Controller
     }
 
 
-
     public function editSellerPage($id)
     {
         $user = User::find($id);

@@ -13,7 +13,7 @@ class RestaurentMealSeeder extends Seeder
             'department_id' => 1,
             'category_id' => 1,
             'product_image' => '1686825194.jfif',
-            'product_name' => 'كيلو مشوي مشكل',
+            'product_name' => 'مشوي مشكل',
             'description' => 'كيلو مشويات مشكل بسلطة وطحينة وارز',
             'price' => '650',
             'calories' => 360,
@@ -22,8 +22,8 @@ class RestaurentMealSeeder extends Seeder
             'without_id' => 3,
             'branche_id' => 1,
             'quantity' => 800,
-            'sold_quantity' => 50,
-            'remaining_quantity' => 800 - 50,
+            'sold_quantity' => 244,
+            'remaining_quantity' => 800 - 244,
         ]);
 
         RestaurentProduct::create([
@@ -40,8 +40,8 @@ class RestaurentMealSeeder extends Seeder
             'without_id' => 4,
             'branche_id' => 2,
             'quantity' => 650,
-            'sold_quantity' => 50,
-            'remaining_quantity' => 650 - 50,
+            'sold_quantity' => 180,
+            'remaining_quantity' => 650 - 180,
         ]);
     }
 }

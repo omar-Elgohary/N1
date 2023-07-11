@@ -29,7 +29,6 @@
         </script>
     @endif
 
-
         <div class="row text-center d-flex flex-row-reverse">
             <div class="col-lg-6">
                 <h2 class="text-black text-end fw-bold">الاحصائيات</h2>
@@ -49,25 +48,25 @@
             <div class="col-xl-6">
                 <div class="spinners">
                     <div>
-                        <h4 class="card-title text-black">الأكثر مبيعا</h4>
+                        <h4 class="card-title text-black mb-3">الأكثر مبيعا</h4>
                     </div>
 
                 <div class="row lastOffer d-flex justify-content-end">
                     <div class="card-body d-flex justify-content-end">
 
                         @if(auth()->user()->department_id == 1)
-                            @foreach(\App\Models\RestaurentProduct::orderBy('sold_quantity', 'asc')->get() as $product)
-                                <div class="col-lg-1 col-md-2 text-center mx-3" dir="ltr">
-                                    <h5>{{ $product->product_name }}</h5>
+                            @foreach(\App\Models\RestaurentProduct::orderBy('sold_quantity', 'desc')->limit(3)->get() as $product)
+                                <div class="col-lg-2 col-md-2 text-center mx-3" dir="ltr">
                                     <h5>{{ $product->sold_quantity }}</h5>
+                                    <span>{{ $product->product_name }}</span>
                                 </div>
 
                                 <input class="knob p-5" data-width="50" data-height="50" data-linecap=round
-                                    data-fgColor="#FF0000" value="80" data-skin="tron" data-angleOffset="180"
+                                    data-fgColor="#FF0000" value="65" data-skin="tron" data-angleOffset="180"
                                     data-readOnly=true data-thickness=".1"/>
                             @endforeach
                         @elseif(auth()->user()->department_id == 2)
-                            @foreach(\App\Models\ShopProduct::orderBy('sold_quantity', 'asc')->get() as $product)
+                            @foreach(\App\Models\ShopProduct::orderBy('sold_quantity', 'desc')->limit(3)->get() as $product)
                                 <div class="col-lg-1 col-md-2 text-center mx-3" dir="ltr">
                                     <h5>{{ $product->product_name }}</h5>
                                     <h5>{{ $product->sold_quantity }}</h5>
@@ -78,7 +77,7 @@
                                     data-readOnly=true data-thickness=".1"/>
                             @endforeach
                         @else
-                            @foreach(\App\Models\Event::orderBy('tickets_sold_quantity', 'asc')->get() as $product)
+                            @foreach(\App\Models\Event::orderBy('tickets_sold_quantity', 'desc')->limit(3)->get() as $product)
                                 <div class="col-lg-1 col-md-2 text-center mx-3" dir="ltr">
                                     <h5>{{ $product->product_name }}</h5>
                                     <h5>{{ $product->tickets_sold_quantity }}</h5>
@@ -94,103 +93,57 @@
                 </div> <!-- row -->
             </div> <!-- card -->
 
-                <div class="col-xl-12">
-                    <div class="topRate mt-5">
-                        <div class="card-body">
-                            <h4 class="card-title text-black mb-4">الأعلى تقييما</h4>
+            <div class="col-xl-12">
+                <div class="topRate mt-5">
+                    <div class="card-body">
+                        <h4 class="card-title text-black mb-3">الأعلى تقييما</h4>
 
+                    @if(auth()->user()->department_id == 1)
+                        @foreach(\App\Models\Rate::groupBy('restaurent_product_id')->selectRaw('restaurent_product_id,avg(rate) as rate')->where('department_id', auth()->user()->department_id)->orderBy('rate', 'desc')->limit(5)->get() as $rate)
                             <div class="d-flex flex-row-reverse justify-content-between">
-                                <h5>اسم المنتج</h5>
-                                <p>4.5<i class="fa fa-thin fa-star text-warning"></i></p>
-                            </div> <!-- 1 -->
-
+                                <h5>{{ $rate->restaurent_product->product_name }}</h5>
+                                <p>{{ round($rate->rate, 1) }}<i class="fa fa-thin fa-star text-warning"></i></p>
+                            </div>
+                        @endforeach
+                    @elseif(auth()->user()->department_id == 2)
+                        @foreach(\App\Models\Rate::groupBy('shop_product_id')->selectRaw('shop_product_id,avg(rate) as rate')->where('department_id', auth()->user()->department_id)->orderBy('rate', 'desc')->limit(5)->get() as $rate)
                             <div class="d-flex flex-row-reverse justify-content-between">
-                                <h5>اسم المنتج</h5>
-                                <p>3.4<i class="fa fa-thin fa-star text-warning"></i></p>
-                            </div> <!-- 2 -->
-
+                                <h5>{{ $rate->shop_product->product_name }}</h5>
+                                <p>{{ round($rate->rate, 1) }}<i class="fa fa-thin fa-star text-warning"></i></p>
+                            </div>
+                        @endforeach
+                    @elseif(auth()->user()->department_id == 3)
+                        @foreach(\App\Models\Rate::groupBy('event_product_id')->selectRaw('event_product_id,avg(rate) as rate')->where('department_id', auth()->user()->department_id)->orderBy('rate', 'desc')->limit(5)->get() as $rate)
                             <div class="d-flex flex-row-reverse justify-content-between">
-                                <h5>اسم المنتج</h5>
-                                <p>2.2<i class="fa fa-thin fa-star text-warning"></i></p>
-                            </div> <!-- 3 -->
+                                <h5>{{ $rate->event_product->event_name }}</h5>
+                                <p>{{ round($rate->rate, 1) }}<i class="fa fa-thin fa-star text-warning"></i></p>
+                            </div>
+                        @endforeach
+                    @endif
 
-                        </div> <!-- card-body -->
-                    </div> <!-- card -->
-                </div> <!-- col-xl-6 -->
+                    </div> <!-- card-body -->
+                </div> <!-- card -->
             </div> <!-- col-xl-6 -->
-        </div> <!-- row -->
+        </div> <!-- col-xl-6 -->
+    </div> <!-- row -->
 
-        <div class="last text-end mt-5">
-            <div class="col-lg-12">
-                <h4>العروض الاخيرة</h4>
+    <div class="last text-end mt-5">
+        <div class="col-lg-12">
+            <h4 class="card-title text-black mb-3">العروض الاخيرة</h4>
+                <div class="row lastOffer d-flex justify-content-end">
 
-                    <div class="row lastOffer d-flex justify-content-end">
-
+                    @foreach(\App\Models\Offer::where('department_id', auth()->user()->department_id)->where('package_id', null)->limit(5)->get() as $offer)
                         <div class="col-lg-1 col-md-2 col-sm-2 text-center mx-3" dir="ltr">
-                            <h5>اسم المنتج</h5>
-                            <input class="knob" data-width="50" data-height="50" data-linecap=round
-                                data-fgColor="#00FFFF" value="80" data-skin="tron" data-angleOffset="180"
-                                data-readOnly=true data-thickness=".1"/>
-                        </div>
-
-                        <div class="col-lg-1 col-md-2 col-sm-2 text-center mx-3" dir="ltr">
-                            <h5>اسم المنتج</h5>
-                            <input class="knob" data-width="50" data-height="50" data-linecap=round
-                                data-fgColor="#000000" value="75" data-skin="tron" data-angleOffset="180"
-                                data-readOnly=true data-thickness=".1"/>
-                        </div>
-
-                        <div class="col-lg-1 col-md-2 col-sm-2 text-center mx-3" dir="ltr">
-                            <h5>اسم المنتج</h5>
-                            <input class="knob" data-width="50" data-height="50" data-linecap=round
-                                data-fgColor="#C71585" value="60" data-skin="tron" data-angleOffset="180"
-                                data-readOnly=true data-thickness=".1"/>
-                        </div>
-
-                        <div class="col-lg-1 col-md-2 col-sm-2 text-center mx-3" dir="ltr">
-                            <h5>اسم المنتج</h5>
-                            <input class="knob" data-width="50" data-height="50" data-linecap=round
-                                data-fgColor="#FF0000" value="55" data-skin="tron" data-angleOffset="180"
-                                data-readOnly=true data-thickness=".1"/>
-                        </div>
-
-                        <div class="col-lg-1 col-md-2 col-sm-2 text-center mx-3" dir="ltr">
-                            <h5>اسم المنتج</h5>
+                            <h5>{{ $offer->coupon->discount_coupon }}</h5>
                             <input class="knob" data-width="50" data-height="50" data-linecap=round
                                 data-fgColor="#4682B4" value="90" data-skin="tron" data-angleOffset="180"
                                 data-readOnly=true data-thickness=".1"/>
                         </div>
+                    @endforeach
 
-                        <div class="col-lg-1 col-md-2 col-sm-2 text-center mx-3" dir="ltr">
-                            <h5>اسم المنتج</h5>
-                            <input class="knob" data-width="50" data-height="50" data-linecap=round
-                                data-fgColor="#000000" value="35" data-skin="tron" data-angleOffset="180"
-                                data-readOnly=true data-thickness=".1"/>
-                        </div>
-
-                        <div class="col-lg-1 col-md-2 col-sm-2 text-center mx-3" dir="ltr">
-                            <h5>اسم المنتج</h5>
-                            <input class="knob" data-width="50" data-height="50" data-linecap=round
-                                data-fgColor="#FFFF00" value="77" data-skin="tron" data-angleOffset="180"
-                                data-readOnly=true data-thickness=".1"/>
-                        </div>
-
-                        <div class="col-lg-1 col-md-2 col-sm-2 text-center mx-3" dir="ltr">
-                            <h5>اسم المنتج</h5>
-                            <input class="knob" data-width="50" data-height="50" data-linecap=round
-                                data-fgColor="#6B8E23" value="80" data-skin="tron" data-angleOffset="180"
-                                data-readOnly=true data-thickness=".1"/>
-                        </div>
-
-                        <div class="col-lg-1 col-md-2 col-sm-2 text-center mx-3" dir="ltr">
-                            <h5>اسم المنتج</h5>
-                            <input class="knob" data-width="50" data-height="50" data-linecap=round
-                                data-fgColor="#FF0000" value="60" data-skin="tron" data-angleOffset="180"
-                                data-readOnly=true data-thickness=".1"/>
-                        </div>
-                    </div> <!-- card-body -->
-                </div>
+                </div> <!-- card-body -->
             </div>
+        </div>
     </div> <!-- container -->
 </section>
 

@@ -10,6 +10,7 @@ return new class extends Migration
         Schema::create('coupons', function (Blueprint $table) {
             $table->id();
             $table->string('random_id');
+            $table->foreignId('department_id')->constrained('departments')->cascadeOnDelete();
             $table->string('image');
             $table->string('discount_coupon');
             $table->string('discount_percentage');

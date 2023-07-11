@@ -10,6 +10,7 @@ class PackageSeeder extends Seeder
     {
         $package = Package::create([
             'random_id' => '#DFSG48',
+            'department_id' => 1,
             'image' => '1686825194.jfif',
             'first_meal_id' => 1,
             'second_meal_id' => 2,
@@ -23,6 +24,7 @@ class PackageSeeder extends Seeder
 
         $package = Package::create([
             'random_id' => '#DSG564',
+            'department_id' => 1,
             'image' => '1686825194.jfif',
             'first_meal_id' => 3,
             'second_meal_id' => 4,
@@ -36,6 +38,7 @@ class PackageSeeder extends Seeder
 
         $package = Package::create([
             'random_id' => '#SDG647',
+            'department_id' => 1,
             'image' => '1686825194.jfif',
             'first_meal_id' => 5,
             'second_meal_id' => 6,
@@ -49,6 +52,7 @@ class PackageSeeder extends Seeder
 
         $package = Package::create([
             'random_id' => '#FDSG12',
+            'department_id' => 1,
             'image' => '1686825194.jfif',
             'first_meal_id' => 2,
             'second_meal_id' => 4,

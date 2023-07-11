@@ -31,6 +31,7 @@ class CouponController extends Controller
 
         Coupon::create([
             'random_id' => $random_id,
+            'department_id' => auth()->user()->department_id,
             'image' => $image_name,
             'discount_coupon' => $request->discount_coupon,
             'discount_percentage' => $request->discount_percentage,

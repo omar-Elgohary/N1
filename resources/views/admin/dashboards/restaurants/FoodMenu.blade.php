@@ -116,17 +116,18 @@
                     <tr>
                         <th>{{ $product->random_id }}</th>
                         <td>
-                            <a href="{{ route('RestaurentProductDetails', $product->id) }}" class="text-warning">{{ $product->product_name}}</a>
+                            <a href="{{ route('RestaurentProductDetails', $product->id) }}" class="text-warning">{{ $product->product_name }}</a>
                         </td>
                         <td>{{ $product->category->name}}</td>
                         <td>{{ $product->price}}</td>
                         <td>{{ $product->sold_quantity}}</td>
                         <td>{{ $product->remaining_quantity}}</td>
-                        <td><i class="fa fa-thin fa-star text-warning"></i> 4.5</td>
+                        <td><i class="fa fa-thin fa-star text-warning"></i>4.5</td>
                         <td>
                             <a href="{{ route('editRestaurentProduct', $product->id) }}" class="btn bg-white text-success"><i class="fa fa-edit"></i></a>
                             <a href="#deleteProduct{{$product->id}}" class="btn bg-white text-danger" data-bs-toggle="modal"><i class="fa fa-trash"></i></a>
                         </td>
+                        
                     </tr>
 
                     {{-- deleteProduct --}}

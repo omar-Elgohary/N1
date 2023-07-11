@@ -42,6 +42,7 @@ class DatabaseSeeder extends Seeder
             ReservationTypeSeeder::class,
             EventSeeder::class,
             EventOrderSeeder::class,
+            RateSeeder::class,
         ]);
     }
 }

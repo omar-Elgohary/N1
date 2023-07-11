@@ -2459,6 +2459,11 @@ input:checked + .slider:before {
     justify-content: space-between;
 }
 
+.card{
+    text-align: justify;
+    text-justify: inter-word;
+}
+
 @media(max-width: 432px){
     #smallcard{
         background-color: #f5f3f3;

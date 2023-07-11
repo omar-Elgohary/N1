@@ -14,13 +14,13 @@
             @csrf
 
             <div class="col-lg-12">
-                <input type="file" name="image" id="upload-custom">
-                <label for="upload-custom" class="upload-lable text-center @error('image') is-invalid @enderror">
-                    <i class="fa-solid fa-file-image"></i>
-                    <h4 class="drag-text">اضغط أو اسحب الصورة الى هنا</h4>
-                </label>
-                @error('image')<div class="alert alert-danger">{{ $message }}</div>@enderror
-            </div>
+                <div class="col-lg-12">
+                    <div class="drop-zone">
+                        <span class="drop-zone__prompt">اضغط أو اسحب الصور الى هنا</span>
+                        <input type="file" name="image" class="drop-zone__input @error('image') is-invalid @enderror" multiple>
+                        @error('image')<div class="alert alert-danger">{{ $message }}</div>@enderror
+                    </div>
+                </div>
 
             <div class="col-lg-4 mt-3">
                 <div class="form-group">
