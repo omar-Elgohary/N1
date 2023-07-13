@@ -121,6 +121,11 @@ Route::middleware(['CheckRestaurent'])->group(function () {
     Route::get('restaurantMenu', [RestaurantController::class, 'restaurantMenu'])->name('restaurantMenu');
     Route::get('foodMenu', [RestaurantController::class, 'foodMenu'])->name('foodMenu');
 
+    Route::get('foodMenu/category/{category_id}', [RestaurantController::class, 'filterProducts'])->name('filterProducts');
+
+    Route::get('ExportrestaurentPDF', [RestaurantController::class, 'ExportrestaurentPDF'])->name('ExportrestaurentPDF');
+    Route::post('uploadtrestaurentExcel', [RestaurantController::class, 'uploadtrestaurentExcel'])->name('uploadtrestaurentExcel');
+
     Route::post('createCategory', [RestaurantController::class, 'createCategory'])->name('createCategory');
     Route::post('editCategory/{id}', [RestaurantController::class, 'editCategory'])->name('editCategory');
 
@@ -146,6 +151,11 @@ Route::middleware(['CheckShop'])->group(function () {
     Route::get('shopMenu', [ShopController::class, 'shopMenu'])->name('shopMenu');
     Route::get('products', [ShopController::class, 'products'])->name('products');
 
+    Route::get('products/category/{category_id}', [ShopController::class, 'filterShopProducts'])->name('filterShopProducts');
+
+    Route::get('ExportShopPDF', [ShopController::class, 'ExportShopPDF'])->name('ExportShopPDF');
+    Route::post('uploadShopExcel', [ShopController::class, 'uploadShopExcel'])->name('uploadShopExcel');
+
     Route::post('createShopCategory', [ShopController::class, 'createShopCategory'])->name('createShopCategory');
 
     Route::get('createShopProduct', [ShopController::class, 'createShopProduct'])->name('createShopProduct');
@@ -169,6 +179,11 @@ Route::middleware(['CheckEntertainment'])->group(function () {
 
     Route::get('entertainmentsMenu', [EntertainmentController::class, 'entertainmentsMenu'])->name('entertainmentsMenu');
     Route::post('createEntertainmentCategory', [EntertainmentController::class, 'createEntertainmentCategory'])->name('createEntertainmentCategory');
+
+    Route::get('events/category/{category_id}', [EntertainmentController::class, 'filterEventProducts'])->name('filterEventProducts');
+
+    Route::get('ExportEventPDF', [EntertainmentController::class, 'ExportEventPDF'])->name('ExportEventPDF');
+    Route::post('uploadEventExcel', [EntertainmentController::class, 'uploadEventExcel'])->name('uploadEventExcel');
 
     Route::get('events', [EntertainmentController::class, 'events'])->name('events');
 

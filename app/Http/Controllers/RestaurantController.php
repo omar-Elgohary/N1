@@ -1,14 +1,17 @@
 <?php
 namespace App\Http\Controllers;
+use PDF;
 use App\Models\Extra;
-use App\Models\Order;
 use App\Models\Without;
 use App\Models\Category;
-use DateTime;
 use Illuminate\Http\Request;
 use App\Models\RestaurentOrder;
 use App\Models\RestaurentProduct;
 use Illuminate\Support\Facades\File;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\ImportRestaurentProducts;
+
+
 
 class RestaurantController extends Controller
 {
@@ -36,6 +39,19 @@ class RestaurantController extends Controller
         $products = RestaurentProduct::where('department_id', auth()->user()->department_id)->get();
         return view('admin.dashboards.restaurants.FoodMenu', compact('products'));
     }
+
+
+
+
+
+    public function filterProducts(Request $request, $category_id)
+    {
+        $category = Category::find($category_id);
+        $products = RestaurentProduct::where('department_id', auth()->user()->department_id)->where('category_id', $category_id)->get();
+        return view('admin.dashboards.restaurants.FoodMenu', compact('category', 'products'));
+    }
+
+
 
 
 
@@ -324,6 +340,39 @@ class RestaurantController extends Controller
                 'status' => 'متوفر'
             ]);
         return view('admin.branches.admins.Restaurant.details', compact('product', 'extras', 'withouts'));
+        }
+    }
+
+
+
+    //PDF
+    public function ExportrestaurentPDF()
+    {
+        $products = RestaurentProduct::get();
+        $data = [
+            'title' => 'Welcome to N1 Restaurents System',
+            'date' => date('m/d/Y'),
+            'products' => $products
+        ];
+        $pdf = PDF::loadView('pdf.restaurentProducts', $data);
+        return $pdf->download('restaurentProducts.pdf');
+    }
+
+
+    public function uploadtrestaurentExcel(Request $request)
+    {
+        try{
+            $request->validate([
+                'file' => 'required|max:10000|mimes:xlsx,xls',
+            ]);
+            $path = $request->file('file')->getRealPath();
+
+            Excel::import(new ImportRestaurentProducts, $path);
+
+            session()->flash('ExcelImported', 'Excel Imported Successfully!');
+            return back();
+        }catch(\Exception $e){
+            dd($e->getMessage());
         }
     }
 }

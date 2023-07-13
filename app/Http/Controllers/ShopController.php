@@ -1,5 +1,6 @@
 <?php
 namespace App\Http\Controllers;
+use PDF;
 use App\Models\Size;
 use App\Models\Color;
 use App\Models\Category;
@@ -7,6 +8,8 @@ use App\Models\ShopOrder;
 use App\Models\ShopProduct;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\ImportShopProducts;
 
 class ShopController extends Controller
 {
@@ -23,6 +26,18 @@ class ShopController extends Controller
         $products = ShopProduct::where('department_id', auth()->user()->department_id)->get();
         return view('admin.dashboards.shops.products', compact('products'));
     }
+
+
+
+
+    public function filterShopProducts(Request $request, $category_id)
+    {
+        $category = Category::find($category_id);
+        $products = ShopProduct::where('department_id', auth()->user()->department_id)->where('category_id', $category_id)->get();
+        return view('admin.dashboards.shops.products', compact('category', 'products'));
+    }
+
+
 
 
 
@@ -275,5 +290,40 @@ class ShopController extends Controller
     {
         $product = ShopProduct::find($id);
         return view('admin.branches.admins.Shop.details', compact('product'));
+    }
+
+
+
+
+
+    //PDF
+    public function ExportShopPDF()
+    {
+        $products = ShopProduct::get();
+        $data = [
+            'title' => 'Welcome to N1.com',
+            'date' => date('m/d/Y'),
+            'products' => $products
+        ];
+        $pdf = PDF::loadView('pdf.shopProducts', $data);
+        return $pdf->download('shopProducts.pdf');
+    }
+
+
+    public function uploadShopExcel(Request $request)
+    {
+        try{
+            $request->validate([
+                'file' => 'required|max:10000|mimes:xlsx,xls',
+            ]);
+            $path = $request->file('file')->getRealPath();
+
+            Excel::import(new ImportShopProducts, $path);
+
+            session()->flash('ExcelImported', 'Excel Imported Successfully!');
+            return back();
+        }catch(\Exception $e){
+            dd($e->getMessage());
+        }
     }
 }

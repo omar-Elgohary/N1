@@ -58,6 +58,16 @@
     </script>
 @endif
 
+@if (session()->has('ExcelImported'))
+    <script>
+        window.onload = function() {
+            notif({
+                msg: 'تم رفع ملف الاكسيل بنجاح ',
+                type: "success"
+            })
+        }
+    </script>
+@endif
 
 @section('content')
 <div class="col-12 d-flex flex-row-reverse text-end">
@@ -71,9 +81,11 @@
 		<aside class="sidebar">
 			<h3 class="text-black">المنيو</h3>
 			<nav class="menu">
-				<a href="#" class="menu-item is-active">الكل</a>
+				<a href="{{ route('foodMenu') }}" class="menu-item {{ !request('category_id') ? 'is-active' : '' }}">الكل</a>
                 @foreach (\App\Models\Category::where('department_id', auth()->user()->department_id)->get() as $category)
-                    <a href="#" class="menu-item">{{ $category->name}}</a>
+                    <a href="{{ route('filterProducts', $category->id) }}" class="menu-item {{ request('category_id') == $category->id ? 'is-active' : '' }}">
+                        {{ $category->name}}
+                    </a>
                 @endforeach
                 <a href="#addCategoryName" id="package" class="btn mt-3" data-bs-toggle="modal">اضافة قسم جديد</a>
             </nav>
@@ -88,8 +100,8 @@
         </div>
 
         <div class="col-6 text-start">
-            <a href="#" id="pdf" class="btn btn-success btns">PDF <i class="fa fa-thin fa-print fa-xl"></i></a>
-            <a id="login" class="btn btns" data-bs-toggle="modal" href="#" role="button">استيراد من اكسل<i class="fa-solid fa-file-excel fa-xl"></i></a>
+            <a href="{{ route('ExportrestaurentPDF') }}" id="pdf" class="btn btn-success btns">PDF <i class="fa fa-thin fa-print fa-xl"></i></a>
+            <a id="login" class="btn btns" data-bs-toggle="modal" href="#importData" role="button">استيراد من اكسل<i class="fa-solid fa-file-excel fa-xl"></i></a>
             <a id="login" class="btn btns" href="{{ route('createRestaurentProduct') }}">اضافة منتج جديد</a>
             {{-- <a href="#editCategoryName" id="coupon" class="btn btn-block btn-bordered px-4 btns" data-bs-toggle="modal">تعديل اسم الفئة</a> --}}
         </div>
@@ -102,7 +114,13 @@
                     <tr>
                         <th>#</th>
                         <th>اسم المنتج</th>
-                        <th>القسم</th>
+
+                        @if(request('category_id'))
+                            <td></td>
+                        @else
+                            <th>القسم</th>
+                        @endif
+
                         <th>السعر</th>
                         <th>الكمية المباعة</th>
                         <th>الكمية المتبقية</th>
@@ -112,13 +130,20 @@
                 </thead>
 
                 <tbody>
-                @forelse ($products as $key => $product)
+                @if(request('category_id'))
+                    @forelse ($products as $key => $product)
                     <tr>
                         <th>{{ $product->random_id }}</th>
                         <td>
                             <a href="{{ route('RestaurentProductDetails', $product->id) }}" class="text-warning">{{ $product->product_name }}</a>
                         </td>
-                        <td>{{ $product->category->name}}</td>
+
+                        @if(request('category_id'))
+                            <td></td>
+                        @else
+                            <td>{{ $product->category->name}}</td>
+                        @endif
+
                         <td>{{ $product->price}}</td>
                         <td>{{ $product->sold_quantity}}</td>
                         <td>{{ $product->remaining_quantity}}</td>
@@ -127,7 +152,6 @@
                             <a href="{{ route('editRestaurentProduct', $product->id) }}" class="btn bg-white text-success"><i class="fa fa-edit"></i></a>
                             <a href="#deleteProduct{{$product->id}}" class="btn bg-white text-danger" data-bs-toggle="modal"><i class="fa fa-trash"></i></a>
                         </td>
-                        
                     </tr>
 
                     {{-- deleteProduct --}}
@@ -151,13 +175,68 @@
                         </div> <!-- modal-dialog -->
                     </div> <!-- modal fade -->
 
-                @empty
-                    <tr>
-                        <th class="text-danger" colspan="10">
-                            لا يوجد بيانات
-                        </th>
-                    </tr>
-                @endforelse
+                    @empty
+                        <tr>
+                            <th class="text-danger" colspan="10">
+                                لا يوجد بيانات
+                            </th>
+                        </tr>
+                    @endforelse
+                @else
+
+                    @forelse ($products as $key => $product)
+                        <tr>
+                            <th>{{ $product->random_id }}</th>
+                            <td>
+                                <a href="{{ route('RestaurentProductDetails', $product->id) }}" class="text-warning">{{ $product->product_name }}</a>
+                            </td>
+
+                            @if(request('category_id'))
+                                <td></td>
+                            @else
+                                <td>{{ $product->category->name}}</td>
+                            @endif
+
+                            <td>{{ $product->price}}</td>
+                            <td>{{ $product->sold_quantity}}</td>
+                            <td>{{ $product->remaining_quantity}}</td>
+                            <td><i class="fa fa-thin fa-star text-warning"></i>4.5</td>
+                            <td>
+                                <a href="{{ route('editRestaurentProduct', $product->id) }}" class="btn bg-white text-success"><i class="fa fa-edit"></i></a>
+                                <a href="#deleteProduct{{$product->id}}" class="btn bg-white text-danger" data-bs-toggle="modal"><i class="fa fa-trash"></i></a>
+                            </td>
+                        </tr>
+
+                        {{-- deleteProduct --}}
+                        <div class="modal fade border-0" id="deleteProduct{{$product->id}}" aria-hidden="true" aria-labelledby="deleteProductLabel" tabindex="-1" dir="rtl">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="btn-x modal-header">
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+
+                                    <div class="modal-body text-center my-5">
+                                        <h2>هل أنت متأكد من حذف هذا المنتج؟</h2>
+                                    </div>
+
+                                    <div class="d-flex justify-content-around mb-5">
+                                        <button type="button" id="coupon" class="btn px-5" data-bs-dismiss="modal">تراجع</button>
+                                        <a href="{{ route('deleteRestaurentProduct', $product->id) }}" id="package" type="button" class="btn btn-block px-5 text-white">حذف</a>
+
+                                    </div>
+                                </div> <!-- modal-content -->
+                            </div> <!-- modal-dialog -->
+                        </div> <!-- modal fade -->
+
+                    @empty
+                        <tr>
+                            <th class="text-danger" colspan="10">
+                                لا يوجد بيانات
+                            </th>
+                        </tr>
+                    @endforelse
+                @endif
+
                 </tbody>
             </table>
         </div>
@@ -191,6 +270,28 @@
 </div> <!-- modal fade -->
 
 
+{{-- importExcel --}}
+<div class="modal fade border-0" id="importData" aria-hidden="true" aria-labelledby="importDataLabel" tabindex="-1" dir="rtl">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="btn-x modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+        <form action="{{ route('uploadtrestaurentExcel') }}" method="post" enctype="multipart/form-data">
+            @csrf
+            <div class="modal-body my-5">
+                <input type="file" name="file" class="form-control rounded-0">
+            </div>
+
+            <div class="d-flex justify-content-around mb-5">
+                <button href="#" id="coupon" class="btn px-5" data-bs-dismiss="modal">الغاء</button>
+                <button id="package" type="submit" class="btn btn-block px-5 text-white">اضف</button>
+            </div>
+        </form>
+        </div> <!-- modal-content -->
+    </div> <!-- modal-dialog -->
+</div> <!-- modal fade -->
 
 {{-- edit category name --}}
 {{-- <div class="modal fade border-0" id="editCategoryName" aria-hidden="true" aria-labelledby="editCategoryNameLabel" tabindex="-1" dir="rtl">

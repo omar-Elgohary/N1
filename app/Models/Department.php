@@ -16,4 +16,10 @@ class Department extends Model
     {
         return $this->hasMany(Category::class);
     }
+
+
+    public function RestaurentProducts()
+    {
+        return $this->hasMany(RestaurentProduct::class);
+    }
 }

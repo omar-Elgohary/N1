@@ -20,7 +20,7 @@
             <a href="{{ route('front.questions') }}" class="text-dark">الأسئلة الشائعة</a><br>
             <a href="#" class="text-dark">سياسة الخصوصية</a><br>
         </div>
-    </div>
+    </div>	
     </div>
 </div>
 

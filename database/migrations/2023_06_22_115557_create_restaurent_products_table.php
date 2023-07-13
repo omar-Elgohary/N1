@@ -19,9 +19,9 @@ return new class extends Migration
             $table->string('calories')->nullable();
             $table->enum('status', ['متوفر', 'غير متوفر'])->default('متوفر');
 
-            $table->string('extra_id')->nullable();
-            $table->string('without_id')->nullable();
-            $table->string('branche_id')->nullable();
+            $table->string('extra_id')->nullable()->constrained('extras');
+            $table->string('without_id')->nullable()->constrained('withouts');
+            $table->string('branche_id')->nullable()->constrained('branches');
 
             $table->string('quantity');
             $table->string('sold_quantity')->nullable();

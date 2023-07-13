@@ -1,11 +1,14 @@
 <?php
 namespace App\Http\Controllers;
+use PDF;
 use App\Models\Event;
 use App\Models\Category;
 use App\Models\EventOrder;
 use Illuminate\Http\Request;
 use App\Models\ReservationType;
 use Illuminate\Support\Facades\File;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\ImportEventProducts;
 
 class EntertainmentController extends Controller
 {
@@ -15,16 +18,25 @@ class EntertainmentController extends Controller
     }
 
 
+
+
     public function createEntertainmentCategory(Request $request)
     {
-        Category::create([
-            'name' => $request->name,
-            'department_id' => auth()->user()->department_id,
-        ]);
+        if(!$request->name){
+            session()->flash('ErrorName');
+            return redirect()->route('events');
+        }else{
+            Category::create([
+                'name' => $request->name,
+                'department_id' => auth()->user()->department_id,
+            ]);
+        }
 
         session()->flash('addCategory');
         return redirect()->route('events');
     }
+
+
 
 
     public function events()
@@ -32,6 +44,18 @@ class EntertainmentController extends Controller
         $events = Event::all();
         return view('admin.dashboards.Entertainments.events', compact('events'));
     }
+
+
+
+
+
+    public function filterEventProducts($category_id)
+    {
+        $category = Category::find($category_id);
+        $events = Event::where('department_id', auth()->user()->department_id)->where('category_id', $category_id)->get();
+        return view('admin.dashboards.Entertainments.events', compact('category', 'events'));
+    }
+
 
 
 
@@ -218,5 +242,42 @@ class EntertainmentController extends Controller
     {
         $event = Event::find($id);
         return view('admin.branches.admins.Entertainment.details', compact('event'));
+    }
+
+
+
+
+
+    // PDF
+    public function ExportEventPDF()
+    {
+        $events = Event::get();
+        $data = [
+            'title' => 'Welcome to N1.com',
+            'date' => date('m/d/Y'),
+            'events' => $events
+        ];
+        $pdf = PDF::loadView('pdf.eventProducts', $data);
+        return $pdf->download('eventProducts.pdf');
+    }
+
+
+
+    // Excel
+    public function uploadEventExcel(Request $request)
+    {
+        try{
+            $request->validate([
+                'file' => 'required|max:10000|mimes:xlsx,xls',
+            ]);
+            $path = $request->file('file')->getRealPath();
+
+            Excel::import(new ImportEventProducts, $path);
+
+            session()->flash('ExcelImported', 'Excel Imported Successfully!');
+            return back();
+        }catch(\Exception $e){
+            dd($e->getMessage());
+        }
     }
 }

@@ -30,7 +30,7 @@
     <!-- Template Main CSS File -->
     <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
 <body>
-    <div class="container d-flex align-items-center justify-content-between">
+    <div class="container d-flex align-items-center justify-content-between mb-3">
         <div class="dropdown">
             <button class="btn dropdown-toggle fw-bold border-0" dir="rtl" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="fa-solid fa-circle-user fa-lg text-warning"></i> اسم المتجر
@@ -46,8 +46,8 @@
             <img class="p-3" src="{{ asset('images/logo.png') }}" alt="logo">
             <ul>
                 <li><a class="nav-link text-black scrollto <?= 'title' == 'الرئيسية' ? 'active' : ''?>" href="/admin">الرئيسية</a></li>
-                <li><a class="nav-link text-black scrollto <?= 'title' == 'اتصل بنا' ? 'active' : ''?>" href="{{ route('contact_us') }}">اتصل بنا</a></li>
-                <li><a class="nav-link text-black scrollto <?= 'title' == 'عن N1' ? 'active' : ''?>" href="/about">عن N1</a></li>
+                {{-- <li><a class="nav-link text-black scrollto <?= 'title' == 'اتصل بنا' ? 'active' : ''?>" href="{{ route('contact_us') }}">اتصل بنا</a></li> --}}
+                {{-- <li><a class="nav-link text-black scrollto <?= 'title' == 'عن N1' ? 'active' : ''?>" href="/about">عن N1</a></li> --}}
 
                 @if(auth()->user()->department_id == 1)
                     <li><a class="nav-link text-black scrollto <?= 'title' == 'القائمة' ? 'active' : ''?>" href="{{route('foodMenu')}}">القائمة</a></li>
