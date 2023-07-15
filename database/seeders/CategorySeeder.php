@@ -18,33 +18,45 @@ class CategorySeeder extends Seeder
             'department_id' => 1,
         ]); // 2
 
+        Category::create([
+            'name' => 'مشروبات',
+            'department_id' => 1,
+        ]); // 3
+
+
 
         // Shop
         Category::create([
-            'name' => 'اطفالي',
-            'department_id' => 2,
-        ]); // 3
-
-        Category::create([
-            'name' => 'حريمي',
+            'name' => 'ملابس كاجوال',
             'department_id' => 2,
         ]); // 4
 
         Category::create([
-            'name' => 'رجالي',
+            'name' => 'أحذية',
             'department_id' => 2,
         ]); // 5
+
+        Category::create([
+            'name' => 'عبايات',
+            'department_id' => 2,
+        ]); // 6
+
 
 
         // Entertainment
         Category::create([
             'name' => 'ملاهي',
             'department_id' => 3,
-        ]); // 6
+        ]); // 7
 
         Category::create([
             'name' => 'سينما',
             'department_id' => 3,
-        ]); // 7
+        ]); // 8
+
+        Category::create([
+            'name' => 'ملاعب',
+            'department_id' => 3,
+        ]); // 9
     }
 }

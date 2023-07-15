@@ -13,7 +13,6 @@
         <form action="{{ route('updateRestaurentProduct', $product->id) }}" method="post" enctype="multipart/form-data">
             @csrf
 
-
             <div class="row col-12">
                 <div class="col-lg-6">
                     <div class="drop-zone">
@@ -23,20 +22,27 @@
                 </div>
 
                 <div class="col-lg-6">
-                    <img src="{{ asset('assets/images/products/'.$product->product_image) }}" name="product_image" height="150" width="250">
+                    <img src="{{ asset('assets/images/products/'.$product->product_image) }}" name="product_image" alt="product_image" height="150" width="250">
                 </div>
             </div>
 
             <div class="col-lg-4 mt-3">
                 <div class="form-group">
                     <label>القسم</label>
-                    <select name="category_id" class="form-control rounded-0 mb-4 mt-2 @error('category_id') is-invalid @enderror">
-                        <option value="{{ $product->category->id }}">{{ $product->category->name }}</option>
-                        @foreach (\App\Models\Category::where('id', '!=', $product->category_id)->where('department_id', auth()->user()->department_id)->get() as $category)
+                    <select name="category_id" class="form-control rounded-0 mb-4 mt-2 @error('category_id') is-invalid @enderror" onclick="console.log($(this).val())" onchange="console.log('change is firing')">
+                        <option value="" selected disabled>حدد القسم</option>
+                        @foreach (\App\Models\Category::where('department_id', auth()->user()->department_id)->get() as $category)
                             <option value="{{ $category->id }}">{{ $category->name }}</option>
                         @endforeach
                     </select>
                     @error('category_id')<div class="alert alert-danger">{{ $message }}</div>@enderror
+                </div> <!-- 1 -->
+
+
+                <div class="form-group">
+                    <label>الفئة الفرعية</label>
+                    <select name="sub_category_name" id="sub_category_name" class="form-control rounded-0 mb-4 mt-2">
+                    </select>
                 </div> <!-- 1 -->
 
                 <div class="form-group">
@@ -111,7 +117,7 @@
                 <hr>
 
                 <h5 class="fw-bold">الفروع التي توفر المنتج:</h5>
-                <div class="branches">
+                <div class="branches p-2">
                     @forelse (\App\Models\Branch::where('department_id', auth()->user()->department_id)->get() as $branch)
                         <div class="form-group mb-3">
                             <label class="custom-checks text-black">{{ $branch->branche_title}}

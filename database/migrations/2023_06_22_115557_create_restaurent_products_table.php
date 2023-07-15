@@ -12,6 +12,7 @@ return new class extends Migration
             $table->string('random_id');
             $table->foreignId('department_id')->constrained('departments')->cascadeOnDelete();
             $table->foreignId('category_id')->constrained('categories')->cascadeOnDelete();
+            $table->foreignId('sub_category_id')->constrained('sub_categories')->cascadeOnDelete();
             $table->string('product_image');
             $table->string('product_name');
             $table->string('description');
@@ -19,9 +20,9 @@ return new class extends Migration
             $table->string('calories')->nullable();
             $table->enum('status', ['متوفر', 'غير متوفر'])->default('متوفر');
 
-            $table->string('extra_id')->nullable()->constrained('extras');
-            $table->string('without_id')->nullable()->constrained('withouts');
-            $table->string('branche_id')->nullable()->constrained('branches');
+            $table->string('extra_id')->constrained('extras')->nullable();
+            $table->string('without_id')->constrained('withouts')->nullable();
+            $table->string('branche_id')->constrained('branches')->nullable();
 
             $table->string('quantity');
             $table->string('sold_quantity')->nullable();

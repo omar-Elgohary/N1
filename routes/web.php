@@ -1,4 +1,6 @@
 <?php
+
+use App\Http\Controllers\Admin\CategoryController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\ShopController;
@@ -36,6 +38,11 @@ Route::get('about', function () {
 
 // Admin
 Route::middleware(['authenticated'])->group(function(){   // User Must Be Authenticated
+
+    Route::post('addSubCategory', [CategoryController::class, 'addSubCategory'])->name('addSubCategory');
+    
+    // ده الراوت الخاص بانه يجيب الفئات الفرعية التابعه لكل قسم
+    Route::get('category/{id}', [CategoryController::class, 'getCategorySubs']);
 
 Route::middleware(['CheckUser'])->group(function () {
 

@@ -20,7 +20,7 @@
             <a href="{{ route('front.questions') }}" class="text-dark">الأسئلة الشائعة</a><br>
             <a href="#" class="text-dark">سياسة الخصوصية</a><br>
         </div>
-    </div>	
+    </div>
     </div>
 </div>
 
@@ -80,6 +80,29 @@
     });
 </script>
 
+<script>
+    $(document).ready(function() {
+        $('select[name="category_id"]').on('change', function() {
+            var CategoryId = $(this).val();
+            if (CategoryId) {
+                $.ajax({
+                    url: "{{ URL::to('category') }}/" + CategoryId,
+                    type: "GET",
+                    dataType: "json",
+                    success: function(data) {
+                        $('select[name="sub_category_name"]').empty();
+                        $.each(data, function(key, value) {
+                            $('select[name="sub_category_name"]').append('<option value="' +
+                                value + '">' + value + '</option>');
+                        });
+                    },
+                });
+            } else {
+                console.log('AJAX load did not work');
+            }
+        });
+    });
+</script>
 
 <script>
     document.querySelectorAll(".drop-zone__input").forEach((inputElement) => {

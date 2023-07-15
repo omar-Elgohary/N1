@@ -4,9 +4,11 @@ use PDF;
 use App\Models\Extra;
 use App\Models\Without;
 use App\Models\Category;
+use App\Models\SubCategory;
 use Illuminate\Http\Request;
 use App\Models\RestaurentOrder;
 use App\Models\RestaurentProduct;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\ImportRestaurentProducts;
@@ -36,8 +38,9 @@ class RestaurantController extends Controller
 
     public function foodMenu()
     {
+        $categories = Category::where('department_id', auth()->user()->department_id)->get();
         $products = RestaurentProduct::where('department_id', auth()->user()->department_id)->get();
-        return view('admin.dashboards.restaurants.FoodMenu', compact('products'));
+        return view('admin.dashboards.restaurants.FoodMenu', compact('categories', 'products'));
     }
 
 
@@ -57,82 +60,98 @@ class RestaurantController extends Controller
 
     public function createRestaurentProduct()
     {
-        return view('admin.dashboards.restaurants.create');
+        $categories = Category::where('department_id', auth()->user()->department_id)->get();
+        return view('admin.dashboards.restaurants.create', compact('categories'));
     }
+
 
 
 
     public function storeRestaurentProduct(Request $request)
     {
-        $this->validate($request, [
-            'category_id' => 'required',
-            'product_image' => 'required',
-            'product_name' => 'required',
-            'description' => 'required',
-            'price' => 'required|numeric',
-            'calories' => 'required|numeric',
-            'extra_id' => 'bail|nullable',
-            'without_id' => 'bail|nullable',
-            'branche_id' => 'bail|nullable',
-            'quantity' => 'required|numeric',
-            'sold_quantity' => 'bail|nullable',
-            'remaining_quantity' => 'bail|nullable',
-        ]);
+        try{
+            $this->validate($request, [
+                'category_id' => 'required',
+                'sub_category_name' => 'required',
+                'product_image' => 'required',
+                'product_name' => 'required',
+                'description' => 'required',
+                'price' => 'required|numeric',
+                'calories' => 'required|numeric',
+                'branche_id' => 'bail|nullable|sometimes',
+                'quantity' => 'required|numeric',
+                'sold_quantity' => 'bail|nullable',
+                'remaining_quantity' => 'bail|nullable',
+            ]);
 
-        $random_id = strtoupper('#'.substr(str_shuffle(uniqid()),0,4));
-        while(RestaurentProduct::where('random_id', $random_id )->exists()){
             $random_id = strtoupper('#'.substr(str_shuffle(uniqid()),0,4));
+            while(RestaurentProduct::where('random_id', $random_id )->exists()){
+                $random_id = strtoupper('#'.substr(str_shuffle(uniqid()),0,4));
+            }
+
+            $file_extention = $request->file("product_image")->getCLientOriginalExtension();
+            $image_name = time(). ".".$file_extention;
+            $request->file("product_image")->move(public_path('assets/images/meals/'), $image_name);
+
+            $subCatName = $request->sub_category_name;
+            $element = SubCategory::where('name', $subCatName)->first()->id;    // to get sub category name
+
+            if($request->has('extra_id') || $request->has('without_id'))
+            {
+                $extra = implode(',', $request->extra_id);
+                $without = implode(',', $request->without_id);
+                $branche = implode(',', $request->branche_id);
+            }else{
+                $extra = '';
+                $without = '';
+                $branche = '';
+            }
+
+            if($request->status == 'on')
+            {
+                RestaurentProduct::create([
+                    'random_id' => $random_id,
+                    'department_id' => auth()->user()->department_id,
+                    'product_image' => $image_name,
+                    'category_id' => $request->category_id,
+                    'sub_category_id' => $element,
+                    'product_name' => $request->product_name,
+                    'description' => $request->description,
+                    'price' => $request->price,
+                    'status' => 'متوفر',
+                    'calories' => $request->calories,
+                    'extra_id' => $extra,
+                    'without_id' => $without,
+                    'branche_id' => $branche,
+                    'quantity' => $request->quantity,
+                    'sold_quantity' => 50,
+                    'remaining_quantity' => ($request->quantity - $request->sold_quantity),
+                ]);
+            }else{
+                RestaurentProduct::create([
+                    'random_id' => $random_id,
+                    'department_id' => auth()->user()->department_id,
+                    'product_image' => $image_name,
+                    'category_id' => $request->category_id,
+                    'sub_category_id' => $element,
+                    'product_name' => $request->product_name,
+                    'description' => $request->description,
+                    'price' => $request->price,
+                    'status' => 'غير متوفر',
+                    'calories' => $request->calories,
+                    'extra_id' => $extra,
+                    'without_id' => $without,
+                    'branche_id' => $branche,
+                    'quantity' => $request->quantity,
+                    'sold_quantity' => 50,
+                    'remaining_quantity' => $request->remaining_quantity - $request->sold_quantity,
+                ]);
+            }
+            session()->flash('addRestaurentProduct');
+            return redirect()->route('foodMenu');
+        }catch(\Exception $e){
+            dd($e->getMessage());
         }
-
-        $file_extention = $request->file("product_image")->getCLientOriginalExtension();
-        $image_name = time(). ".".$file_extention;
-        $request->file("product_image")->move(public_path('assets/images/meals/'), $image_name);
-
-        $extra = implode(',', $request->extra_id) ;
-        $without = implode(',', $request->without_id) ;
-        $branche = implode(',', $request->branche_id) ;
-
-        if($request->status == 'on')
-        {
-            RestaurentProduct::create([
-                'random_id' => $random_id,
-                'department_id' => auth()->user()->department_id,
-                'product_image' => $image_name,
-                'category_id' => $request->category_id,
-                'product_name' => $request->product_name,
-                'description' => $request->description,
-                'price' => $request->price,
-                'status' => 'متوفر',
-                'calories' => $request->calories,
-                'extra_id' => $extra,
-                'without_id' => $without,
-                'branche_id' => $branche,
-                'quantity' => $request->quantity,
-                'sold_quantity' => 50,
-                'remaining_quantity' => ($request->quantity - $request->sold_quantity),
-            ]);
-        }else{
-            RestaurentProduct::create([
-                'random_id' => $random_id,
-                'department_id' => auth()->user()->department_id,
-                'product_image' => $image_name,
-                'category_id' => $request->category_id,
-                'product_name' => $request->product_name,
-                'description' => $request->description,
-                'price' => $request->price,
-                'status' => 'غير متوفر',
-                'calories' => $request->calories,
-                'extra_id' => $extra,
-                'without_id' => $without,
-                'branche_id' => $branche,
-                'quantity' => $request->quantity,
-                'sold_quantity' => 50,
-                'remaining_quantity' => $request->remaining_quantity - $request->sold_quantity,
-            ]);
-        }
-
-        session()->flash('addRestaurentProduct');
-        return redirect()->route('foodMenu');
     }
 
 
@@ -166,60 +185,76 @@ class RestaurantController extends Controller
 
     public function updateRestaurentProduct(Request $request, $id)
     {
-        $product = RestaurentProduct::find($id);
+        try{
+            $product = RestaurentProduct::find($id);
 
-        if($request->hasFile('product_image'))
-        {
-            $oldImage = 'assets/images/meals/'.$product->image;
-            if(File::exists($oldImage))
+            if($request->hasFile('product_image'))
             {
-                File::delete($oldImage);
+                $oldImage = 'assets/images/meals/'.$product->image;
+                if(File::exists($oldImage))
+                {
+                    File::delete($oldImage);
+                }
+                $file_extention = $request->file("product_image")->getCLientOriginalExtension();
+                $newImage = time(). "." .$file_extention;
+                $request->file("product_image")->move(public_path('assets/images/meals/'), $newImage);
+                $product->product_image = $newImage;
             }
-            $file_extention = $request->file("product_image")->getCLientOriginalExtension();
-            $newImage = time(). "." .$file_extention;
-            $request->file("product_image")->move(public_path('assets/images/meals/'), $newImage);
-            $product->product_image = $newImage;
+
+            $subCatName = $request->sub_category_name;
+            $element = SubCategory::where('name', $subCatName)->first()->id;    // to get sub category name
+
+            if($request->has('extra_id') || $request->has('without_id'))
+            {
+                $extra = implode(',', $request->extra_id);
+                $without = implode(',', $request->without_id);
+                $branche = implode(',', $request->branche_id);
+            }else{
+                $extra = '';
+                $without = '';
+                $branche = '';
+            }
+
+            if($request->status == 'off')
+            {
+                $product->update([
+                    'category_id' => $request->category_id,
+                    'sub_category_id' => $element,
+                    'product_name' => $request->product_name,
+                    'description' => $request->description,
+                    'price' => $request->price,
+                    'status' => 'غير متوفر',
+                    'calories' => $request->calories,
+                    'extra_id' => $extra,
+                    'without_id' => $without,
+                    'branche_id' => $branche,
+                    'quantity' => $request->quantity,
+                    'sold_quantity' => 50,
+                    'remaining_quantity' => $request->remaining_quantity - $request->sold_quantity,
+                ]);
+            }else{
+                $product->update([
+                    'category_id' => $request->category_id,
+                    'sub_category_id' => $element,
+                    'product_name' => $request->product_name,
+                    'description' => $request->description,
+                    'price' => $request->price,
+                    'status' => 'متوفر',
+                    'calories' => $request->calories,
+                    'extra_id' => $extra,
+                    'without_id' => $without,
+                    'branche_id' => $branche,
+                    'quantity' => $request->quantity,
+                    'sold_quantity' => 50,
+                    'remaining_quantity' => $request->remaining_quantity - $request->sold_quantity,
+                ]);
+            }
+
+            session()->flash('editRestaurentProduct');
+            return redirect()->route('foodMenu');
+        }catch(\Exception $e){
+            dd($e->getMessage());
         }
-
-        $extra   = implode(',', $request->extra_id);
-        $without = implode(',', $request->without_id);
-        $branche = implode(',', $request->branche_id);
-
-        if($request->status == 'off')
-        {
-            $product->update([
-                'category_id' => $request->category_id,
-                'product_name' => $request->product_name,
-                'description' => $request->description,
-                'price' => $request->price,
-                'status' => 'غير متوفر',
-                'calories' => $request->calories,
-                'extra_id' => $extra,
-                'without_id' => $without,
-                'branche_id' => $branche,
-                'quantity' => $request->quantity,
-                'sold_quantity' => 50,
-                'remaining_quantity' => $request->remaining_quantity - $request->sold_quantity,
-            ]);
-        }else{
-            $product->update([
-                'category_id' => $request->category_id,
-                'product_name' => $request->product_name,
-                'description' => $request->description,
-                'price' => $request->price,
-                'status' => 'متوفر',
-                'calories' => $request->calories,
-                'extra_id' => $extra,
-                'without_id' => $without,
-                'branche_id' => $branche,
-                'quantity' => $request->quantity,
-                'sold_quantity' => 50,
-                'remaining_quantity' => $request->remaining_quantity - $request->sold_quantity,
-            ]);
-        }
-
-        session()->flash('editRestaurentProduct');
-        return redirect()->route('foodMenu');
     }
 
 

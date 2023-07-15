@@ -34,7 +34,7 @@
 
         <form action="#" method="post">
             <div class="col-lg-12 pt-0 p-2">
-                <img src="{{ asset('assets/images/products/'.$product->product_image) }}" class="m-1 mt-0" height="150" alt="">
+                <img src="{{ asset('assets/images/products/'.$product->product_image) }}" name="product_image" class="m-1 mt-0" height="150" alt="product_image">
             </div>
 
             <div class="col-lg-4 mt-3">
@@ -54,7 +54,7 @@
 
                 <div class="form-group my-4">
                     <label>الوصف</label>
-                    <label class="mx-5">{{ $product->description }}</label>
+                    <label>{{ $product->description }}</label>
                 </div> <!-- 3 -->
 
                 <div class="form-group my-4">
@@ -76,7 +76,7 @@
                 @foreach($extras as $extra)
                         <div class="form-group my-4">
                             <label>- {{ $extra->name }}</label>
-                        </div> 
+                        </div>
                     @endforeach
                 @else
                     <h5 class="text-danger">لا يوجد اضافات</h5>
@@ -91,7 +91,7 @@
                     @foreach ($withouts as $without)
                         <div class="form-group my-4">
                             <p>- {{ $without->name }}</p>
-                        </div> 
+                        </div>
                     @endforeach
                 @else
                     <h5 class="text-danger">لا يوجد مكونات</h5>

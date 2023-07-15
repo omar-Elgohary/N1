@@ -22,14 +22,22 @@
             <div class="col-lg-4 mt-4">
                 <div class="form-group">
                     <label>القسم</label>
-                    <select name="category_id" class="form-control rounded-0 mb-4 mt-2 @error('category_id') is-invalid @enderror">
+                    <select name="category_id" class="form-control rounded-0 mb-4 mt-2 @error('category_id') is-invalid @enderror" onclick="console.log($(this).val())" onchange="console.log('change is firing')">
+                        <option value="" selected disabled>حدد القسم</option>
                         @foreach (\App\Models\Category::where('department_id', auth()->user()->department_id)->get() as $category)
-                        {{-- @foreach (\App\Models\Category::all() as $category) --}}
                             <option value="{{ $category->id }}">{{ $category->name }}</option>
                         @endforeach
                     </select>
                     @error('category_id')<div class="alert alert-danger">{{ $message }}</div>@enderror
                 </div> <!-- 1 -->
+
+
+                <div class="form-group">
+                    <label for="inputName">الفئة الفرعية</label>
+                    <select name="sub_category_name" id="sub_category_name" class="form-control rounded-0 mb-4 mt-2">
+                    </select>
+                </div> <!-- 1 -->
+
 
                 <div class="form-group">
                     <label>الاسم</label>
@@ -100,8 +108,8 @@
                 <hr>
 
                 <h5 class="fw-bold">الفروع التي توفر المنتج:</h5>
-                <div class="branches">
-                    @forelse (\App\Models\Branch::where('department_id', auth()->user()->department_id)->get() as $branch)
+                <div class="branches p-2">
+                    @forelse(\App\Models\Branch::where('department_id', auth()->user()->department_id)->get() as $branch)
                         <div class="form-group mb-3">
                             <label class="custom-checks text-black">{{ $branch->branche_title}}
                                 <input name="branche_id[]" value="{{ $branch->id }}" type="checkbox">
@@ -124,5 +132,4 @@
         </form>
     </div> <!-- container -->
 </section>
-
 @endsection

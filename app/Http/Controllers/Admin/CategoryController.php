@@ -2,7 +2,9 @@
 namespace App\Http\Controllers\Admin;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\SubCategory;
 
 class CategoryController extends Controller
 {
@@ -50,5 +52,35 @@ class CategoryController extends Controller
         session()->flash('Delete' , 'تم حذف القسم بنجاج');
         return back();
     }
+
+
+
+    public function getCategorySubs($id)
+    {
+        $subCategories = DB::table('sub_categories')->where('category_id' , $id)->pluck('name' , 'id');
+        return json_encode($subCategories);
+    }
+
+
+
+    public function addSubCategory(Request $request)
+    {
+        try{
+            $this->validate($request, [
+                'category_id' => 'required',
+                'name' => 'required',
+            ]);
+
+            SubCategory::create([
+                'category_id' => $request->category_id,
+                'name' => $request->name,
+            ]);
+
+            session()->flash('addSubCategory');
+            return redirect()->route('foodMenu');
+        }catch(\Exception $e){
+            dd($e->getMessage());
+        }
+    }
 }
-    
+
