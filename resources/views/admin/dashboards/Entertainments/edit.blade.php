@@ -28,37 +28,50 @@
 
             <div class="col-lg-4 mt-3">
                 <div class="form-group">
-                    <label class="mt-4">القسم</label>
-                    <select name="category_id" class="form-control rounded-0 mb-4 mt-2 @error('category_id') is-invalid @enderror">
-                        <option value="{{ $event->category->id }}">{{ $event->category->name }}</option>
-                        @foreach (\App\Models\Category::where('department_id', auth()->user()->department_id)->get() as $category)
+                    <label>القسم</label>
+                    <select name="category_id" class="form-control rounded-0 mb-4 mt-2" onclick="console.log($(this).val())" onchange="console.log('change is firing')">
+                        <option value="{{ \App\Models\Category::where('id', $event->category_id)->first()->id }}" name="category_id" selected>{{  \App\Models\Category::where('id', $event->category_id)->first()->name }}</option>
+                        @foreach (\App\Models\Category::where('department_id', auth()->user()->department_id)->where('id', '!=', $event->category_id)->get() as $category)
                             <option value="{{ $category->id }}">{{ $category->name }}</option>
                         @endforeach
                     </select>
-                    @error('category_id')<div class="alert alert-danger">{{ $message }}</div>@enderror
                 </div> <!-- 1 -->
+
+
+                <div class="form-group">
+                    <label>الفئة الفرعية</label>
+                    <select name="sub_category_name" id="sub_category_name" class="form-control rounded-0 mb-4 mt-2">
+                        <option value="{{ $event->subCategory->id }}">{{ $event->subCategory->name }}</option>
+                    </select>
+                </div> <!-- 2 -->
 
                 <div class="form-group">
                     <label>اسم الفعالية</label>
                     <input type="text" name="event_name" value="{{ $event->event_name }}" class="form-control rounded-0 mb-4 mt-2 @error('product_name') is-invalid @enderror">
                     @error('event_name')<div class="alert alert-danger">{{ $message }}</div>@enderror
-                </div> <!-- 1 -->
+                </div> <!-- 3 -->
 
                 <div class="form-group">
                     <label>الوصف</label>
                     <input type="text" name="description" value="{{ $event->description }}" class="form-control rounded-0 mb-4 mt-2">
-                </div> <!-- 2 -->
+                </div> <!-- 4 -->
 
                 <div class="form-group">
                     <label>سعر التذكرة</label>
                     <input type="text" name="ticket_price" value="{{ $event->ticket_price }}" placeholder="ريال سعودي" class="form-control rounded-0 mb-4 mt-2 @error('ticket_price') is-invalid @enderror">
                     @error('ticket_price')<div class="alert alert-danger">{{ $message }}</div>@enderror
-                </div> <!-- 3 -->
+                </div> <!-- 5 -->
 
                 <div class="form-group">
                     <label>عدد التذاكر</label>
                     <input type="text" name="tickets_quantity" value="{{ $event->tickets_quantity }}" class="form-control rounded-0 mb-4 mt-2 @error('tickets_quantity') is-invalid @enderror">
                     @error('tickets_quantity')<div class="alert alert-danger">{{ $message }}</div>@enderror
+                </div> <!-- 6 -->
+
+                <div class="form-group">
+                    <label>عدد التذاكر المباعة</label>
+                    <input type="text" name="tickets_sold_quantity" placeholder="الكمية" value="{{ $event->tickets_sold_quantity }}" class="form-control rounded-0 mb-4 mt-2 @error('quantity') is-invalid @enderror">
+                    @error('tickets_sold_quantity')<div class="alert alert-danger">{{ $message }}</div>@enderror
                 </div> <!-- 4 -->
 
             <hr>

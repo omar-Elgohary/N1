@@ -54,7 +54,7 @@
                 <div class="row lastOffer d-flex justify-content-end">
                     <div class="card-body d-flex justify-content-end">
 
-                        @if(auth()->user()->department_id == 1)
+                        @if(auth()->user()->department_id == 1 )
                             @foreach(\App\Models\RestaurentProduct::orderBy('sold_quantity', 'desc')->limit(3)->get() as $product)
                                 <div class="col-lg-2 col-md-2 text-center mx-3" dir="ltr">
                                     <h5>{{ $product->sold_quantity }}</h5>
@@ -67,9 +67,9 @@
                             @endforeach
                         @elseif(auth()->user()->department_id == 2)
                             @foreach(\App\Models\ShopProduct::orderBy('sold_quantity', 'desc')->limit(3)->get() as $product)
-                                <div class="col-lg-1 col-md-2 text-center mx-3" dir="ltr">
-                                    <h5>{{ $product->product_name }}</h5>
+                                <div class="col-lg-2 col-md-2 text-center mx-3" dir="ltr">
                                     <h5>{{ $product->sold_quantity }}</h5>
+                                    <h5>{{ $product->product_name }}</h5>
                                 </div>
 
                                 <input class="knob" data-width="50" data-height="50" data-linecap=round
@@ -78,9 +78,9 @@
                             @endforeach
                         @else
                             @foreach(\App\Models\Event::orderBy('tickets_sold_quantity', 'desc')->limit(3)->get() as $product)
-                                <div class="col-lg-1 col-md-2 text-center mx-3" dir="ltr">
-                                    <h5>{{ $product->product_name }}</h5>
+                                <div class="col-lg-2 col-md-2 text-center mx-3" dir="ltr">
                                     <h5>{{ $product->tickets_sold_quantity }}</h5>
+                                    <h5>{{ $product->event_name }}</h5>
                                 </div>
 
                                 <input class="knob" data-width="50" data-height="50" data-linecap=round
@@ -92,6 +92,7 @@
                     </div> <!-- card-body -->
                 </div> <!-- row -->
             </div> <!-- card -->
+
 
             <div class="col-xl-12">
                 <div class="topRate mt-5">

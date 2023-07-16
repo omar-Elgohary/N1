@@ -3,6 +3,17 @@
     قائمة الفعاليات
 @endsection
 
+@if (session()->has('addSubCategory'))
+    <script>
+        window.onload = function() {
+            notif({
+                msg: 'تم اضافة الفئة الفرعية بنجاح ',
+                type: "success"
+            })
+        }
+    </script>
+@endif
+
 @if (session()->has('addCategory'))
     <script>
         window.onload = function() {
@@ -126,7 +137,7 @@
             <a href="{{ route('ExportEventPDF') }}" id="pdf" class="btn btn-success btns">PDF <i class="fa fa-thin fa-print fa-xl"></i></a>
             <a id="login" class="btn btns" data-bs-toggle="modal" href="#importData" role="button">استيراد من اكسل<i class="fa-solid fa-file-excel fa-xl"></i></a>
             <a id="login" class="btn btns" href="{{ route('createEvent') }}">اضافة فعالية جديدة</a>
-            {{-- <a href="#editCategoryName" id="coupon" class="btn btn-block btn-bordered btns" data-bs-toggle="modal">تعديل اسم المقر</a> --}}
+            <a href="#addSubCategory" id="coupon" class="btn btn-block btn-bordered px-4 btns" data-bs-toggle="modal">اضافة فئة فرعية</a>
         </div>
     </div> <!-- col-12 -->
 
@@ -138,13 +149,7 @@
                         <th>#</th>
                         <th>اسم الفعالية</th>
                         <th>حالة الحجز</th>
-
-                        @if(request('category_id'))
-                            <td></td>
-                        @else
-                            <th>القسم</th>
-                        @endif
-
+                        <th>الفئة</th>
                         <th>تاريخ النشر</th>
                         <th>سعر التذكرة</th>
                         <th>التذاكر المحجوزة</th>
@@ -153,8 +158,7 @@
                 </thead>
 
                 <tbody>
-                @if(request('category_id'))
-                    @forelse ($events as $key => $event)
+                @forelse ($events as $key => $event)
                     <tr>
                         <th>{{ $event->random_id }}</th>
                         <td>
@@ -171,7 +175,7 @@
                             <td class="text-success">{{ $event->status }}</td>
                         @endif
 
-                        <td>{{ $event->category->name}}</td>
+                        <td class="fw-bold">{{ $event->subCategory->name }}</td>
                         <td>{{ date('Y-m-d' , strtotime($event->start_reservation_date)) }}
                         <td>{{ $event->ticket_price}}</td>
                         <td>{{ $event->tickets_sold_quantity}} / {{ $event->tickets_quantity}}</td>
@@ -208,62 +212,6 @@
                             </th>
                         </tr>
                     @endforelse
-                @else
-                    @forelse ($events as $key => $event)
-                    <tr>
-                        <th>{{ $event->random_id }}</th>
-                        <td>
-                            <a href="{{ route('eventDetails', $event->id) }}" class="text-warning">{{ $event->event_name}}</a>
-                        </td>
-
-                        @if($event->status == 'لم يبدأ')
-                            <td class="text-secondary">{{ $event->status }}</td>
-                        @elseif($event->status == 'منتهي')
-                            <td class="text-dark">{{ $event->status }}</td>
-                        @elseif($event->status == 'متوقف')
-                            <td class="text-danger">{{ $event->status }}</td>
-                        @else
-                            <td class="text-success">{{ $event->status }}</td>
-                        @endif
-
-                        <td>{{ $event->category->name}}</td>
-                        <td>{{ date('Y-m-d' , strtotime($event->start_reservation_date)) }}
-                        <td>{{ $event->ticket_price}}</td>
-                        <td>{{ $event->tickets_sold_quantity}} / {{ $event->tickets_quantity}}</td>
-                        <td>
-                            <a href="{{ route('editEvent', $event->id) }}" class="btn bg-white text-success"><i class="fa fa-edit"></i></a>
-                            <a href="#deleteEvent{{$event->id}}" class="btn bg-white text-danger" data-bs-toggle="modal"><i class="fa fa-trash"></i></a>
-                        </td>
-                    </tr>
-
-                        {{-- deleteEvent --}}
-                        <div class="modal fade border-0" id="deleteEvent{{$event->id}}" aria-hidden="true" aria-labelledby="deleteProductLabel" tabindex="-1" dir="rtl">
-                            <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content">
-                                    <div class="btn-x modal-header">
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-
-                                    <div class="modal-body text-center my-5">
-                                        <h2>هل أنت متأكد من حذف هذا المنتج؟</h2>
-                                    </div>
-
-                                    <div class="d-flex justify-content-around mb-5">
-                                        <button type="button" id="coupon" class="btn px-5" data-bs-dismiss="modal">تراجع</button>
-                                        <a href="{{ route('deleteEvent', $event->id) }}" id="package" type="button" class="btn btn-block px-5 text-white">حذف</a>
-
-                                    </div>
-                                </div> <!-- modal-content -->
-                            </div> <!-- modal-dialog -->
-                        </div> <!-- modal fade -->
-                    @empty
-                        <tr>
-                            <th class="text-danger" colspan="10">
-                                لا يوجد بيانات
-                            </th>
-                        </tr>
-                    @endforelse
-                @endif
                 </tbody>
             </table>
         </div>
@@ -366,4 +314,38 @@
         </div> <!-- modal-content -->
     </div> <!-- modal-dialog -->
 </div> <!-- modal fade -->
+
+
+{{-- add sub category --}}
+<div class="modal fade border-0" id="addSubCategory" aria-hidden="true" aria-labelledby="addSubCategoryLabel" tabindex="-1" dir="rtl">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="btn-x modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+        <form action="{{ route('addSubCategory') }}" method="POST">
+        @csrf
+            <div class="modal-body my-5">
+                <h4 class="text-end">اسم القسم</h4>
+                <select name="category_id" class="form-control rounded-0 mb-4 mt-2 @error('category_id') is-invalid @enderror">
+                    <option value="" selected disabled>حدد القسم</option>
+                    @foreach (\App\Models\Category::where('department_id', auth()->user()->department_id)->get() as $category)
+                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                    @endforeach
+                </select>
+
+                <h4 class="text-end">اسم الفئة</h4>
+                <input type="text" name="name" class="form-control rounded-0 mb-4 mt-2 @error('name') is-invalid @enderror">
+            </div>
+
+            <div class="d-flex justify-content-around mb-5">
+                <a href="#" id="coupon" class="btn px-5">حذف</a>
+                <button type="submit" id="package" class="btn btn-block px-5 text-white">اضف</button>
+            </div>
+        </div> <!-- modal-content -->
+    </form>
+    </div> <!-- modal-dialog -->
+</div> <!-- modal fade -->
+
 @endsection

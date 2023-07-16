@@ -28,23 +28,47 @@
 
             <div class="col-lg-4 mt-3">
                 <div class="form-group">
+                    <label>القسم</label>
+                    <select name="category_id" class="form-control rounded-0 mb-4 mt-2" onclick="console.log($(this).val())" onchange="console.log('change is firing')">
+                        <option value="{{ \App\Models\Category::where('id', $product->category_id)->first()->id }}" name="category_id" selected>{{  \App\Models\Category::where('id', $product->category_id)->first()->name }}</option>
+                        @foreach (\App\Models\Category::where('department_id', auth()->user()->department_id)->where('id', '!=', $product->category_id)->get() as $category)
+                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                        @endforeach
+                    </select>
+                </div> <!-- 1 -->
+
+
+                <div class="form-group">
+                    <label>الفئة الفرعية</label>
+                    <select name="sub_category_name" id="sub_category_name" class="form-control rounded-0 mb-4 mt-2">
+                        <option value="{{ $product->subCategory->id }}">{{ $product->subCategory->name }}</option>
+                    </select>
+                </div> <!-- 2 -->
+
+                <div class="form-group">
                     <label>الاسم</label>
                     <input type="text" name="product_name" value="{{$product->product_name}}" class="form-control rounded-0 mb-4 mt-2">
-                </div> <!-- 1 -->
+                </div> <!-- 3 -->
 
                 <div class="form-group">
                     <label>الوصف</label>
                     <input type="text" name="description" value="{{$product->description}}" class="form-control rounded-0 mb-4 mt-2">
-                </div> <!-- 2 -->
+                </div> <!-- 4 -->
 
                 <div class="form-group">
                     <label>السعر</label>
                     <input type="text" name="price" value="{{$product->price}}" placeholder="ريال سعودي" class="form-control rounded-0 mb-4 mt-2">
-                </div> <!-- 3 -->
+                </div> <!-- 5 -->
 
                 <div class="form-group">
                     <label>عدد البضاعة المتوفرة</label>
-                        <input type="text" name="quantity" value="{{$product->quantity}}" class="form-control rounded-0 mt-3">
+                        <input type="text" name="quantity" value="{{$product->quantity}}" class="form-control rounded-0  mb-4 mt-2">
+                </div>
+
+                <div class="form-group">
+                    <label>الكمية المباعة</label>
+                    <input type="text" name="sold_quantity" placeholder="الكمية" value="{{ $product->sold_quantity }}" class=" mb-4 mt-2 form-control rounded-0 mb-4 mt-2 @error('quantity') is-invalid @enderror">
+                    @error('sold_quantity')<div class="alert alert-danger">{{ $message }}</div>@enderror
                 </div>
 
                 <hr>

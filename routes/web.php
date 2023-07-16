@@ -40,7 +40,7 @@ Route::get('about', function () {
 Route::middleware(['authenticated'])->group(function(){   // User Must Be Authenticated
 
     Route::post('addSubCategory', [CategoryController::class, 'addSubCategory'])->name('addSubCategory');
-    
+
     // ده الراوت الخاص بانه يجيب الفئات الفرعية التابعه لكل قسم
     Route::get('category/{id}', [CategoryController::class, 'getCategorySubs']);
 

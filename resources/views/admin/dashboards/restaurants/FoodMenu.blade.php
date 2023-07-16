@@ -142,7 +142,6 @@
                                 <a href="{{ route('RestaurentProductDetails', $product->id) }}" class="text-warning">{{ $product->product_name }}</a>
                             </td>
                             <td class="fw-bold">{{ $product->subCategory->name }}</td>
-                            {{-- <td class="fw-bold">{{ \App\Models\SubCategory::where('id', request('sub_categoru_name'))->first()->name }}</td> --}}
                             <td>{{ $product->price}}</td>
                             <td>{{ $product->sold_quantity}}</td>
                             <td>{{ $product->remaining_quantity}}</td>
@@ -230,7 +229,7 @@
             </div>
 
             <div class="d-flex justify-content-around mb-5">
-                <button href="#" id="coupon" class="btn px-5" data-bs-dismiss="modal">الغاء</button>
+                <a href="#" id="coupon" class="btn px-5" data-bs-dismiss="modal">الغاء</a>
                 <button id="package" type="submit" class="btn btn-block px-5 text-white">اضف</button>
             </div>
         </form>

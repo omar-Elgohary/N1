@@ -5,6 +5,23 @@
 		<title>A simple, clean, and responsive HTML invoice template</title>
 
 		<style>
+            table {
+                border: tomato;
+                width: 100%;
+            }
+
+            th, td {
+                text-align: left;
+                padding: 8px;
+            }
+
+            th {
+                background-color: #b6b5b5;
+            }
+
+            tr:nth-child(even) {
+                background-color: #f2f2f2;
+            }
 			.invoice-box {
 				max-width: 800px;
 				margin: auto;

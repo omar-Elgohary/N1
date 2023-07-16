@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('branche_id')->constrained('branches')->nullable();
 
             $table->string('quantity');
-            $table->string('sold_quantity')->nullable();
+            $table->string('sold_quantity')->nullable()->default(0);
             $table->string('remaining_quantity')->nullable();
             $table->timestamps();
         });

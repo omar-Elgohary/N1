@@ -12,6 +12,7 @@ class EventSeeder extends Seeder
             'random_id' => '#E1N2J3',
             'department_id' => 3,
             'category_id' => 7,
+            'sub_category_id' => 7,
             'event_image' => '1687779997.jfif',
             'event_name' => 'قطر الموت',
             'description' => 'لعبة رعب قطر الموت 3 كيلو متر',
@@ -23,8 +24,7 @@ class EventSeeder extends Seeder
             'start_reservation_date' => '2023-07-16',
 
             'tickets_quantity' => 200,
-            'tickets_sold_quantity' => 110,
-            'tickets_remaining_quantity' => 200 - 110,
+            'tickets_remaining_quantity' => 200,
         ]);
 
 
@@ -32,6 +32,7 @@ class EventSeeder extends Seeder
             'random_id' => '#H5T2V0',
             'department_id' => 3,
             'category_id' => 8,
+            'sub_category_id' => 8,
             'event_image' => '1687776590.jfif',
             'event_name' => 'فيلم كيره والجن',
             'description' => 'فيلم تاريخي بطولة كريم عبد العزيز وأحمد عز',
@@ -43,8 +44,7 @@ class EventSeeder extends Seeder
             'start_reservation_date' => '2023-07-01',
 
             'tickets_quantity' => 500,
-            'tickets_sold_quantity' => 432,
-            'tickets_remaining_quantity' => 500 - 432,
+            'tickets_remaining_quantity' => 500,
         ]);
 
 
@@ -52,6 +52,7 @@ class EventSeeder extends Seeder
             'random_id' => '#H5T2V0',
             'department_id' => 3,
             'category_id' => 9,
+            'sub_category_id' => 9,
             'event_image' => '1687776590.jfif',
             'event_name' => 'ملعب كورة قدم',
             'description' => 'حجز ملعب كورة قدم كبير واقامة دورات',
@@ -63,8 +64,7 @@ class EventSeeder extends Seeder
             'start_reservation_date' => '2023-07-01',
 
             'tickets_quantity' => 900,
-            'tickets_sold_quantity' => 866,
-            'tickets_remaining_quantity' => 900 - 866,
+            'tickets_remaining_quantity' => 900,
         ]);
     }
 }

@@ -121,7 +121,7 @@
 		<div class="invoice-box">
 			<table cellpadding="0" cellspacing="0">
 				<tr class="top">
-					<td colspan="2">
+					<td colspan="2">    
 						<table>
 							<tr>
 								<td class="title">
@@ -144,7 +144,7 @@
                             <th>#</th>
                             <th>اسم الفعالية</th>
                             <th>حالة الحجز</th>
-                            <th>القسم</th>
+                            <th>الفئة</th>
                             <th>تاريخ النشر</th>
                             <th>سعر التذكرة</th>
                             <th>التذاكر المحجوزة</th>
@@ -167,7 +167,7 @@
                                     <td class="text-success">{{ $event->status }}</td>
                                 @endif
 
-                                <td>{{ $event->category->name}}</td>
+                                <td class="fw-bold">{{ $event->subCategory->name }}</td>
                                 <td>{{ $event->start_reservation_date}}</td>
                                 <td>{{ $event->ticket_price}}</td>
                                 <td>{{ $event->tickets_sold_quantity}} / {{ $event->tickets_quantity}}</td>

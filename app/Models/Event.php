@@ -13,12 +13,16 @@ class Event extends Model
     {
         return $this->created_at->format('Y-m-d'); // Adjust the format as needed
     }
-    
+
     public function category()
     {
         return $this->belongsTo(Category::class);
     }
 
+    public function subCategory()
+    {
+        return $this->belongsTo(SubCategory::class);
+    }
 
     public function types()
     {

@@ -4,11 +4,12 @@ use PDF;
 use App\Models\Event;
 use App\Models\Category;
 use App\Models\EventOrder;
+use App\Models\SubCategory;
 use Illuminate\Http\Request;
 use App\Models\ReservationType;
+use App\Imports\ImportEventProducts;
 use Illuminate\Support\Facades\File;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Imports\ImportEventProducts;
 
 class EntertainmentController extends Controller
 {
@@ -72,6 +73,7 @@ class EntertainmentController extends Controller
     {
         $this->validate($request, [
             'category_id' => 'required',
+            'sub_category_name' => 'required',
             'event_image' => 'required',
             'event_name' => 'required',
             'description' => 'required',
@@ -94,16 +96,19 @@ class EntertainmentController extends Controller
 
         $reservation_types = implode(',', $request->reservations_type_id);
 
+        $subCatName = $request->sub_category_name;
+        $element = SubCategory::where('name', $subCatName)->first()->id;
+
         Event::create([
             'random_id' => $random_id,
             'department_id' => auth()->user()->department_id,
             'event_image' => $image_name,
             'category_id' => $request->category_id,
+            'sub_category_id' => $element,
             'event_name' => $request->event_name,
             'description' => $request->description,
             'ticket_price' => $request->ticket_price,
             'tickets_quantity' => $request->tickets_quantity,
-            'tickets_sold_quantity' => 30,
             'tickets_remaining_quantity' => ($request->tickets_quantity - $request->tickets_sold_quantity),
             'reservations_type_id' => $reservation_types,
             'reservation_date' => $request->reservation_date,
@@ -145,14 +150,18 @@ class EntertainmentController extends Controller
         }
 
         $reservation_types = implode(',', $request->reservations_type_id);
+        $subCatName = $request->sub_category_name;
 
         $event->update([
             'category_id' => $request->category_id,
+            'sub_category_id' => $subCatName,
             'event_image' => $event->event_image,
             'event_name' => $request->event_name,
             'description' => $request->description,
             'ticket_price' => $request->ticket_price,
             'tickets_quantity' => $request->tickets_quantity,
+            'tickets_sold_quantity' => $request->tickets_sold_quantity,
+            'tickets_remaining_quantity' => ($request->tickets_quantity - $request->tickets_sold_quantity),
             'reservations_type_id' => $reservation_types,
             'reservation_date' => $request->reservation_date,
             'reservation_time' => $request->reservation_time,
@@ -255,7 +264,7 @@ class EntertainmentController extends Controller
         $data = [
             'title' => 'Welcome to N1.com',
             'date' => date('m/d/Y'),
-            'events' => $events
+            'events' => $events 
         ];
         $pdf = PDF::loadView('pdf.eventProducts', $data);
         return $pdf->download('eventProducts.pdf');

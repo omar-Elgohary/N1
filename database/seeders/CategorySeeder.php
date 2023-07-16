@@ -37,7 +37,7 @@ class CategorySeeder extends Seeder
         ]); // 5
 
         Category::create([
-            'name' => 'عبايات',
+            'name' => 'ملابس بيتي',
             'department_id' => 2,
         ]); // 6
 

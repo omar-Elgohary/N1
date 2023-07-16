@@ -124,7 +124,7 @@ class RestaurantController extends Controller
                     'without_id' => $without,
                     'branche_id' => $branche,
                     'quantity' => $request->quantity,
-                    'sold_quantity' => 50,
+                    'sold_quantity' => 0,
                     'remaining_quantity' => ($request->quantity - $request->sold_quantity),
                 ]);
             }else{
@@ -143,8 +143,8 @@ class RestaurantController extends Controller
                     'without_id' => $without,
                     'branche_id' => $branche,
                     'quantity' => $request->quantity,
-                    'sold_quantity' => 50,
-                    'remaining_quantity' => $request->remaining_quantity - $request->sold_quantity,
+                    'sold_quantity' => 0,
+                    'remaining_quantity' => ($request->quantity - $request->sold_quantity),
                 ]);
             }
             session()->flash('addRestaurentProduct');
@@ -185,7 +185,7 @@ class RestaurantController extends Controller
 
     public function updateRestaurentProduct(Request $request, $id)
     {
-        try{
+        // try{
             $product = RestaurentProduct::find($id);
 
             if($request->hasFile('product_image'))
@@ -202,7 +202,7 @@ class RestaurantController extends Controller
             }
 
             $subCatName = $request->sub_category_name;
-            $element = SubCategory::where('name', $subCatName)->first()->id;    // to get sub category name
+            // $element = SubCategory::where('name', $subCatName)->first()->id;    // to get sub category name
 
             if($request->has('extra_id') || $request->has('without_id'))
             {
@@ -219,7 +219,7 @@ class RestaurantController extends Controller
             {
                 $product->update([
                     'category_id' => $request->category_id,
-                    'sub_category_id' => $element,
+                    'sub_category_id' => $subCatName,
                     'product_name' => $request->product_name,
                     'description' => $request->description,
                     'price' => $request->price,
@@ -229,13 +229,13 @@ class RestaurantController extends Controller
                     'without_id' => $without,
                     'branche_id' => $branche,
                     'quantity' => $request->quantity,
-                    'sold_quantity' => 50,
-                    'remaining_quantity' => $request->remaining_quantity - $request->sold_quantity,
+                    'sold_quantity' => $request->sold_quantity,
+                    'remaining_quantity' => ($request->quantity - $request->sold_quantity),
                 ]);
             }else{
                 $product->update([
                     'category_id' => $request->category_id,
-                    'sub_category_id' => $element,
+                    'sub_category_id' => $subCatName,
                     'product_name' => $request->product_name,
                     'description' => $request->description,
                     'price' => $request->price,
@@ -245,16 +245,16 @@ class RestaurantController extends Controller
                     'without_id' => $without,
                     'branche_id' => $branche,
                     'quantity' => $request->quantity,
-                    'sold_quantity' => 50,
-                    'remaining_quantity' => $request->remaining_quantity - $request->sold_quantity,
+                    'sold_quantity' => $request->sold_quantity,
+                    'remaining_quantity' => ($request->quantity - $request->sold_quantity),
                 ]);
             }
 
             session()->flash('editRestaurentProduct');
             return redirect()->route('foodMenu');
-        }catch(\Exception $e){
-            dd($e->getMessage());
-        }
+        // }catch(\Exception $e){
+        //     dd($e->getMessage());
+        // }
     }
 
 
@@ -394,6 +394,8 @@ class RestaurantController extends Controller
     }
 
 
+
+    // Excel
     public function uploadtrestaurentExcel(Request $request)
     {
         try{

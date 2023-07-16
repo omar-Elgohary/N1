@@ -18,4 +18,21 @@ class SubCategory extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+
+
+    public function restProducts()
+    {
+        return $this->hasMany(RestaurentProduct::class);
+    }
+
+    public function shopProducts()
+    {
+        return $this->hasMany(ShopProduct::class);
+    }
+
+    public function events()
+    {
+        return $this->hasMany(Event::class);
+    }
 }

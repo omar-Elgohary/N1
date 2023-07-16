@@ -30,8 +30,9 @@
 
             <div class="col-lg-4 mt-3">
                 <div class="form-group">
-                    <label class="mt-4">القسم</label>
-                    <select name="category_id" class="form-control rounded-0 mb-4 mt-2 @error('category_id') is-invalid @enderror">
+                    <label>القسم</label>
+                    <select name="category_id" class="form-control rounded-0 mb-4 mt-2 @error('category_id') is-invalid @enderror" onclick="console.log($(this).val())" onchange="console.log('change is firing')">
+                        <option value="" selected disabled>حدد القسم</option>
                         @foreach (\App\Models\Category::where('department_id', auth()->user()->department_id)->get() as $category)
                             <option value="{{ $category->id }}">{{ $category->name }}</option>
                         @endforeach
@@ -40,28 +41,34 @@
                 </div> <!-- 1 -->
 
                 <div class="form-group">
+                    <label for="inputName">الفئة الفرعية</label>
+                    <select name="sub_category_name" id="sub_category_name" class="form-control rounded-0 mb-4 mt-2">
+                    </select>
+                </div> <!-- 2 -->
+
+                <div class="form-group">
                     <label>اسم الفعالية</label>
                     <input type="text" name="event_name" class="form-control rounded-0 mb-4 mt-2 @error('product_name') is-invalid @enderror">
                     @error('event_name')<div class="alert alert-danger">{{ $message }}</div>@enderror
-                </div> <!-- 1 -->
+                </div> <!-- 3 -->
 
                 <div class="form-group">
                     <label>الوصف</label>
                     <input type="text" name="description" class="form-control rounded-0 mb-4 mt-2 @error('description') is-invalid @enderror">
                     @error('description')<div class="alert alert-danger">{{ $message }}</div>@enderror
-                </div> <!-- 2 -->
+                </div> <!-- 4 -->
 
                 <div class="form-group">
                     <label>سعر التذكرة</label>
                     <input type="text" name="ticket_price" placeholder="ريال سعودي" class="form-control rounded-0 mb-4 mt-2 @error('ticket_price') is-invalid @enderror">
                     @error('ticket_price')<div class="alert alert-danger">{{ $message }}</div>@enderror
-                </div> <!-- 3 -->
+                </div> <!-- 5 -->
 
                 <div class="form-group">
                     <label>عدد التذاكر</label>
                     <input type="text" name="tickets_quantity" class="form-control rounded-0 mb-4 mt-2 @error('tickets_quantity') is-invalid @enderror">
                     @error('tickets_quantity')<div class="alert alert-danger">{{ $message }}</div>@enderror
-                </div> <!-- 4 -->
+                </div> <!-- 6 -->
 
 
                 <div class="branches mt-5">

@@ -77,7 +77,7 @@ class CategoryController extends Controller
             ]);
 
             session()->flash('addSubCategory');
-            return redirect()->route('foodMenu');
+            return back();
         }catch(\Exception $e){
             dd($e->getMessage());
         }

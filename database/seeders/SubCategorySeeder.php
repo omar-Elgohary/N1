@@ -10,7 +10,7 @@ class SubCategorySeeder extends Seeder
     {
         // Shops
         SubCategory::create([
-            'name' => 'كباب وكفتة',
+            'name' => 'وجبات كباب وكفتة',
             'category_id' => 1,
         ]);
 
@@ -20,7 +20,7 @@ class SubCategorySeeder extends Seeder
         ]);
 
         SubCategory::create([
-            'name' => 'كولا',
+            'name' => 'مشروبات باردة',
             'category_id' => 3,
         ]);
 
@@ -28,17 +28,17 @@ class SubCategorySeeder extends Seeder
 
         // Shop
         SubCategory::create([
-            'name' => 'قميص',
+            'name' => 'قمصان',
             'category_id' => 4,
         ]);
 
         SubCategory::create([
-            'name' => 'كوتشي رنينج',
+            'name' => 'كوتشيات',
             'category_id' => 5,
         ]);
 
         SubCategory::create([
-            'name' => 'عباية خروج رجالي',
+            'name' => 'ترينجات بيتي',
             'category_id' => 6,
         ]);
 
@@ -57,7 +57,7 @@ class SubCategorySeeder extends Seeder
 
         SubCategory::create([
             'name' => 'كرة قدم',
-            'category_id' => 8,
+            'category_id' => 9,
         ]);
     }
 }

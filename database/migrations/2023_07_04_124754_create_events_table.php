@@ -12,6 +12,7 @@ return new class extends Migration
             $table->string('random_id');
             $table->foreignId('department_id')->constrained('departments')->cascadeOnDelete();
             $table->foreignId('category_id')->constrained('categories')->cascadeOnDelete();
+            $table->foreignId('sub_category_id')->constrained('sub_categories')->cascadeOnDelete();
             $table->string('event_image');
             $table->string('event_name');
             $table->string('description');
@@ -23,7 +24,7 @@ return new class extends Migration
             $table->date('start_reservation_date');
 
             $table->string('tickets_quantity');
-            $table->string('tickets_sold_quantity')->nullable();
+            $table->string('tickets_sold_quantity')->nullable()->default(0);
             $table->string('tickets_remaining_quantity')->nullable();
             $table->timestamps();
         });
