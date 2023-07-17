@@ -187,8 +187,7 @@
 </div> <!-- modal-fade -->
 
 {{-- confirm number --}}
-@component('components.confirmNumber')
+@component('front.layouts.confirmNumber')
 
-@endcomponent
 
 @endguest

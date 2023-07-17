@@ -1,5 +1,4 @@
 <?php
-
 use App\Http\Controllers\Admin\CategoryController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MainController;
@@ -15,7 +14,8 @@ use App\Http\Controllers\RestaurantController;
 
 Route::controller(AuthController::class)->group(function(){
     Route::post('register', 'register')->name('register');
-    Route::post('verify', 'verify')->name('verify');
+    Route::get('verifyForm/{id}', 'verifyForm')->name('verifyForm');
+    Route::post('verify/{id}', 'verify')->name('verify');
     Route::post('login', 'login')->name('login');
     Route::get('logOut', 'logOut')->name('logOut');
 });
@@ -133,8 +133,15 @@ Route::middleware(['CheckRestaurent'])->group(function () {
     Route::get('ExportrestaurentPDF', [RestaurantController::class, 'ExportrestaurentPDF'])->name('ExportrestaurentPDF');
     Route::post('uploadtrestaurentExcel', [RestaurantController::class, 'uploadtrestaurentExcel'])->name('uploadtrestaurentExcel');
 
+    Route::get('restaurentCategories', [RestaurantController::class, 'restaurentCategories'])->name('restaurentCategories');
     Route::post('createCategory', [RestaurantController::class, 'createCategory'])->name('createCategory');
     Route::post('editCategory/{id}', [RestaurantController::class, 'editCategory'])->name('editCategory');
+    Route::post('deleteCategory/{id}', [RestaurantController::class, 'deleteCategory'])->name('deleteCategory');
+
+    Route::get('allSubCategories/{category_id}', [RestaurantController::class, 'allSubCategories'])->name('allSubCategories');
+    Route::post('createSubCategory/{category_id}', [RestaurantController::class, 'createSubCategory'])->name('createSubCategory');
+    Route::post('editSubCategory/{id}', [RestaurantController::class, 'editSubCategory'])->name('editSubCategory');
+    Route::post('deleteSubCategory/{id}', [RestaurantController::class, 'deleteSubCategory'])->name('deleteSubCategory');
 
     Route::get('createRestaurentProduct', [RestaurantController::class, 'createRestaurentProduct'])->name('createRestaurentProduct');
     Route::post('storeRestaurentProduct', [RestaurantController::class, 'storeRestaurentProduct'])->name('storeRestaurentProduct');
@@ -163,7 +170,15 @@ Route::middleware(['CheckShop'])->group(function () {
     Route::get('ExportShopPDF', [ShopController::class, 'ExportShopPDF'])->name('ExportShopPDF');
     Route::post('uploadShopExcel', [ShopController::class, 'uploadShopExcel'])->name('uploadShopExcel');
 
+    Route::get('shopCategories', [ShopController::class, 'shopCategories'])->name('shopCategories');
     Route::post('createShopCategory', [ShopController::class, 'createShopCategory'])->name('createShopCategory');
+    Route::post('editShopCategory/{id}', [ShopController::class, 'editShopCategory'])->name('editShopCategory');
+    Route::post('deleteShopCategory/{id}', [ShopController::class, 'deleteShopCategory'])->name('deleteShopCategory');
+
+    Route::get('shopSubCategories/{category_id}', [ShopController::class, 'shopSubCategories'])->name('shopSubCategories');
+    Route::post('createShopSubCategory/{category_id}', [ShopController::class, 'createShopSubCategory'])->name('createShopSubCategory');
+    Route::post('editShopSubCategory/{id}', [ShopController::class, 'editShopSubCategory'])->name('editShopSubCategory');
+    Route::post('deleteShopSubCategory/{id}', [ShopController::class, 'deleteShopSubCategory'])->name('deleteShopSubCategory');
 
     Route::get('createShopProduct', [ShopController::class, 'createShopProduct'])->name('createShopProduct');
     Route::post('storeShopProduct', [ShopController::class, 'storeShopProduct'])->name('storeShopProduct');
@@ -185,15 +200,23 @@ Route::middleware(['CheckShop'])->group(function () {
 Route::middleware(['CheckEntertainment'])->group(function () {
 
     Route::get('entertainmentsMenu', [EntertainmentController::class, 'entertainmentsMenu'])->name('entertainmentsMenu');
-    Route::post('createEntertainmentCategory', [EntertainmentController::class, 'createEntertainmentCategory'])->name('createEntertainmentCategory');
 
     Route::get('events/category/{category_id}', [EntertainmentController::class, 'filterEventProducts'])->name('filterEventProducts');
 
     Route::get('ExportEventPDF', [EntertainmentController::class, 'ExportEventPDF'])->name('ExportEventPDF');
     Route::post('uploadEventExcel', [EntertainmentController::class, 'uploadEventExcel'])->name('uploadEventExcel');
 
-    Route::get('events', [EntertainmentController::class, 'events'])->name('events');
+    Route::get('eventCategories', [EntertainmentController::class, 'eventCategories'])->name('eventCategories');
+    Route::post('createEntertainmentCategory', [EntertainmentController::class, 'createEntertainmentCategory'])->name('createEntertainmentCategory');
+    Route::post('editEventCategory/{id}', [EntertainmentController::class, 'editEventCategory'])->name('editEventCategory');
+    Route::post('deleteEventCategory/{id}', [EntertainmentController::class, 'deleteEventCategory'])->name('deleteEventCategory');
 
+    Route::get('eventSubCategories/{category_id}', [EntertainmentController::class, 'eventSubCategories'])->name('eventSubCategories');
+    Route::post('createEventSubCategory/{category_id}', [EntertainmentController::class, 'createEventSubCategory'])->name('createEventSubCategory');
+    Route::post('editEventSubCategory/{id}', [EntertainmentController::class, 'editEventSubCategory'])->name('editEventSubCategory');
+    Route::post('deleteEventSubCategory/{id}', [EntertainmentController::class, 'deleteEventSubCategory'])->name('deleteEventSubCategory');
+
+    Route::get('events', [EntertainmentController::class, 'events'])->name('events');
     Route::get('createEvent', [EntertainmentController::class, 'createEvent'])->name('createEvent');
     Route::post('storeEvent', [EntertainmentController::class, 'storeEvent'])->name('storeEvent');
 

@@ -5,16 +5,16 @@
 
         <div class="modal-body">
             <div class="mt-5 mt-lg-0 text-end" data-aos-delay="100">
-                <form action="{{ route('verify') }}" method="post">
+                <form action="{{ route('verify', $user) }}" method="POST">
                     @csrf
                     <div class="form-group mt-3">
                         <div class="container height-100 d-flex justify-content-center align-items-center">
                             <div class="position-relative">
                                 <h2 class="fw-bold" style="color: #e57504">التحقق من رقم الجوال</h2>
-                                <div> <span class="mb-3">ادخل الكود المرسل اليك</span>
-                                    {{-- <small>
-                                        {{ \App\Models\User::latest()->phone }}
-                                    </small> --}}
+                                <div> <span class="mb-3">ادخل الكود المرسل الى</span>
+                                    <small>
+                                        {{ session('phone') }}
+                                    </small>
                                 </div>
 
                                 <div id="otp" class="inputs d-flex flex-row justify-content-center mt-2">
@@ -22,11 +22,11 @@
                                     {{-- <input class="m-2 text-center form-control rounded-0" type="text" name ="second" id="second" maxlength="1" /> --}}
                                     {{-- <input class="m-2 text-center form-control rounded-0" type="text" name ="third" id="third" maxlength="1" /> --}}
                                     {{-- <input class="m-2 text-center form-control rounded-0" type="text" name ="fourth" id="fourth" maxlength="1" /> --}}
-                                    <input name="otp" type="text form-cotrol" type="text">
+                                    <input name="verification_code" type="text form-cotrol" type="text">
                                 </div>
 
                                 <div class="text-center mt-3">
-                                    <button type="submit" class="btn btn-success">ارسال الكود</button>
+                                    <button type="submit" class="btn btn-success">تسجبل الدخول</button>
                                 </div>
 
                                 {{-- <div class="text-center mt-3">

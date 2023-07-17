@@ -22,7 +22,7 @@ class User extends Authenticatable
 
     public function sendOtpSms($receiverNumber)
     {
-        $otp = 'Login Otp is' . $this->otp;
+        $otp = 'Register Otp is' . $this->otp;
         try{
             $account_id = getenv("TWILIO_SID");
             $auth_token = getenv("TWILIO_TOKEN");
@@ -58,6 +58,17 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+
+    public function generateCode()
+    {
+        $this->timestamps = false;
+        $this->code = rand(1000, 9999);
+        $this->expire_at = now()->addMinute(1);
+        $this->save();
+    }
+
 
 
     public function department()

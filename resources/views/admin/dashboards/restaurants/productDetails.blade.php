@@ -54,7 +54,7 @@
 
                 <div class="form-group my-4">
                     <label>الوصف</label>
-                    <label>{{ $product->description }}</label>
+                    <label class="mx-5">{{ $product->description }}</label>
                 </div> <!-- 3 -->
 
                 <div class="form-group my-4">

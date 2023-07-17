@@ -79,7 +79,7 @@
 		</div>
 
 		<aside class="sidebar">
-			<h3 class="text-black">الأقسام</h3>
+			<a href="{{ route('shopCategories') }}" class="fw-bold fs-5 text-success mb-5">الأقسام</a>
 			<nav class="menu">
                 <a href="{{ route('products') }}" class="menu-item {{ !request('category_id') ? 'is-active' : '' }}">الكل</a>
                 @foreach (\App\Models\Category::where('department_id', auth()->user()->department_id)->get() as $category)

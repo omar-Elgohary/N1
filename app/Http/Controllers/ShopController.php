@@ -20,8 +20,6 @@ class ShopController extends Controller
     }
 
 
-
-
     public function products()
     {
         $categories = Category::where('department_id', auth()->user()->department_id)->get();
@@ -31,16 +29,12 @@ class ShopController extends Controller
 
 
 
-
-    public function filterShopProducts(Request $request, $category_id)
+    // Categories
+    public function shopCategories()
     {
-        $category = Category::find($category_id);
-        $products = ShopProduct::where('department_id', auth()->user()->department_id)->where('category_id', $category_id)->get();
-        return view('admin.dashboards.shops.products', compact('category', 'products'));
+        $categories = Category::where('department_id', auth()->user()->department_id)->get();
+        return view('admin.dashboards.shops.allCategories', compact('categories'));
     }
-
-
-
 
 
 
@@ -52,7 +46,84 @@ class ShopController extends Controller
         ]);
 
         session()->flash('addCategory');
-        return redirect()->route('products');
+        return back();
+    }
+
+
+    public function editShopCategory(Request $request, $id)
+    {
+        $category = Category::find($id);
+        $category->update([
+            'name' => $request->name,
+        ]);
+        session()->flash('editCategory');
+        return back();
+    }
+
+
+    public function deleteShopCategory($id)
+    {
+        Category::find($id)->delete();
+        session()->flash('deleteCategory');
+        return back();
+    }
+
+
+
+    // SubCategories
+    public function shopSubCategories($id)
+    {
+        $category = Category::find($id);
+        $subCategories = SubCategory::where('category_id', $id)->get();
+        return view('admin.dashboards.shops.allSubCategories', compact('category', 'subCategories'));
+    }
+
+
+    public function createShopSubCategory(Request $request, $id)
+    {
+        if($request->name == ''){
+            session()->flash('nameRequired');
+            return back();
+        }
+
+        $category = Category::find($id);
+
+        SubCategory::create([
+            'name' => $request->name,
+            'category_id' => $category->id,
+        ]);
+        session()->flash('addSubCategory');
+        return back();
+    }
+
+
+
+    public function editShopSubCategory(Request $request, $id)
+    {
+        SubCategory::find($id)->update([
+            'name' => $request->name,
+        ]);
+        session()->flash('editSubCategory');
+        return back();
+    }
+
+
+
+    public function deleteShopSubCategory($id)
+    {
+        SubCategory::find($id)->delete();
+        session()->flash('deleteSubCategory');
+        return back();
+    }
+
+
+
+
+    public function filterShopProducts(Request $request, $category_id)
+    {
+        $category = Category::find($category_id);
+        $products = ShopProduct::where('department_id', auth()->user()->department_id)->where('category_id', $category_id)->get();
+        return view('admin.dashboards.shops.products', compact('category', 'products'));
     }
 
 

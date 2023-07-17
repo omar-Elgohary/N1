@@ -19,33 +19,100 @@ class EntertainmentController extends Controller
     }
 
 
-
-
-    public function createEntertainmentCategory(Request $request)
-    {
-        if(!$request->name){
-            session()->flash('ErrorName');
-            return redirect()->route('events');
-        }else{
-            Category::create([
-                'name' => $request->name,
-                'department_id' => auth()->user()->department_id,
-            ]);
-        }
-
-        session()->flash('addCategory');
-        return redirect()->route('events');
-    }
-
-
-
-
     public function events()
     {
         $events = Event::all();
         return view('admin.dashboards.Entertainments.events', compact('events'));
     }
 
+
+
+    // Categories
+    public function eventCategories()
+    {
+        $categories = Category::where('department_id', auth()->user()->department_id)->get();
+        return view('admin.dashboards.Entertainments.allCategories', compact('categories'));
+    }
+
+
+
+    public function createEntertainmentCategory(Request $request)
+    {
+        Category::create([
+            'name' => $request->name,
+            'department_id' => auth()->user()->department_id,
+        ]);
+
+        session()->flash('addCategory');
+        return back();
+    }
+
+
+    public function editEventCategory(Request $request, $id)
+    {
+        $category = Category::find($id);
+        $category->update([
+            'name' => $request->name,
+        ]);
+        session()->flash('editCategory');
+        return back();
+    }
+
+
+    public function deleteEventCategory($id)
+    {
+        Category::find($id)->delete();
+        session()->flash('deleteCategory');
+        return back();
+    }
+
+
+
+    // SubCategories
+    public function eventSubCategories($id)
+    {
+        $category = Category::find($id);
+        $subCategories = SubCategory::where('category_id', $id)->get();
+        return view('admin.dashboards.Entertainments.allSubCategories', compact('category', 'subCategories'));
+    }
+
+
+    public function createEventSubCategory(Request $request, $id)
+    {
+        if($request->name == ''){
+            session()->flash('nameRequired');
+            return back();
+        }
+
+        $category = Category::find($id);
+
+        SubCategory::create([
+            'name' => $request->name,
+            'category_id' => $category->id,
+        ]);
+        session()->flash('addSubCategory');
+        return back();
+    }
+
+
+
+    public function editEventSubCategory(Request $request, $id)
+    {
+        SubCategory::find($id)->update([
+            'name' => $request->name,
+        ]);
+        session()->flash('editSubCategory');
+        return back();
+    }
+
+
+
+    public function deleteEventSubCategory($id)
+    {
+        SubCategory::find($id)->delete();
+        session()->flash('deleteSubCategory');
+        return back();
+    }
 
 
 
@@ -264,7 +331,7 @@ class EntertainmentController extends Controller
         $data = [
             'title' => 'Welcome to N1.com',
             'date' => date('m/d/Y'),
-            'events' => $events 
+            'events' => $events
         ];
         $pdf = PDF::loadView('pdf.eventProducts', $data);
         return $pdf->download('eventProducts.pdf');

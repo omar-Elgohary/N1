@@ -12,8 +12,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('email');
             $table->foreignId('department_id')->nullable()->constrained('departments');
-            $table->string('phone');
             $table->string('country_code')->default('+20');
+            $table->string('phone');
             $table->boolean('isVerified')->default(false);
             $table->string('password');
             $table->string('confirmed_password');
