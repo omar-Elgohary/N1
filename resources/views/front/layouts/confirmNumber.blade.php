@@ -5,8 +5,9 @@
 
         <div class="modal-body">
             <div class="mt-5 mt-lg-0 text-end" data-aos-delay="100">
-                <form action="{{ route('verify', $user) }}" method="POST">
-                    @csrf
+                {{-- <form action="{{ route('verify', $user) }}" method="POST"> --}}
+                <form action="{{ route('verify') }}" method="POST">
+                @csrf
                     <div class="form-group mt-3">
                         <div class="container height-100 d-flex justify-content-center align-items-center">
                             <div class="position-relative">
@@ -42,4 +43,3 @@
         </div>
     </div>
 </div>
-

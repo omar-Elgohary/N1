@@ -180,14 +180,12 @@
                     </div>
                 </div>
             </div> <!-- row -->
-            </form>
-
+        </form>
     </div> <!-- modal-content -->
 </div> <!-- modal-dialog -->
 </div> <!-- modal-fade -->
 
-{{-- confirm number --}}
-@component('front.layouts.confirmNumber')
-
+{{-- Confirm Number --}}
+@include('front.layouts.confirmNumber')
 
 @endguest
