@@ -7,6 +7,7 @@
     <meta content="" name="description">
     <meta content="" name="keywords">
     <!-- Favicons -->
+    <link href="{{ asset('images/logo.png') }}" rel="icon">
     <link href="assets/img/favicon.png" rel="icon">
     <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
@@ -29,6 +30,11 @@
     <!-- Template Main CSS File -->
     <link href="assets/css/style.css" rel="stylesheet">
 <body>
+
+    <div class="loader_bg">
+        <div class="loader"></div>
+    </div>
+
     <div class="container d-flex align-items-center justify-content-between">
         @auth
             <p>logout</p>
@@ -57,9 +63,9 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="margin-right: calc(100% - 30px);"></button>
         </div>
 
-        <div class="modal-body">
+        <div class="modal-body d-flex justify-content-center">
             <div class="col-lg-6 mt-5 mt-lg-0 text-end" data-aos-delay="100">
-                <h2 class="text-bold" style="color: #ff8000">تسجيل الدخول</h2>
+                <h2 class="text-bold text-center" style="color: #ff8000">تسجيل الدخول</h2>
 
                 <form action="{{ route('login') }}" method="post">
                     @csrf
@@ -67,17 +73,17 @@
                         <label class="mb-3">البريد الالكتروني</label>
                         <input type="email" class="form-control rounded-0" name="email">
                     </div>
-
+                    
                     <div class="form-group mt-3">
                         <label class="mb-3">كلمة المرور</label>
                         <input type="password" class="form-control rounded-0" name="password">
                     </div>
-
+                    
                     {{-- <div class="form-group mt-3">
                         <input type="checkbox"> تذكرني
                     </div> --}}
-
-                    <div class="form-group mt-3 text-center mx-auto">
+                    
+                    <div class="form-group mt-4 text-center mx-auto">
                         {{-- <button type="submit" class="btn px-5 mb-3" id="">تسجيل الدخول</button><br> --}}
                         <input type="submit" value="تسجيل الدخول" class="btn px-5 mb-3" id="login"><br>
                         <a data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" style="cursor: pointer;">لا تمتلك حسابا بعد؟ <span class="text-danger text-decoration-underline">انشاء حساب تاجر</span></a>
@@ -89,103 +95,4 @@
         </div>
     </div>
 </div>
-
-
-{{-- انشاء حساب تاجر --}}
-<div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1" dir="rtl">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-        <div class="modal-header">
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="margin-right: calc(100% - 30px);"></button>
-        </div>
-
-        <div class="modal-body mt-5 mt-lg-0 text-end">
-            <h2 class="fw-bold" style="color: #ff8000">انشاء حساب تاجر</h2>
-            <form action="{{ route('register') }}" method="post" autocomplete="off">
-                @csrf
-                <div class="row">
-                    <div class="col-lg-6">
-
-                        <div class="form-group mt-3">
-                            <label class="mb-3">اسم الشركة</label>
-                            <input type="text" class="form-control rounded-0" name="company_name">
-                        </div>
-
-                        <div class="form-group mt-3">
-                            <label class="mb-3">رقم السجل التجاري/ معروف</label>
-                            <input type="text" class="form-control rounded-0" name="commercial_registration_number">
-                        </div>
-
-                        <div class="form-group mt-3">
-                            <div class="row">
-                                <div class="col-lg-9">
-                                    <label class="mb-3">رقم الجوال</label>
-                                    <input type="text" class="form-control rounded-0" name="phone">
-                                </div>
-
-                                <div class="col-lg-3">
-                                    <select name="country_code" id="inputState" class="form-control rounded-0 mt-5">
-                                        <option selected="" value="+20">20+</option>
-                                        <option value="+966">966+</option>
-                                        <option value="+971">971+</option>
-                                        <option value="+968">968+</option>
-                                        <option value="+965">965+</option>
-                                        <option value="+974">974+</option>
-                                        <option value="+973">973+</option>
-                                        <option value="+970">970+</option>
-                                        <option value="+962">962+</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group mt-3">
-                            <label class="mb-3">كلمة المرور</label>
-                            <input type="password" class="form-control rounded-0" name="password">
-                        </div>
-                    </div> <!-- col-6 -->
-
-                    <div class="col-lg-6">
-                        <div class="form-group mt-3">
-                            <label class="mb-3">نوع النشاط</label>
-                            <select class="form-control rounded-0" name="department_id">
-                                <option value="">اختر نوع النشاط</option>
-                                @foreach (\App\Models\Department::all() as $department)
-                                    <option value="{{ $department->id }}">{{ $department->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <div class="form-group mt-3">
-                            <label class="mb-3">صورة السجل التجاري/ معروف</label><br>
-                            <label for="file" class="upload form-control d-flex flex-row-reverse"><i class="fa fa-duotone fa-cloud-arrow-up text-secondary"></i> ارفع السجل التجاري\ معروف</label>
-                            <input type="file" class="form-control rounded-0" id="file" name="commercial_registration_image">
-                        </div>
-
-                        <div class="form-group mt-3">
-                            <label class="mb-3">البريد الالكتروني</label>
-                            <input type="email" class="form-control rounded-0" name="email">
-                        </div>
-
-                        <div class="form-group mt-3">
-                            <label class="mb-3">تأكيد كلمة المرور</label>
-                            <input type="password" class="form-control rounded-0" name="confirmed_password">
-                        </div>
-                    </div> <!-- col-6 -->
-
-                    <div class="form-group mt-4 text-center">
-                        <input type="submit" class="btn px-5 mb-3" id="login" value="انشاء الحساب"><br>
-                        {{-- <a class="btn px-5 mb-3" id="login" data-bs-target="#exampleModalToggle3" data-bs-toggle="modal">انشاء الحساب</a> <br> --}}
-                        <a data-bs-target="#exampleModalToggle" data-bs-toggle="modal" style="cursor: pointer;"> تمتلك حسابا؟ <span class="text-danger text-decoration-underline">تسجيل الدخول</span></a>
-                    </div>
-                </div>
-            </div> <!-- row -->
-        </form>
-    </div> <!-- modal-content -->
-</div> <!-- modal-dialog -->
-</div> <!-- modal-fade -->
-
-{{-- Confirm Number --}}
-@include('front.layouts.confirmNumber')
-
 @endguest

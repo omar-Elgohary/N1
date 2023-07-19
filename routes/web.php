@@ -11,11 +11,8 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\EntertainmentController;
 use App\Http\Controllers\RestaurantController;
 
-
 Route::controller(AuthController::class)->group(function(){
     Route::post('register', 'register')->name('register');
-    Route::get('verifyForm/{id}', 'verifyForm')->name('verifyForm');
-    // Route::post('verify/{id}', 'verify')->name('verify');
     Route::post('verify', 'verify')->name('verify');
     Route::post('login', 'login')->name('login');
     Route::get('logOut', 'logOut')->name('logOut');
@@ -25,7 +22,8 @@ Route::controller(AuthController::class)->group(function(){
 
 // Front
 Route::get('/', function () {
-    return view('front.home');
+    $signedup = 1;
+    return view('front.home', compact('signedup'));
 })->name('home');
 
 Route::get('contact_us', [MainController::class, 'index'])->name('contact_us');

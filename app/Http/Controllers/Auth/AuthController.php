@@ -10,19 +10,6 @@ use Illuminate\Support\Facades\Session;
 
 class AuthController extends Controller
 {
-    public function verifyForm($id)
-    {
-        $user = User::find($id);
-        return view('front.layouts.confirmNumber', compact('user'));
-    }
-
-
-    public function register()
-    {
-        return view('front.layouts.confirmNumber');
-    }
-
-
     // public function register(Request $request)
     // {
     //     try{
@@ -65,19 +52,67 @@ class AuthController extends Controller
     //             'from' => $twilio_number,
     //             'body' => $otp,
     //         ]);
+            
+    //         $signedup = 1;
+    //         return view('front.home', compact('signedup'));
 
-    //         return view('front.layouts.confirmNumber', compact('user'));
     //     }catch(\Exception $e){
-    //         info("Error: ".$e->getMessage());
+    //         info($e->getMessage());
     //     }
     // }
 
 
 
 
+    public function register(Request $request)
+    {
+        try{
+            $file_extention = $request->file("commercial_registration_image")->getCLientOriginalExtension();
+            $image_name = time(). ".".$file_extention;
+            $request->file("commercial_registration_image")->move(public_path('assets/images/meals/'), $image_name);
+
+            $user = User::create([
+                'name' => $request->company_name,
+                'company_name' => $request->company_name,
+                'department_id' => $request->department_id,
+                'phone'=> $request->phone,
+                'country_code'=> $request->country_code,
+                'isVerified'=> 0,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'confirmed_password' => Hash::make($request->confirmed_password),
+                'commercial_registration_number' => $request->commercial_registration_number,
+                'commercial_registration_image' => $image_name,
+                'type' => 'seller',
+            ]);
+
+            $signedup = 1;
+            return view('front.home', compact('signedup'));
+
+        }catch(\Exception $e){
+            info($e->getMessage());
+        }
+    }
+
+
+
     public function verify(Request $request, $id)
     {
         try{
+            $account_id = getenv("TWILIO_SID");
+            $auth_token = getenv("TWILIO_TOKEN");
+            $twilio_number = getenv("TWILIO_FROM");
+
+            $otp = rand(100000, 999999);
+            Session::put('verification_code', $otp);
+            Session::put('user_data', $request->all());
+
+            $client = new Client($account_id, $auth_token);
+            $client->messages->create("+20 1156513661", [
+                'from' => $twilio_number,
+                'body' => $otp,
+            ]);
+
             $user = User::find($id);
             $phoneNumber = $request->input('phone');
             $userEnteredVerificationCode = $request->input('verification_code');

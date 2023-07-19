@@ -33,6 +33,17 @@
     </script>
 @endif
 
+@if (session()->has('registeration failed'))
+    <script>
+        window.onload = function() {
+            notif({
+                msg: "هناك خطأ في تسجيل الدخول",
+                type: "error"
+            })
+        }
+    </script>
+@endif
+
 @if (Session::has('Invalid verification code entered!'))
     <script>
         window.onload = function() {
@@ -252,5 +263,162 @@
     </div>
 </section>
 </main>
+
+@php
+    $user = Auth::user();
+@endphp
+
+{{-- انشاء حساب تاجر --}}
+<div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1" dir="rtl">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="margin-right: calc(100% - 30px);"></button>
+        </div>
+
+        <div class="modal-body mt-5 mt-lg-0 text-end">
+            <h2 class="fw-bold" style="color: #ff8000">انشاء حساب تاجر</h2>
+            <form action="{{ route('register') }}" method="post" autocomplete="off" enctype="multipart/form-data">
+                @csrf
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group mt-3">
+                            <label class="mb-3">اسم الشركة</label>
+                            <input type="text" class="form-control rounded-0" name="company_name">
+                        </div>
+
+                        <div class="form-group mt-3">
+                            <label class="mb-3">رقم السجل التجاري/ معروف</label>
+                            <input type="text" class="form-control rounded-0" name="commercial_registration_number">
+                        </div>
+
+                        <div class="form-group mt-3">
+                            <div class="row">
+                                <div class="col-lg-9">
+                                    <label class="mb-3">رقم الجوال</label>
+                                    <input type="text" class="form-control rounded-0" name="phone">
+                                </div>
+
+                                <div class="col-lg-3">
+                                    <select name="country_code" id="inputState" class="form-control rounded-0 mt-5">
+                                        <option selected="" value="+20">20+</option>
+                                        <option value="+966">966+</option>
+                                        <option value="+971">971+</option>
+                                        <option value="+968">968+</option>
+                                        <option value="+965">965+</option>
+                                        <option value="+974">974+</option>
+                                        <option value="+973">973+</option>
+                                        <option value="+970">970+</option>
+                                        <option value="+962">962+</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group mt-3">
+                            <label class="mb-3">كلمة المرور</label>
+                            <input type="password" class="form-control rounded-0" name="password">
+                        </div>
+                    </div> <!-- col-6 -->
+
+                    <div class="col-lg-6">
+                        <div class="form-group mt-3">
+                            <label class="mb-3">نوع النشاط</label>
+                            <select class="form-control rounded-0" name="department_id">
+                                <option value="">اختر نوع النشاط</option>
+                                @foreach (\App\Models\Department::all() as $department)
+                                    <option value="{{ $department->id }}">{{ $department->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="form-group mt-3">
+                            <label class="mb-3">صورة السجل التجاري/ معروف</label><br>
+                            <label for="file" class="upload form-control d-flex flex-row-reverse"><i class="fa fa-duotone fa-cloud-arrow-up text-secondary"></i> ارفع السجل التجاري\ معروف</label>
+                            <input type="file" class="form-control rounded-0" id="file" name="commercial_registration_image">
+                        </div>
+
+                        <div class="form-group mt-3">
+                            <label class="mb-3">البريد الالكتروني</label>
+                            <input type="email" class="form-control rounded-0" name="email">
+                        </div>
+
+                        <div class="form-group mt-3">
+                            <label class="mb-3">تأكيد كلمة المرور</label>
+                            <input type="password" class="form-control rounded-0" name="confirmed_password">
+                        </div>
+                    </div> <!-- col-6 -->
+
+                    <div class="form-group mt-4 text-center">
+                        <input type="submit" class="btn px-5 mb-3" id="verify" value="انشاء الحساب"><br>
+                        {{-- <a class="btn px-5 mb-3" id="login" data-bs-target="#exampleModalToggle3" data-bs-toggle="modal">انشاء الحساب</a> <br> --}}
+                        <a data-bs-target="#exampleModalToggle" data-bs-toggle="modal" style="cursor: pointer;"> تمتلك حسابا؟ <span class="text-danger text-decoration-underline">تسجيل الدخول</span></a>
+                    </div>
+                </div>
+            </div> <!-- row -->
+        </form>
+    </div> <!-- modal-content -->
+</div> <!-- modal-dialog -->
+</div> <!-- modal-fade -->
+
+
+{{-- Confirm Number --}}
+<div class="modal fade border-0" id="exampleModalToggle3" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1" dir="rtl">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+        <div class="modal-body">
+            <div class="mt-5 mt-lg-0 text-end" data-aos-delay="100">
+                <form action="{{ route('verify') }}" method="POST">
+                {{-- <form action="{{ route('verify', $user) }}" method="POST"> --}}
+                @csrf
+                    <div class="form-group mt-3">
+                        <div class="container height-100 d-flex justify-content-center align-items-center">
+                            <div class="position-relative">
+                                <h2 class="fw-bold" style="color: #e57504">التحقق من رقم الجوال</h2>
+                                <div> <span class="mb-3">ادخل الكود المرسل الى</span>
+                                    <small>
+                                        {{ session('phone') }}
+                                    </small>
+                                </div>
+
+                                <div id="otp" class="inputs d-flex flex-row justify-content-center mt-2">
+                                    {{-- <input class="m-2 text-center form-control rounded-0" type="text" name ="first" id="first" maxlength="1" /> --}}
+                                    {{-- <input class="m-2 text-center form-control rounded-0" type="text" name ="second" id="second" maxlength="1" /> --}}
+                                    {{-- <input class="m-2 text-center form-control rounded-0" type="text" name ="third" id="third" maxlength="1" /> --}}
+                                    {{-- <input class="m-2 text-center form-control rounded-0" type="text" name ="fourth" id="fourth" maxlength="1" /> --}}
+                                    <input name="verification_code" type="text form-cotrol" type="text">
+                                </div>
+
+                                <div class="text-center mt-3">
+                                    <button type="submit" class="btn btn-success">تسجبل الدخول</button>
+                                </div>
+
+                                {{-- <div class="text-center mt-3">
+                                    <div class="countdown">59:00</div>
+                                </div> --}}
+
+                            </div> <!-- position-relative -->
+                        </div> <!-- container -->
+                    </div> <!-- form-group -->
+                </form>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+
+
+@if($signedup == 1)
+    @push('script')
+        <script>
+            $('#verify').on('click', function(event) {
+                event.preventDefault(); // Prevent default link navigation
+                $('#exampleModalToggle2').modal('hide');
+                $('#exampleModalToggle3').modal('show');
+            });
+        </script>
+    @endpush 
+@endif
 
 @endsection

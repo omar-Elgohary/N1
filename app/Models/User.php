@@ -40,6 +40,7 @@ class User extends Authenticatable
             info("Error: ".$e->getMessage());
         }
     }
+
     /**
      * The attributes that should be hidden for serialization.
      *
