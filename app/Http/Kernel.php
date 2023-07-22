@@ -69,5 +69,6 @@ class Kernel extends HttpKernel
         'CheckShop' => \App\Http\Middleware\CheckShop::class,
         'CheckEntertainment' => \App\Http\Middleware\CheckEntertainment::class,
         'CheckUser' => \App\Http\Middleware\CheckUser::class,
+        'isAdminDashboard' => \App\Http\Middleware\isAdminDashboard::class,
     ];
 }

@@ -37,7 +37,7 @@
     <script>
         window.onload = function() {
             notif({
-                msg: "هناك خطأ في تسجيل الدخول",
+                msg: "هناك خطأ في انشاء الحساب",
                 type: "error"
             })
         }
@@ -164,28 +164,6 @@
                 </div>
             </div>
         @endforeach
-
-        {{-- <div class="col-md-6 col-lg-4 d-flex align-items-stretch mb-5 mb-lg-0">
-        <div class="icon-box">
-            <h4 class="title text-center">الخدمة الأولى</h4>
-            <img src="{{ asset('images/l1.png') }}" alt="">
-        </div>
-        </div>
-
-        <div class="col-md-6 col-lg-4 d-flex align-items-stretch mb-5 mb-lg-0" data-aos-delay="100">
-        <div class="icon-box">
-            <h4 class="title text-center">الخدمة الثانية</h4>
-            <img src="{{ asset('images/l2.png') }}" alt="">
-        </div>
-        </div>
-
-        <div class="col-md-6 col-lg-4 d-flex align-items-stretch mb-5 mb-lg-0" data-aos-delay="200">
-        <div class="icon-box">
-            <h4 class="title text-center">الخدمة الثالثة</h4>
-            <img src="{{ asset('images/l3.png') }}" alt="">
-        </div>
-        </div> --}}
-
     </div>
     </div>
 </section>
@@ -264,10 +242,6 @@
 </section>
 </main>
 
-@php
-    $user = Auth::user();
-@endphp
-
 {{-- انشاء حساب تاجر --}}
 <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1" dir="rtl">
     <div class="modal-dialog modal-dialog-centered">
@@ -335,7 +309,7 @@
                         <div class="form-group mt-3">
                             <label class="mb-3">صورة السجل التجاري/ معروف</label><br>
                             <label for="file" class="upload form-control d-flex flex-row-reverse"><i class="fa fa-duotone fa-cloud-arrow-up text-secondary"></i> ارفع السجل التجاري\ معروف</label>
-                            <input type="file" class="form-control rounded-0" id="file" name="commercial_registration_image">
+                            <input type="file" accept="image/*" class="form-control rounded-0" id="file" name="commercial_registration_image">
                         </div>
 
                         <div class="form-group mt-3">
@@ -363,7 +337,7 @@
 
 
 {{-- Confirm Number --}}
-<div class="modal fade border-0" id="exampleModalToggle3" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1" dir="rtl">
+{{-- <div class="modal fade border-0" id="exampleModalToggle3" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1" dir="rtl">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
 
@@ -406,10 +380,10 @@
         </div>
         </div>
     </div>
-</div>
+</div> --}}
 
 
-@if($signedup == 1)
+{{-- @if($signedup == 1)
     @push('script')
         <script>
             $('#verify').on('click', function(event) {
@@ -418,7 +392,7 @@
                 $('#exampleModalToggle3').modal('show');
             });
         </script>
-    @endpush 
-@endif
+    @endpush
+@endif --}}
 
 @endsection

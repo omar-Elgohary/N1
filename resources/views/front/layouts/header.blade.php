@@ -73,16 +73,16 @@
                         <label class="mb-3">البريد الالكتروني</label>
                         <input type="email" class="form-control rounded-0" name="email">
                     </div>
-                    
+
                     <div class="form-group mt-3">
                         <label class="mb-3">كلمة المرور</label>
                         <input type="password" class="form-control rounded-0" name="password">
                     </div>
-                    
+
                     {{-- <div class="form-group mt-3">
                         <input type="checkbox"> تذكرني
                     </div> --}}
-                    
+
                     <div class="form-group mt-4 text-center mx-auto">
                         {{-- <button type="submit" class="btn px-5 mb-3" id="">تسجيل الدخول</button><br> --}}
                         <input type="submit" value="تسجيل الدخول" class="btn px-5 mb-3" id="login"><br>
@@ -96,3 +96,4 @@
     </div>
 </div>
 @endguest
+

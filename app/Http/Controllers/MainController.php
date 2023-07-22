@@ -7,6 +7,14 @@ use Illuminate\Http\Request;
 
 class MainController extends Controller
 {
+    public function home()
+    {
+        $signedup = 1;
+        return view('front.home', compact('signedup'));
+    }
+
+
+
     public function index()
     {
         return view('front.contact');
