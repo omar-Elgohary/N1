@@ -146,7 +146,9 @@
 
 <!-- Right bar overlay-->
 <div class="rightbar-overlay"></div>
-
+<!--Internal  Notify js -->
+<script src="{{ URL::asset('assets/plugins/notify/js/notifIt.js') }}"></script>
+<script src="{{ URL::asset('assets/plugins/notify/js/notifit-custom.js') }}"></script>
 <!-- JAVASCRIPT -->
 <script src="{{ asset('dashboard/assets/libs/jquery/jquery.min.js') }}"></script>
 <script src="{{ asset('dashboard/assets/libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script>

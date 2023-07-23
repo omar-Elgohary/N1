@@ -45,19 +45,19 @@
                     </a>
                 </li>
 
-                <li class="menu-title">Apps</li>
+                <li class="menu-title">اضافات</li>
 
                 <li>
-                    <a href="calendar.html" class="waves-effect">
+                    <a href="{{ route('aboutUs') }}" class="waves-effect">
                         <i class="uil-calender"></i>
-                        <span>Calendar</span>
+                        <span>معلومات عن N1</span>
                     </a>
                 </li>
 
                 <li>
-                    <a href="chat.html" class=" waves-effect">
+                    <a href="{{ route('usersMessages') }}" class=" waves-effect">
                         <i class="uil-comments-alt"></i>
-                        <span>Chat</span>
+                        <span>رسائل العملاء</span>
                     </a>
                 </li>
 

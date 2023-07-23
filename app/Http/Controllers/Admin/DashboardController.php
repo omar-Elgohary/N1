@@ -22,10 +22,12 @@ class DashboardController extends Controller
 
     public function addCategory(Request $request)
     {
-        return $request;
         $request->validate([
             'name' => 'required',
             'department_id' => 'required',
+        ],[
+            'name.required' => 'يجب ادخال اسم الفئة',
+            'department_id.required' => 'يجب اختيار القسم',
         ]);
 
         Category::create([
@@ -34,6 +36,26 @@ class DashboardController extends Controller
         ]);
 
         session()->flash('addCategory');
+        return back();
+    }
+
+
+
+    public function updateCategory(Request $request, $id)
+    {
+        $category = Category::find($id);
+        $category->update([
+            'name' => $request->name,
+            'department_id' => $request->department_id,
+        ]);
+        session()->flash('updateCategory');
+        return back();
+    }
+
+    public function deleteCategory(Request $request, $id)
+    {
+        Category::find($id)->delete();
+        session()->flash('deleteCategory');
         return back();
     }
 }

@@ -4,7 +4,6 @@
 @endsection
 
 @section('content')
-
 @if (session()->has('addCategory'))
     <script>
         window.onload = function() {
@@ -16,8 +15,42 @@
     </script>
 @endif
 
+@if (session()->has('updateCategory'))
+    <script>
+        window.onload = function() {
+            notif({
+                msg: 'تم تعديل الفئة بنجاح ',
+                type: "primary"
+            })
+        }
+    </script>
+@endif
+
+@if (session()->has('deleteCategory'))
+    <script>
+        window.onload = function() {
+            notif({
+                msg: 'تم حذف الفئة بنجاح ',
+                type: "success"
+            })
+        }
+    </script>
+@endif
+
+
 <div class="main-content">
 <div class="page-content">
+    
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
@@ -58,8 +91,8 @@
                                 <td class="fw-bold">{{ $category->name}}</td>
                                 <td class="fw-bold">{{ $category->department->name }}</td>
                                 <td>
-                                    <a href="javascript:void(0);" class="px-3 text-primary"><i class="uil uil-pen font-size-18"></i></a>
-                                    <a href="javascript:void(0);" class="px-3 text-danger"><i class="uil uil-trash-alt font-size-18"></i></a>
+                                    <a href="#updatecategory" class="px-3 text-primary" data-bs-toggle="modal"><i class="uil uil-pen font-size-18"></i></a>
+                                    <a href="#deleteCategory" class="px-3 text-danger" data-bs-toggle="modal"><i class="uil uil-trash-alt font-size-18"></i></a>
                                 </td>
                             </tr>
                         </tbody>
@@ -75,9 +108,7 @@
                     </table>
                 </div>
             </div>
-        </div>
-        <!-- end row -->
-
+        </div><!-- end row -->
     </div> <!-- container-fluid -->
 </div>
 
@@ -97,7 +128,7 @@
             <div class="modal-body">
                 <div class="form-group mb-3">
                     <label for="name">اسم الفئة</label>
-                    <input type="text" name="name" class="form-control">
+                    <input type="text" name="name" class="form-control" id="input">
                 </div>
 
                 <div class="form-group">
@@ -116,7 +147,66 @@
                 <a href="#" class="btn btn-block btn-secondary px-5 text-white" data-bs-dismiss="modal">الغاء</a>
             </div>
         </form>
+        </div> <!-- modal-content -->
+    </div> <!-- modal-dialog -->
+</div> <!-- modal fade -->
 
+
+{{-- updatecategory --}}
+<div class="modal fade border-0" id="updatecategory" aria-hidden="true" aria-labelledby="updatecategoryLabel" tabindex="-1" dir="rtl">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="btn-x modal-header">
+                <h2>تعديل الفئة</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+        <form action="{{route('updateCategory', $category->id)}}" method="post">
+            @csrf
+            <div class="modal-body">
+                <div class="form-group mb-3">
+                    <label for="name">اسم الفئة</label>
+                    <input type="text" name="name" class="form-control" id="input" value="{{$category->name}}">
+                </div>
+
+                <div class="form-group">
+                    <label>اسم القسم</label>
+                    <select name="department_id" class="form-control">
+                        <option value="{{ $category->department->id }}">{{ $category->department->name }}</option>
+                        @foreach (\App\Models\Department::all() as $department)
+                            <option value="{{ $department->id }}">{{ $department->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-around my-4">
+                <button type="submit" class="btn btn-block btn-primary btn-bordered px-5">تعديل</button>
+                <a href="#" class="btn btn-block btn-secondary px-5 text-white" data-bs-dismiss="modal">الغاء</a>
+            </div>
+        </form>
+
+        </div> <!-- modal-content -->
+    </div> <!-- modal-dialog -->
+</div> <!-- modal fade -->
+
+
+{{-- deleteCategory --}}
+<div class="modal fade border-0" id="deleteCategory" aria-hidden="true" aria-labelledby="deleteCategoryLabel" tabindex="-1" dir="rtl">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="btn-x modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body text-center my-5">
+                <h2 class="text-black">هل أنت متأكد من حذف هذه الفئة؟</h2>
+            </div>
+
+            <div class="modal-footer d-flex justify-content-around">
+                <a href="#" class="btn btn-block btn-secondary px-5 text-white" data-bs-dismiss="modal">الغاء</a>
+                <a href="{{ route('deleteCategory', $category->id) }}" type="button" class="btn btn-block btn-danger btn-bordered px-5">حذف</a>
+            </div>
         </div> <!-- modal-content -->
     </div> <!-- modal-dialog -->
 </div> <!-- modal fade -->

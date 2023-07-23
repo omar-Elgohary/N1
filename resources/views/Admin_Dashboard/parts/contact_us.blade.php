@@ -1,4 +1,8 @@
-@extends('dashboard.layouts.app')
+@extends('Admin_Dashboard.layouts.app')
+@section('title')
+    رسائل العملاء
+@endsection
+
 @section('content')
 <div class="main-content">
 
@@ -32,7 +36,7 @@
                         </thead>
 
                         <tbody>
-                        @forelse ($contact_requests as $key => $request)
+                        @forelse ($usersMessages as $key => $request)
                             <tr>
                                 <td>{{ $key+1 }}</td>
                                 <td>{{ $request->name }}</td>

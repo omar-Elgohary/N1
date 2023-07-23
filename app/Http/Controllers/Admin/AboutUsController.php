@@ -1,19 +1,20 @@
 <?php
 namespace App\Http\Controllers\admin;
-use App\Models\AboutUs;
+use App\Models\Aboutus;
 use App\Models\ContactUs;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
 class AboutUsController extends Controller
 {
-    public function index()
+    public function aboutUs()
     {
-        $infos = AboutUs::all();
-        return view('dashboard.parts.about_us', compact('infos'));
+        $infos = DB::table('about_us')->paginate(5);
+        return view('Admin_Dashboard.parts.about_us', compact('infos'));
     }
 
-    public function store(Request $request)
+    public function storeAboutUs(Request $request)
     {
         $this->validate($request, [
             'paragraph_ar' => 'required|unique:about_us|min:20',
@@ -23,43 +24,49 @@ class AboutUsController extends Controller
             'paragraph_en.required' => 'يجب ادخال معلومات عن الموقع بالانجليزية',
             'paragraph_ar.unique' => 'معلومات الموقع العربية التي ادخلتها موجوده سابقا',
             'paragraph_en.unique' => 'معلومات الموقع الانجليزية التي ادخلتها موجوده سابقا',
-            'paragraph.min' => 'يجب ادخال اكثر من 50 حرف لمعلومات الموقع',
+            'paragraph.min' => 'يجب ادخال اكثر من 20 حرف لمعلومات الموقع',
         ]);
 
         $data = $request->only('paragraph_ar', 'paragraph_en');
-        AboutUs::create($data);
+        DB::table('about_us')->insert($data);
 
-        session()->flash('Add', 'تم اضافة معلومات الموقع بنجاح ');
+        session()->flash('storeAboutUs');
         return back();
     }
 
-    public function update(Request $request, $id)
+    public function updateAboutUs(Request $request, $id)
     {
         $this->validate($request, [
             'paragraph_ar' => 'required|min:20',
             'paragraph_en' => 'required|min:20',
+        ],[
+            'paragraph_ar.required' => 'يجب ادخال معلومات عن الموقع بالعربية',
+            'paragraph_en.required' => 'يجب ادخال معلومات عن الموقع بالانجليزية',
+            'paragraph_ar.unique' => 'معلومات الموقع العربية التي ادخلتها موجوده سابقا',
+            'paragraph_en.unique' => 'معلومات الموقع الانجليزية التي ادخلتها موجوده سابقا',
+            'paragraph.min' => 'يجب ادخال اكثر من 20 حرف لمعلومات الموقع',
         ]);
-
         $data = $request->only('paragraph_ar', 'paragraph_en');
-        AboutUs::find($id)->update($data);
+        DB::table('about_us')->where('id', $id)->update($data);
 
-        session()->flash('Edit', 'تم تعديل معلومات الموقع بنجاح ');
+        session()->flash('updateAboutUs');
         return back();
     }
 
-    public function destroy(Request $request, $id)
+    public function deleteAboutUs($id)
     {
-        AboutUs::find($id)->delete();
-        session()->flash('Delete', 'تم حذف معلومات الموقع بنجاح ');
+        $info = DB::table('about_us')->where('id', $id);
+        $info->delete();
+        session()->flash('deleteAboutUs');
         return back();
     }
 
 
 
 
-    public function contact_us()
+    public function usersMessages()
     {
-        $contact_requests = ContactUs::all();
-        return view('dashboard.parts.contact_us', compact('contact_requests'));
+        $usersMessages = DB::table('contact_us')->get();
+        return view('Admin_Dashboard.parts.contact_us', compact('usersMessages'));
     }
 }
