@@ -39,6 +39,24 @@
                 </li>
 
                 <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="uil-user-circle"></i>
+                        <span>المستخدمين</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{ route('users') }}">العملاء</a></li>
+                        <li><a href="{{ route('sellers') }}">مقدمي الخدمة</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="{{ route('upgradeAccountsPage') }}" class="waves-effect">
+                        <i class="bx bx-archive-out"></i>
+                        <span>ترقية الحسابات</span>
+                    </a>
+                </li>
+
+                <li>
                     <a href="{{ route('categories') }}" class="waves-effect">
                         <i class="uil-window-section"></i>
                         <span>الفئات</span>

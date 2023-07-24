@@ -1,5 +1,6 @@
 <?php
 namespace App\Http\Controllers\Admin;
+use App\Models\User;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -11,6 +12,69 @@ class DashboardController extends Controller
     {
         return view('Admin_Dashboard.dashboard');
     }
+
+
+
+    public function adminInfo()
+    {
+        $admin = Auth::user();
+        return view('Admin_Dashboard.parts.adminInfo', compact('admin'));
+    }
+
+
+
+    public function editAdminInfo(Request $request)
+    {
+        $admin = Auth::user();
+
+        $admin->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+        ]);
+        session()->flash('editAdmin');
+        return back();
+    }
+
+
+
+    public function users()
+    {
+        $users = User::where('type', 'user')->get();
+        return view('Admin_Dashboard.User.users', compact('users'));
+    }
+
+
+    public function sellers()
+    {
+        $sellers = User::where('type', 'seller')->get();
+        return view('Admin_Dashboard.User.sellers', compact('sellers'));
+    }
+
+
+
+
+    public function upgradeAccountsPage()
+    {
+        $users = User::where('type', 'user')->get();
+        return view('Admin_Dashboard.parts.upgradeAccounts', compact('users'));
+    }
+
+
+
+
+
+    public function upgradeAccounts()
+    {
+
+    }
+
+
+
+
+
+
+
 
 
     public function categories()

@@ -6,18 +6,14 @@
             </div>
             <div class="col-sm-6">
                 <div class="text-sm-end d-none d-sm-block">
-                    Crafted with <i class="mdi mdi-heart text-danger"></i> by <a href="https://themesbrand.com/" target="_blank" class="text-reset">Themesbrand</a>
+                    Crafted with <i class="mdi mdi-heart text-danger"></i> by <a href="https://themesbrand.com/" target="_blank" class="text-reset">Ektml Team</a>
                 </div>
             </div>
         </div>
     </div>
 </footer>
-</div>
-<!-- end main content-->
-
-</div>
-<!-- END layout-wrapper -->
-
+</div><!-- end main content-->
+</div><!-- END layout-wrapper -->
 
 
 <!-- Right Sidebar -->
@@ -34,7 +30,6 @@
 
 <!-- Settings -->
 <hr class="m-0" />
-
 <div class="p-4">
     <h6 class="mb-3">Layout</h6>
     <div class="form-check form-check-inline">
@@ -137,18 +132,17 @@
             id="layout-direction-rtl" value="rtl">
         <label class="form-check-label" for="layout-direction-rtl">RTL</label>
     </div>
-
 </div>
-
 </div> <!-- end slimscroll-menu-->
-</div>
-<!-- /Right-bar -->
+</div><!-- /Right-bar -->
 
 <!-- Right bar overlay-->
 <div class="rightbar-overlay"></div>
+
 <!--Internal  Notify js -->
 <script src="{{ URL::asset('assets/plugins/notify/js/notifIt.js') }}"></script>
 <script src="{{ URL::asset('assets/plugins/notify/js/notifit-custom.js') }}"></script>
+
 <!-- JAVASCRIPT -->
 <script src="{{ asset('dashboard/assets/libs/jquery/jquery.min.js') }}"></script>
 <script src="{{ asset('dashboard/assets/libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
@@ -157,7 +151,11 @@
 <script src="{{ asset('dashboard/assets/libs/node-waves/waves.min.js') }}"></script>
 <script src="{{ asset('dashboard/assets/libs/waypoints/lib/jquery.waypoints.min.js') }}"></script>
 <script src="{{ asset('dashboard/assets/libs/jquery.counterup/jquery.counterup.min.js') }}"></script>
-
+<script src="{{ asset('dashboard/assets/js/pages/form-validation.init.js') }}"></script>
+<script src="{{ asset('dashboard/assets/libs/parsleyjs/parsley.min.js') }}"></script>
+<script src="{{ asset('dashboard/assets/js/pages/alerts.init.js') }}"></script>
+<script src="{{ asset('dashboard/assets/libs/sweetalert2/sweetalert2.min.js') }}"></script>
+<script src="{{ asset('dashboard/assets/js/pages/sweet-alerts.init.js') }}"></script>
 <!-- apexcharts -->
 <script src="{{ asset('dashboard/assets/libs/apexcharts/apexcharts.min.js') }}"></script>
 <script src="{{ asset('dashboard/assets/js/pages/dashboard.init.js') }}"></script>
