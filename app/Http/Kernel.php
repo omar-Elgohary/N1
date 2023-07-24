@@ -70,5 +70,12 @@ class Kernel extends HttpKernel
         'CheckEntertainment' => \App\Http\Middleware\CheckEntertainment::class,
         'CheckUser' => \App\Http\Middleware\CheckUser::class,
         'isAdminDashboard' => \App\Http\Middleware\isAdminDashboard::class,
+
+        /**** OTHER MIDDLEWARE ****/
+        'localize'                => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRoutes::class,
+        'localizationRedirect'    => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRedirectFilter::class,
+        'localeSessionRedirect'   => \Mcamara\LaravelLocalization\Middleware\LocaleSessionRedirect::class,
+        'localeCookieRedirect'    => \Mcamara\LaravelLocalization\Middleware\LocaleCookieRedirect::class,
+        'localeViewPath'          => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationViewPath::class
     ];
 }

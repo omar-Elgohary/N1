@@ -11,17 +11,17 @@ class DepartmentSeeder extends Seeder
     public function run()
     {
         Department::create([
-            'name' => 'مطاعم',
+            'name' => ['en' => 'Restaurents', 'ar' => 'مطاعم'],
             'image' => 'fgj.jfif',
         ]);
 
         Department::create([
-            'name' => 'متجر منتجات',
+            'name' => ['en' => 'Shops', 'ar' => 'متجر منتجات'],
             'image' => 'vyugj.jfif',
         ]);
 
         Department::create([
-            'name' => 'ترفيه',
+            'name' => ['en' => 'Entertainments', 'ar' => 'ترفيه'],
             'image' => 'ghk.jfif',
         ]);
     }

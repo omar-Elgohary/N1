@@ -1,5 +1,5 @@
 <?php
-use App\Http\Controllers\Admin\CategoryController;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\ShopController;
@@ -8,9 +8,23 @@ use App\Http\Controllers\CouponController;
 use App\Http\Controllers\SellerController;
 use App\Http\Controllers\PackageController;
 use App\Http\Controllers\Auth\AuthController;
-use App\Http\Controllers\EntertainmentController;
 use App\Http\Controllers\RestaurantController;
+use App\Http\Controllers\EntertainmentController;
+use App\Http\Controllers\Admin\CategoryController;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
+
+Route::group(
+    [
+        'prefix' => LaravelLocalization::setLocale(),
+        'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]
+    ], function(){
+
+
+    Route::get('/', function()
+    {
+        return view('front.home');
+    });
 
 Route::controller(AuthController::class)->group(function(){
     Route::post('register', 'register')->name('register');
@@ -289,3 +303,5 @@ Route::middleware(['CheckEntertainment'])->group(function () {
 }); // Middleware CheckUser
 
 }); // middleware authenticated
+
+}); // Localization

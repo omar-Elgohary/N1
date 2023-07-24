@@ -322,8 +322,13 @@ h6 {
 /**
 * Desktop Navigation
 */
+
+.navhead{
+    direction: ltr;
+}
+
 .navbar {
-  padding: 0;
+    padding: 0;
 }
 
 .navbar ul {

@@ -27,33 +27,59 @@
     <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
     <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
     <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
     <!-- Template Main CSS File -->
-    <link href="assets/css/style.css" rel="stylesheet">
+    @if(App::getLocale() == 'ar')
+        <link href="assets/css/style-ar.css" rel="stylesheet">
+    @else
+        <link href="assets/css/style-en.css" rel="stylesheet">
+    @endif
+
 <body>
 
     <div class="loader_bg">
         <div class="loader"></div>
     </div>
 
-    <div class="container d-flex align-items-center justify-content-between">
-        @auth
-            <p>logout</p>
-        @else
-            <a class="btn px-4" id="login" data-bs-toggle="modal" href="#exampleModalToggle" role="button">تسجيل الدخول <i class="fa-solid fa-circle-user"></i></i></a>
-        @endauth
+    <div class="navhead">
+        <div class="container d-flex align-items-center justify-content-between">
+            @auth
+                <p>logout</p>
+            @else
+                <a class="btn px-4" id="login" data-bs-toggle="modal" href="#exampleModalToggle" role="button">تسجيل الدخول <i class="fa-solid fa-circle-user"></i></i></a>
+            @endauth
 
-        <nav id="navbar" class="navbar" dir="rtl">
-            <img class="p-3" src="{{ asset('images/logo.png') }}" alt="logo">
-            <ul>
-                <li><a class="nav-link text-black  active" href="/">الرئيسية</a></li>
-                <li><a class="nav-link text-black scrollto" href="{{ route('contact_us') }}">اتصل بنا</a></li>
-                <li><a class="nav-link text-black scrollto" href="/about">عن N1</a></li>
-            </ul>
-            <i class="bi bi-list mobile-nav-toggle" style="background-color: #ff8914"></i>
-        </nav><!-- .navbar -->
+            <nav id="navbar" class="navbar" dir="rtl">
+                <img class="p-3" src="{{ asset('images/logo.png') }}" alt="logo">
+                <ul>
+                    <li><a class="nav-link text-black  active" href="/">الرئيسية</a></li>
+                    <li><a class="nav-link text-black scrollto" href="{{ route('contact_us') }}">اتصل بنا</a></li>
+                    <li><a class="nav-link text-black scrollto" href="/about">عن N1</a></li>
+                </ul>
+                <i class="bi bi-list mobile-nav-toggle" style="background-color: #ff8914"></i>
+{{--
+                <div class="dropdown">
+                        @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                        <a data-turbo="false" class="dropdown-item dropdown-link" rel="alternate" hreflang="{{ $localeCode }}" href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}"
+                            wire:click="reloadPageContent">
+                            <div class="link-ico">
+                                <span class='flag-icon flag-icon-{{$localeCode == 'en' ? 'us' : 'sa'}}'></span>
+                                <span class="title text-black">{{ $properties['native'] }}</span>
+                            </div>
+                        </a>
+                    @endforeach
+                </div> --}}
+
+        <li>
+            <a href="{{ app()->getLocale() == 'ar' ? url('local?local=en') : url('local?local=ar') }}">
+                {{ app()->getLocale() == 'ar' ? "English" : "العربية" }}</a>
+        </li>
+
+            </nav><!-- .navbar -->
+        </div>
     </div>
-
 @guest
+
 {{-- loging modal --}}
 <div class="modal fade border-0" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1" dir="rtl">
     <div class="modal-dialog modal-dialog-centered">
