@@ -11,6 +11,7 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\EntertainmentController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\OfferController;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 Route::group(
@@ -80,6 +81,8 @@ Route::get('/allOffers', function () {
 Route::get('/homeOffers', function () {
     return view('admin.offers.index');
 });
+
+Route::get('ExportOffersPDF', [OfferController::class, 'ExportOffersPDF'])->name('ExportOffersPDF');
 
 ###############################################################################################################################
 
@@ -249,6 +252,8 @@ Route::middleware(['CheckRestaurent'])->group(function () {
     Route::get('restaurantPurchases', [RestaurantController::class, 'restaurantPurchases'])->name('restaurantPurchases');
     Route::get('restaurantPurchasesDetails/{id}', [RestaurantController::class, 'restaurantPurchasesDetails'])->name('restaurantPurchasesDetails');
     Route::get('changePurchaseStatus/{id}', [RestaurantController::class, 'changePurchaseStatus'])->name('changePurchaseStatus');
+    Route::get('ExportrestaurantPurchasesPDF', [RestaurantController::class, 'ExportrestaurantPurchasesPDF'])->name('ExportrestaurantPurchasesPDF');
+    Route::get('filterRestaurantPurchases', [RestaurantController::class, 'filterRestaurantPurchases'])->name('filterRestaurantPurchases');
 
 }); // CheckRestaurent middleware
 ###############################################################################################################################

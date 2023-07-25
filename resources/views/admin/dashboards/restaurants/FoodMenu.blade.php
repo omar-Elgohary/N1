@@ -199,9 +199,14 @@
 
         <form action="{{ route('createCategory') }}" method="post">
             @csrf
-            <div class="modal-body my-5">
-                <h4 class="text-end">{{ __('restaurent.category_name') }}</h4>
-                <input type="text" name="name" class="form-control rounded-0">
+            <div class="modal-body mb-2">
+                <h4 class="text-end">{{ __('restaurent.category_name_ar') }}</h4>
+                <input type="text" name="name_ar" class="form-control rounded-0">
+            </div>
+
+            <div class="modal-body mb-3">
+                <h4 class="text-end">{{ __('restaurent.category_name_en') }}</h4>
+                <input type="text" name="name_en" class="form-control rounded-0">
             </div>
 
             <div class="d-flex justify-content-around mb-5">
@@ -256,8 +261,11 @@
                     @endforeach
                 </select>
 
-                <h4 class="text-end">{{ __('restaurent.sub_category') }}</h4>
-                <input type="text" name="name" class="form-control rounded-0 mb-4 mt-2 @error('name') is-invalid @enderror">
+                <h4 class="text-end">{{ __('restaurent.sub_category_ar') }}</h4>
+                <input type="text" name="name_ar" class="form-control rounded-0 mb-4 mt-2 @error('name_ar') is-invalid @enderror">
+
+                <h4 class="text-end">{{ __('restaurent.sub_category_en') }}</h4>
+                <input type="text" name="name_en" class="form-control rounded-0 mb-4 mt-2 @error('name_en') is-invalid @enderror">
             </div>
 
             <div class="d-flex justify-content-around mb-5">

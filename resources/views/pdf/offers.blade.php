@@ -131,6 +131,7 @@
 									Invoice #: 123<br />
 									Title: {{ $title }}<br />
 									Created: {{ $date }}<br />
+                                    All Offers
 								</td>
 							</tr>
 						</table>
@@ -141,29 +142,33 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>{{ __('restaurent.name') }}</th>
-                            <th>{{ __('restaurent.category_name') }}</th>
-                            <th>{{ __('restaurent.price') }}</th>
-                            <th>{{ __('restaurent.sold_quantity') }}</th>
-                            <th>{{ __('restaurent.remaining_quantity') }}</th>
-                            <th>{{ __('restaurent.rate') }}</th>
+                            <th>{{ __('offers.offer_type') }}</th>
+                            <th>{{ __('offers.user_count') }}</th>
+                            <th>{{ __('offers.offer_status') }}</th>
+                            <th>{{ __('offers.start_time') }}</th>
+                            <th>{{ __('offers.end_time') }}</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse ($products as $key => $product)
+                        @forelse ($offers as $key => $offer)
                             <tr>
-                                <th>{{ $product->random_id }}</th>
-                                <td>{{ $product->name }}</td>
-                                <td>{{ $product->category->name}}</td>
-                                <td>{{ $product->price }}</td>
-                                <td>{{ $product->sold_quantity }}</td>
-                                <td>{{ $product->remaining_quantity }}</td>
-                                <td><i class="fa fa-thin fa-star text-warning"></i>4.5</td>
+                                <th>{{ $offer->id }}</th>
+                                <td>{{ $offer->offer_type }}</td>
+                                <td>{{ $offer->users_count }}</td>
+
+                                @if( $offer->status == 'مفعل')
+                                    <td class="text-success">{{ __('restaurent.available') }}</td>
+                                @else
+                                    <td class="text-danger">{{ __('restaurent.notavailable') }}</td>
+                                @endif
+
+                                <td>{{ $offer->start_date }}</td>
+                                <td>{{ $offer->end_date }}</td>
                             </tr>
                         @empty
                             <tr>
                                 <th class="text-danger" colspan="10">
-                                    لا يوجد بيانات
+                                    {{ __('restaurent.nodata') }}
                                 </th>
                             </tr>
                         @endforelse

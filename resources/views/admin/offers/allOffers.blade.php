@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 @section('title')
-    العروض
+    {{ __('offers.offers') }}
 @endsection
 
 @if (session()->has('addCoupon'))
@@ -107,12 +107,12 @@
     <div class="container">
         <div class="row text-center d-flex flex-row-reverse">
             <div class="col-lg-6">
-                <h2 class="text-black text-end">العروض</h2>
+                <h2 class="text-black text-end">{{ __('offers.offers') }}</h2>
             </div>
 
             <div class="col-lg-6 text-start">
-                <a href="#" id="pdf" class="btn btn-success"><i class="fa fa-thin fa-print"></i>PDF</a>
-                <a id="login" class="btn px-4" data-bs-toggle="modal" href="#staticBackdrop" role="button">اضافة عرض جديد</a>
+                <a href="{{ route('ExportOffersPDF') }}" id="pdf" class="btn btn-success"><i class="fa fa-thin fa-print"></i>PDF</a>
+                <a id="login" class="btn px-4" data-bs-toggle="modal" href="#staticBackdrop" role="button">{{ __('offers.add_offer') }}</a>
             </div>
         </div> <!-- row -->
 
@@ -121,12 +121,12 @@
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>نوع العرض</th>
-                        <th>عدد المستخدمين</th>
-                        <th>الحالة</th>
-                        <th>تاريخ البداية</th>
-                        <th>تاريخ النهاية</th>
-                        <th>التحكم بالعرض</th>
+                        <th>{{ __('offers.offer_type') }}</th>
+                        <th>{{ __('offers.user_count') }}</th>
+                        <th>{{ __('offers.status') }}</th>
+                        <th>{{ __('offers.start_time') }}</th>
+                        <th>{{ __('offers.end_time') }}</th>
+                        <th>{{ __('offers.offer_control') }}</th>
                     </tr>
                 </thead>
 
@@ -139,17 +139,17 @@
                         @if ($offer->status == 'مفعل')
                             <td>
                                 @if ($offer->offer_type == 'coupon')
-                                    <a href="{{ route('couponDetails', $offer->coupon_id) }}" class="text-success">{{ $offer->status }}</a>
+                                    <a href="{{ route('couponDetails', $offer->coupon_id) }}" class="text-success">{{ __('restaurent.available') }}</a>
                                 @else
-                                    <a href="{{ route('packageDetails', $offer->package_id) }}" class="text-success">{{ $offer->status }}</a>
+                                    <a href="{{ route('packageDetails', $offer->package_id) }}" class="text-success">{{ __('restaurent.available') }}</a>
                                 @endif
                             </td>
                         @else
                             <td>
                                 @if ($offer->offer_type == 'coupon')
-                                    <a href="{{ route('couponDetails', $offer->coupon_id) }}" class="text-danger">{{ $offer->status }}</a>
+                                    <a href="{{ route('couponDetails', $offer->coupon_id) }}" class="text-danger">{{ __('restaurent.notavailable') }}</a>
                                 @else
-                                    <a href="{{ route('packageDetails', $offer->package_id) }}" class="text-danger">{{ $offer->status }}</a>
+                                    <a href="{{ route('packageDetails', $offer->package_id) }}" class="text-danger">{{ __('restaurent.notavailable') }}</a>
                                 @endif
                             </td>
                         @endif
@@ -176,16 +176,16 @@
                             </div>
 
                             <div class="modal-body text-center my-5">
-                                <h2>هل أنت متأكد من حذف هذا العرض؟</h2>
+                                <h2>{{ __('offers.delete_question') }}</h2>
                             </div>
 
                             <div class="d-flex justify-content-around my-4">
-                                <button type="button" id="coupon" class="btn px-5" data-bs-dismiss="modal">تراجع</button>
+                                <button type="button" id="coupon" class="btn px-5" data-bs-dismiss="modal">{{ __('offers.cancel') }}</button>
 
                                 @if ($offer->offer_type == 'coupon')
-                                    <a href="{{route('deleteCoupon', $offer->coupon_id) }}" id="package" type="button" class="btn btn-block px-5 text-white">حذف</a>
+                                    <a href="{{route('deleteCoupon', $offer->coupon_id) }}" id="package" type="button" class="btn btn-block px-5 text-white">{{ __('restaurent.delete') }}</a>
                                 @else
-                                    <a href="{{route('deletePackage', $offer->package_id) }}" id="package" type="button" class="btn btn-block px-5 text-white">حذف</a>
+                                    <a href="{{route('deletePackage', $offer->package_id) }}" id="package" type="button" class="btn btn-block px-5 text-white">{{ __('restaurent.delete') }}</a>
                                 @endif
 
                             </div>
@@ -195,8 +195,6 @@
 
                 @endforeach
             </table>
-
-
     </div>
 </div> <!-- container -->
 </section>
@@ -210,12 +208,12 @@
             </div>
 
             <div class="modal-body text-center my-5">
-                <h2>هل تريد اضافة عرض أو بكج؟</h2>
+                <h2>{{ __('offers.add_question') }}</h2>
             </div>
 
             <div class="d-flex justify-content-around my-4">
-                <a href="{{ route('addCouponPage') }}" id="coupon" type="button" class="btn btn-block btn-bordered px-5">عرض</a>
-                <a href="{{ route('addPackagePage') }}" id="package" type="button" class="btn btn-block px-5 text-white">بكج</a>
+                <a href="{{ route('addCouponPage') }}" id="coupon" type="button" class="btn btn-block btn-bordered px-5">{{ __('offers.coupon') }}</a>
+                <a href="{{ route('addPackagePage') }}" id="package" type="button" class="btn btn-block px-5 text-white">{{ __('offers.package') }}</a>
             </div>
         </div> <!-- modal-content -->
     </div> <!-- modal-dialog -->

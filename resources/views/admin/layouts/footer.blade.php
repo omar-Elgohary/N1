@@ -92,8 +92,9 @@
                     success: function(data) {
                         $('select[name="sub_category_name"]').empty();
                         $.each(data, function(key, value) {
+                            console.log(value);
                             $('select[name="sub_category_name"]').append('<option value="' +
-                                value + '">' + value + '</option>');
+                                value.id + '">' + value.name + '</option>');
                         });
                     },
                 });

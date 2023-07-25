@@ -17,7 +17,7 @@ class RestaurentProduct extends Model
         'name' => 'array',
         'description' => 'array',
     ];
-    
+
     private $locale = null;
 
     public function name(string $locale = null): Attribute {
@@ -36,7 +36,7 @@ class RestaurentProduct extends Model
 
     public function nameLocale(string $locale) {
         $this->locale = $locale;
-        return $this->product_name;
+        return $this->name;
     }
 
     public function description(string $locale = null): Attribute {

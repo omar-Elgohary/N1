@@ -1,13 +1,13 @@
 @extends('admin.layouts.app')
 @section('title')
-    تفاصيل الباكدج
+    {{ __('offers.pcakage_details') }}
 @endsection
 
 @section('content')
 <section>
     <div class="container" dir="rtl">
         <div class="section-title text-end">
-            <h3 class="text-black">تفاصيل البكج</h3>
+            <h3 class="text-black">{{ __('offers.pcakage_details') }}</h3>
         </div>
 
         <div class="row col-12">
@@ -18,11 +18,11 @@
 
             <div class="col-lg-4 mt-5">
                 <div class="form-group my-4">
-                    <label class="text-black">حالة العرض</label>
+                    <label class="text-black">{{ __('offers.offer_status') }}</label>
                     @if($package->status == 'مفعل')
-                    <label class="text-success mx-5" style="font-weight: bold;">مفعل</label>
+                    <label class="text-success mx-5" style="font-weight: bold;">{{ __('restaurent.available') }}</label>
                 @else
-                    <label class="text-danger mx-5" style="font-weight: bold;">غير مفعل</label>
+                    <label class="text-danger mx-5" style="font-weight: bold;">{{ __('restaurent.notavailable') }}</label>
                 @endif
                 </div> <!-- 1 -->
 
@@ -41,32 +41,32 @@
                 </div> <!-- 3 -->
 
                 <div class="form-group my-4">
-                    <label class="text-black">تاريخ البداية</label>
+                    <label class="text-black">{{ __('offers.start_time') }}</label>
                     <label class="text-black mx-5">{{ $package->start_date }}</label>
                 </div> <!-- 4 -->
 
                 <div class="form-group my-4">
-                    <label class="text-black">تاريخ النهاية</label>
+                    <label class="text-black">{{ __('offers.end_time') }}</label>
                     <label class="text-black mx-5">{{ $package->end_date }}</label>
                 </div> <!-- 5 -->
 
                 <div class="form-group my-4">
-                    <label class="text-black">السعر</label>
-                    <label class="text-black mx-5">{{ $package->price }} رس</label>
+                    <label class="text-black">{{ __('restaurent.price') }}</label>
+                    <label class="text-black mx-5">{{ $package->price }} {{ __('restaurent.SAR') }}</label>
                 </div> <!-- 6 -->
             </div> <!-- col-4 -->
 
         <div class="col-4 d-grid mx-auto mt-5">
             @if($package->status == 'مفعل')
-                <a id="login" href="{{ route('editPackage', $package->id) }}" class="btn mb-3">تعديل</a>
+                <a id="login" href="{{ route('editPackage', $package->id) }}" class="btn mb-3">{{ __('offers.edit') }}</a>
             @else
-                <a href="{{ route('activationPackage', $package->id) }}" id="login" class="btn">تفعيل</a>
+                <a href="{{ route('activationPackage', $package->id) }}" id="login" class="btn">{{ __('offers.activate') }}</a>
             @endif
 
             @if($package->status == 'مفعل')
-            <a href="#Deactivation" id="coupon" class="btn" data-bs-toggle="modal">الغاء التفعيل</a>
+            <a href="#Deactivation" id="coupon" class="btn" data-bs-toggle="modal">{{ __('offers.disactivate') }}</a>
             @else
-                <a id="coupon" href="{{ route('deletePackage', $package->id) }}" class="btn mb-3">حذف</a>
+                <a id="coupon" href="{{ route('deletePackage', $package->id) }}" class="btn mb-3">{{ __('restaurent.delete') }}</a>
             @endif
         </div>
     </div> <!-- container -->
@@ -82,12 +82,12 @@
             </div>
 
             <div class="modal-body text-center text-black my-5">
-                <h2>هل أنت متأكد من الغاء تفعيل هذا العرض؟</h2>
+                <h2>{{ __('offers.disactivate_questtion') }}</h2>
             </div>
 
             <div class="modal-footer d-flex justify-content-around">
-                <button type="button" id="coupon" class="btn px-5" data-bs-dismiss="modal">تراجع</button>
-                <a id="package" href="{{route('deactivationPackage', $package->id)}}" class="btn btn-block px-5 text-white">الغاء التفعيل</a>
+                <button type="button" id="coupon" class="btn px-5" data-bs-dismiss="modal">{{ __('offers.cancel') }}</button>
+                <a id="package" href="{{route('deactivationPackage', $package->id)}}" class="btn btn-block px-5 text-white">{{ __('offers.disactivate') }}</a>
             </div>
         </div> <!-- modal-content -->
     </div> <!-- modal-dialog -->

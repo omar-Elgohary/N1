@@ -57,8 +57,14 @@ class CategoryController extends Controller
 
     public function getCategorySubs($id)
     {
-        $subCategories = DB::table('sub_categories')->where('category_id' , $id)->pluck('name' , 'id');
-        return json_encode($subCategories);
+        $subCategories = SubCategory::where('category_id' , $id)->get();
+        $data = [];
+        foreach ($subCategories as $subCat)
+            $data[] = [
+                'id' => $subCat->id,
+                'name' => $subCat->name,
+            ];
+        return json_encode($data);
     }
 
 
@@ -68,12 +74,16 @@ class CategoryController extends Controller
         try{
             $this->validate($request, [
                 'category_id' => 'required',
-                'name' => 'required',
+                'name_ar' => 'required',
+                'name_en' => 'required',
             ]);
 
             SubCategory::create([
                 'category_id' => $request->category_id,
-                'name' => $request->name,
+                'name' => [
+                    'en' => $request->name_en,
+                    'ar' => $request->name_ar,
+                ],
             ]);
 
             session()->flash('addSubCategory');

@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 @section('title')
-    الفروع
+    {{ __('branches.branches') }}
 @endsection
 
 @if (session()->has('addBranch'))
@@ -52,12 +52,12 @@
     <div class="container">
         <div class="row text-center d-flex flex-row-reverse">
             <div class="col-lg-6">
-                <h2 class="text-black text-end fw-bold">الفروع</h2>
+                <h2 class="text-black text-end fw-bold">{{ __('branches.branches') }}</h2>
             </div>
 
             <div class="col-lg-6 text-start">
                 <a href="#" id="pdf" class="btn btn-success"><i class="fa fa-thin fa-print"></i>PDF</a>
-                <a id="login" class="btn px-4" data-bs-toggle="modal" href="#staticBackdrop" role="button">اضافة فرع جديد</a>
+                <a id="login" class="btn px-4" data-bs-toggle="modal" href="#staticBackdrop" role="button">{{ __('branches.add_branche') }}</a>
             </div>
         </div> <!-- row -->
 
@@ -66,10 +66,10 @@
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>عنوان الفرع</th>
-                        <th>رقم الجوال</th>
-                        <th>البريد الالكتروني</th>
-                        <th>التحكم بالعرض</th>
+                        <th>{{ __('branches.name') }}</th>
+                        <th>{{ __('branches.phone') }}</th>
+                        <th>{{ __('branches.email') }}</th>
+                        <th>{{ __('branches.control') }}</th>
                     </tr>
                 </thead>
 
@@ -77,7 +77,7 @@
                 <tbody>
                     <tr>
                         <th>{{ $branch->random_id }}</th>
-                        <td>{{ $branch->branche_title }}</td>
+                        <td>{{ $branch->name }}</td>
                         <td>{{ $branch->phone }}</td>
                         <td>{{ $branch->email }}</td>
                         <td>
@@ -95,12 +95,12 @@
             </div>
 
             <div class="modal-body text-center my-5">
-                <h2 class="text-black">هل أنت متأكد من حذف هذا الفرع؟</h2>
+                <h2 class="text-black">{{ __('branches.delete_question') }}</h2>
             </div>
 
             <div class="modal-footer d-flex justify-content-around">
-                <button type="button" id="coupon" class="btn px-5" data-bs-dismiss="modal">تراجع</button>
-                <a href="{{ route('deleteBranch', $branch->id) }}" id="package" type="button" class="btn btn-block px-5 text-white">حذف</a>
+                <button type="button" id="coupon" class="btn px-5" data-bs-dismiss="modal">{{ __('restaurent.retreat') }}</button>
+                <a href="{{ route('deleteBranch', $branch->id) }}" id="package" type="button" class="btn btn-block px-5 text-white">{{ __('restaurent.delete') }}</a>
             </div>
         </div> <!-- modal-content -->
     </div> <!-- modal-dialog -->
@@ -109,7 +109,7 @@
             @empty
             <tr>
                 <th class="text-danger" colspan="5">
-                    لا يوجد بيانات
+                    {{ __('restaurent.nodata') }}
                 </th>
             </tr>
         @endforelse
@@ -125,7 +125,7 @@
     <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
         <div class="d-flex justify-content-between p-3 mb-2">
-            <h3 class="modal-title font-bold" style="color: #ed7802; font: x-large">انشاء حساب فرع</h3>
+            <h3 class="modal-title font-bold" style="color: #ed7802; font: x-large">{{ __('branches.add_branche_account') }}</h3>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
 
@@ -138,34 +138,34 @@
 
                 <div class="col-lg-6">
                     <div class="form-group mt-3">
-                        <label class="text-black mb-3">موقع الفرع</label>
+                        <label class="text-black mb-3">{{ __('branches.branche_location') }}</label>
                         <input type="text" class="form-control rounded-0" name="branche_location">
                     </div>
 
                     <div class="form-group mt-3">
-                        <label class="text-black mb-3">رقم الجوال</label>
+                        <label class="text-black mb-3">{{ __('branches.phone') }}</label>
                         <input type="text" class="form-control rounded-0" name="phone">
                     </div>
 
                     <div class="form-group mt-3">
-                        <label class="text-black mb-3">تأكيد كلمة المرور</label>
+                        <label class="text-black mb-3">{{ __('homepage.confirmPassword') }}</label>
                         <input type="password" class="form-control rounded-0" name="password">
                     </div>
                 </div> <!-- col-4 -->
 
                 <div class="col-lg-6">
                     <div class="form-group mt-3">
-                        <label class="text-black mb-3">اسم الفرع</label>
+                        <label class="text-black mb-3">{{ __('branches.name') }}</label>
                         <input type="text" class="form-control rounded-0" name="branche_title">
                     </div>
 
                     <div class="form-group mt-3">
-                        <label class="text-black mb-3">البريد الالكتروني</label>
+                        <label class="text-black mb-3">{{ __('branches.email') }}</label>
                         <input type="email" class="form-control rounded-0" name="email">
                     </div>
 
                     <div class="form-group mt-3">
-                        <label class="text-black mb-3">كلمة المرور</label>
+                        <label class="text-black mb-3">{{ __('homepage.password') }}</label>
                         <input type="password" class="form-control rounded-0" name="confirmed_password">
                     </div>
                 </div> <!-- col-6 -->
@@ -174,7 +174,7 @@
     </div>
 
     <div class="d-flex justify-content-around mt-4 mb-5">
-        <button id="package" type="submit" class="btn btn-block px-5 text-white">انشاء حساب فرع</button>
+        <button id="package" type="submit" class="btn btn-block px-5 text-white">{{ __('branches.add_branche_account') }}</button>
     </div>
 </form>
     </div>

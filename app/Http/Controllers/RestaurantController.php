@@ -6,14 +6,14 @@ use App\Models\Without;
 use App\Models\Category;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use App\Models\RestaurentOrder;
 use App\Models\RestaurentProduct;
+use App\Models\RestaurentPurchase;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\ImportRestaurentProducts;
-
-
 
 class RestaurantController extends Controller
 {
@@ -35,7 +35,10 @@ class RestaurantController extends Controller
     public function createCategory(Request $request)
     {
         Category::create([
-            'name' => $request->name,
+            'name' => [
+                'en' => $request->name_en,
+                'ar' => $request->name_ar,
+            ],
             'department_id' => auth()->user()->department_id,
         ]);
 
@@ -137,6 +140,14 @@ class RestaurantController extends Controller
 
 
 
+    public function filterRestaurantPurchases()
+    {
+        $purchases = RestaurentOrder::whereMonth('created_at', date('m'))->get();
+        return view('admin.purchases.RestaurantPurchases.index', compact('purchases'));
+    }
+
+
+
 
     public function createRestaurentProduct()
     {
@@ -149,13 +160,15 @@ class RestaurantController extends Controller
 
     public function storeRestaurentProduct(Request $request)
     {
-        try{
+        // try{
             $this->validate($request, [
                 'category_id' => 'required',
                 'sub_category_name' => 'required',
                 'product_image' => 'required',
-                'product_name' => 'required',
-                'description' => 'required',
+                'name_ar' => 'required',
+                'name_en' => 'required',
+                'description_ar' => 'required',
+                'description_en' => 'required',
                 'price' => 'required|numeric',
                 'calories' => 'required|numeric',
                 'branche_id' => 'bail|nullable|sometimes',
@@ -174,7 +187,7 @@ class RestaurantController extends Controller
             $request->file("product_image")->move(public_path('assets/images/meals/'), $image_name);
 
             $subCatName = $request->sub_category_name;
-            $element = SubCategory::where('name', $subCatName)->first()->id;    // to get sub category name
+            $element = SubCategory::where('id', $subCatName)->first()->id;    // to get sub category name
 
             if($request->has('extra_id') || $request->has('without_id'))
             {
@@ -195,8 +208,14 @@ class RestaurantController extends Controller
                     'product_image' => $image_name,
                     'category_id' => $request->category_id,
                     'sub_category_id' => $element,
-                    'product_name' => $request->product_name,
-                    'description' => $request->description,
+                    'name' => [
+                        'en' => $request->name_en,
+                        'ar' => $request->name_ar
+                    ],
+                    'description' => [
+                        'en' => $request->description_en,
+                        'ar' => $request->description_ar
+                    ],
                     'price' => $request->price,
                     'status' => 'متوفر',
                     'calories' => $request->calories,
@@ -214,9 +233,14 @@ class RestaurantController extends Controller
                     'product_image' => $image_name,
                     'category_id' => $request->category_id,
                     'sub_category_id' => $element,
-                    'product_name' => $request->product_name,
-                    'description' => $request->description,
-                    'price' => $request->price,
+                    'name' => [
+                        'en' => $request->name_en,
+                        'ar' => $request->name_ar
+                    ],
+                    'description' => [
+                        'en' => $request->description_en,
+                        'ar' => $request->description_ar
+                    ],                    'price' => $request->price,
                     'status' => 'غير متوفر',
                     'calories' => $request->calories,
                     'extra_id' => $extra,
@@ -229,9 +253,9 @@ class RestaurantController extends Controller
             }
             session()->flash('addRestaurentProduct');
             return redirect()->route('foodMenu');
-        }catch(\Exception $e){
-            dd($e->getMessage());
-        }
+        // }catch(\Exception $e){
+        //     dd($e->getMessage());
+        // }
     }
 
 
@@ -300,8 +324,14 @@ class RestaurantController extends Controller
                 $product->update([
                     'category_id' => $request->category_id,
                     'sub_category_id' => $subCatName,
-                    'product_name' => $request->product_name,
-                    'description' => $request->description,
+                    'name' => [
+                        'en' => $request->name_en,
+                        'ar' => $request->name_ar
+                    ],
+                    'description' => [
+                        'en' => $request->description_en,
+                        'ar' => $request->description_ar
+                    ],
                     'price' => $request->price,
                     'status' => 'غير متوفر',
                     'calories' => $request->calories,
@@ -316,8 +346,14 @@ class RestaurantController extends Controller
                 $product->update([
                     'category_id' => $request->category_id,
                     'sub_category_id' => $subCatName,
-                    'product_name' => $request->product_name,
-                    'description' => $request->description,
+                    'name' => [
+                        'en' => $request->name_en,
+                        'ar' => $request->name_ar
+                    ],
+                    'description' => [
+                        'en' => $request->description_en,
+                        'ar' => $request->description_ar
+                    ],
                     'price' => $request->price,
                     'status' => 'متوفر',
                     'calories' => $request->calories,
@@ -473,6 +509,17 @@ class RestaurantController extends Controller
         return $pdf->download('restaurentProducts.pdf');
     }
 
+    public function ExportrestaurantPurchasesPDF()
+    {
+        $Purchases = RestaurentOrder::get();
+        $data = [
+            'title' => 'Welcome to N1 Restaurents System',
+            'date' => date('m/d/Y'),
+            'Purchases' => $Purchases
+        ];
+        $pdf = PDF::loadView('pdf.restaurentPurchases', $data);
+        return $pdf->download('restaurentPurchases.pdf');
+    }
 
 
     // Excel

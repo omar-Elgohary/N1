@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 @section('title')
-    عمليات الشراء
+    {{ __('restaurent.purchases') }}
 @endsection
 
 
@@ -29,7 +29,7 @@
 
             <nav class="menu">
                 @foreach(['يناير', 'فبراير', 'مارس', 'ابريل', 'مايو', 'يونيو', 'يوليو', 'اغسطس', 'سبتمبر', 'اكتوبر', 'نوفمبر', 'ديسمبر'] as $month)
-                    <a href="#" class="menu-item monthes">{{ $month }}</a>
+                    <a href="{{ route('filterRestaurantPurchases') }}" class="menu-item monthes">{{ $month }}</a>
                 @endforeach
 			</nav>
 		</aside>
@@ -40,11 +40,11 @@
     <div class="container">
     <div class="col-12 d-flex flex-row-reverse p-0">
         <div class="col-6 section-title text-end p-0">
-            <h2 class="text-black">عمليات الشراء</h2>
+            <h2 class="text-black">{{ __('restaurent.purchases') }}</h2>
         </div>
 
         <div class="col-6 text-start mb-3">
-            <a href="#" id="pdf" class="btn btn-success"><i class="fa fa-thin fa-print"></i><br><small>PDF</small> </a>
+            <a href="{{ route('ExportrestaurantPurchasesPDF') }}" id="pdf" class="btn btn-success"><i class="fa fa-thin fa-print"></i><br><small>PDF</small> </a>
             <a href="#" id="pdf" class="btn btn-success"><i class="fa fa-thin fa-file-excel"></i><br><small>Excel</small> </a>
         </div>
     </div> <!-- col-12 -->
@@ -55,13 +55,13 @@
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>اسم المستخدم</th>
-                        <th>السعر</th>
-                        <th>عدد المنتجات</th>
-                        <th>حالة الطلب</th>
-                        <th>تاريخ الطلب</th>
-                        <th>تقييم الخدمة</th>
-                        <th>التفاصيل</th>
+                        <th>{{ __('restaurent.user_name') }}</th>
+                        <th>{{ __('restaurent.price') }}</th>
+                        <th>{{ __('restaurent.products_number') }}</th>
+                        <th>{{ __('offers.offer_status') }}</th>
+                        <th>{{ __('restaurent.offer_time') }}</th>
+                        <th>{{ __('restaurent.rate_service') }}</th>
+                        <th>{{ __('restaurent.details') }}</th>
                     </tr>
                 </thead>
 
@@ -74,13 +74,13 @@
                         <td>{{ $purchase->products_count }}</td>
 
                         @if($purchase->order_status == 'جديد')
-                            <td class="text-danger">{{ $purchase->order_status }}</td>
+                            <td class="text-danger">{{ __('restaurent.new') }}</td>
                         @elseif($purchase->order_status == 'قيد التجهيز')
-                            <td class="text-warning">{{ $purchase->order_status }}</td>
+                            <td class="text-warning">{{ __('restaurent.processing') }}</td>
                         @elseif($purchase->order->order_status == 'تم الاستلام')
-                            <td class="text-success">{{ $purchase->order_status }}</td>
+                            <td class="text-success">{{ __('restaurent.received') }}</td>
                         @else
-                            <td class="text-dark">{{ $purchase->order_status }}</td>
+                            <td class="text-dark">{{ __('restaurent.completed') }}</td>
                         @endif
 
                         <td>{{ $purchase->formatted_created_at }}</td>

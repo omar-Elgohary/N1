@@ -131,6 +131,7 @@
 									Invoice #: 123<br />
 									Title: {{ $title }}<br />
 									Created: {{ $date }}<br />
+                                    Purchases
 								</td>
 							</tr>
 						</table>
@@ -141,24 +142,35 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>{{ __('restaurent.name') }}</th>
-                            <th>{{ __('restaurent.category_name') }}</th>
+                            <th>{{ __('restaurent.user_name') }}</th>
                             <th>{{ __('restaurent.price') }}</th>
-                            <th>{{ __('restaurent.sold_quantity') }}</th>
-                            <th>{{ __('restaurent.remaining_quantity') }}</th>
+                            <th>{{ __('restaurent.products_number') }}</th>
+                            <th>{{ __('offers.offer_status') }}</th>
+                            <th>{{ __('restaurent.offer_time') }}</th>
                             <th>{{ __('restaurent.rate') }}</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse ($products as $key => $product)
+                        @forelse ($Purchases as $key => $purchase)
                             <tr>
-                                <th>{{ $product->random_id }}</th>
-                                <td>{{ $product->name }}</td>
-                                <td>{{ $product->category->name}}</td>
-                                <td>{{ $product->price }}</td>
-                                <td>{{ $product->sold_quantity }}</td>
-                                <td>{{ $product->remaining_quantity }}</td>
-                                <td><i class="fa fa-thin fa-star text-warning"></i>4.5</td>
+                                <th>{{ $purchase->random_id }}</th>
+                                <td>{{ \App\Models\User::where('id', $purchase->user_id)->first()->name }}</td>
+                                <td>{{ $purchase->total_price }}</td>
+                                <td>{{ $purchase->products_count }}</td>
+
+                                @if($purchase->order_status == 'جديد')
+                                    <td class="text-danger">{{ __('restaurent.new') }}</td>
+                                @elseif($purchase->order_status == 'قيد التجهيز')
+                                    <td class="text-warning">{{ __('restaurent.processing') }}</td>
+                                @elseif($purchase->order->order_status == 'تم الاستلام')
+                                    <td class="text-success">{{ __('restaurent.received') }}</td>
+                                @else
+                                    <td class="text-dark">{{ __('restaurent.completed') }}</td>
+                                @endif
+
+                                <td>{{ $purchase->formatted_created_at }}</td>
+
+                                <td><i class="fa fa-thin fa-star text-warning"></i> 4.5</td>
                             </tr>
                         @empty
                             <tr>
