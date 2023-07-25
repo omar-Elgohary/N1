@@ -4,6 +4,19 @@ font-family: 'Cairo', sans-serif;
     padding: 0 !important;
 }
 
+#createsellermodal{
+    text-align: end;
+}
+
+#inputState{
+    margin-top: 2.5rem!important;
+}
+
+@-moz-document url-prefix() {
+    select {
+        text-align: end;
+    }
+  }
 /* start sidebar*/
 .sidebar{
     background-color: #f5f3f3;
@@ -326,8 +339,11 @@ h6 {
     direction: rtl;
 }
 
-.navbar {
+
+#navbar {
     padding: 0;
+    display: flex;
+    flex-direction: row-reverse;
 }
 
 .navbar ul {
@@ -755,6 +771,7 @@ section {
 
 .about .container {
   position: relative;
+  direction: rtl;
 }
 
 .about .content h3 {
@@ -2269,6 +2286,18 @@ section {
     padding: 60px 0 30px 0;
     display: flex;
     justify-content: space-between;
+    direction: rtl;
+    text-align: end;
+}
+
+#footer .footer-top .footer-info{
+    direction: rtl;
+    text-align: start;
+}
+
+#footer .footer-top .footer-info .links{
+    direction: rtl;
+    text-align: start;
 }
 
 #footer .footer-top .footer-info {
@@ -2300,7 +2329,7 @@ section {
     padding: 10px 0;
     margin-right: 4px;
     border-radius: 50%;
-    text-align: center;
+    text-align: auto;
     width: 36px;
     height: 36px;
     transition: 0.3s;

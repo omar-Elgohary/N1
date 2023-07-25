@@ -9,23 +9,23 @@ class WithoutSeeder extends Seeder
     public function run()
     {
         Without::create([
-            'name' => 'بصل',
+            'name' => ['en' => 'onion', 'ar' => 'بصل'],
         ]);
 
         Without::create([
-            'name' => 'طماطم',
+            'name' => ['en' => 'tomatoes', 'ar' => 'طماطم'],
         ]);
 
         Without::create([
-            'name' => 'جبن',
+            'name' => ['en' => 'cheese', 'ar' => 'جبن'],
         ]);
 
         Without::create([
-            'name' => 'خيار',
+            'name' => ['en' => 'cucumber', 'ar' => 'خيار'],
         ]);
 
         Without::create([
-            'name' => 'كاتشب',
+            'name' => ['en' => 'ketchup', 'ar' => 'كاتشب'],
         ]);
     }
 }

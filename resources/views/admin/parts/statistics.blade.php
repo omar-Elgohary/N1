@@ -1,7 +1,7 @@
 @extends('admin.layouts.app')
 @section('content')
 @section('title')
-    الرئيسية
+    {{ __('staticpage.statistics') }}
 @endsection
 
 <section>
@@ -31,7 +31,7 @@
 
         <div class="row text-center d-flex flex-row-reverse">
             <div class="col-lg-6">
-                <h2 class="text-black text-end fw-bold">الاحصائيات</h2>
+                <h2 class="text-black text-end fw-bold">{{ __('staticpage.statistics') }}</h2>
             </div>
         </div> <!-- row -->
 
@@ -39,7 +39,7 @@
             <div class="col-xl-6">
                 <div class="donut_chart">
                     <div class="card-body">
-                        <h4 class="card-title text-black mb-4">احصائيات المنتجات خلال اخر شهر</h4>
+                        <h4 class="card-title text-black mb-4">{{ __('staticpage.title1') }}</h4>
                         <div id="donut_chart" data-colors='["--bs-success", "--bs-primary", "--bs-warning" ,"--bs-info", "--bs-danger"]' class="apex-charts"  dir="ltr"></div>
                     </div> <!-- card-body -->
                 </div> <!-- card -->
@@ -48,7 +48,7 @@
             <div class="col-xl-6">
                 <div class="spinners">
                     <div>
-                        <h4 class="card-title text-black mb-3">الأكثر مبيعا</h4>
+                        <h4 class="card-title text-black mb-3">{{ __('staticpage.title2') }}</h4>
                     </div>
 
                 <div class="row lastOffer d-flex justify-content-end">
@@ -97,7 +97,7 @@
             <div class="col-xl-12">
                 <div class="topRate mt-5">
                     <div class="card-body">
-                        <h4 class="card-title text-black mb-3">الأعلى تقييما</h4>
+                        <h4 class="card-title text-black mb-3">{{ __('staticpage.title3') }}</h4>
 
                     @if(auth()->user()->department_id == 1)
                         @foreach(\App\Models\Rate::groupBy('restaurent_product_id')->selectRaw('restaurent_product_id,avg(rate) as rate')->where('department_id', auth()->user()->department_id)->orderBy('rate', 'desc')->limit(5)->get() as $rate)
@@ -130,7 +130,7 @@
 
     <div class="last text-end mt-5">
         <div class="col-lg-12">
-            <h4 class="card-title text-black mb-3">العروض الاخيرة</h4>
+            <h4 class="card-title text-black mb-3">{{ __('staticpage.title4') }}</h4>
                 <div class="row lastOffer d-flex justify-content-end">
 
                     @foreach(\App\Models\Offer::where('department_id', auth()->user()->department_id)->where('package_id', null)->limit(5)->get() as $offer)

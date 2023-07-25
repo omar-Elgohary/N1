@@ -13,7 +13,6 @@ use App\Http\Controllers\EntertainmentController;
 use App\Http\Controllers\Admin\CategoryController;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
-
 Route::group(
     [
         'prefix' => LaravelLocalization::setLocale(),

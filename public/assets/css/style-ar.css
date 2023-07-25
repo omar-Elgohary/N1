@@ -4,6 +4,9 @@ font-family: 'Cairo', sans-serif;
     padding: 0 !important;
 }
 
+#inputState{
+  margin-top: 2.5rem!important;
+}
 /* start sidebar*/
 .sidebar{
     background-color: #f5f3f3;
@@ -2270,6 +2273,18 @@ section {
     padding: 60px 0 30px 0;
     display: flex;
     justify-content: space-between;
+    direction: ltr;
+    text-align: end;
+}
+
+#footer .footer-top .footer-info{
+    direction: ltr;
+    text-align: start;
+}
+
+#footer .footer-top .footer-info .links{
+    direction: ltr;
+    text-align: start;
 }
 
 #footer .footer-top .footer-info {

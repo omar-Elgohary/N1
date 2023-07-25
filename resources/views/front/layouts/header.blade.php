@@ -30,9 +30,9 @@
 
     <!-- Template Main CSS File -->
     @if(App::getLocale() == 'ar')
-        <link href="assets/css/style-ar.css" rel="stylesheet">
+        <link href="{{ asset('assets/css/style-ar.css') }}" rel="stylesheet">
     @else
-        <link href="assets/css/style-en.css" rel="stylesheet">
+        <link href="{{ asset('assets/css/style-en.css') }}" rel="stylesheet">
     @endif
 
 <body>
@@ -46,34 +46,52 @@
             @auth
                 <p>logout</p>
             @else
-                <a class="btn px-4" id="login" data-bs-toggle="modal" href="#exampleModalToggle" role="button">تسجيل الدخول <i class="fa-solid fa-circle-user"></i></i></a>
+                <a class="btn px-4" id="login" data-bs-toggle="modal" href="#exampleModalToggle" role="button">{{ __('homepage.login') }}  <i class="fa-solid fa-circle-user"></i></i></a>
             @endauth
 
             <nav id="navbar" class="navbar" dir="rtl">
                 <img class="p-3" src="{{ asset('images/logo.png') }}" alt="logo">
                 <ul>
-                    <li><a class="nav-link text-black  active" href="/">الرئيسية</a></li>
-                    <li><a class="nav-link text-black scrollto" href="{{ route('contact_us') }}">اتصل بنا</a></li>
-                    <li><a class="nav-link text-black scrollto" href="/about">عن N1</a></li>
+                    <li><a class="nav-link text-black active" href="/">{{ __('homepage.home') }}</a></li>
+                    <li><a class="nav-link text-black scrollto" href="{{ route('contact_us') }}">{{ __('homepage.contactus') }}</a></li>
+                    <li><a class="nav-link text-black scrollto" href="/about">{{ __('homepage.aboutus') }}</a></li>
                 </ul>
                 <i class="bi bi-list mobile-nav-toggle" style="background-color: #ff8914"></i>
-{{--
-                <div class="dropdown">
-                        @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
-                        <a data-turbo="false" class="dropdown-item dropdown-link" rel="alternate" hreflang="{{ $localeCode }}" href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}"
-                            wire:click="reloadPageContent">
-                            <div class="link-ico">
-                                <span class='flag-icon flag-icon-{{$localeCode == 'en' ? 'us' : 'sa'}}'></span>
-                                <span class="title text-black">{{ $properties['native'] }}</span>
-                            </div>
-                        </a>
-                    @endforeach
-                </div> --}}
 
-        <li>
-            <a href="{{ app()->getLocale() == 'ar' ? url('local?local=en') : url('local?local=ar') }}">
-                {{ app()->getLocale() == 'ar' ? "English" : "العربية" }}</a>
-        </li>
+                <ul>
+                    <li>
+                        @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                            <a data-turbo="false" class="dropdown-item dropdown-link" rel="alternate" hreflang="{{ $localeCode }}" href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}"
+                                wire:click="reloadPageContent">
+                                <div class="link-ico">
+                                    <span class='flag-icon flag-icon-{{$localeCode == 'en' ? 'us' : 'ar'}}'></span>
+                                    <span class="title text-black">{{ $properties['native'] }}</span>
+                                </div>
+                            </a>
+                        @endforeach
+                    </li>
+                </ul>
+
+                {{-- <div style="z-index: 0;" class="dropdown d-inline-block language-switch btn-group dropstart">
+                    <button type="button" class="btn header-item waves-effect"
+                        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="align-middle text-black">{{ __('stacticpage.lang') }}</span>
+                    </button>
+
+                    <ul>
+                        <li>
+                            @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                                <a data-turbo="false" class="dropdown-item dropdown-link" rel="alternate" hreflang="{{ $localeCode }}" href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}"
+                                    wire:click="reloadPageContent">
+                                    <div class="link-ico">
+                                        <span class='{{$localeCode == 'en' ? 'us' : 'ar'}}'></span>
+                                        <span class="title text-black">{{ $properties['native'] }}</span>
+                                    </div>
+                                </a>
+                            @endforeach
+                        </li>
+                    </ul>
+                </div> --}}
 
             </nav><!-- .navbar -->
         </div>
@@ -90,18 +108,18 @@
         </div>
 
         <div class="modal-body d-flex justify-content-center">
-            <div class="col-lg-6 mt-5 mt-lg-0 text-end" data-aos-delay="100">
-                <h2 class="text-bold text-center" style="color: #ff8000">تسجيل الدخول</h2>
+            <div class="col-lg-6 mt-5 mt-lg-0 text-center" data-aos-delay="100">
+                <h2 class="text-bold text-center" style="color: #ff8000">{{ __('homepage.login') }}</h2>
 
                 <form action="{{ route('login') }}" method="post">
                     @csrf
                     <div class="form-group mt-3">
-                        <label class="mb-3">البريد الالكتروني</label>
+                        <label class="mb-3">{{ __('homepage.email') }}</label>
                         <input type="email" class="form-control rounded-0" name="email">
                     </div>
 
                     <div class="form-group mt-3">
-                        <label class="mb-3">كلمة المرور</label>
+                        <label class="mb-3">{{ __('homepage.password') }}</label>
                         <input type="password" class="form-control rounded-0" name="password">
                     </div>
 
@@ -111,8 +129,8 @@
 
                     <div class="form-group mt-4 text-center mx-auto">
                         {{-- <button type="submit" class="btn px-5 mb-3" id="">تسجيل الدخول</button><br> --}}
-                        <input type="submit" value="تسجيل الدخول" class="btn px-5 mb-3" id="login"><br>
-                        <a data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" style="cursor: pointer;">لا تمتلك حسابا بعد؟ <span class="text-danger text-decoration-underline">انشاء حساب تاجر</span></a>
+                        <input type="submit" value="{{ __('homepage.login') }}" class="btn px-5 mb-3" id="login"><br>
+                        <a data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" style="cursor: pointer;">{{ __('homepage.smalldesc1') }} <span class="text-danger text-decoration-underline">{{ __('homepage.smalldesc2') }}  </span></a>
                     </div>
                 </form>
 

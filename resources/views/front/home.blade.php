@@ -145,26 +145,24 @@
 
 <section id="hero" class="d-flex justify-cntent-center align-items-center">
     <div id="heroCarousel" class="container carousel carousel-fade">
-        <h3 class="text-white text-center">Lorem ipsum dolor sit consectetur</h3>
+        <h3 class="text-white text-center">{{ __('homepage.bigheader') }}</h3>
         <p class="text-white text-center">{{ __('homepage.smallheader') }}</p>
     </div>
 </section>
 
-
 <main id="main">
 <section id="icon-boxes" class="icon-boxes">
-<div class="container">
-    <div class="row d-flex flex-row-reverse">
-
-        @foreach (\App\Models\Department::all() as $department)
-            <div class="col-md-6 col-lg-4 d-flex align-items-center mb-5 mb-lg-0">
-                <div class="icon-box mx-auto">
-                    <h4 class="title text-center">{{ $department->name }}</h4>
-                    <img src="{{ asset('assets/images/departments/'.$department->image) }}" class="mx-auto d-block" alt="">
-                </div>
-            </div>
-        @endforeach
-    </div>
+    <div class="container">
+        <div class="row d-flex flex-row-reverse">
+                @foreach (\App\Models\Department::all() as $department)
+                    <div class="col-md-6 col-lg-4 d-flex align-items-center mb-5 mb-lg-0">
+                        <div class="icon-box mx-auto">
+                            <h4 class="title text-center">{{ $department->name }}</h4>
+                            <img src="{{ asset('assets/images/departments/'.$department->image) }}" class="mx-auto d-block" alt="">
+                        </div>
+                    </div>
+                @endforeach
+        </div>
     </div>
 </section>
 
@@ -180,11 +178,9 @@
             </div>
 
             <div class="para col-lg-8 mt-4">
-                <h3 class="title text-dark" dir="rtl">عن N1</h3>
+                <h3 class="title text-dark" dir="rtl">{{ __('homepage.aboutus') }}</h3>
                 <div class="card p-3 mb-5">
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolore minus ex obcaecati pariatur. Soluta perspiciatis culpa modi veniam beatae recusandae quis deserunt quam. Adipisci enim expedita repellendus reiciendis quos iusto dolorum cupiditate, qui maxime quae. Illo alias neque nihil corrupti! Quasi, beatae tempora. Veniam a beatae quo eligendi natus? Tenetur quidem rerum quis dicta aliquid odio quia, ipsa, exercitationem tempore est id illum. Porro, nemo maiores? Temporibus architecto enim voluptas animi ea nesciunt consectetur, accusamus ratione! Iste quibusdam rem vel dolor!
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolore minus ex obcaecati pariatur. Soluta perspiciatis culpa modi veniam beatae recusandae quis deserunt quam. Adipisci enim expedita repellendus reiciendis quos iusto dolorum cupiditate, qui maxime quae. Illo alias neque nihil corrupti! Quasi, beatae tempora. Veniam a beatae quo eligendi natus? Tenetur quidem rerum quis dicta aliquid odio quia, ipsa, exercitationem tempore est id illum. Porro, nemo maiores? Temporibus architecto enim voluptas animi ea nesciunt consectetur, accusamus ratione! Iste quibusdam rem vel dolor!
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolore minus ex obcaecati pariatur. Soluta perspiciatis culpa modi veniam beatae recusandae quis deserunt quam. Adipisci enim expedita repellendus reiciendis quos iusto dolorum cupiditate, qui maxime quae. Illo alias neque nihil corrupti!
+                    {{ __('homepage.frontDesc') }}
                 </div>
             </div>
         </div>
@@ -196,7 +192,7 @@
 <section id="pricing" class="pricing">
     <div class="container">
     <div class="section-title">
-        <h2 class="text-black">الشركاء</h2>
+        <h2 class="text-black">{{ __('homepage.Partners') }}</h2>
     </div>
 
     <div class="row">
@@ -250,31 +246,31 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="margin-right: calc(100% - 30px);"></button>
         </div>
 
-        <div class="modal-body mt-5 mt-lg-0 text-end">
-            <h2 class="fw-bold" style="color: #ff8000">انشاء حساب تاجر</h2>
+        <div id="createsellermodal" class="modal-body mt-5 mt-lg-0">
+            <h2 class="fw-bold" style="color: #ff8000">{{ __('homepage.createSeller') }}</h2>
             <form action="{{ route('register') }}" method="post" autocomplete="off" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="form-group mt-3">
-                            <label class="mb-3">اسم الشركة</label>
+                            <label class="mb-3">{{ __('homepage.companyName') }}</label>
                             <input type="text" class="form-control rounded-0" name="company_name">
                         </div>
 
                         <div class="form-group mt-3">
-                            <label class="mb-3">رقم السجل التجاري/ معروف</label>
+                            <label class="mb-3">{{ __('homepage.commercialNumber') }}</label>
                             <input type="text" class="form-control rounded-0" name="commercial_registration_number">
                         </div>
 
                         <div class="form-group mt-3">
                             <div class="row">
                                 <div class="col-lg-9">
-                                    <label class="mb-3">رقم الجوال</label>
+                                    <label class="mb-3">{{ __('homepage.phone') }}</label>
                                     <input type="text" class="form-control rounded-0" name="phone">
                                 </div>
 
                                 <div class="col-lg-3">
-                                    <select name="country_code" id="inputState" class="form-control rounded-0 mt-5">
+                                    <select name="country_code" id="inputState" class="form-control rounded-0 mt-2">
                                         <option selected="" value="+20">20+</option>
                                         <option value="+966">966+</option>
                                         <option value="+971">971+</option>
@@ -290,16 +286,16 @@
                         </div>
 
                         <div class="form-group mt-3">
-                            <label class="mb-3">كلمة المرور</label>
+                            <label class="mb-3">{{ __('homepage.password') }}</label>
                             <input type="password" class="form-control rounded-0" name="password">
                         </div>
                     </div> <!-- col-6 -->
 
                     <div class="col-lg-6">
                         <div class="form-group mt-3">
-                            <label class="mb-3">نوع النشاط</label>
+                            <label class="mb-3">{{ __('homepage.activityType') }}</label>
                             <select class="form-control rounded-0" name="department_id">
-                                <option value="">اختر نوع النشاط</option>
+                                <option value="">{{ __('homepage.choose') }}</option>
                                 @foreach (\App\Models\Department::all() as $department)
                                     <option value="{{ $department->id }}">{{ $department->name }}</option>
                                 @endforeach
@@ -307,26 +303,26 @@
                         </div>
 
                         <div class="form-group mt-3">
-                            <label class="mb-3">صورة السجل التجاري/ معروف</label><br>
-                            <label for="file" class="upload form-control d-flex flex-row-reverse"><i class="fa fa-duotone fa-cloud-arrow-up text-secondary"></i> ارفع السجل التجاري\ معروف</label>
+                            <label class="mb-3">{{ __('homepage.commercialImage') }}</label><br>
+                            <label for="file" class="upload form-control d-flex flex-row-reverse"><i class="fa fa-duotone fa-cloud-arrow-up text-secondary"></i> {{ __('homepage.uploadcommercialImage') }}</label>
                             <input type="file" accept="image/*" class="form-control rounded-0" id="file" name="commercial_registration_image">
                         </div>
 
                         <div class="form-group mt-3">
-                            <label class="mb-3">البريد الالكتروني</label>
+                            <label class="mb-3">{{ __('homepage.email') }}</label>
                             <input type="email" class="form-control rounded-0" name="email">
                         </div>
 
                         <div class="form-group mt-3">
-                            <label class="mb-3">تأكيد كلمة المرور</label>
+                            <label class="mb-3">{{ __('homepage.confirmPassword') }}</label>
                             <input type="password" class="form-control rounded-0" name="confirmed_password">
                         </div>
                     </div> <!-- col-6 -->
 
                     <div class="form-group mt-4 text-center">
-                        <input type="submit" class="btn px-5 mb-3" id="verify" value="انشاء الحساب"><br>
+                        <input type="submit" class="btn px-5 mb-3" id="verify" value="{{ __('homepage.signup') }}"><br>
                         {{-- <a class="btn px-5 mb-3" id="login" data-bs-target="#exampleModalToggle3" data-bs-toggle="modal">انشاء الحساب</a> <br> --}}
-                        <a data-bs-target="#exampleModalToggle" data-bs-toggle="modal" style="cursor: pointer;"> تمتلك حسابا؟ <span class="text-danger text-decoration-underline">تسجيل الدخول</span></a>
+                        <a data-bs-target="#exampleModalToggle" data-bs-toggle="modal" style="cursor: pointer;"> {{ __('homepage.haveaccount') }} <span class="text-danger text-decoration-underline">{{ __('homepage.login') }}</span></a>
                     </div>
                 </div>
             </div> <!-- row -->

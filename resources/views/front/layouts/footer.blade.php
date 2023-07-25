@@ -2,31 +2,34 @@
 
 <div class="footer-top">
     <div class="container">
-    <div class="row d-flex justify-content-between">
-        <div class="col-lg-3 col-md-6 footer-contact">
-        <button type="submit" class="btn btn-dark px-4 mb-3"><i class="fa-brands fa-apple"></i> Download</button>
-        <p>
-        <button type="submit" class="btn btn-dark px-4"><i class="fa fa-thin fa-play"></i> Download</button>
-        </p>
+        <div class="row d-flex justify-content-between">
+            <div class="col-lg-3 col-md-6 footer-contact">
+            <button type="submit" class="btn btn-dark px-4 mb-3"><i class="fa-brands fa-apple"></i> Download</button>
+            <p>
+            <button type="submit" class="btn btn-dark px-4"><i class="fa fa-thin fa-play"></i> Download</button>
+            </p>
         </div>
 
-        <div class="col-lg-3 col-md-6 footer-info">
-        <div class="social-links mt-3">
-            <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
-            <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
-            <a href="#" class="linkedin"><i class="bx bxl-whatsapp"></i></a>
-            <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
+            <div class="col-lg-3 col-md-6 footer-info">
+                <div class="social-links mt-3">
+                    <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
+                    <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
+                    <a href="#" class="linkedin"><i class="bx bxl-whatsapp"></i></a>
+                    <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
+                </div>
+
+                <div class="links">
+                    <a href="{{ route('front.questions') }}" class="text-dark">{{ __('homepage.FAQ') }}</a><br>
+                    <a href="#" class="text-dark">{{ __('homepage.privacy policy') }}</a><br>
+                </div>
+            </div>
         </div>
-            <a href="{{ route('front.questions') }}" class="text-dark">الأسئلة الشائعة</a><br>
-            <a href="#" class="text-dark">سياسة الخصوصية</a><br>
-        </div>
-    </div>
     </div>
 </div>
 
 <div class="container">
     <div class="copyright">
-        جميع الحقوق محفوظة لشركة
+        {{ __('homepage.footertitle') }}
     </div>
 </div>
 </footer><!-- End Footer -->

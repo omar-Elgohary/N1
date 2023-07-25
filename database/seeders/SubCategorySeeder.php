@@ -10,17 +10,17 @@ class SubCategorySeeder extends Seeder
     {
         // Shops
         SubCategory::create([
-            'name' => 'وجبات كباب وكفتة',
+            'name' => ['en' => 'kbab and kofta meals', 'ar' => 'وجبات كباب وكفتة'],
             'category_id' => 1,
         ]);
 
         SubCategory::create([
-            'name' => 'بيتزا رانش',
+            'name' => ['en' => 'Ranch Pizza', 'ar' => 'بيتزا رانش'],
             'category_id' => 2,
         ]);
 
         SubCategory::create([
-            'name' => 'مشروبات باردة',
+            'name' => ['en' => 'cold drinks', 'ar' => 'مشروبات باردة'],
             'category_id' => 3,
         ]);
 
@@ -28,17 +28,17 @@ class SubCategorySeeder extends Seeder
 
         // Shop
         SubCategory::create([
-            'name' => 'قمصان',
+            'name' => ['en' => 'shirts', 'ar' => 'قمصان'],
             'category_id' => 4,
         ]);
 
         SubCategory::create([
-            'name' => 'كوتشيات',
+            'name' => ['en' => 'Coaches', 'ar' => 'كوتشيات'],
             'category_id' => 5,
         ]);
 
         SubCategory::create([
-            'name' => 'ترينجات بيتي',
+            'name' => ['en' => 'Betty staggers', 'ar' => 'ترينجات بيتي'],
             'category_id' => 6,
         ]);
 
@@ -46,17 +46,17 @@ class SubCategorySeeder extends Seeder
 
         // Events
         SubCategory::create([
-            'name' => 'ألعاب رعب',
+            'name' => ['en' => 'Horror Games', 'ar' => 'ألعاب رعب'],
             'category_id' => 7,
         ]);
 
         SubCategory::create([
-            'name' => 'أفلام',
+            'name' => ['en' => 'films', 'ar' => 'أفلام'],
             'category_id' => 8,
         ]);
 
         SubCategory::create([
-            'name' => 'كرة قدم',
+            'name' => ['en' => 'football', 'ar' => 'كرة قدم'],
             'category_id' => 9,
         ]);
     }

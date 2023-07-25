@@ -13,7 +13,7 @@ class BrancheSeeder extends Seeder
         Branch::create([
             'random_id' => '#Df54fd',
             'department_id' => 1,
-            'branche_title' => 'كنتاكي',
+            'name' => ['en' => 'KFC', 'ar' => 'كنتاكي'],
             'branche_location' => 'المنصورة - أحمد ماهر',
             'email' => 'kfc@mans.com',
             'phone' => '01236547854',
@@ -28,7 +28,7 @@ class BrancheSeeder extends Seeder
         Branch::create([
             'random_id' => '#H5G4D5',
             'department_id' => 1,
-            'branche_title' => 'ماكدونلز',
+            'name' => ['en' => 'MAC', 'ar' => 'ماكدونلز'],
             'branche_location' => 'القاهرة - مدينة نصر',
             'email' => 'mac@cairo.com',
             'phone' => '01278459651',
@@ -44,7 +44,7 @@ class BrancheSeeder extends Seeder
         Branch::create([
             'random_id' => '#J4U6F2',
             'department_id' => 2,
-            'branche_title' => 'التوحيد والنور',
+            'name' => ['en' => 'eltaw7ed w elnour', 'ar' => 'التوحيد والنور'],
             'branche_location' => 'الجيزة - حي أول',
             'email' => 'eltawheed@giza.com',
             'phone' => '01236548514',
@@ -59,7 +59,7 @@ class BrancheSeeder extends Seeder
         Branch::create([
             'random_id' => '#S6R2V7',
             'department_id' => 2,
-            'branche_title' => 'بيتي براند',
+            'name' => ['en' => 'bety brand', 'ar' => 'بيتي براند'],
             'branche_location' => 'الاسكندرية - سيدي جابر',
             'email' => 'betey@alex.com',
             'phone' => '01023652010',
@@ -74,7 +74,7 @@ class BrancheSeeder extends Seeder
         Branch::create([
             'random_id' => '#S6R2V7',
             'department_id' => 3,
-            'branche_title' => 'سينما المعادي',
+            'name' => ['en' => 'm3ady cinema', 'ar' => 'سينما المعادي'],
             'branche_location' => 'القاهرة',
             'email' => 'cinema@cairo.com',
             'phone' => '01279584658',
@@ -89,7 +89,7 @@ class BrancheSeeder extends Seeder
         Branch::create([
             'random_id' => '#S6R2V7',
             'department_id' => 3,
-            'branche_title' => 'ملاهي الشيخ زايد',
+            'name' => ['en' => 'shiekh zayed malahy', 'ar' => 'ملاهي الشيخ زايد'],
             'branche_location' => 'التجمع',
             'email' => 'malahy@tagamo3.com',
             'phone' => '01125414530',

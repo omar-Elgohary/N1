@@ -9,17 +9,17 @@ class CategorySeeder extends Seeder
     public function run()
     {
         Category::create([
-            'name' => 'مشويات',
+            'name' =>['en' => 'mashwiat', 'ar' => 'مشويات'],
             'department_id' => 1,
         ]); // 1
 
         Category::create([
-            'name' => 'بيتزا',
+            'name' =>['en' => 'pizza', 'ar' => 'بيتزا'],
             'department_id' => 1,
         ]); // 2
 
         Category::create([
-            'name' => 'مشروبات',
+            'name' =>['en' => 'drinks', 'ar' => 'مشروبات'],
             'department_id' => 1,
         ]); // 3
 
@@ -27,17 +27,17 @@ class CategorySeeder extends Seeder
 
         // Shop
         Category::create([
-            'name' => 'ملابس كاجوال',
+            'name' =>['en' => 'Casual clothes', 'ar' => 'ملابس كاجوال'],
             'department_id' => 2,
         ]); // 4
 
         Category::create([
-            'name' => 'أحذية',
+            'name' =>['en' => 'shoes', 'ar' => 'أحذية'],
             'department_id' => 2,
         ]); // 5
 
         Category::create([
-            'name' => 'ملابس بيتي',
+            'name' =>['en' => 'Home clothes', 'ar' => 'ملابس بيتي'],
             'department_id' => 2,
         ]); // 6
 
@@ -45,17 +45,17 @@ class CategorySeeder extends Seeder
 
         // Entertainment
         Category::create([
-            'name' => 'ملاهي',
+            'name' =>['en' => 'malahey', 'ar' => 'ملاهي'],
             'department_id' => 3,
         ]); // 7
 
         Category::create([
-            'name' => 'سينما',
+            'name' =>['en' => 'Cinema', 'ar' => 'سينما'],
             'department_id' => 3,
         ]); // 8
 
         Category::create([
-            'name' => 'ملاعب',
+            'name' =>['en' => 'Playgrounds', 'ar' => 'ملاعب'],
             'department_id' => 3,
         ]); // 9
     }

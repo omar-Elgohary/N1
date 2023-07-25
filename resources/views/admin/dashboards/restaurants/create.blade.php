@@ -1,29 +1,29 @@
 @extends('admin.layouts.app')
 @section('title')
-    اضافة منتج جديد
+    {{ __('restaurent.addnewmeal') }}
 @endsection
 
 @section('content')
 <section>
     <div class="container mt-2" dir="rtl">
         <div class="section-title text-end">
-            <h3 class="text-black">اضافة منتج جديد</h3>
+            <h3 class="text-black">{{ __('restaurent.addnewmeal') }}</h3>
         </div>
 
         <form action="{{route('storeRestaurentProduct')}}" method="post" enctype="multipart/form-data">
             @csrf
 
             <div class="drop-zone">
-                <span class="drop-zone__prompt">اضغط أو اسحب الصور الى هنا</span>
+                <span class="drop-zone__prompt">{{ __('restaurent.upload_photo') }}</span>
                 <input type="file" name="product_image" class="drop-zone__input @error('product_image') is-invalid @enderror" multiple>
                 @error('product_image')<div class="alert alert-danger">{{ $message }}</div>@enderror
             </div>
 
             <div class="col-lg-4 mt-4">
                 <div class="form-group">
-                    <label>القسم</label>
+                    <label>{{ __('restaurent.category_name') }}</label>
                     <select name="category_id" class="form-control rounded-0 mb-4 mt-2 @error('category_id') is-invalid @enderror" onclick="console.log($(this).val())" onchange="console.log('change is firing')">
-                        <option value="" selected disabled>حدد القسم</option>
+                        <option value="" selected disabled>{{ __('restaurent.choose_category') }}</option>
                         @foreach (\App\Models\Category::where('department_id', auth()->user()->department_id)->get() as $category)
                             <option value="{{ $category->id }}">{{ $category->name }}</option>
                         @endforeach
@@ -33,46 +33,46 @@
 
 
                 <div class="form-group">
-                    <label for="inputName">الفئة الفرعية</label>
+                    <label for="inputName">{{ __('restaurent.sub_category') }}</label>
                     <select name="sub_category_name" id="sub_category_name" class="form-control rounded-0 mb-4 mt-2">
                     </select>
                 </div> <!-- 1 -->
 
 
                 <div class="form-group">
-                    <label>الاسم</label>
+                    <label>{{ __('restaurent.name') }}</label>
                     <input type="text" name="product_name" class="form-control rounded-0 mb-4 mt-2 @error('product_name') is-invalid @enderror">
                     @error('product_name')<div class="alert alert-danger">{{ $message }}</div>@enderror
                 </div> <!-- 1 -->
 
                 <div class="form-group">
-                    <label>الوصف</label>
+                    <label>{{ __('restaurent.description') }}</label>
                     <input type="text" name="description" class="form-control rounded-0 mb-4 mt-2 @error('description') is-invalid @enderror">
                     @error('description')<div class="alert alert-danger">{{ $message }}</div>@enderror
                 </div> <!-- 2 -->
 
                 <div class="form-group">
-                    <label>السعر</label>
+                    <label>{{ __('restaurent.price') }}</label>
                     <input type="text" name="price" placeholder="ريال سعودي" class="form-control rounded-0 mb-4 mt-2 @error('price') is-invalid @enderror">
                     @error('price')<div class="alert alert-danger">{{ $message }}</div>@enderror
                 </div> <!-- 3 -->
 
                 <div class="form-group">
-                    <label>عدد السعرات الحرارية</label>
-                    <input type="text" name="calories" placeholder="كالوري" class="form-control rounded-0 mb-4 mt-2 @error('calories') is-invalid @enderror">
+                    <label>{{ __('restaurent.cal_number') }}</label>
+                    <input type="text" name="calories" placeholder="{{ __('restaurent.cal') }}" class="form-control rounded-0 mb-4 mt-2 @error('calories') is-invalid @enderror">
                     @error('calories')<div class="alert alert-danger">{{ $message }}</div>@enderror
                 </div> <!-- 4 -->
 
                 <div class="form-group">
-                    <label>الكمية</label>
-                    <input type="text" name="quantity" placeholder="الكمية" class="form-control rounded-0 mb-4 mt-2 @error('quantity') is-invalid @enderror">
+                    <label>{{ __('restaurent.quantity') }}</label>
+                    <input type="text" name="quantity" placeholder="{{ __('restaurent.quantity') }}" class="form-control rounded-0 mb-4 mt-2 @error('quantity') is-invalid @enderror">
                     @error('quantity')<div class="alert alert-danger">{{ $message }}</div>@enderror
                 </div> <!-- 4 -->
 
                 <hr>
 
                 <div class="extra">
-                    <h5>الاضافات:</h5>
+                    <h5>{{ __('restaurent.extra') }}:</h5>
                     @foreach (\App\Models\Extra::all() as $extra)
                         <div class="form-group mt-3">
                             <label class="custom-checks text-black">{{ $extra->name }}
@@ -86,7 +86,7 @@
                 <hr>
 
                 <div class="without">
-                    <h5>بدون:</h5>
+                    <h5>{{ __('restaurent.without') }}:</h5>
                     @foreach (\App\Models\Without::all() as $without)
                         <div class="form-group mt-3">
                             <label class="custom-checks text-black">{{ $without->name}}
@@ -102,12 +102,12 @@
                         <input type="checkbox" name="status" checked>
                         <span class="slider round"></span>
                     </label>
-                    <label>نشر المنتج</label>
+                    <label>{{ __('restaurent.publish') }}</label>
                 </div>
 
                 <hr>
 
-                <h5 class="fw-bold">الفروع التي توفر المنتج:</h5>
+                <h5 class="fw-bold">{{ __('restaurent.available_branches') }} :</h5>
                 <div class="branches p-2">
                     @forelse(\App\Models\Branch::where('department_id', auth()->user()->department_id)->get() as $branch)
                         <div class="form-group mb-3">
@@ -126,8 +126,8 @@
             </div> <!-- col-4 -->
 
             <div class="col-4 d-grid mx-auto mt-5">
-                <button id="login" type="submit" class="btn mb-3">اضافة</button>
-                <a id="coupon" href="FoodMenu" class="btn">الغاء</a>
+                <button id="login" type="submit" class="btn mb-3">{{ __('restaurent.cancel') }}</button>
+                <a id="coupon" href="FoodMenu" class="btn">{{ __('restaurent.add') }}</a>
             </div>
         </form>
     </div> <!-- container -->

@@ -9,23 +9,23 @@ class ExtraSeeder extends Seeder
     public function run()
     {
         Extra::create([
-            'name' => 'صوص',
+            'name' => ['en' => 'sauce', 'ar' => 'صوص'],
         ]);
 
         Extra::create([
-            'name' => 'بطاطس',
+            'name' => ['en' => 'potatoes', 'ar' => 'بطاطس'],
         ]);
 
         Extra::create([
-            'name' => 'جبن',
+            'name' => ['en' => 'cheese', 'ar' => 'جبن'],
         ]);
 
         Extra::create([
-            'name' => 'خيار',
+            'name' => ['en' => 'cucumber', 'ar' => 'خيار'],
         ]);
 
         Extra::create([
-            'name' => 'كاتشب',
+            'name' => ['en' => 'ketchup', 'ar' => 'كاتشب'],
         ]);
     }
 }

@@ -11,7 +11,7 @@ return new class extends Migration
             $table->id();
             $table->string('random_id');
             $table->foreignId('department_id')->constrained('departments')->cascadeOnDelete();
-            $table->string('branche_title');
+            $table->json('name');
             $table->string('branche_location')->nullable();
             $table->string('email')->unique();
             $table->string('phone')->unique();
