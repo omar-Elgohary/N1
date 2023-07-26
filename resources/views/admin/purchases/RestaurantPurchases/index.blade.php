@@ -3,7 +3,6 @@
     {{ __('restaurent.purchases') }}
 @endsection
 
-
 @section('content')
 <div class="col-12 d-flex flex-row-reverse text-end">
     <div class="app col-lg-2 col-md-1">
@@ -26,10 +25,10 @@
                     <li><a class="dropdown-item" href="#">2020</a></li>
                 </ul>
             </div> --}}
-
+            
             <nav class="menu">
-                @foreach(['يناير', 'فبراير', 'مارس', 'ابريل', 'مايو', 'يونيو', 'يوليو', 'اغسطس', 'سبتمبر', 'اكتوبر', 'نوفمبر', 'ديسمبر'] as $month)
-                    <a href="{{ route('filterRestaurantPurchases') }}" class="menu-item monthes">{{ $month }}</a>
+                @foreach([1=>'يناير', 2=>'فبراير', 3=>'مارس', 4=>'ابريل', 5=>'مايو', 6=>'يونيو', 7=>'يوليو', 8=>'اغسطس', 9=>'سبتمبر', 10=>'اكتوبر', 11=>'نوفمبر', 12=>'ديسمبر'] as $key => $month)
+                    <a href="{{ route('filterRestaurantPurchases', $key) }}" class="menu-item monthes">{{ $month }}</a>
                 @endforeach
 			</nav>
 		</aside>

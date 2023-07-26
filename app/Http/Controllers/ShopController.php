@@ -41,7 +41,10 @@ class ShopController extends Controller
     public function createShopCategory(Request $request)
     {
         Category::create([
-            'name' => $request->name,
+            'name' =>[
+                'en' => $request->name_en,
+                'ar' => $request->name_ar,
+            ],
             'department_id' => auth()->user()->department_id,
         ]);
 
@@ -410,6 +413,21 @@ class ShopController extends Controller
         $pdf = PDF::loadView('pdf.shopProducts', $data);
         return $pdf->download('shopProducts.pdf');
     }
+
+
+
+    public function ExportShopPurchasesPDF()
+    {
+        $Purchases  = ShopOrder::get();
+        $data = [
+            'title' => 'Welcome to N1.com',
+            'date' => date('m/d/Y'),
+            'Purchases' => $Purchases
+        ];
+        $pdf = PDF::loadView('pdf.shopPurchases', $data);
+        return $pdf->download('shopPurchases.pdf');
+    }
+
 
 
     public function uploadShopExcel(Request $request)

@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 @section('title')
-    عمليات الشراء
+    {{ __('shop.purchases') }}
 @endsection
 
 @section('content')
@@ -14,7 +14,7 @@
 
 
 		<aside class="sidebar">
-            <div class="dropdown">
+            {{-- <div class="dropdown">
                 <a id="year" class="btn d-flex justify-content-around flex-row-reverse" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     2023 <i class="fas fa-regular fa-angle-down mt-1 mx-3"></i>
                 </a>
@@ -24,7 +24,7 @@
                     <li><a class="dropdown-item" href="#">2021</a></li>
                     <li><a class="dropdown-item" href="#">2020</a></li>
                 </ul>
-            </div>
+            </div> --}}
 
             <nav class="menu">
 				<a href="#" class="menu-item monthes is-active">يناير</a>
@@ -48,11 +48,11 @@
     <div class="container">
     <div class="col-12 d-flex flex-row-reverse p-0">
         <div class="col-6 section-title text-end p-0">
-            <h2 class="text-black">عمليات الشراء</h2>
+            <h2 class="text-black">{{ __('shop.purchases') }}</h2>
         </div>
 
         <div class="col-6 text-start mb-3">
-            <a href="#" id="pdf" class="btn btn-success"><i class="fa fa-thin fa-print"></i><br><small>PDF</small> </a>
+            <a href="{{ route('ExportShopPurchasesPDF') }}" id="pdf" class="btn btn-success"><i class="fa fa-thin fa-print"></i><br><small>PDF</small> </a>
             <a href="#" id="pdf" class="btn btn-success"><i class="fa fa-thin fa-file-excel"></i><br><small>Excel</small> </a>
         </div>
     </div> <!-- col-12 -->
@@ -63,13 +63,13 @@
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>اسم المستخدم</th>
-                        <th>السعر</th>
-                        <th>عدد المنتجات</th>
-                        <th>حالة الطلب</th>
-                        <th>تاريخ الطلب</th>
-                        <th>تقييم الخدمة</th>
-                        <th>التفاصيل</th>
+                        <th>{{ __('shop.user_name') }}</th>
+                        <th>{{ __('shop.price') }}</th>
+                        <th>{{ __('shop.products_number') }}</th>
+                        <th>{{ __('shop.order_status') }}</th>
+                        <th>{{ __('shop.order_date') }}</th>
+                        <th>{{ __('restaurent.rate_service') }}</th>
+                        <th>{{ __('restaurent.details') }}</th>
                     </tr>
                 </thead>
 
@@ -82,13 +82,13 @@
                         <td>{{$order->products_count}}</td>
 
                         @if($order->order_status == 'قيد التجهيز')
-                            <td class="text-warning">{{$order->order_status}}</td>
+                            <td class="text-warning">{{ __('shop.processing') }}</td>
                         @elseif($order->order_status == 'جاهز للاستلام')
-                            <td class="text-primary">{{$order->order_status}}</td>
+                            <td class="text-primary">{{ __('shop.ready_pick') }}</td>
                         @elseif($order->order_status == 'تم الشحن')
-                            <td class="text-info">{{$order->order_status}}</td>
+                            <td class="text-info">{{ __('shop.charged') }}</td>
                         @else
-                            <td class="text-success">{{$order->order_status}}</td>
+                            <td class="text-success">{{ __('shop.completed') }}</td>
                         @endif
 
                         <td>{{ $order->formatted_created_at }}</td>

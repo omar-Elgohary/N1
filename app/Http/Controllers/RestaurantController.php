@@ -141,10 +141,11 @@ class RestaurantController extends Controller
 
 
     public function filterRestaurantPurchases()
-    {
-        $purchases = RestaurentOrder::whereMonth('created_at', date('m'))->get();
+    {        
+        $purchases = RestaurentOrder::whereMonth('created_at', '06')->get();
         return view('admin.purchases.RestaurantPurchases.index', compact('purchases'));
     }
+
 
 
 

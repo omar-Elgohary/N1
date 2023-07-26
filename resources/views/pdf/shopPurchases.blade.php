@@ -131,7 +131,7 @@
 									Invoice #: 123<br />
 									Title: {{ $title }}<br />
 									Created: {{ $date }}<br />
-                                    Shop Products
+                                    Purchases
 								</td>
 							</tr>
 						</table>
@@ -142,39 +142,42 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>{{ __('shop.product_name') }}</th>
-                            <th>{{ __('shop.status') }}</th>
+                            <th>{{ __('shop.user_name') }}</th>
                             <th>{{ __('shop.price') }}</th>
-                            <th>{{ __('shop.sold_quantity') }}</th>
-                            <th>{{ __('shop.remaining_quantity') }}</th>
-                            <th>{{ __('restaurent.category_name') }}</th>
-                            <th>{{ __('shop.rate') }}</th>
+                            <th>{{ __('shop.products_number') }}</th>
+                            <th>{{ __('shop.order_status') }}</th>
+                            <th>{{ __('shop.order_date') }}</th>
+                            <th>{{ __('restaurent.rate_service') }}</th>
                         </tr>
                     </thead>
-
                     <tbody>
-                    @forelse ($products as $product)
-                        <tr>
-                            <td>{{ $product->random_id }}</td>
-                            <td>{{ $product->name }}</td>
-                            @if ($product->status == 'متوفر')
-                                <td class="text-success mx-5">{{ $product->status }}</td>
-                            @else
-                                <td class="text-danger mx-5">{{ $product->status }}</td>
-                            @endif
-                            <td>{{ $product->price }}</td>
-                            <td>{{ $product->sold_quantity }}</td>
-                            <td>{{ $product->remaining_quantity }}</td>
-                            <td>{{ $product->category->name }}</td>
-                            <td><i class="fa fa-thin fa-star text-warning"></i> 4.5</td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <th class="text-danger" colspan="10">
-                                لا يوجد بيانات
-                            </th>
-                        </tr>
-                    @endforelse
+                        @forelse ($Purchases as $key => $purchase)
+                            <tr>
+                                <th>{{$purchase->random_id}}</th>
+                                <td>{{$purchase->user->name}}</td>
+                                <td>{{$purchase->total_price}}</td>
+                                <td>{{$purchase->products_count}}</td>
+
+                                @if($purchase->order_status == 'قيد التجهيز')
+                                    <td class="text-warning">{{ __('shop.processing') }}</td>
+                                @elseif($purchase->order_status == 'جاهز للاستلام')
+                                    <td class="text-primary">{{ __('shop.ready_pick') }}</td>
+                                @elseif($purchase->order_status == 'تم الشحن')
+                                    <td class="text-info">{{ __('shop.charged') }}</td>
+                                @else
+                                    <td class="text-success">{{ __('shop.completed') }}</td>
+                                @endif
+
+                                <td>{{ $purchase->formatted_created_at }}</td>
+                                <td><i class="fa fa-thin fa-star text-warning"></i> 4.5</td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <th class="text-danger" colspan="10">
+                                    {{ __('shop.nodata') }}
+                                </th>
+                            </tr>
+                        @endforelse
                     </tbody>
                 </table>
 			</table>

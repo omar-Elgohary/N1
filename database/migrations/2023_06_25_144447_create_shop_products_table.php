@@ -14,9 +14,9 @@ return new class extends Migration
             $table->foreignId('category_id')->constrained('categories')->cascadeOnDelete();
             $table->foreignId('sub_category_id')->constrained('sub_categories')->cascadeOnDelete();
             $table->string('product_image');
-            $table->string('product_name');
-            $table->string('description');
-            $table->string('price');
+            $table->json('name');
+            $table->json('description');
+            $table->string('price');    
             $table->string('size_id');
             $table->string('color_id');
             $table->enum('returnable', ['لا', 'نعم'])->default('لا');

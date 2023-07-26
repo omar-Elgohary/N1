@@ -72,7 +72,7 @@ return [
     "description_ar" => "الوصف عربي",
     "description_en" => "الوصف انجليزي",
     "category_name_ar" => "اسم القسم عربي",
-    "category_name_en" => "اسم القسم لنجليزي",
+    "category_name_en" => "اسم القسم انجليزي",
     "sub_category_ar" => "اسم الفئة الفرعية عربي",
     "sub_category_en" => "اسم الفئة الفرعية انجليزي",
 ];

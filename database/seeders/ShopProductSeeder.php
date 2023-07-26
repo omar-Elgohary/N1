@@ -8,15 +8,14 @@ class ShopProductSeeder extends Seeder
 {
     public function run()
     {
-
         ShopProduct::create([
             'random_id' => '#T8W2K4',
             'department_id' => 2,
             'category_id' => 4,
             'sub_category_id' => 4,
             'product_image' => '1686825194.jfif',
-            'product_name' => 'قميص بلاستر',
-            'description' => 'قميص بلاستر كاجوال بدلة وخروج',
+            'name' => ['en' => 'Blaster shirt', 'ar' => 'قميص بلاستر'],
+            'description' => ['en' => 'Casual plaster shirt, suit and go out', 'ar' => 'قميص بلاستر كاجوال بدلة وخروج'],
             'price' => '360',
             'size_id' => 2,
             'color_id' => 5,
@@ -34,8 +33,8 @@ class ShopProductSeeder extends Seeder
             'category_id' => 5,
             'sub_category_id' => 5,
             'product_image' => '1686825194.jfif',
-            'product_name' => 'كوتشي رانينج',
-            'description' => 'كوتشي رانينج طبي مريح',
+            'name' => ['en' => 'Kochi Running', 'ar' => 'كوتشي رانينج'],
+            'description' => ['en' => 'Kochi Running New Medical', 'ar' => 'كوتشي رانينج طبي مريح'],
             'price' => '470',
             'size_id' => 4,
             'color_id' => 3,
@@ -53,8 +52,8 @@ class ShopProductSeeder extends Seeder
             'category_id' => 6,
             'sub_category_id' => 6,
             'product_image' => '1686825194.jfif',
-            'product_name' => 'ترينج بيتي',
-            'description' => 'ترينج اطفالي بيتي مريح',
+            'name' => ['en' => 'Tring Betty', 'ar' => 'ترينج بيتي'],
+            'description' => ['en' => 'Comfortable baby clothes', 'ar' => 'ترينج اطفالي بيتي مريح'],
             'price' => '740',
             'size_id' => 4,
             'color_id' => 3,

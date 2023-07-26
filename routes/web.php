@@ -258,11 +258,14 @@ Route::middleware(['CheckRestaurent'])->group(function () {
 }); // CheckRestaurent middleware
 ###############################################################################################################################
 
+
+
 // ShopPurchases
 Route::middleware(['CheckShop'])->group(function () {
 
     Route::get('shopPurchases', [ShopController::class, 'shopPurchases'])->name('shopPurchases');
     Route::get('shopPurchasesDetails/{id}', [ShopController::class, 'shopPurchasesDetails'])->name('shopPurchasesDetails');
+    Route::get('ExportShopPurchasesPDF', [ShopController::class, 'ExportShopPurchasesPDF'])->name('ExportShopPurchasesPDF');
 
 }); // CheckShop middleware
 
