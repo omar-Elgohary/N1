@@ -9,6 +9,7 @@ use App\Models\ShopProduct;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
 use App\Imports\ImportShopProducts;
+use App\Imports\ImportShopPurchese;
 use Illuminate\Support\Facades\File;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -143,13 +144,15 @@ class ShopController extends Controller
 
     public function storeShopProduct(Request $request)
     {
-        try{
+        // try{
             $this->validate($request, [
                 'category_id' => 'required',
                 'sub_category_name' => 'required',
                 'product_image' => 'required',
-                'product_name' => 'required',
-                'description' => 'required',
+                'name_ar' => 'required',
+                'name_en' => 'required',
+                'description_en' => 'required',
+                'description_ar' => 'required',
                 'price' => 'required|numeric',
                 'color_id' => 'required',
                 'branche_id' => 'bail|nullable',
@@ -177,7 +180,7 @@ class ShopController extends Controller
             }
 
             $subCatName = $request->sub_category_name;
-            $element = SubCategory::where('name', $subCatName)->first()->id;
+            $element = SubCategory::where('id', $subCatName)->first()->id;
 
             if($request->status == 'on')
             {
@@ -187,8 +190,14 @@ class ShopController extends Controller
                     'product_image' => $image_name,
                     'category_id' => $request->category_id,
                     'sub_category_id' => $element,
-                    'product_name' => $request->product_name,
-                    'description' => $request->description,
+                    'name' => [
+                        'en' => $request->name_en,
+                        'ar' => $request->name_ar,
+                    ],
+                    'description' =>  [
+                        'en' => $request->description_en,
+                        'ar' => $request->description_ar,
+                    ],
                     'price' => $request->price,
                     'status' => 'متوفر',
                     'size_id' => $sizes,
@@ -204,8 +213,14 @@ class ShopController extends Controller
                     'product_image' => $image_name,
                     'category_id' => $request->category_id,
                     'sub_category_id' => $element,
-                    'product_name' => $request->product_name,
-                    'description' => $request->description,
+                    'name' => [
+                        'en' => $request->name_en,
+                        'ar' => $request->name_ar,
+                    ],
+                    'description' =>  [
+                        'en' => $request->description_en,
+                        'ar' => $request->description_ar,
+                    ],
                     'price' => $request->price,
                     'status' => 'غير متوفر',
                     'size_id' => $sizes,
@@ -218,9 +233,9 @@ class ShopController extends Controller
 
             session()->flash('addShopProduct');
             return redirect()->route('products');
-        }catch(\Exception $e){
-            dd($e->getMessage());
-        }
+        // }catch(\Exception $e){
+        //     dd($e->getMessage());
+        // }
     }
 
 
@@ -272,8 +287,14 @@ class ShopController extends Controller
                     'category_id' => $request->category_id,
                     'sub_category_id' => $subCatName,
                     'product_image' => $product->product_image,
-                    'product_name' => $request->product_name,
-                    'description' => $request->description,
+                    'name' => [
+                        'en' => $request->name_en,
+                        'ar' => $request->name_ar,
+                    ],
+                    'description' =>  [
+                        'en' => $request->description_en,
+                        'ar' => $request->description_ar,
+                    ],
                     'price' => $request->price,
                     'size_id' => $sizes,
                     'color_id' => $colors,
@@ -290,8 +311,14 @@ class ShopController extends Controller
                     'category_id' => $request->category_id,
                     'sub_category_id' => $subCatName,
                     'product_image' => $product->product_image,
-                    'product_name' => $request->product_name,
-                    'description' => $request->description,
+                    'name' => [
+                        'en' => $request->name_en,
+                        'ar' => $request->name_ar,
+                    ],
+                    'description' =>  [
+                        'en' => $request->description_en,
+                        'ar' => $request->description_ar,
+                    ],
                     'price' => $request->price,
                     'size_id' => $sizes,
                     'color_id' => $colors,

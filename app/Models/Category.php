@@ -10,6 +10,9 @@ class Category extends Model
 
     protected $guarded = [];
 
+    protected $casts = [
+        'name' => 'array',
+    ];
     private $locale = null;
 
     public function name(string $locale = null): Attribute {

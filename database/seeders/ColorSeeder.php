@@ -9,27 +9,27 @@ class ColorSeeder extends Seeder
     public function run()
     {
         Color::create([
-            'color' => 'أحمر',
+            'color' => ['en' => 'red', 'ar' => 'أحمر'],
         ]);
 
         Color::create([
-            'color' => 'أبيض',
+            'color' => ['en' => 'white', 'ar' => 'أبيض'],
         ]);
 
         Color::create([
-            'color' => 'أسود',
+            'color' => ['en' => 'black', 'ar' => 'أسود'],
         ]);
 
         Color::create([
-            'color' => 'بني',
+            'color' => ['en' => 'brown', 'ar' => 'بني'],
         ]);
 
         Color::create([
-            'color' => 'رصاصي',
+            'color' => ['en' => 'gray', 'ar' => 'رصاصي'],
         ]);
 
         Color::create([
-            'color' => 'أزرق',
+            'color' => ['en' => 'blue', 'ar' => 'أزرق'],
         ]);
     }
 }

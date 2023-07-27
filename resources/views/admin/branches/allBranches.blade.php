@@ -56,7 +56,7 @@
             </div>
 
             <div class="col-lg-6 text-start">
-                <a href="#" id="pdf" class="btn btn-success"><i class="fa fa-thin fa-print"></i>PDF</a>
+                <a href="{{ route('exportBranchePdf') }}" id="pdf" class="btn btn-success"><i class="fa fa-thin fa-print"></i>PDF</a>
                 <a id="login" class="btn px-4" data-bs-toggle="modal" href="#staticBackdrop" role="button">{{ __('branches.add_branche') }}</a>
             </div>
         </div> <!-- row -->
@@ -73,8 +73,8 @@
                     </tr>
                 </thead>
 
-                @forelse ($branches as $key => $branch)
                 <tbody>
+                @forelse ($branches as $key => $branch)
                     <tr>
                         <th>{{ $branch->random_id }}</th>
                         <td>{{ $branch->name }}</td>

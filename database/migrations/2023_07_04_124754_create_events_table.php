@@ -14,8 +14,8 @@ return new class extends Migration
             $table->foreignId('category_id')->constrained('categories')->cascadeOnDelete();
             $table->foreignId('sub_category_id')->constrained('sub_categories')->cascadeOnDelete();
             $table->string('event_image');
-            $table->string('event_name');
-            $table->string('description');
+            $table->json('name');
+            $table->json('description');
             $table->string('ticket_price');
             $table->string('reservations_type_id')->constrained('reservation_types')->cascadeOnDelete();
             $table->enum('status', ['لم يبدأ', 'متاح', 'متوقف', 'منتهي'])->default('لم يبدأ');

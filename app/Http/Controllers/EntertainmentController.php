@@ -39,7 +39,10 @@ class EntertainmentController extends Controller
     public function createEntertainmentCategory(Request $request)
     {
         Category::create([
-            'name' => $request->name,
+            'name' => [
+                'en' => $request->name_en,
+                'ar' => $request->name_ar,
+            ],
             'department_id' => auth()->user()->department_id,
         ]);
 
@@ -52,7 +55,10 @@ class EntertainmentController extends Controller
     {
         $category = Category::find($id);
         $category->update([
-            'name' => $request->name,
+            'name' => [
+                'en' => $request->name_en,
+                'ar' => $request->name_ar,
+            ],
         ]);
         session()->flash('editCategory');
         return back();
@@ -87,7 +93,10 @@ class EntertainmentController extends Controller
         $category = Category::find($id);
 
         SubCategory::create([
-            'name' => $request->name,
+            'name' => [
+                'en' => $request->name_en,
+                'ar' => $request->name_ar,
+            ],
             'category_id' => $category->id,
         ]);
         session()->flash('addSubCategory');
@@ -99,7 +108,10 @@ class EntertainmentController extends Controller
     public function editEventSubCategory(Request $request, $id)
     {
         SubCategory::find($id)->update([
-            'name' => $request->name,
+            'name' => [
+                'en' => $request->name_en,
+                'ar' => $request->name_ar,
+            ],
         ]);
         session()->flash('editSubCategory');
         return back();

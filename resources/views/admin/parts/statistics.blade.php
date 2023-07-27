@@ -58,7 +58,7 @@
                             @foreach(\App\Models\RestaurentProduct::orderBy('sold_quantity', 'desc')->limit(3)->get() as $product)
                                 <div class="col-lg-2 col-md-2 text-center mx-3" dir="ltr">
                                     <h5>{{ $product->sold_quantity }}</h5>
-                                    <span>{{ $product->product_name }}</span>
+                                    <span>{{ $product->name }}</span>
                                 </div>
 
                                 <input class="knob p-5" data-width="50" data-height="50" data-linecap=round
@@ -69,7 +69,7 @@
                             @foreach(\App\Models\ShopProduct::orderBy('sold_quantity', 'desc')->limit(3)->get() as $product)
                                 <div class="col-lg-2 col-md-2 text-center mx-3" dir="ltr">
                                     <h5>{{ $product->sold_quantity }}</h5>
-                                    <h5>{{ $product->product_name }}</h5>
+                                    <h5>{{ $product->name }}</h5>
                                 </div>
 
                                 <input class="knob" data-width="50" data-height="50" data-linecap=round
@@ -80,7 +80,7 @@
                             @foreach(\App\Models\Event::orderBy('tickets_sold_quantity', 'desc')->limit(3)->get() as $product)
                                 <div class="col-lg-2 col-md-2 text-center mx-3" dir="ltr">
                                     <h5>{{ $product->tickets_sold_quantity }}</h5>
-                                    <h5>{{ $product->event_name }}</h5>
+                                    <h5>{{ $product->name }}</h5>
                                 </div>
 
                                 <input class="knob" data-width="50" data-height="50" data-linecap=round
@@ -102,14 +102,14 @@
                     @if(auth()->user()->department_id == 1)
                         @foreach(\App\Models\Rate::groupBy('restaurent_product_id')->selectRaw('restaurent_product_id,avg(rate) as rate')->where('department_id', auth()->user()->department_id)->orderBy('rate', 'desc')->limit(5)->get() as $rate)
                             <div class="d-flex flex-row-reverse justify-content-between">
-                                <h5>{{ $rate->restaurent_product->product_name }}</h5>
+                                <h5>{{ $rate->restaurent_product->name }}</h5>
                                 <p>{{ round($rate->rate, 1) }}<i class="fa fa-thin fa-star text-warning"></i></p>
                             </div>
                         @endforeach
                     @elseif(auth()->user()->department_id == 2)
                         @foreach(\App\Models\Rate::groupBy('shop_product_id')->selectRaw('shop_product_id,avg(rate) as rate')->where('department_id', auth()->user()->department_id)->orderBy('rate', 'desc')->limit(5)->get() as $rate)
                             <div class="d-flex flex-row-reverse justify-content-between">
-                                <h5>{{ $rate->shop_product->product_name }}</h5>
+                                <h5>{{ $rate->shop_product->name }}</h5>
                                 <p>{{ round($rate->rate, 1) }}<i class="fa fa-thin fa-star text-warning"></i></p>
                             </div>
                         @endforeach

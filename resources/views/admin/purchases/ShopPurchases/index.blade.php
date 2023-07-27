@@ -53,7 +53,7 @@
 
         <div class="col-6 text-start mb-3">
             <a href="{{ route('ExportShopPurchasesPDF') }}" id="pdf" class="btn btn-success"><i class="fa fa-thin fa-print"></i><br><small>PDF</small> </a>
-            <a href="#" id="pdf" class="btn btn-success"><i class="fa fa-thin fa-file-excel"></i><br><small>Excel</small> </a>
+            {{-- <a href="#importData" id="pdf" data-bs-toggle="modal" class="btn btn-success"><i class="fa fa-thin fa-file-excel"></i><br><small>Excel</small> </a> --}}
         </div>
     </div> <!-- col-12 -->
 

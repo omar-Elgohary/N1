@@ -18,6 +18,10 @@ return [
     'delete_question' => 'هل أنت متأكد من حذف هذا المنتج؟',
 
 
+    // Add Product
+    '' => '',
+
+
     // Edit Product
     'edit_product' => 'تعديل المنتج',
     'edit_product_info' => 'تعديل معلومات المنتج',

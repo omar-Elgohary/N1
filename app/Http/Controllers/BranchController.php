@@ -1,5 +1,6 @@
 <?php
 namespace App\Http\Controllers;
+use PDF;
 use App\Models\Branch;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -90,4 +91,20 @@ class BranchController extends Controller
         session()->flash('deleteBranch');
         return redirect()->route('allBranches');
     }
+
+
+
+
+    public function exportBranchePdf()
+    {
+        $branches  = Branch::where('department_id', auth()->user()->department_id)->get();
+        $data = [
+            'title' => 'Welcome to N1.com',
+            'date' => date('m/d/Y'),
+            'branches' => $branches
+        ];
+        $pdf = PDF::loadView('pdf.branches', $data);
+        return $pdf->download('branches.pdf');
+    }
 }
+

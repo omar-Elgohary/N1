@@ -14,8 +14,8 @@ class EventSeeder extends Seeder
             'category_id' => 7,
             'sub_category_id' => 7,
             'event_image' => '1687779997.jfif',
-            'event_name' => 'قطر الموت',
-            'description' => 'لعبة رعب قطر الموت 3 كيلو متر',
+            'name' => ['en' => 'diameter of death', 'ar' => 'قطر الموت'],
+            'description' => ['en' => 'Horror game death diameter 3 km', 'ar' => 'لعبة رعب قطر الموت 3 كيلو متر'],
             'ticket_price' => '90',
             'reservations_type_id' => 2,
 
@@ -34,8 +34,8 @@ class EventSeeder extends Seeder
             'category_id' => 8,
             'sub_category_id' => 8,
             'event_image' => '1687776590.jfif',
-            'event_name' => 'فيلم كيره والجن',
-            'description' => 'فيلم تاريخي بطولة كريم عبد العزيز وأحمد عز',
+            'name' => ['en' => 'Kira Wal Jinn movie', 'ar' => 'فيلم كيره والجن'],
+            'description' => ['en' => 'A historical film starring Karim Abdel Aziz and Ahmed Ezz.', 'ar' => 'فيلم تاريخي بطولة كريم عبد العزيز وأحمد عز'],
             'ticket_price' => '135',
             'reservations_type_id' => 4,
 
@@ -54,8 +54,8 @@ class EventSeeder extends Seeder
             'category_id' => 9,
             'sub_category_id' => 9,
             'event_image' => '1687776590.jfif',
-            'event_name' => 'ملعب كورة قدم',
-            'description' => 'حجز ملعب كورة قدم كبير واقامة دورات',
+            'name' => ['en' => 'football stadium', 'ar' => 'ملعب كرة قدم'],
+            'description' => ['en' => 'Reservation of a large football field and the establishment of courses', 'ar' => 'حجز ملعب كورة قدم كبير واقامة دورات'],
             'ticket_price' => '200',
             'reservations_type_id' => 4,
 

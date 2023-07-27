@@ -94,6 +94,9 @@ Route::get('EditBranchPage/{id}', [BranchController::class, 'EditBranchPage'])->
 Route::post('updateBranch/{id}', [BranchController::class, 'updateBranch'])->name('updateBranch');
 Route::get('deleteBranch/{id}', [BranchController::class, 'deleteBranch'])->name('deleteBranch');
 
+Route::get('exportBranchePdf', [BranchController::class, 'exportBranchePdf'])->name('exportBranchePdf');
+
+
 ###############################################################################################################################
 
 // Coupons
@@ -220,7 +223,7 @@ Route::middleware(['CheckEntertainment'])->group(function () {
     Route::post('uploadEventExcel', [EntertainmentController::class, 'uploadEventExcel'])->name('uploadEventExcel');
 
     Route::get('eventCategories', [EntertainmentController::class, 'eventCategories'])->name('eventCategories');
-    Route::post('createEntertainmentCategory', [EntertainmentController::class, 'createEntertainmentCategory'])->name('createEntertainmentCategory');
+    Route::post('createEntertainmentCategory', [EntertainmentController::class, 'create`EntertainmentCategory'])->name('createEntertainmentCategory');
     Route::post('editEventCategory/{id}', [EntertainmentController::class, 'editEventCategory'])->name('editEventCategory');
     Route::post('deleteEventCategory/{id}', [EntertainmentController::class, 'deleteEventCategory'])->name('deleteEventCategory');
 
@@ -237,7 +240,7 @@ Route::middleware(['CheckEntertainment'])->group(function () {
     Route::post('updateEvent/{id}', [EntertainmentController::class, 'updateEvent'])->name('updateEvent');
 
     Route::get('eventDetails/{id}', [EntertainmentController::class, 'eventDetails'])->name('eventDetails');
-    Route::delete('deleteEvent/{id}', [EntertainmentController::class, 'deleteEvent'])->name('deleteEvent');
+    Route::get('deleteEvent/{id}', [EntertainmentController::class, 'deleteEvent'])->name('deleteEvent');
 
     Route::post('deactivationEvent/{id}', [EntertainmentController::class, 'deactivationEvent'])->name('deactivationEvent');
     Route::get('activationEvent/{id}', [EntertainmentController::class, 'activationEvent'])->name('activationEvent');

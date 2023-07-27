@@ -29,7 +29,7 @@ return [
     'product_details' => 'Product Details',
     'size' => 'Size',
     'color' => 'Color',
-    'avaulable_quantity' => 'Avaulable Quantity',
+    'avaulable_quantity' => 'Available Quantity',
     'products' => 'Products',
     'return_question' => '?Is it possible to return the product',
     '7days' => 'Yes, within 7 days',
