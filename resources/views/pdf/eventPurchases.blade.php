@@ -22,7 +22,6 @@
             tr:nth-child(even) {
                 background-color: #f2f2f2;
             }
-
 			.invoice-box {
 				max-width: 800px;
 				margin: auto;
@@ -121,7 +120,7 @@
 		<div class="invoice-box">
 			<table cellpadding="0" cellspacing="0">
 				<tr class="top">
-					<td colspan="2">    
+					<td colspan="2">
 						<table>
 							<tr>
 								<td class="title">
@@ -132,51 +131,44 @@
 									Invoice #: 123<br />
 									Title: {{ $title }}<br />
 									Created: {{ $date }}<br />
-                                    Events
+                                    Reservations
 								</td>
 							</tr>
 						</table>
 					</td>
 				</tr>
 
-                <table class="table table-bordered table-dark">
+                <table class="table">
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>{{ __('events.event_name') }}</th>
-                            <th>{{ __('events.reservation_status') }}</th>
-                            <th>{{ __('events.category') }}</th>
-                            <th>{{ __('events.publish_date') }}</th>
-                            <th>{{ __('events.ticket_price') }}</th>
-                            <th>{{ __('events.reservation_tickets') }}</th>
+                            <th>{{ __('restaurent.user_name') }}</th>
+                            <th>{{ __('events.tickets_number') }}</th>
+                            <th>{{ __('events.reservation_type') }}</th>
+                            <th>{{ __('restaurent.price') }}</th>
+                            <th>{{ __('events.event_rate') }}</th>
                         </tr>
                     </thead>
-
                     <tbody>
-                        @forelse ($events as $key => $event)
+                        @forelse ($Purchases as $key => $purchase)
                             <tr>
-                                <th>{{ $event->random_id }}</th>
-                                <td>{{ $event->name }}</td>
-
-                                @if($event->status == 'لم يبدأ')
-                                    <td class="text-secondary">{{ __('events.didnt_start') }}</td>
-                                @elseif($event->status == 'منتهي')
-                                    <td class="text-dark">{{ __('events.finished') }}</td>
-                                @elseif($event->status == 'متوقف')
-                                    <td class="text-danger">{{ __('events.stopped') }}</td>
-                                @else
-                                    <td class="text-success">{{ __('events.available') }}</td>
-                                @endif
-
-                                <td class="fw-bold">{{ $event->subCategory->name }}</td>
-                                <td>{{ $event->start_reservation_date }}</td>
-                                <td>{{ $event->ticket_price }}</td>
-                                <td>{{ $event->tickets_sold_quantity }} / {{ $event->tickets_quantity }}</td>
+                                <th>{{ $purchase->random_id }}</th>
+                                <td>{{ $purchase->user->name }}</td>
+                                <td>{{ $purchase->event->tickets_quantity }}</td>
+        
+                                @foreach (\App\Models\ReservationType::where('id', $purchase->event->reservations_type_id)->get() as $type)
+                                    <td>
+                                        {{ $type->name }}
+                                    </td>
+                                @endforeach
+        
+                                <td>{{ \App\Models\Event::where('id', $purchase->event_id)->first()->ticket_price }}</td>
+                                <td><i class="fa fa-thin fa-star text-warning"></i> 4.5</td>
                             </tr>
                         @empty
                             <tr>
                                 <th class="text-danger" colspan="10">
-                                    {{ __('restaurent.nodata') }} 
+                                    {{ __('shop.nodata') }}
                                 </th>
                             </tr>
                         @endforelse

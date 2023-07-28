@@ -51,7 +51,11 @@ class RestaurantController extends Controller
     {
         $category = Category::find($id);
         $category->update([
-            'name' => $request->name,
+            'name' => [
+                'en' => $request->name_en,
+                'ar' => $request->name_ar,
+            ],
+            'department_id' => auth()->user()->department_id,
         ]);
         session()->flash('editCategory');
         return back();
@@ -78,15 +82,23 @@ class RestaurantController extends Controller
 
     public function createSubCategory(Request $request, $id)
     {
-        if($request->name == ''){
-            session()->flash('nameRequired');
+        if($request->name_en == ''){
+            session()->flash('nameRequiredEn');
+            return back();
+        }
+
+        if($request->name_ar == ''){
+            session()->flash('nameRequiredAr');
             return back();
         }
 
         $category = Category::find($id);
 
         SubCategory::create([
-            'name' => $request->name,
+            'name' => [
+                'en' => $request->name_en,
+                'ar' => $request->name_ar,
+            ],
             'category_id' => $category->id,
         ]);
         session()->flash('addSubCategory');
@@ -98,11 +110,16 @@ class RestaurantController extends Controller
     public function editSubCategory(Request $request, $id)
     {
         SubCategory::find($id)->update([
-            'name' => $request->name,
+            'name' => [
+                'en' => $request->name_en,
+                'ar' => $request->name_ar,
+            ],    
+            'category_id' => $request->category_id,
         ]);
         session()->flash('editSubCategory');
         return back();
     }
+
 
 
 

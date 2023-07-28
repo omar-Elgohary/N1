@@ -32,4 +32,17 @@ return [
     "signup" => "انشاء الحساب",
     "haveaccount" => "تمتلك حسابا؟ ",
     "uploadcommercialImage" => 'ارفع صورة السجل/معروف',
+
+
+    // contact us
+    'contactus_desc' => 'شاركنا التطوير وسمعنا صوتك',
+    'full_name' => 'الاسم الثلاثي',
+    'Message_text' => 'نص الرسالة',
+    'send' => 'ارسال',
+    'phone_verification' => 'التحقق من رقم الجوال',
+    'Enter_the_code_sent_to' => 'ادخل الكود المرسل الى',
+
+
+
+
 ];

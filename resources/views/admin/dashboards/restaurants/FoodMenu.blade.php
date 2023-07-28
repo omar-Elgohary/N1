@@ -7,7 +7,7 @@
     <script>
         window.onload = function() {
             notif({
-                msg: 'تم اضافة الفئة الفرعية بنجاح ',
+                msg: "{{ __('messages.addSubCategory') }}",
                 type: "success"
             })
         }
@@ -18,7 +18,7 @@
     <script>
         window.onload = function() {
             notif({
-                msg: 'تم اضافة المنتج بنجاح ',
+                msg: "{{ __('messages.addRestaurentProduct') }}",
                 type: "success"
             })
         }
@@ -29,7 +29,7 @@
     <script>
         window.onload = function() {
             notif({
-                msg: 'تم تعديل المنتج بنجاح ',
+                msg: "{{ __('messages.editRestaurentProduct') }}",
                 type: "success"
             })
         }
@@ -40,7 +40,7 @@
     <script>
         window.onload = function() {
             notif({
-                msg: 'تم حذف المنتج بنجاح ',
+                msg: "{{ __('messages.deleteRestaurentProduct') }}",
                 type: "error"
             })
         }
@@ -51,7 +51,7 @@
     <script>
         window.onload = function() {
             notif({
-                msg: 'تم اضافة القسم بنجاح ',
+                msg: "{{ __('messages.addCategory') }}",
                 type: "success"
             })
         }
@@ -62,7 +62,7 @@
     <script>
         window.onload = function() {
             notif({
-                msg: 'تم تعديل اسم القسم بنجاح ',
+                msg: "{{ __('messages.editCategory') }}",
                 type: "success"
             })
         }
@@ -73,7 +73,7 @@
     <script>
         window.onload = function() {
             notif({
-                msg: 'تم رفع ملف الاكسيل بنجاح ',
+                msg: "{{ __('messages.ExcelImported') }}",
                 type: "success"
             })
         }

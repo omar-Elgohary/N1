@@ -33,7 +33,24 @@ return [
     'publish' => 'Publishing',
 
 
+    // Edit Event
+    'edit_event' => 'Edit Event Info',
+    'event_name_ar' => 'Arabic Event Name',
+    'event_name_en' => 'English Event Name',
+    'sold_tickets_number' => 'Sold Tickets Number',
+    'reservation_start_date' => 'Reservation Start Date',
+    'reservation_desc_date' => 'Ticket reservations will be published and activated based on the date specified here',
 
+
+    // Reservations
+    'Reservations' => 'Reservations',
+    'events' => 'Events',
+    'event_rate' => 'Event Rate',
+    'reservation_process_details' => 'Reservation Process Details',
+    'confirmed_reservation' => 'Confirmed Reservation',
+    'attendance_not_confirmed' => 'Attendance Not Confirmed',
+    'attendance_confirmed' => 'Attendance Confirmed',
+    'reservation_date' => 'Reservation Date',
 
 
 ];

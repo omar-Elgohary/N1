@@ -16,45 +16,45 @@
             </div>
         </div>
 
-            <div class="col-lg-4 mt-5">
-                <div class="form-group my-4">
-                    <label class="text-black">{{ __('offers.offer_status') }}</label>
-                    @if($package->status == 'مفعل')
-                    <label class="text-success mx-5" style="font-weight: bold;">{{ __('restaurent.available') }}</label>
-                @else
-                    <label class="text-danger mx-5" style="font-weight: bold;">{{ __('restaurent.notavailable') }}</label>
-                @endif
-                </div> <!-- 1 -->
+        <div class="col-lg-4 mt-5">
+            <div class="form-group my-4">
+                <label class="text-black">{{ __('offers.offer_status') }}</label>
+                @if($package->status == 'مفعل')
+                <label class="text-success mx-5" style="font-weight: bold;">{{ __('restaurent.available') }}</label>
+            @else
+                <label class="text-danger mx-5" style="font-weight: bold;">{{ __('restaurent.notavailable') }}</label>
+            @endif
+            </div> <!-- 1 -->
 
-                <div class="form-group my-4">
-                    <label><img src="{{ asset('images/NoPath - Copy (2).png') }}" alt=""></label>
-                    <label class="mx-5">
-                        <h5 class="text-black">{{ \App\Models\Meal::where('id', $package->first_meal_id)->first()->name }}</h5>
-                    </label>
-                </div> <!-- 2 -->
+            <div class="form-group my-4">
+                <label><img src="{{ asset('images/NoPath - Copy (2).png') }}" alt=""></label>
+                <label class="mx-5">
+                    <h5 class="text-black">{{ \App\Models\Meal::where('id', $package->first_meal_id)->first()->name }}</h5>
+                </label>
+            </div> <!-- 2 -->
 
-                <div class="form-group my-4">
-                    <label><img src="{{ asset('images/NoPath - Copy (2).png') }}" alt=""></label>
-                    <label class="mx-5">
-                        <h5 class="text-black">{{ \App\Models\Meal::where('id', $package->second_meal_id)->first()->name }}</h5>
-                    </label>
-                </div> <!-- 3 -->
+            <div class="form-group my-4">
+                <label><img src="{{ asset('images/NoPath - Copy (2).png') }}" alt=""></label>
+                <label class="mx-5">
+                    <h5 class="text-black">{{ \App\Models\Meal::where('id', $package->second_meal_id)->first()->name }}</h5>
+                </label>
+            </div> <!-- 3 -->
 
-                <div class="form-group my-4">
-                    <label class="text-black">{{ __('offers.start_time') }}</label>
-                    <label class="text-black mx-5">{{ $package->start_date }}</label>
-                </div> <!-- 4 -->
+            <div class="form-group my-4">
+                <label class="text-black">{{ __('offers.start_time') }}</label>
+                <label class="text-black mx-5">{{ $package->start_date }}</label>
+            </div> <!-- 4 -->
 
-                <div class="form-group my-4">
-                    <label class="text-black">{{ __('offers.end_time') }}</label>
-                    <label class="text-black mx-5">{{ $package->end_date }}</label>
-                </div> <!-- 5 -->
+            <div class="form-group my-4">
+                <label class="text-black">{{ __('offers.end_time') }}</label>
+                <label class="text-black mx-5">{{ $package->end_date }}</label>
+            </div> <!-- 5 -->
 
-                <div class="form-group my-4">
-                    <label class="text-black">{{ __('restaurent.price') }}</label>
-                    <label class="text-black mx-5">{{ $package->price }} {{ __('restaurent.SAR') }}</label>
-                </div> <!-- 6 -->
-            </div> <!-- col-4 -->
+            <div class="form-group my-4">
+                <label class="text-black">{{ __('restaurent.price') }}</label>
+                <label class="text-black mx-5">{{ $package->price }} {{ __('restaurent.SAR') }}</label>
+            </div> <!-- 6 -->
+        </div> <!-- col-4 -->
 
         <div class="col-4 d-grid mx-auto mt-5">
             @if($package->status == 'مفعل')

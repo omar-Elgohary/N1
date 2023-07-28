@@ -93,8 +93,11 @@ class ShopController extends Controller
         $category = Category::find($id);
 
         SubCategory::create([
-            'name' => $request->name,
-            'category_id' => $category->id,
+            'name' =>[
+                'en' => $request->name_en,
+                'ar' => $request->name_ar,
+            ],
+            'category_id' => $request->category_id,
         ]);
         session()->flash('addSubCategory');
         return back();
@@ -105,7 +108,12 @@ class ShopController extends Controller
     public function editShopSubCategory(Request $request, $id)
     {
         SubCategory::find($id)->update([
-            'name' => $request->name,
+            'name' =>[
+                'en' => $request->name_en,
+                'ar' => $request->name_ar,
+            ],            
+            'category_id' => $request->category_id,
+
         ]);
         session()->flash('editSubCategory');
         return back();

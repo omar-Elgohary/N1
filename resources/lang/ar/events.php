@@ -33,4 +33,22 @@ return [
     'publish' => 'اعادة النشر',
 
 
+    // Edit Event
+    'edit_event' => 'تعديل معلومات الفعالية',
+    'event_name_ar' => 'اسم الفعالية عربي',
+    'event_name_en' => 'اسم الفعالية انجليزي',
+    'sold_tickets_number' => 'عدد التذاكر المباعة',
+    'reservation_start_date' => 'تاريخ بدء الحجز',
+    'reservation_desc_date' => 'سيتم نشر وتفعيل حجز التتذاكر بناءا على التاريخ المحدد هنا',
+
+
+    // Reservations
+    'Reservations' => 'عمليات الحجز',
+    'events' => 'الفعاليات',
+    'event_rate' => 'تقييم الفعالية',
+    'reservation_process_details' => 'تفاصيل عملية الحجز',
+    'confirmed_reservation' => 'حجز مؤكد',
+    'attendance_not_confirmed' => 'لم يتم تأكيد الحضور',
+    'attendance_confirmed' => 'يتم تأكيد الحضور',
+    'reservation_date' => 'تاريخ الحجز',
 ];

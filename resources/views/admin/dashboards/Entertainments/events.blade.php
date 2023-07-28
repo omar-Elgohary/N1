@@ -7,7 +7,7 @@
     <script>
         window.onload = function() {
             notif({
-                msg: 'تم اضافة الفئة الفرعية بنجاح ',
+                msg: "{{ __('messages.addSubCategory') }}",
                 type: "success"
             })
         }
@@ -18,7 +18,7 @@
     <script>
         window.onload = function() {
             notif({
-                msg: 'تم اضافة القسم بنجاح ',
+                msg: "{{ __('messages.addCategory') }}",
                 type: "success"
             })
         }
@@ -29,7 +29,7 @@
     <script>
         window.onload = function() {
             notif({
-                msg: 'تم اضافة الفعالية بنجاح ',
+                msg: "{{ __('messages.addEvent') }}",
                 type: "success"
             })
         }
@@ -40,7 +40,7 @@
     <script>
         window.onload = function() {
             notif({
-                msg: 'تم تعديل الفعالية بنجاح ',
+                msg: "{{ __('messages.editEvent') }}",
                 type: "primary"
             })
         }
@@ -51,7 +51,7 @@
     <script>
         window.onload = function() {
             notif({
-                msg: 'تم ايقاف نشر الفعالية بنجاح',
+                msg: "{{ __('messages.deactivationEvent') }}",
                 type: "info"
             })
         }
@@ -62,7 +62,7 @@
     <script>
         window.onload = function() {
             notif({
-                msg: 'تم اعادة نشر الفعالية بنجاح',
+                msg: "{{ __('messages.activationEvent') }}",
                 type: "info"
             })
         }
@@ -73,7 +73,7 @@
     <script>
         window.onload = function() {
             notif({
-                msg: 'تم حذف الفعالية بنجاح ',
+                msg: "{{ __('messages.deleteEvent') }}",
                 type: "success"
             })
         }
@@ -84,7 +84,7 @@
     <script>
         window.onload = function() {
             notif({
-                msg: 'يجب ادخال اسم القسم',
+                msg: "{{ __('messages.ErrorName') }}",
                 type: "error"
             })
         }
@@ -95,7 +95,7 @@
     <script>
         window.onload = function() {
             notif({
-                msg: 'تم رفع ملف الاكسيل بنجاح ',
+                msg: "{{ __('messages.ExcelImported') }}",
                 type: "success"
             })
         }
@@ -274,28 +274,6 @@
 </div> <!-- modal fade -->
 
 
-{{-- deleteEvent --}}
-<div class="modal fade border-0" id="deleteEvent" aria-hidden="true" aria-labelledby="deleteEventLabel" tabindex="-1" dir="rtl">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="btn-x modal-header">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-
-            <div class="modal-body text-center fw-bold my-5">
-                <h2>{{ __('events.delete_event_question') }}</h2>
-            </div>
-
-            <div class="d-flex justify-content-around mb-5">
-                <button type="button" id="coupon" class="btn px-5" data-bs-dismiss="modal">{{ __('restaurent.cancel') }}</button>
-                <a href="{{ route('deleteEvent', $event->id) }}" id="package" class="btn btn-block px-5 text-white">{{ __('restaurent.delete') }}</a>
-
-            </div>
-        </div> <!-- modal-content -->
-    </div> <!-- modal-dialog -->
-</div> <!-- modal fade -->
-
-
 {{-- importExcel --}}
 <div class="modal fade border-0" id="importData" aria-hidden="true" aria-labelledby="importDataLabel" tabindex="-1" dir="rtl">
     <div class="modal-dialog modal-dialog-centered">
@@ -311,8 +289,8 @@
             </div>
 
             <div class="d-flex justify-content-around mb-5">
-                <button href="#" id="coupon" class="btn px-5" data-bs-dismiss="modal">الغاء</button>
-                <button id="package" type="submit" class="btn btn-block px-5 text-white">اضف</button>
+                <button href="#" id="coupon" class="btn px-5" data-bs-dismiss="modal">{{ __('restaurent.cancel') }}</button>
+                <button id="package" type="submit" class="btn btn-block px-5 text-white">{{ __('restaurent.add') }}</button>
             </div>
         </form>
         </div> <!-- modal-content -->

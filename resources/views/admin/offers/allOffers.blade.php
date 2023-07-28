@@ -7,7 +7,7 @@
     <script>
         window.onload = function() {
             notif({
-                msg: 'تم اضافة الكوبون بنجاح ',
+                msg: "{{ __('messages.addCoupon') }}",
                 type: "success"
             })
         }
@@ -18,7 +18,7 @@
     <script>
         window.onload = function() {
             notif({
-                msg: 'تم تعديل الكوبون بنجاح ',
+                msg: "{{ __('messages.editCoupon') }}",
                 type: "primary"
             })
         }
@@ -29,7 +29,7 @@
     <script>
         window.onload = function() {
             notif({
-                msg: 'تم اضافة الباكدج بنجاح ',
+                msg: "{{ __('messages.addPackage') }}",
                 type: "success"
             })
         }
@@ -40,7 +40,7 @@
     <script>
         window.onload = function() {
             notif({
-                msg: 'تم تعديل الباكدج بنجاح ',
+                msg: "{{ __('messages.editPackage') }}",
                 type: "primary"
             })
         }
@@ -51,7 +51,7 @@
 <script>
     window.onload = function() {
         notif({
-            msg: 'تم حذف العرض بنجاح ',
+            msg: "{{ __('messages.deleteOffer') }}",
             type: "primary"
         })
     }
@@ -62,7 +62,7 @@
     <script>
         window.onload = function() {
             notif({
-                msg: "تم تفعيل الكوبون بنجاح",
+                msg: "{{ __('messages.activationCoupon') }}",
                 type: "success"
             })
         }
@@ -73,7 +73,7 @@
     <script>
         window.onload = function() {
             notif({
-                msg: "تم الغاء تفعيل الكوبون بنجاح",
+                msg: "{{ __('messages.deactivationCoupon') }}",
                 type: "error"
             })
         }
@@ -84,7 +84,7 @@
     <script>
         window.onload = function() {
             notif({
-                msg: "تم تفعيل الباكدج بنجاح",
+                msg: "{{ __('messages.activationPackage') }}",
                 type: "success"
             })
         }
@@ -95,7 +95,7 @@
     <script>
         window.onload = function() {
             notif({
-                msg: "تم الغاء تفعيل الباكدج بنجاح",
+                msg: "{{ __('messages.deactivationPackage') }}",
                 type: "error"
             })
         }

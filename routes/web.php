@@ -223,7 +223,7 @@ Route::middleware(['CheckEntertainment'])->group(function () {
     Route::post('uploadEventExcel', [EntertainmentController::class, 'uploadEventExcel'])->name('uploadEventExcel');
 
     Route::get('eventCategories', [EntertainmentController::class, 'eventCategories'])->name('eventCategories');
-    Route::post('createEntertainmentCategory', [EntertainmentController::class, 'create`EntertainmentCategory'])->name('createEntertainmentCategory');
+    Route::post('createEntertainmentCategory', [EntertainmentController::class, 'createEntertainmentCategory'])->name('createEntertainmentCategory');
     Route::post('editEventCategory/{id}', [EntertainmentController::class, 'editEventCategory'])->name('editEventCategory');
     Route::post('deleteEventCategory/{id}', [EntertainmentController::class, 'deleteEventCategory'])->name('deleteEventCategory');
 
@@ -279,6 +279,7 @@ Route::middleware(['CheckEntertainment'])->group(function () {
 
     Route::get('entertainmentPurchases', [EntertainmentController::class, 'entertainmentPurchases'])->name('entertainmentPurchases');
     Route::get('eventOrderDetails/{id}', [EntertainmentController::class, 'eventOrderDetails'])->name('eventOrderDetails');
+    Route::get('ExportEventPurchasesPDF', [EntertainmentController::class, 'ExportEventPurchasesPDF'])->name('ExportEventPurchasesPDF');
 
 }); // CheckEntertainment middleware
 

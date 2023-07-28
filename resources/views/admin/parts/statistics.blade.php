@@ -11,7 +11,7 @@
         <script>
             window.onload = function() {
                 notif({
-                    msg: "تم تسجيل الدخول بنجاح",
+                    msg: "{{ __('messages.login') }}",
                     type: "success"
                 })
             }
@@ -22,7 +22,7 @@
         <script>
             window.onload = function() {
                 notif({
-                    msg: "تم انشاء حساب التاجر بنجاح",
+                    msg: "{{ __('messages.register') }}",
                     type: "success"
                 })
             }

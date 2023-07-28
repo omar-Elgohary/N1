@@ -15,7 +15,7 @@
     <script>
         window.onload = function() {
             notif({
-                msg: "تم تسجيل الخروج بنجاح",
+                msg: "{{ __('messages.logout') }}",
                 type: "success"
             })
         }
@@ -26,8 +26,8 @@
     <script>
         window.onload = function() {
             notif({
-                msg: "يجب تفعيل الايميل أولا",
-                type: "success"
+                msg: "{{ __('messages.isVerified') }}",
+                type: "error"
             })
         }
     </script>
@@ -37,7 +37,7 @@
     <script>
         window.onload = function() {
             notif({
-                msg: "هناك خطأ في انشاء الحساب",
+                msg: "{{ __('messages.registeration failed') }}",
                 type: "error"
             })
         }
@@ -48,7 +48,7 @@
     <script>
         window.onload = function() {
             notif({
-                msg: "تأكد من كود التفعيل",
+                msg: "{{ __('messages.Invalid verification code entered!') }}",
                 type: "error"
             })
         }
@@ -59,7 +59,7 @@
     <script>
         window.onload = function() {
             notif({
-                msg: "يجب عليك ادخال كود التفعيل",
+                msg: "{{ __('messages.OTP') }}",
                 type: "error"
             })
         }
@@ -70,7 +70,7 @@
     <script>
         window.onload = function() {
             notif({
-                msg: "يجب عليك تسجيل الدخول أولا",
+                msg: "{{ __('messages.mustLogin') }}",
                 type: "error"
             })
         }
@@ -81,7 +81,7 @@
     <script>
         window.onload = function() {
             notif({
-                msg: "هناك خطأ في تسجيل الدخول",
+                msg: "{{ __('messages.ErrorLogin') }}",
                 type: "error"
             })
         }
@@ -92,7 +92,7 @@
     <script>
         window.onload = function() {
             notif({
-                msg: "هناك خطأ في انشاء الحساب",
+                msg: "{{ __('messages.ErrorRegister') }}",
                 type: "error"
             })
         }
@@ -103,7 +103,7 @@
     <script>
         window.onload = function() {
             notif({
-                msg: "يجب أن يكون قسمك خاص بالمطاعم",
+                msg: "{{ __('messages.CheckRestaurent') }}",
                 type: "error"
             })
         }
@@ -114,7 +114,7 @@
     <script>
         window.onload = function() {
             notif({
-                msg: "يجب أن يكون قسمك خاص بالمحلات",
+                msg: "{{ __('messages.CheckShop') }}",
                 type: "error"
             })
         }
@@ -125,7 +125,7 @@
     <script>
         window.onload = function() {
             notif({
-                msg: "يجب أن يكون قسمك خاص بالترفيه",
+                msg: "{{ __('messages.CheckEntertainment') }}",
                 type: "error"
             })
         }
@@ -136,7 +136,7 @@
     <script>
         window.onload = function() {
             notif({
-                msg: "يجب عليك تحميل التطبيق",
+                msg: "{{ __('messages.CheckUser') }}",
                 type: "error"
             })
         }

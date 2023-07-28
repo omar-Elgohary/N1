@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 @section('title')
-    عمليات الحجز
+    {{ __('events.Reservations') }}
 @endsection
 
 @section('content')
@@ -13,7 +13,7 @@
 		</div>
 
 		<aside class="sidebar">
-			<h3 class="text-black">الفعاليات</h3>
+			<h3 class="text-black">{{ __('events.events') }}</h3>
 			<nav class="menu">
                 @foreach (\App\Models\Category::where('department_id', auth()->user()->department_id)->get() as $category)
                     <a href="#" class="menu-item is-active">{{ $category->name }}</a>
@@ -27,11 +27,11 @@
     <div class="container">
     <div class="col-12 d-flex flex-row-reverse p-0">
         <div class="col-6 section-title text-end p-0">
-            <h2 class="text-black">عمليات الحجز</h2>
+            <h2 class="text-black">{{ __('events.Reservations') }}</h2>
         </div>
 
         <div class="col-6 text-start mb-3">
-            <a href="#" id="pdf" class="btn btn-success"><i class="fa fa-thin fa-print"></i><br><small>PDF</small> </a>
+            <a href="{{ route('ExportEventPurchasesPDF') }}" id="pdf" class="btn btn-success"><i class="fa fa-thin fa-print"></i><br><small>PDF</small> </a>
             <a href="#" id="pdf" class="btn btn-success"><i class="fa fa-thin fa-file-excel"></i><br><small>Excel</small> </a>
         </div>
     </div> <!-- col-12 -->
@@ -42,12 +42,12 @@
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>اسم المستخدم</th>
-                        <th>عدد التذاكر</th>
-                        <th>نوع الحجز</th>
-                        <th>السعر</th>
-                        <th>تقييم الفعالية</th>
-                        <th>التفاصيل</th>
+                        <th>{{ __('restaurent.user_name') }}</th>
+                        <th>{{ __('events.tickets_number') }}</th>
+                        <th>{{ __('events.reservation_type') }}</th>
+                        <th>{{ __('restaurent.price') }}</th>
+                        <th>{{ __('events.event_rate') }}</th>
+                        <th>{{ __('restaurent.details') }}</th>
                     </tr>
                 </thead>
 

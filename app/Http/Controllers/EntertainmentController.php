@@ -85,8 +85,13 @@ class EntertainmentController extends Controller
 
     public function createEventSubCategory(Request $request, $id)
     {
-        if($request->name == ''){
-            session()->flash('nameRequired');
+        if($request->name_en == ''){
+            session()->flash('nameRequiredEn');
+            return back();
+        }
+
+        if($request->name_ar == ''){
+            session()->flash('nameRequiredAr');
             return back();
         }
 
@@ -112,6 +117,7 @@ class EntertainmentController extends Controller
                 'en' => $request->name_en,
                 'ar' => $request->name_ar,
             ],
+            'category_id' => $request->category_id,
         ]);
         session()->flash('editSubCategory');
         return back();
@@ -130,7 +136,7 @@ class EntertainmentController extends Controller
 
 
     public function filterEventProducts($category_id)
-    {
+    {   
         $category = Category::find($category_id);
         $events = Event::where('department_id', auth()->user()->department_id)->where('category_id', $category_id)->get();
         return view('admin.dashboards.Entertainments.events', compact('category', 'events'));
@@ -349,6 +355,23 @@ class EntertainmentController extends Controller
         return $pdf->download('eventProducts.pdf');
     }
 
+
+
+
+    public function ExportEventPurchasesPDF()
+    {
+        $Purchases  = EventOrder::get();
+        $data = [
+            'title' => 'Welcome to N1.com',
+            'date' => date('m/d/Y'),
+            'Purchases' => $Purchases
+        ];
+        $pdf = PDF::loadView('pdf.eventPurchases', $data);
+        return $pdf->download('eventPurchases.pdf');
+    }
+
+
+    
 
 
     // Excel

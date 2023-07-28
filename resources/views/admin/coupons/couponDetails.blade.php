@@ -7,7 +7,7 @@
     <script>
         window.onload = function() {
             notif({
-                msg: "تم الغاء تفعيل الكوبون بنجاح",
+                msg: "{{ __('messages.deactivationCoupon') }}",
                 type: "info"
             })
         }

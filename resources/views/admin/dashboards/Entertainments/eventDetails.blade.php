@@ -58,19 +58,19 @@
                         <label>{{ __('events.reservation_type') }}</label>
                     </div>
 
-                    @foreach (\App\Models\Event::select('reservations_type_id')->get() as $eventIds)
+                    {{-- @foreach (\App\Models\Event::select('reservations_type_id')->get() as $eventIds) --}}
                         <div class="col-12 d-flex">
-                            <h5 class="fw-bold">- {{ \App\Models\ReservationType::where('id', $eventIds->reservations_type_id)->first()->name }}</h5>
+                            <h5 class="fw-bold">- {{ \App\Models\ReservationType::where('id', $event->reservations_type_id)->first()->name }}</h5>
                             {{-- <p class="mx-5">50 ريال سعودي</p> --}}
                         </div>
-                    @endforeach
+                    {{-- @endforeach --}}
 
                 </div> <!-- 6 -->
 
                 <hr>
 
                 <div class="form-group col-lg-12 my-4 d-grid">
-                    <div class="col-4 mb-3">
+                    <div class="col-6 mb-3">
                         <h5>{{ __('events.reservation_time') }}</h5>
                     </div>
 
@@ -81,7 +81,7 @@
                         </div>
 
                         <div id="SmallCard" class="col-lg-6 mx-3">
-                            <h5>{{ $event->start_reservation_date}}</h5>
+                            <h5>{{ $event->start_reservation_date }}</h5>
                         </div>
 
                     </div>

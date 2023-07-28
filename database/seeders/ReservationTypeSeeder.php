@@ -9,19 +9,19 @@ class ReservationTypeSeeder extends Seeder
     public function run()
     {
         ReservationType::create([
-            'name' => 'أطفال',
+            'name' => ['en' => 'children', 'ar' => 'أطفال'],
         ]);
 
         ReservationType::create([
-            'name' => 'شباب',
+            'name' => ['en' => 'youths', 'ar' => 'شباب'],
         ]);
 
         ReservationType::create([
-            'name' => 'عائلة',
+            'name' => ['en' => 'family', 'ar' => 'عائلة'],
         ]);
 
         ReservationType::create([
-            'name' => 'كبار زوار',
+            'name' => ['en' => 'top visitors', 'ar' => 'كبار زوار'],
         ]);
     }
 }

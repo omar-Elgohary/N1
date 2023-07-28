@@ -1,13 +1,13 @@
 @extends('admin.layouts.app')
 @section('title')
-    اضافة فعالية جديدة
+    {{ __('events.add_new_event') }}
 @endsection
 
 @section('content')
 <section>
     <div class="container mt-2" dir="rtl">
         <div class="section-title text-end">
-            <h3 class="text-black">اضافة فعالية جديدة</h3>
+            <h3 class="text-black">{{ __('events.add_new_event') }}</h3>
         </div>
 
 @if ($errors->any())
@@ -24,15 +24,15 @@
             @csrf
 
             <div class="drop-zone">
-                <span class="drop-zone__prompt">اضغط أو اسحب الصور الى هنا</span>
+                <span class="drop-zone__prompt">{{ __('restaurent.upload_photo') }}</span>
                 <input type="file" name="event_image" class="drop-zone__input" multiple>
             </div>
 
             <div class="col-lg-4 mt-3">
                 <div class="form-group">
-                    <label>القسم</label>
+                    <label>{{ __('events.category') }}</label>
                     <select name="category_id" class="form-control rounded-0 mb-4 mt-2 @error('category_id') is-invalid @enderror" onclick="console.log($(this).val())" onchange="console.log('change is firing')">
-                        <option value="" selected disabled>حدد القسم</option>
+                        <option value="" selected disabled>{{ __('restaurent.choose_category') }}</option>
                         @foreach (\App\Models\Category::where('department_id', auth()->user()->department_id)->get() as $category)
                             <option value="{{ $category->id }}">{{ $category->name }}</option>
                         @endforeach
@@ -41,38 +41,50 @@
                 </div> <!-- 1 -->
 
                 <div class="form-group">
-                    <label for="inputName">الفئة الفرعية</label>
+                    <label for="inputName">{{ __('restaurent.sub_category') }}</label>
                     <select name="sub_category_name" id="sub_category_name" class="form-control rounded-0 mb-4 mt-2">
                     </select>
                 </div> <!-- 2 -->
 
                 <div class="form-group">
-                    <label>اسم الفعالية</label>
-                    <input type="text" name="event_name" class="form-control rounded-0 mb-4 mt-2 @error('product_name') is-invalid @enderror">
-                    @error('event_name')<div class="alert alert-danger">{{ $message }}</div>@enderror
+                    <label>{{ __('events.event_name_ar') }}</label>
+                    <input type="text" name="name_ar" class="form-control rounded-0 mb-4 mt-2 @error('name_ar') is-invalid @enderror">
+                    @error('name_ar')<div class="alert alert-danger">{{ $message }}</div>@enderror
                 </div> <!-- 3 -->
 
                 <div class="form-group">
-                    <label>الوصف</label>
-                    <input type="text" name="description" class="form-control rounded-0 mb-4 mt-2 @error('description') is-invalid @enderror">
-                    @error('description')<div class="alert alert-danger">{{ $message }}</div>@enderror
+                    <label>{{ __('events.event_name_en') }}</label>
+                    <input type="text" name="name_en" class="form-control rounded-0 mb-4 mt-2 @error('name_en') is-invalid @enderror">
+                    @error('name_en')<div class="alert alert-danger">{{ $message }}</div>@enderror
                 </div> <!-- 4 -->
 
                 <div class="form-group">
-                    <label>سعر التذكرة</label>
-                    <input type="text" name="ticket_price" placeholder="ريال سعودي" class="form-control rounded-0 mb-4 mt-2 @error('ticket_price') is-invalid @enderror">
-                    @error('ticket_price')<div class="alert alert-danger">{{ $message }}</div>@enderror
+                    <label>{{ __('restaurent.description_ar') }}</label>
+                    <input type="text" name="description_ar" class="form-control rounded-0 mb-4 mt-2 @error('description_ar') is-invalid @enderror">
+                    @error('description_ar')<div class="alert alert-danger">{{ $message }}</div>@enderror
                 </div> <!-- 5 -->
 
                 <div class="form-group">
-                    <label>عدد التذاكر</label>
+                    <label>{{ __('restaurent.description_en') }}</label>
+                    <input type="text" name="description_en" class="form-control rounded-0 mb-4 mt-2 @error('description_en') is-invalid @enderror">
+                    @error('description_en')<div class="alert alert-danger">{{ $message }}</div>@enderror
+                </div> <!-- 6 -->
+
+                <div class="form-group">
+                    <label>{{ __('events.ticket_price') }}</label>
+                    <input type="text" name="ticket_price" placeholder="ريال سعودي" class="form-control rounded-0 mb-4 mt-2 @error('ticket_price') is-invalid @enderror">
+                    @error('ticket_price')<div class="alert alert-danger">{{ $message }}</div>@enderror
+                </div> <!-- 7 -->
+
+                <div class="form-group">
+                    <label>{{ __('events.tickets_number') }}</label>
                     <input type="text" name="tickets_quantity" class="form-control rounded-0 mb-4 mt-2 @error('tickets_quantity') is-invalid @enderror">
                     @error('tickets_quantity')<div class="alert alert-danger">{{ $message }}</div>@enderror
-                </div> <!-- 6 -->
+                </div> <!-- 8 -->
 
 
                 <div class="branches mt-5">
-                    <label>أنواع الحجز :</label>
+                    <label>{{ __('events.reservation_type') }} :</label>
                     @forelse ($reservationTypes as $type)
                         <div class="form-group my-3">
                             <label class="custom-checks text-black">{{ $type->name}}
@@ -82,7 +94,7 @@
                         </div>
                     @empty
                         <div class="form-group mt-3">
-                            <label class="custom-checks text-black text-bold">لا يوجد فروع اخرى
+                            <label class="custom-checks text-black text-bold">{{ __('restaurent.nodata') }}  
                             </label>
                         </div>
                     @endforelse
@@ -91,7 +103,7 @@
             <hr>
 
                 <div class="row mt-5">
-                    <h5>أوقات الحجز</h5>
+                    <h5>{{ __('events.reservation_time') }}</h5>
                     <div class="col-lg-6">
                         <div class="form-group mt-3">
                             <input type="date" class="form-control rounded-0  @error('reservation_date') is-invalid @enderror" name="reservation_date">
@@ -106,8 +118,8 @@
                 </div> <!-- row -->
 
                 <div class="mt-5">
-                    <h5>تاريخ بدء الحجوزات</h5>
-                    <p class="fs-6">سيتم نشر الفعالية وتفعيل حجز التتذاكر بناءا على التاريخ المحدد هنا</p>
+                    <h5>{{ __('events.reservation_start_date') }}</h5>
+                    <p class="fs-6">{{ __('events.reservation_desc_date') }}</p>
                     <div class="form-group mt-3">
                         <input type="date" name="start_reservation_date" class="form-control rounded-0 @error('start_reservation_date') is-invalid @enderror">
                         @error('start_reservation_date')<div class="alert alert-danger">{{ $message }}</div>@enderror
@@ -116,8 +128,8 @@
             </div> <!-- col-4 -->
 
             <div class="col-4 d-grid mx-auto mt-5">
-                <button id="login" type="submit" class="btn mb-3">اضافة</button>
-                <a id="coupon" href="events" class="btn">الغاء</a>
+                <button id="login" type="submit" class="btn mb-3">{{ __('restaurent.add') }}</button>
+                <a id="coupon" href="events" class="btn">{{ __('restaurent.cancel') }}</a>
             </div>
         </form>
     </div> <!-- container -->

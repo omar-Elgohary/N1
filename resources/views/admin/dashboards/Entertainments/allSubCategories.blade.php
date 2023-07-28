@@ -1,13 +1,13 @@
 @extends('admin.layouts.app')
 @section('title')
-    الفئات الفرعية
+    {{ __('categories.sub_categories') }}
 @endsection
 
 @if (session()->has('nameRequired'))
     <script>
         window.onload = function() {
             notif({
-                msg: 'يجب ادخال اسم الفئة',
+                msg: "{{ __('messages.nameRequired') }}",
                 type: "error"
             })
         }
@@ -18,18 +18,18 @@
     <script>
         window.onload = function() {
             notif({
-                msg: 'تم اضافة الفئة الفرعية بنجاح ',
+                msg: "{{ __('messages.addSubCategory') }}",
                 type: "success"
             })
         }
     </script>
 @endif
-
+    
 @if (session()->has('editSubCategory'))
     <script>
         window.onload = function() {
             notif({
-                msg: 'تم تعديل الفئة الفرعية بنجاح ',
+                msg: "{{ __('messages.editSubCategory') }}",
                 type: "success"
             })
         }
@@ -40,7 +40,7 @@
     <script>
         window.onload = function() {
             notif({
-                msg: 'تم حذف الفئة الفرعية بنجاح ',
+                msg: "{{ __('messages.deleteSubCategory') }}",
                 type: "success"
             })
         }
@@ -56,20 +56,18 @@
 				<i class="fas fa-regular fa-arrow-right"></i>
 			</div>
 		</div>
-
-
 	</div>
 
 
 <section class="container col-lg-12">
     <div class="col-12 d-flex flex-row-reverse p-0">
         <div class="col-6 section-title text-end p-0">
-            <h2 class="text-black">الفئات الفرعية الخاصة بالقسم {{ $category->name }}</h2>
+            <h2 class="text-black">{{ __('categories.sub_categories_of') }} <span class="text-primary">{{ $category->name }}</span></h2>
         </div>
 
         <div class="col-6 text-start">
-            <a href="#createEventSubCategory{{$category->id}}" id="coupon" class="btn btn-block btn-bordered px-4 btns" data-bs-toggle="modal">اضافة فئة فرعية</a>
-            <a href="{{ route('eventCategories') }}" id="package" class="btn btn-block btn-bordered px-4 btns">جميع الأقسام</a>
+            <a href="#createEventSubCategory{{$category->id}}" id="coupon" class="btn btn-block btn-bordered px-4 btns" data-bs-toggle="modal">{{ __('restaurent.addsubcategory') }}</a>
+            <a href="{{ route('eventCategories') }}" id="package" class="btn btn-block btn-bordered px-4 btns">{{ __('categories.categories') }}</a>
         </div>
     </div> <!-- col-12 -->
 
@@ -79,8 +77,8 @@
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>اسم الفئة الفرعية</th>
-                        <th>الادارة</th>
+                        <th>{{ __('categories.sub_category_name') }}</th>
+                        <th>{{ __('categories.control') }}</th>
                     </tr>
                 </thead>
 
@@ -106,12 +104,12 @@
                             <form action="{{ route('deleteEventSubCategory', $subCategory->id) }}" method="post">
                                 @csrf
                                     <div class="modal-body text-center my-5">
-                                        <h2>هل أنت متأكد من حذف هذه الفئة؟</h2>
+                                        <h2>{{ __('categories.delete_subcat_question') }}</h2>
                                     </div>
 
                                     <div class="d-flex justify-content-around mb-5">
-                                        <button type="button" id="coupon" class="btn px-5" data-bs-dismiss="modal">تراجع</button>
-                                        <button id="package" type="submit" class="btn btn-block px-5 text-white">حذف</button>
+                                        <a href="#" id="coupon" class="btn px-5" data-bs-dismiss="modal">{{ __('restaurent.cancel') }}</a>
+                                        <button id="package" type="submit" class="btn btn-block px-5 text-white">{{ __('restaurent.delete') }}</button>
                                     </div>
                             </form>
                                 </div> <!-- modal-content -->
@@ -128,14 +126,25 @@
 
                             <form action="{{ route('editEventSubCategory', $subCategory->id) }}" method="post">
                                 @csrf
-                                    <div class="modal-body text-center my-5">
-                                        <h2>اسم الفئة</h2>
-                                        <input type="text" name="name" class="form-control rounded-0" value="{{ $subCategory->name }}">
-                                    </div>
+                                <div class="modal-body my-3">
+                                    <h4 class="text-end">{{ __('restaurent.category_name') }}</h4>
+                                    <select name="category_id" class="form-control rounded-0 mb-4 mt-2 @error('category_id') is-invalid @enderror">
+                                        <option value="{{ $category->id }}" selected>{{ $category->name }}</option>
+                                        @foreach (\App\Models\Category::where('department_id', auth()->user()->department_id)->get() as $category)
+                                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                        @endforeach
+                                    </select>
+                    
+                                    <h4 class="text-end">{{ __('restaurent.sub_category_ar') }}</h4>
+                                    <input type="text" name="name_ar" value="{{ $subCategory->nameLocale('ar') }}" class="form-control rounded-0 mb-4 mt-2 @error('name_ar') is-invalid @enderror">
+                    
+                                    <h4 class="text-end">{{ __('restaurent.sub_category_en') }}</h4>
+                                    <input type="text" name="name_en" value="{{ $subCategory->nameLocale('en') }}" class="form-control rounded-0 mb-2 mt-2 @error('name_en') is-invalid @enderror">
+                                </div>
 
                                     <div class="d-flex justify-content-around mb-5">
-                                        <button type="button" id="coupon" class="btn px-5" data-bs-dismiss="modal">تراجع</button>
-                                        <button id="package" type="submit" class="btn btn-block px-5 text-white">تعديل</button>
+                                        <a href="#" id="coupon" class="btn px-5" data-bs-dismiss="modal">{{ __('restaurent.cancel') }}</a>
+                                        <button id="package" type="submit" class="btn btn-block px-5 text-white">{{ __('categories.edit') }}</button>
                                     </div>
                             </form>
                                 </div> <!-- modal-content -->
@@ -144,8 +153,8 @@
                     @empty
                         <tr>
                             <th class="text-danger" colspan="10">
-                                لا يوجد بيانات
-                            </th>
+                                {{ __('restaurent.nodata') }}
+                            </th> 
                         </tr>
                     @endforelse
 
@@ -167,14 +176,25 @@
 
         <form action="{{ route('createEventSubCategory', $category->id) }}" method="post">
             @csrf
-            <div class="modal-body my-5">
-                <h4 class="text-end">اسم الفئة</h4>
-                <input type="text" name="name" class="form-control rounded-0">
+            <div class="modal-body my-3">
+                <h4 class="text-end">{{ __('restaurent.category_name') }}</h4>
+                <select name="category_id" class="form-control rounded-0 mb-4 mt-2 @error('category_id') is-invalid @enderror">
+                    <option value="" selected disabled>{{ __('restaurent.choose_category') }}</option>
+                    @foreach (\App\Models\Category::where('department_id', auth()->user()->department_id)->get() as $category)
+                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                    @endforeach
+                </select>
+
+                <h4 class="text-end">{{ __('restaurent.sub_category_ar') }}</h4>
+                <input type="text" name="name_ar" class="form-control rounded-0 mb-4 mt-2 @error('name_ar') is-invalid @enderror">
+
+                <h4 class="text-end">{{ __('restaurent.sub_category_en') }}</h4>
+                <input type="text" name="name_en" class="form-control rounded-0 mb-4 mt-2 @error('name_en') is-invalid @enderror">
             </div>
 
             <div class="d-flex justify-content-around mb-5">
-                <a href="#" id="coupon" class="btn px-5" data-bs-dismiss="modal">الغاء</a>
-                <button id="package" type="submit" class="btn btn-block px-5 text-white">اضف</button>
+                <a href="#" id="coupon" class="btn px-5" data-bs-dismiss="modal">{{ __('restaurent.cancel') }}</a>
+                <button id="package" type="submit" class="btn btn-block px-5 text-white">{{ __('restaurent.add') }}</button>
             </div>
         </form>
         </div> <!-- modal-content -->

@@ -31,7 +31,15 @@ return [
     "choose" => 'Choose Activity',
     "signup" => "Signup",
     "haveaccount" => "have an account?",
-    "uploadcommercialImage" => 'upload commercial image/known'
+    "uploadcommercialImage" => 'upload commercial image/known',
 
+
+    // contact us
+    'contactus_desc' => 'Share the development and let us hear your voice',
+    'full_name' => 'Full Name',
+    'Message_text' => 'Message Text',
+    'send' => 'Send',
+    'phone_verification' => 'Mobile number verification',
+    'Enter_the_code_sent_to' => 'Enter the code sent to',
 
 ];

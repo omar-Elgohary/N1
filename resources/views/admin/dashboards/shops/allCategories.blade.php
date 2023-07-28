@@ -1,13 +1,13 @@
 @extends('admin.layouts.app')
 @section('title')
-    المنيو
+    {{ __('categories.categories') }}
 @endsection
 
 @if (session()->has('addCategory'))
     <script>
         window.onload = function() {
             notif({
-                msg: 'تم اضافة القسم بنجاح ',
+                msg: "{{ __('messages.addCategory') }}",
                 type: "success"
             })
         }
@@ -18,7 +18,7 @@
     <script>
         window.onload = function() {
             notif({
-                msg: 'تم تعديل القسم بنجاح ',
+                msg: "{{ __('messages.editCategory') }}",
                 type: "success"
             })
         }
@@ -29,7 +29,7 @@
     <script>
         window.onload = function() {
             notif({
-                msg: 'تم حذف القسم بنجاح ',
+                msg: "{{ __('messages.deleteCategory') }}",
                 type: "success"
             })
         }
@@ -53,11 +53,11 @@
 <section class="container col-lg-12">
     <div class="col-12 d-flex flex-row-reverse p-0">
         <div class="col-6 section-title text-end p-0">
-            <h2 class="text-black">جميع الأقسام</h2>
+            <h2 class="text-black">{{ __('categories.categories') }}</h2>
         </div>
 
         <div class="col-6 text-start">
-            <a href="#createShopCategory" id="coupon" class="btn btn-block btn-bordered px-4 btns" data-bs-toggle="modal">اضافة قسم</a>
+            <a href="#createShopCategory" id="coupon" class="btn btn-block btn-bordered px-4 btns" data-bs-toggle="modal">{{ __('categories.add_category') }}</a>
         </div>
     </div> <!-- col-12 -->
 
@@ -67,8 +67,8 @@
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>اسم القسم</th>
-                        <th>التحكم بالقسم</th>
+                        <th>{{ __('categories.category_name') }}</th>
+                        <th>{{ __('categories.category_control') }}</th>                    
                     </tr>
                 </thead>
 
@@ -96,12 +96,12 @@
                             <form action="{{ route('deleteShopCategory', $category->id) }}" method="post">
                                 @csrf
                                     <div class="modal-body text-center my-5">
-                                        <h2>هل أنت متأكد من حذف هذا القسم؟</h2>
+                                        <h2>{{ __('categories.cat_delete_question') }}</h2>
                                     </div>
 
                                     <div class="d-flex justify-content-around mb-5">
-                                        <button type="button" id="coupon" class="btn px-5" data-bs-dismiss="modal">تراجع</button>
-                                        <button id="package" type="submit" class="btn btn-block px-5 text-white">حذف</button>
+                                        <a href="#" id="coupon" class="btn px-5" data-bs-dismiss="modal">{{ __('restaurent.cancel') }}</a>
+                                        <button id="package" type="submit" class="btn btn-block px-5 text-white">{{ __('restaurent.delete') }}</button>
                                     </div>
                             </form>
                                 </div> <!-- modal-content -->
@@ -118,15 +118,20 @@
 
                             <form action="{{ route('editShopCategory', $category->id) }}" method="post">
                                 @csrf
-                                    <div class="modal-body text-center my-5">
-                                        <h2>اسم القسم</h2>
-                                        <input type="text" name="name" class="form-control rounded-0" value="{{ $category->name }}">
-                                    </div>
+                                <div class="modal-body mb-2">
+                                    <h4 class="text-end">{{ __('restaurent.category_name_ar') }}</h4>
+                                    <input type="text" name="name_ar" class="form-control rounded-0" value="{{ $category->nameLocale('ar') }}">
+                                </div>
+                    
+                                <div class="modal-body mb-2">
+                                    <h4 class="text-end">{{ __('restaurent.category_name_en') }}</h4>
+                                    <input type="text" name="name_en" class="form-control rounded-0" value="{{ $category->nameLocale('en') }}">
+                                </div>
 
-                                    <div class="d-flex justify-content-around mb-5">
-                                        <button type="button" id="coupon" class="btn px-5" data-bs-dismiss="modal">تراجع</button>
-                                        <button id="package" type="submit" class="btn btn-block px-5 text-white">تعديل</button>
-                                    </div>
+                                <div class="d-flex justify-content-around mb-5">
+                                    <a href="#" id="coupon" class="btn px-5" data-bs-dismiss="modal">{{ __('restaurent.cancel') }}</a>
+                                    <button id="package" type="submit" class="btn btn-block px-5 text-white">{{ __('categories.edit') }}</button>
+                                </div>
                             </form>
                                 </div> <!-- modal-content -->
                             </div> <!-- modal-dialog -->
@@ -134,7 +139,7 @@
                     @empty
                         <tr>
                             <th class="text-danger" colspan="10">
-                                لا يوجد بيانات
+                                {{ __('restaurent.nodata') }}
                             </th>
                         </tr>
                     @endforelse
@@ -156,15 +161,20 @@
             </div>
 
         <form action="{{ route('createShopCategory') }}" method="post">
-            @csrf
-            <div class="modal-body my-5">
-                <h4 class="text-end">اسم القسم</h4>
-                <input type="text" name="name" class="form-control rounded-0">
+            @csrf   
+            <div class="modal-body mb-2">
+                <h4 class="text-end">{{ __('restaurent.category_name_ar') }}</h4>
+                <input type="text" name="name_ar" class="form-control rounded-0">
+            </div>
+
+            <div class="modal-body mb-2">
+                <h4 class="text-end">{{ __('restaurent.category_name_en') }}</h4>
+                <input type="text" name="name_en" class="form-control rounded-0">
             </div>
 
             <div class="d-flex justify-content-around mb-5">
-                <a href="#" id="coupon" class="btn px-5" data-bs-dismiss="modal">الغاء</a>
-                <button id="package" type="submit" class="btn btn-block px-5 text-white">اضف</button>
+                <a href="#" id="coupon" class="btn px-5" data-bs-dismiss="modal">{{ __('restaurent.cancel') }}</a>
+                <button id="package" type="submit" class="btn btn-block px-5 text-white">{{ __('restaurent.add') }}</button>
             </div>
         </form>
         </div> <!-- modal-content -->

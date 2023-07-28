@@ -7,7 +7,7 @@
     <script>
         window.onload = function() {
             notif({
-                msg: 'تم الغاء نشر المنتج بنجاح',
+                msg: "{{ __('messages.DeactiveShopProduct') }}",
                 type: "success"
             })
         }
@@ -18,7 +18,7 @@
     <script>
         window.onload = function() {
             notif({
-                msg: 'تم اعادة نشر المنتج بنجاح',
+                msg: "{{ __('messages.unDeactiveShopProduct') }}",
                 type: "success"
             })
         }

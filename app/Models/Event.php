@@ -13,6 +13,7 @@ class Event extends Model
     protected $casts = [
         'name' => 'array',
         'description' => 'array',
+        'reservation_time' => 'datetime: H:i',
     ];
 
     private $locale = null;

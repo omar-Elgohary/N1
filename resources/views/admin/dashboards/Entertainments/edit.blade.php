@@ -1,13 +1,13 @@
 @extends('admin.layouts.app')
 @section('title')
-    تعديل معلومات الفعالية
+    {{ __('events.edit_event') }}
 @endsection
 
 @section('content')
 <section>
     <div class="container mt-2" dir="rtl">
         <div class="section-title text-end">
-            <h3 class="text-black fw-bold">تعديل معلومات الفعالية</h3>
+            <h3 class="text-black fw-bold">{{ __('events.edit_event') }}</h3>
         </div>
 
         <form action="{{ route('updateEvent', $event->id) }}" method="post" enctype="multipart/form-data">
@@ -16,19 +16,19 @@
             <div class="row col-12">
                 <div class="col-lg-6">
                     <div class="drop-zone">
-                        <span class="drop-zone__prompt">اضغط أو اسحب الصور الى هنا</span>
+                        <span class="drop-zone__prompt">{{ __('restaurent.upload_photo') }}</span>
                         <input type="file" name="event_image" class="drop-zone__input" multiple>
                     </div>
                 </div>
 
                 <div class="col-lg-6">
-                    <img src="{{ asset('assets/images/products/'.$event->event_image) }}" name="event_image" height="200" width="250">
+                    <img src="{{ asset('assets/images/products/'.$event->event_image) }}" name="event_image" height="200" width="250" alt="event photo">
                 </div>
             </div>
 
             <div class="col-lg-4 mt-3">
                 <div class="form-group">
-                    <label>القسم</label>
+                    <label>{{ __('events.category') }}</label>
                     <select name="category_id" class="form-control rounded-0 mb-4 mt-2" onclick="console.log($(this).val())" onchange="console.log('change is firing')">
                         <option value="{{ \App\Models\Category::where('id', $event->category_id)->first()->id }}" name="category_id" selected>{{  \App\Models\Category::where('id', $event->category_id)->first()->name }}</option>
                         @foreach (\App\Models\Category::where('department_id', auth()->user()->department_id)->where('id', '!=', $event->category_id)->get() as $category)
@@ -39,45 +39,58 @@
 
 
                 <div class="form-group">
-                    <label>الفئة الفرعية</label>
+                    <label>{{ __('restaurent.sub_category') }}</label>
                     <select name="sub_category_name" id="sub_category_name" class="form-control rounded-0 mb-4 mt-2">
                         <option value="{{ $event->subCategory->id }}">{{ $event->subCategory->name }}</option>
                     </select>
                 </div> <!-- 2 -->
 
                 <div class="form-group">
-                    <label>اسم الفعالية</label>
-                    <input type="text" name="event_name" value="{{ $event->event_name }}" class="form-control rounded-0 mb-4 mt-2 @error('product_name') is-invalid @enderror">
-                    @error('event_name')<div class="alert alert-danger">{{ $message }}</div>@enderror
+                    <label>{{ __('events.event_name_ar') }}</label>
+                    <input type="text" name="name_ar" value="{{ $event->nameLocale('ar') }}" class="form-control rounded-0 mb-4 mt-2 @error('name_ar') is-invalid @enderror">
+                    @error('name_ar')<div class="alert alert-danger">{{ $message }}</div>@enderror
                 </div> <!-- 3 -->
 
                 <div class="form-group">
-                    <label>الوصف</label>
-                    <input type="text" name="description" value="{{ $event->description }}" class="form-control rounded-0 mb-4 mt-2">
+                    <label>{{ __('events.event_name_en') }}</label>
+                    <input type="text" name="name_en" value="{{ $event->nameLocale('en') }}" class="form-control rounded-0 mb-4 mt-2 @error('name_en') is-invalid @enderror">
+                    @error('name_en')<div class="alert alert-danger">{{ $message }}</div>@enderror
                 </div> <!-- 4 -->
 
                 <div class="form-group">
-                    <label>سعر التذكرة</label>
-                    <input type="text" name="ticket_price" value="{{ $event->ticket_price }}" placeholder="ريال سعودي" class="form-control rounded-0 mb-4 mt-2 @error('ticket_price') is-invalid @enderror">
-                    @error('ticket_price')<div class="alert alert-danger">{{ $message }}</div>@enderror
+                    <label>{{ __('restaurent.description_ar') }}</label>
+                    <input type="text" name="description_ar" value="{{ $event->descriptionLocale('ar') }}" class="form-control rounded-0 mb-4 mt-2 @error('description_ar') is-invalid @enderror">
+                    @error('description_ar')<div class="alert alert-danger">{{ $message }}</div>@enderror
                 </div> <!-- 5 -->
 
                 <div class="form-group">
-                    <label>عدد التذاكر</label>
-                    <input type="text" name="tickets_quantity" value="{{ $event->tickets_quantity }}" class="form-control rounded-0 mb-4 mt-2 @error('tickets_quantity') is-invalid @enderror">
-                    @error('tickets_quantity')<div class="alert alert-danger">{{ $message }}</div>@enderror
+                    <label>{{ __('restaurent.description_en') }}</label>
+                    <input type="text" name="description_en" value="{{ $event->descriptionLocale('en') }}" class="form-control rounded-0 mb-4 mt-2 @error('description_en') is-invalid @enderror">
+                    @error('description_en')<div class="alert alert-danger">{{ $message }}</div>@enderror
                 </div> <!-- 6 -->
 
                 <div class="form-group">
-                    <label>عدد التذاكر المباعة</label>
+                    <label>{{ __('events.ticket_price') }}</label>
+                    <input type="text" name="ticket_price" value="{{ $event->ticket_price }}" placeholder="ريال سعودي" class="form-control rounded-0 mb-4 mt-2 @error('ticket_price') is-invalid @enderror">
+                    @error('ticket_price')<div class="alert alert-danger">{{ $message }}</div>@enderror
+                </div> <!-- 7 -->
+
+                <div class="form-group">
+                    <label>{{ __('events.tickets_number') }}</label>
+                    <input type="text" name="tickets_quantity" value="{{ $event->tickets_quantity }}" class="form-control rounded-0 mb-4 mt-2 @error('tickets_quantity') is-invalid @enderror">
+                    @error('tickets_quantity')<div class="alert alert-danger">{{ $message }}</div>@enderror
+                </div> <!-- 8 -->
+
+                <div class="form-group">
+                    <label>{{ __('events.sold_tickets_number') }}</label>
                     <input type="text" name="tickets_sold_quantity" placeholder="الكمية" value="{{ $event->tickets_sold_quantity }}" class="form-control rounded-0 mb-4 mt-2 @error('quantity') is-invalid @enderror">
                     @error('tickets_sold_quantity')<div class="alert alert-danger">{{ $message }}</div>@enderror
-                </div> <!-- 4 -->
+                </div> <!-- 9 -->
 
             <hr>
 
                 <div class="extra">
-                    <label>أنواع الحجز:</label>
+                    <label>{{ __('events.reservation_type') }} :</label>
                     @foreach (\App\Models\ReservationType::all() as $type)
                         <div class="form-group mt-3">
                             <label class="custom-checks text-black">{{ $type->name }}
@@ -92,7 +105,7 @@
             <hr>
 
             <div class="row mt-5">
-                <h5>أوقات الحجز</h5>
+                <h5>{{ __('events.reservation_time') }} </h5>
                 <div class="col-lg-6">
                     <div class="form-group mt-3">
                         <input type="date" value="{{ $event->reservation_date }}" class="form-control rounded-0  @error('reservation_date') is-invalid @enderror" name="reservation_date">
@@ -107,8 +120,8 @@
             </div> <!-- row -->
 
             <div class="mt-5">
-                <h5>تاريخ بدء الحجوزات</h5>
-                <p class="fs-6">سيتم نشر الفعالية وتفعيل حجز التتذاكر بناءا على التاريخ المحدد هنا</p>
+                <h5>{{ __('events.reservation_start_date') }}</h5>
+                <p class="fs-6">{{ __('events.reservation_desc_date') }}</p>
                 <div class="form-group mt-3">
                     <input type="date" value="{{ $event->start_reservation_date }}" name="start_reservation_date" class="form-control rounded-0 @error('start_reservation_date') is-invalid @enderror">
                     @error('start_reservation_date')<div class="alert alert-danger">{{ $message }}</div>@enderror
@@ -117,8 +130,8 @@
         </div> <!-- col-4 -->
 
             <div class="col-4 d-grid mx-auto mt-5">
-                <button id="login" type="submit" class="btn mb-3">حفظ التعديلات</button>
-                <a href="#deleteEvent{{ $event->id }}" id="coupon" class="btn" data-bs-toggle="modal" role="button">حذف الفعالية</a>
+                <button id="login" type="submit" class="btn mb-3">{{ __('restaurent.save_updates') }}</button>
+                <a href="#deleteEvent{{ $event->id }}" id="coupon" class="btn" data-bs-toggle="modal" role="button">{{ __('events.delete_event') }}</a>
             </div>
         </form>
     </div> <!-- container -->

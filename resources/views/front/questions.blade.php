@@ -5,7 +5,7 @@
     <div class="container">
 
     <div class="section-title">
-        <h2 class="text-black">الأسئلة الشائعة</h2>
+        <h2 class="text-black">{{ __('homepage.FAQ') }}</h2>
     </div>
 
 <div class="faq-list">
