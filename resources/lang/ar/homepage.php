@@ -43,6 +43,25 @@ return [
     'Enter_the_code_sent_to' => 'ادخل الكود المرسل الى',
 
 
+    //FAQ
+    'firstQuestion' => 'السؤال الأول',
+    'secondQuestion' => 'السؤال الثاني',
+    'thirdQuestion' => 'السؤال الثالث',
 
+
+    // months
+    'January' => 'يناير',
+    'February' => 'فبراير',
+    'March' => 'مارس',
+    'April' => 'أبريل',
+    'May' => 'مايو',
+    'June' => 'يونيو',
+    'July' => 'يوليو',
+    'August' => 'أغسطس',
+    'September' => 'سبتمبر',
+    'October' => 'أكتوبر',
+    'November' => 'نوفمبر',
+    'December' => 'ديسمبر',
+    
 
 ];

@@ -51,6 +51,7 @@ class CouponController extends Controller
             'end_date' => $request->end_date,
             'coupon_id' => $coupon_id,
             'package_id' => null,
+            'department_id' => auth()->user()->department_id,
         ]);
 
         session()->flash('addCoupon');
@@ -86,6 +87,7 @@ class CouponController extends Controller
 
         $coupon->update([
             // 'image' => $image,
+            'department_id' => auth()->user()->department_id,
             'discount_coupon' => $request->discount_coupon,
             'discount_percentage' => $request->discount_percentage,
             'start_date' => $request->start_date,
@@ -103,6 +105,7 @@ class CouponController extends Controller
             'end_date' => $request->end_date,
             'coupon_id' => $id,
             'package_id' => null,
+            'department_id' => auth()->user()->department_id,
         ]);
 
         session()->flash('editCoupon');

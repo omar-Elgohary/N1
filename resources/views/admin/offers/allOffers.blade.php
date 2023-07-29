@@ -130,7 +130,7 @@
                     </tr>
                 </thead>
 
-                @foreach(\App\Models\Offer::all() as $key => $offer)
+                @foreach($offers as $key => $offer)
                 <tbody>
                     <tr>
                         <th>{{ $key+1 }}</th>

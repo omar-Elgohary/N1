@@ -70,13 +70,13 @@
                             <a href="{{ route('eventOrderDetails', $order->id) }}" class="btn bg-white text-warning"><i class="fa fa-eye"></i></a>
                         </td>
                     </tr>
-                @empty
-                    <tr>
-                        <th class="text-danger" colspan="10">
-                            لا يوجد بيانات
-                        </th>
-                    </tr>
-                @endforelse
+                    @empty
+                        <tr>
+                            <th class="text-danger" colspan="10">
+                                {{ __('restaurent.nodata') }}
+                            </th>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>

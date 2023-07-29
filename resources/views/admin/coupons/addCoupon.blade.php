@@ -62,7 +62,7 @@
 
             <div class="col-4 d-grid mx-auto mt-5">
                 <button id="login" type="submit" class="btn mb-3">{{ __('offers.add') }}</button>
-                <button id="coupon" type="submit" class="btn">{{ __('offers.cancel') }}</button>
+                <a href="{{ route('alloffers') }}" id="coupon" class="btn">{{ __('offers.cancel') }}</a>
             </div>
         </form>
     </div> <!-- container -->

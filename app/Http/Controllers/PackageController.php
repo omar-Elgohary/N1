@@ -47,8 +47,8 @@ class PackageController extends Controller
     {
         $this->validate($request, [
             'image' => 'required',
-            'first_meal' => 'required',
-            'second_meal' => 'required',
+            'first_meal_id' => 'required',
+            'second_meal_id' => 'required',
             'start_date' => 'required|date',
             'end_date' => 'required|date',
             'price' => 'required|numeric',
@@ -68,9 +68,10 @@ class PackageController extends Controller
 
         Package::create([
             'random_id' => $random_id,
+            'department_id' => auth()->user()->department_id,
             'image' => $image_name,
-            'first_meal' => $request->first_meal,
-            'second_meal' => $request->second_meal,
+            'first_meal_id' => $request->first_meal_id,
+            'second_meal_id' => $request->second_meal_id,
             'start_date' => $request->start_date,
             'end_date' => $request->end_date,
             'price' => $request->price,
@@ -88,6 +89,7 @@ class PackageController extends Controller
             'end_date' => $request->end_date,
             'coupon_id' => null,
             'package_id' => $package_id,
+            'department_id' => auth()->user()->department_id,
         ]);
 
         session()->flash('addPackage');
@@ -109,9 +111,6 @@ class PackageController extends Controller
 
 
 
-
-
-
     public function updatePackage(Request $request, $id)
     {
         $package = Package::find($id);
@@ -129,8 +128,9 @@ class PackageController extends Controller
         }
 
         $package->update([
-            'first_meal' => $request->first_meal,
-            'second_meal' => $request->second_meal,
+            'department_id' => auth()->user()->department_id,
+            'first_meal_id' => $request->first_meal_id,
+            'second_meal_id' => $request->second_meal_id,
             'start_date' => $request->start_date,
             'end_date' => $request->end_date,
             'price' => $request->price,
@@ -147,6 +147,7 @@ class PackageController extends Controller
             'end_date' => $request->end_date,
             'coupon_id' => null,
             'package_id' => $id,
+            'department_id' => auth()->user()->department_id,
         ]);
 
         session()->flash('editPackage');

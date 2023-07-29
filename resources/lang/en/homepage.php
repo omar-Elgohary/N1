@@ -42,4 +42,25 @@ return [
     'phone_verification' => 'Mobile number verification',
     'Enter_the_code_sent_to' => 'Enter the code sent to',
 
+
+    //FAQ
+    'firstQuestion' => 'First Question',
+    'secondQuestion' => 'Second Question',
+    'thirdQuestion' => 'Third Question',
+
+
+    // months
+    'January' => 'January',
+    'February' => 'February',
+    'March' => 'March',
+    'April' => 'April',
+    'May' => 'May',
+    'June' => 'June',
+    'July' => 'July',
+    'August' => 'August',
+    'September' => 'September',
+    'October' => 'October',
+    'November' => 'November',
+    'December' => 'December',
+
 ];

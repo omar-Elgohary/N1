@@ -10,7 +10,15 @@ use Illuminate\Support\Facades\Session;
 
 class AuthController extends Controller
 {
-    public function register(Request $request)
+    public function __construct()
+    {
+        $this->basic  = new \Vonage\Client\Credentials\Basic("5674634d", "AMDxQDCTqT7GJhwc");
+        $this->client = new \Vonage\Client(new \Vonage\Client\Credentials\Container($this->basic));
+    }
+
+
+
+    public function sendOtp(Request $request)
     {
         try{
             // $request->validate([
@@ -43,25 +51,40 @@ class AuthController extends Controller
                 'type' => 'seller',
             ]);
 
-            $account_id = getenv("TWILIO_SID");
-            $auth_token = getenv("TWILIO_TOKEN");
-            $twilio_number = getenv("TWILIO_FROM");
+            //send
+            // $request = new \Vonage\Verify\Request("+201156513661", "Vonage");
+            // $response = $this->client->verify()->start($request);
+            // echo "Started verification, `request_id` is " . $response->getRequestId();
 
-            $otp = rand(100000, 999999);
-            Session::put('verification_code', $otp);
-            Session::put('user_data', $request->except('commercial_registration_image'));
 
-            $client = new Client($account_id, $auth_token);
-            $client->messages->create("+20 1156513661", [
-                'from' => $twilio_number,
-                'body' => $otp,
-            ]);
+            //check
+            $result = $this->client->verify()->check($response->getRequestId(), $request->verification_code);
+            var_dump($result->getResponseData());
+
+
+
+
+            // $account_id = getenv("TWILIO_SID");
+            // $auth_token = getenv("TWILIO_TOKEN");
+            // $twilio_number = getenv("TWILIO_FROM");
+
+            // $otp = rand(100000, 999999);
+            // Session::put('verification_code', $otp);
+            // Session::put('user_data', $request->except('commercial_registration_image'));
+            // $client = new Client($account_id, $auth_token);
+            // $client->messages->create("+20 1156513661", [
+            //     'from' => $twilio_number,
+            //     'body' => $otp,
+            // ]);
+            // dd($otp);
 
             return view('front.layouts.confirmNumber', compact('user'));
         }catch(\Exception $e){
-            info($e->getMessage());
+            dd($e->getMessage());
         }
     }
+
+
 
 
 

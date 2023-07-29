@@ -48,7 +48,7 @@
                 <li><a class="dropdown-item text-danger" href="{{route('logOut')}}">{{ __('staticpage.logout') }}</a></li>
             </ul>
         </div>
-
+        
         <div class="navhead">
             <nav id="navbar" class="navbar" dir="rtl">
             <img class="p-3" src="{{ asset('images/logo.png') }}" alt="logo">
@@ -95,7 +95,7 @@
                                 @endforeach
                             </li>
                         </ul>
-                    </div> 
+                    </div>
                 </li>
         </nav>
             <i class="bi bi-list mobile-nav-toggle" style="background-color: #ff8914"></i>

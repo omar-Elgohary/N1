@@ -248,7 +248,7 @@
 
         <div id="createsellermodal" class="modal-body mt-5 mt-lg-0">
             <h2 class="fw-bold" style="color: #ff8000">{{ __('homepage.createSeller') }}</h2>
-            <form action="{{ route('register') }}" method="post" autocomplete="off" enctype="multipart/form-data">
+            <form action="{{ route('sendOtp') }}" method="post" autocomplete="off" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
                     <div class="col-lg-6">
@@ -320,7 +320,7 @@
                     </div> <!-- col-6 -->
 
                     <div class="form-group mt-4 text-center">
-                        <input type="submit" class="btn px-5 mb-3" id="verify" value="{{ __('homepage.signup') }}"><br>
+                        <button type="submit" id="verify" class="btn px-5 mb-3">{{ __('homepage.signup') }}</button><br>
                         {{-- <a class="btn px-5 mb-3" id="login" data-bs-target="#exampleModalToggle3" data-bs-toggle="modal">انشاء الحساب</a> <br> --}}
                         <a data-bs-target="#exampleModalToggle" data-bs-toggle="modal" style="cursor: pointer;"> {{ __('homepage.haveaccount') }} <span class="text-danger text-decoration-underline">{{ __('homepage.login') }}</span></a>
                     </div>
@@ -375,8 +375,8 @@
         </div>
         </div>
     </div>
-</div>
---}}
+</div> --}}
+
 
 {{-- @if($signedup == 1)
     @push('script')

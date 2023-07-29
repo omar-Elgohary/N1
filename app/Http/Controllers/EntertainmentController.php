@@ -136,7 +136,7 @@ class EntertainmentController extends Controller
 
 
     public function filterEventProducts($category_id)
-    {   
+    {
         $category = Category::find($category_id);
         $events = Event::where('department_id', auth()->user()->department_id)->where('category_id', $category_id)->get();
         return view('admin.dashboards.Entertainments.events', compact('category', 'events'));
@@ -371,7 +371,7 @@ class EntertainmentController extends Controller
     }
 
 
-    
+
 
 
     // Excel

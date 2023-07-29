@@ -17,7 +17,6 @@
 
     <div class="modal-body">
         <div class="mt-5 mt-lg-0 text-end" data-aos-delay="100">
-            {{-- <form action="{{ route('verify', $id) }}" method="POST"> --}}
             <form action="{{ route('verify') }}" method="POST">
             @csrf
                 <div class="form-group my-5">
@@ -31,20 +30,12 @@
                             </div>
 
                             <div id="otp" class="inputs d-flex flex-row justify-content-center mt-2">
-                                {{-- <input class="m-2 text-center form-control rounded-0" type="text" name ="first" id="first" maxlength="1" /> --}}
-                                {{-- <input class="m-2 text-center form-control rounded-0" type="text" name ="second" id="second" maxlength="1" /> --}}
-                                {{-- <input class="m-2 text-center form-control rounded-0" type="text" name ="third" id="third" maxlength="1" /> --}}
-                                {{-- <input class="m-2 text-center form-control rounded-0" type="text" name ="fourth" id="fourth" maxlength="1" /> --}}
                                 <input name="verification_code" type="text form-cotrol" type="text">
                             </div>
 
                             <div class="text-center mt-3">
-                                <button type="submit" id="ff" class="btn btn-success">{{ __('homepage.login') }}</button>
+                                <button type="submit" id="ff" class="btn btn-success">ارسال الكود</button>
                             </div>
-
-                            {{-- <div class="text-center mt-3">
-                                <div class="countdown">59:00</div>
-                            </div> --}}
 
                         </div> <!-- position-relative -->
                     </div> <!-- container -->

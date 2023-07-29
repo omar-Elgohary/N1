@@ -11,7 +11,7 @@ class OfferController extends Controller
 {
     public function index()
     {
-        $offers = Offer::all();
+        $offers = Offer::where('department_id', auth()->user()->department_id)->get();
         return view('admin.offers.allOffers', compact('offers'));
     }
 

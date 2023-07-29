@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\ImportRestaurentProducts;
+use App\Models\ShopOrder;
 
 class RestaurantController extends Controller
 {
@@ -113,7 +114,7 @@ class RestaurantController extends Controller
             'name' => [
                 'en' => $request->name_en,
                 'ar' => $request->name_ar,
-            ],    
+            ],
             'category_id' => $request->category_id,
         ]);
         session()->flash('editSubCategory');
@@ -157,9 +158,9 @@ class RestaurantController extends Controller
 
 
 
-    public function filterRestaurantPurchases()
-    {        
-        $purchases = RestaurentOrder::whereMonth('created_at', '06')->get();
+    public function filterRestaurantPurchases($key)
+    {
+        $purchases = RestaurentOrder::whereMonth('created_at', $key)->get();
         return view('admin.purchases.RestaurantPurchases.index', compact('purchases'));
     }
 

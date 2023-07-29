@@ -53,7 +53,7 @@
 
                     <div class="form-group mt-3">
                         <label class="mb-3">{{ __('homepage.commercialImage') }}</label><br>
-                        <label for="file" value="{{$user->commercial_registration_image}}" class="upload form-control"><i class="fa fa-duotone fa-cloud-arrow-up text-secondary"></i> ارفع السجل التجاري\ معروف</label>
+                        <label for="file" value="{{$user->commercial_registration_image}}" class="upload form-control"><i class="fa fa-duotone fa-cloud-arrow-up text-secondary"></i>{{ __('homepage.uploadcommercialImage') }}</label>
                         <input type="file" class="form-control rounded-0" name="commercial_registration_image" id="file">
                     </div>
 

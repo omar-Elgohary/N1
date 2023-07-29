@@ -74,6 +74,17 @@ class ShopController extends Controller
 
 
 
+
+    public function filterShopPurchases($key)
+    {
+        $purchases = ShopOrder::whereMonth('created_at', $key)->get();
+        return view('admin.purchases.ShopPurchases.index', compact('purchases'));
+    }
+
+
+
+
+
     // SubCategories
     public function shopSubCategories($id)
     {
@@ -111,7 +122,7 @@ class ShopController extends Controller
             'name' =>[
                 'en' => $request->name_en,
                 'ar' => $request->name_ar,
-            ],            
+            ],
             'category_id' => $request->category_id,
 
         ]);

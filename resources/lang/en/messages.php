@@ -3,7 +3,7 @@
 return [
     'login' => 'Successfully logged in',
     'register' => 'Merchant account created successfully',
-    'editSellerInfo' => 'Personal information has been modified successfully',
+    'editSellerInfo' => 'Personal information has been Edited successfully',
     'passwordCorrect' => 'Password has been modified successfully',
     'passwordInCorrect' => 'Password does not match',
     'logout' => 'Signed out successfully',

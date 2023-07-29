@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 @section('title')
-     {{ __('offers.edit_package') }}
+    {{ __('offers.edit_package') }}
 @endsection
 
 @section('content')
@@ -30,20 +30,18 @@
             <div class="col-lg-4 mt-5">
                         <div class="form-group">
                     <label>{{ __('offers.first_meal') }}</label>
-                    <select name="first_meal" class="form-control rounded-0 mb-4 mt-2">
-                        <option>{{ $package->first_meal_id }}</option>
+                    <select name="first_meal_id" class="form-control rounded-0 mb-4 mt-2">
                         @foreach ($meals as $meal)
-                        <option value="{{ $meal->name }}">{{ $meal->name }}</option>
+                        <option value="{{ $meal->id }}" @if($meal->id == $package->first_meal_id) selected @endif>{{ $meal->name }}</option>
                     @endforeach
                 </select>
                 </div> <!-- 1 -->
 
                 <div class="form-group">
                     <label>{{ __('offers.second_meal') }}</label>
-                    <select name="second_meal" class="form-control rounded-0 mb-4 mt-2">
-                        <option>{{ $package->second_meal_id }}</option>
+                    <select name="second_meal_id" class="form-control rounded-0 mb-4 mt-2">
                         @foreach ($meals as $meal)
-                            <option value="{{ $meal->name }}">{{ $meal->name }}</option>
+                            <option value="{{ $meal->id }}" @if($meal->id == $package->second_meal_id) selected @endif>{{ $meal->name }}</option>
                         @endforeach
                     </select>
                 </div> <!-- 2 -->

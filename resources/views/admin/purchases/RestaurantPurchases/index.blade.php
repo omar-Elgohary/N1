@@ -25,9 +25,9 @@
                     <li><a class="dropdown-item" href="#">2020</a></li>
                 </ul>
             </div> --}}
-            
+
             <nav class="menu">
-                @foreach([1=>'يناير', 2=>'فبراير', 3=>'مارس', 4=>'ابريل', 5=>'مايو', 6=>'يونيو', 7=>'يوليو', 8=>'اغسطس', 9=>'سبتمبر', 10=>'اكتوبر', 11=>'نوفمبر', 12=>'ديسمبر'] as $key => $month)
+                @foreach([1 => __('homepage.January'), 2 => __('homepage.February'), 3 => __('homepage.March'), 4 => __('homepage.April'), 5 => __('homepage.May'), 6 => __('homepage.June'), 7 => __('homepage.July'), 8 => __('homepage.August'), 9 => __('homepage.September'), 10 => __('homepage.October'), 11 => __('homepage.November'), 12 => __('homepage.December')] as $key => $month)
                     <a href="{{ route('filterRestaurantPurchases', $key) }}" class="menu-item monthes">{{ $month }}</a>
                 @endforeach
 			</nav>
@@ -44,7 +44,7 @@
 
         <div class="col-6 text-start mb-3">
             <a href="{{ route('ExportrestaurantPurchasesPDF') }}" id="pdf" class="btn btn-success"><i class="fa fa-thin fa-print"></i><br><small>PDF</small> </a>
-            <a href="#" id="pdf" class="btn btn-success"><i class="fa fa-thin fa-file-excel"></i><br><small>Excel</small> </a>
+            {{-- <a href="#" id="pdf" class="btn btn-success"><i class="fa fa-thin fa-file-excel"></i><br><small>Excel</small> </a> --}}
         </div>
     </div> <!-- col-12 -->
 
@@ -64,7 +64,7 @@
                     </tr>
                 </thead>
 
-                @foreach ($purchases as $purchase)
+                @forelse($purchases as $purchase)
                 <tbody>
                     <tr>
                         <th>{{ $purchase->random_id }}</th>
@@ -89,8 +89,14 @@
                             <a href="{{ route('restaurantPurchasesDetails', $purchase->id) }}" class="btn bg-white text-warning"><i class="fa fa-eye"></i></a>
                         </td>
                     </tr>
+                    @empty
+                        <tr>
+                            <th class="text-danger" colspan="10">
+                                {{ __('restaurent.nodata') }}
+                            </th>
+                        </tr>
+                    @endforelse
                 </tbody>
-                @endforeach
 
             </table>
         </div>

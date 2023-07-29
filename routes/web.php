@@ -27,7 +27,7 @@ Route::group(
     });
 
 Route::controller(AuthController::class)->group(function(){
-    Route::post('register', 'register')->name('register');
+    Route::post('sendOtp', 'sendOtp')->name('sendOtp');
     Route::post('verify', 'verify')->name('verify');
     Route::post('login', 'login')->name('login');
     Route::get('logOut', 'logOut')->name('logOut');
@@ -74,9 +74,7 @@ Route::middleware(['CheckUser'])->group(function () {
 ###############################################################################################################################
 
 // Offers
-Route::get('/allOffers', function () {
-    return view('admin.offers.allOffers');
-})->name('alloffers');
+Route::get('allOffers', [OfferController::class, 'index'])->name('alloffers');
 
 Route::get('/homeOffers', function () {
     return view('admin.offers.index');
@@ -256,12 +254,10 @@ Route::middleware(['CheckRestaurent'])->group(function () {
     Route::get('restaurantPurchasesDetails/{id}', [RestaurantController::class, 'restaurantPurchasesDetails'])->name('restaurantPurchasesDetails');
     Route::get('changePurchaseStatus/{id}', [RestaurantController::class, 'changePurchaseStatus'])->name('changePurchaseStatus');
     Route::get('ExportrestaurantPurchasesPDF', [RestaurantController::class, 'ExportrestaurantPurchasesPDF'])->name('ExportrestaurantPurchasesPDF');
-    Route::get('filterRestaurantPurchases', [RestaurantController::class, 'filterRestaurantPurchases'])->name('filterRestaurantPurchases');
+    Route::get('filterRestaurantPurchases/{key}', [RestaurantController::class, 'filterRestaurantPurchases'])->name('filterRestaurantPurchases');
 
 }); // CheckRestaurent middleware
 ###############################################################################################################################
-
-
 
 // ShopPurchases
 Route::middleware(['CheckShop'])->group(function () {
@@ -269,6 +265,7 @@ Route::middleware(['CheckShop'])->group(function () {
     Route::get('shopPurchases', [ShopController::class, 'shopPurchases'])->name('shopPurchases');
     Route::get('shopPurchasesDetails/{id}', [ShopController::class, 'shopPurchasesDetails'])->name('shopPurchasesDetails');
     Route::get('ExportShopPurchasesPDF', [ShopController::class, 'ExportShopPurchasesPDF'])->name('ExportShopPurchasesPDF');
+    Route::get('filterShopPurchases/{key}', [ShopController::class, 'filterShopPurchases'])->name('filterShopPurchases');
 
 }); // CheckShop middleware
 

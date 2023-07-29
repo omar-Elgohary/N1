@@ -4,7 +4,9 @@ namespace App\Models;
 use App\Models\Order;
 use Twilio\Rest\Client;
 use App\Models\Department;
+use Illuminate\Http\Request;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -20,7 +22,8 @@ class User extends Authenticatable
      */
     protected $guarded = [];
 
-    public function sendOtpSms($receiverNumber)
+
+    public function sendOtpSms()
     {
         $otp = 'Register Otp is' . $this->otp;
         try{
@@ -29,7 +32,8 @@ class User extends Authenticatable
             $twilio_number = getenv("TWILIO_FROM");
 
             $client = new Client($account_id, $auth_token);
-            $client->messages->create($receiverNumber, [
+            // $client->messages->create($receiverNumber, [
+            $client->messages->create("+20 1156513661", [
                 'from' => $twilio_number,
                 'body' => $otp,
             ]);

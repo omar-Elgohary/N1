@@ -24,20 +24,20 @@
             <div class="col-lg-4 mt-5">
                 <div class="form-group">
                     <label>{{ __('offers.first_meal') }}</label>
-                    <select name="first_meal" class="form-control rounded-0 mb-4 mt-2">
+                    <select name="first_meal_id" class="form-control rounded-0 mb-4 mt-2">
                         <option>{{ __('offers.choose_meal') }}</option>
                         @foreach ($meals as $meal)
-                            <option value="{{ $meal->name }}">{{ $meal->name }}</option>
+                            <option value="{{ $meal->id }}">{{ $meal->name }}</option>
                         @endforeach
                     </select>
                 </div> <!-- 1 -->
 
                 <div class="form-group">
                     <label>{{ __('offers.second_meal') }}</label>
-                    <select name="second_meal" class="form-control rounded-0 mb-4 mt-2">
+                    <select name="second_meal_id" class="form-control rounded-0 mb-4 mt-2">
                         <option>{{ __('offers.choose_meal') }}</option>
                         @foreach ($meals as $meal)
-                            <option value="{{ $meal->name}}">{{ $meal->name }}</option>
+                            <option value="{{ $meal->id }}">{{ $meal->name }}</option>
                         @endforeach
                     </select>
                 </div> <!-- 2 -->
@@ -54,7 +54,7 @@
 
                 <div class="form-group">
                     <label>{{ __('restaurent.price') }}</label>
-                    <input type="text" name="price" placeholder="ريال سعودي" class="form-control rounded-0 mb-4 mt-2">
+                    <input type="text" name="price" placeholder="{{ __('restaurent.SAR') }}" class="form-control rounded-0 mb-4 mt-2">
                 </div> <!-- 5 -->
 
                 <div class="form-group">

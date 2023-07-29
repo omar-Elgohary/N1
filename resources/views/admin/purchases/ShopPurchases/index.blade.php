@@ -27,18 +27,9 @@
             </div> --}}
 
             <nav class="menu">
-				<a href="#" class="menu-item monthes is-active">يناير</a>
-				<a href="#" class="menu-item monthes">فبراير</a>
-				<a href="#" class="menu-item monthes">مارس</a>
-				<a href="#" class="menu-item monthes">ابريل</a>
-				<a href="#" class="menu-item monthes">مايو</a>
-				<a href="#" class="menu-item monthes">يونيو</a>
-				<a href="#" class="menu-item monthes">يوليو</a>
-				<a href="#" class="menu-item monthes">اغسطس</a>
-				<a href="#" class="menu-item monthes">سبتمبر</a>
-				<a href="#" class="menu-item monthes">اكتوبر</a>
-				<a href="#" class="menu-item monthes">نوفمبر</a>
-				<a href="#" class="menu-item monthes">ديسمبر</a>
+                @foreach([1 => __('homepage.January'), 2 => __('homepage.February'), 3 => __('homepage.March'), 4 => __('homepage.April'), 5 => __('homepage.May'), 6 => __('homepage.June'), 7 => __('homepage.July'), 8 => __('homepage.August'), 9 => __('homepage.September'), 10 => __('homepage.October'), 11 => __('homepage.November'), 12 => __('homepage.December')] as $key => $month)
+                    <a href="{{ route('filterRestaurantPurchases', $key) }}" class="menu-item monthes">{{ $month }}</a>
+                @endforeach
 			</nav>
 		</aside>
 	</div>
@@ -73,7 +64,7 @@
                     </tr>
                 </thead>
 
-                @foreach(\App\Models\ShopOrder::where('department_id', auth()->user()->department_id)->get() as $order)
+                @forelse(\App\Models\ShopOrder::where('department_id', auth()->user()->department_id)->get() as $order)
                 <tbody>
                     <tr>
                         <th>{{$order->random_id}}</th>
@@ -97,8 +88,14 @@
                             <a href="{{ route('shopPurchasesDetails', $order->id) }}" class="btn bg-white text-warning"><i class="fa fa-eye"></i></a>
                         </td>
                     </tr>
+                    @empty
+                        <tr>
+                            <th class="text-danger" colspan="10">
+                                {{ __('restaurent.nodata') }}
+                            </th>
+                        </tr>
+                    @endforelse
                 </tbody>
-                @endforeach
             </table>
         </div>
     </div> <!-- container -->
