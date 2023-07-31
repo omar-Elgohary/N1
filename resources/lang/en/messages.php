@@ -61,6 +61,7 @@ return [
     //shops
     'DeactiveShopProduct' => 'The product has been successfully activated',
     'unDeactiveShopProduct' => 'The product has been successfully deactivated',
+    'error' => 'There is an error when register',
 
 
 

@@ -19,6 +19,7 @@ return [
     "password" => "كلمة المرور",
     "smalldesc1" => "لا تمتلك حسابا بعد؟",
     "smalldesc2" => "انشاء حساب تاجر",
+    "Remember_Me" => 'تذكرني',
 
     // register modal
     "createSeller" => "انشاء حساب تاجر",
@@ -62,6 +63,6 @@ return [
     'October' => 'أكتوبر',
     'November' => 'نوفمبر',
     'December' => 'ديسمبر',
-    
+
 
 ];

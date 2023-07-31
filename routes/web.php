@@ -27,9 +27,9 @@ Route::group(
     });
 
 Route::controller(AuthController::class)->group(function(){
-    Route::post('sendOtp', 'sendOtp')->name('sendOtp');
-    Route::post('verify', 'verify')->name('verify');
-    Route::post('login', 'login')->name('login');
+    Route::post('register', 'register')->name('register');
+    Route::post('check', 'check')->name('check');
+    Route::post('login', 'login')->name('login');   
     Route::get('logOut', 'logOut')->name('logOut');
 });
 

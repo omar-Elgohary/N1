@@ -18,10 +18,10 @@ return new class extends Migration
             $table->string('password');
             $table->string('confirmed_password');
             $table->enum('type', ['admin', 'seller', 'user'])->default('user');
-
             $table->string('company_name')->nullable();
             $table->string('commercial_registration_number', 20)->nullable();
             $table->string('commercial_registration_image')->nullable();
+            $table->rememberToken();
             $table->timestamps();
         });
     }

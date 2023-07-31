@@ -19,6 +19,7 @@ return [
     "password" => "Password",
     "smalldesc1" => "Don't have an account?",
     "smalldesc2" => "Create Seller Account",
+    "Remember_Me" => 'Remember Me',
 
     // register modal
     "createSeller" => "Create Seller Account",

@@ -1568,6 +1568,10 @@ section {
 /*--------------------------------------------------------------
 # Contact
 --------------------------------------------------------------*/
+#contact{
+    direction: rtl;
+}
+
 .contact {
   background: url("../img/contact-bg.png") left center no-repeat;
   position: relative;

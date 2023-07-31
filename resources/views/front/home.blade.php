@@ -143,6 +143,17 @@
     </script>
 @endif
 
+@if (session()->has('error'))
+    <script>
+        window.onload = function() {
+            notif({
+                msg: "{{ __('messages.error') }}",
+                type: "error"
+            })
+        }
+    </script>
+@endif
+
 <section id="hero" class="d-flex justify-cntent-center align-items-center">
     <div id="heroCarousel" class="container carousel carousel-fade">
         <h3 class="text-white text-center">{{ __('homepage.bigheader') }}</h3>
@@ -248,7 +259,7 @@
 
         <div id="createsellermodal" class="modal-body mt-5 mt-lg-0">
             <h2 class="fw-bold" style="color: #ff8000">{{ __('homepage.createSeller') }}</h2>
-            <form action="{{ route('sendOtp') }}" method="post" autocomplete="off" enctype="multipart/form-data">
+            <form action="{{ route('register') }}" method="post" autocomplete="off" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
                     <div class="col-lg-6">
@@ -266,7 +277,7 @@
                             <div class="row">
                                 <div class="col-lg-9">
                                     <label class="mb-3">{{ __('homepage.phone') }}</label>
-                                    <input type="text" class="form-control rounded-0" name="phone">
+                                    <input type="text" class="form-control rounded-0" name="phone" id="phone">
                                 </div>
 
                                 <div class="col-lg-3">
@@ -339,13 +350,13 @@
 
         <div class="modal-body">
             <div class="mt-5 mt-lg-0 text-end" data-aos-delay="100">
-                <form action="{{ route('verify') }}" method="POST">
+                <form action="{{ route('check') }}" method="POST">
                 @csrf
                     <div class="form-group mt-3">
                         <div class="container height-100 d-flex justify-content-center align-items-center">
                             <div class="position-relative">
-                                <h2 class="fw-bold" style="color: #e57504">التحقق من رقم الجوال</h2>
-                                <div> <span class="mb-3">ادخل الكود المرسل الى</span>
+                                <h2 class="fw-bold" style="color: #e57504">{{ __('homepage.phone_verification') }}</h2>
+                                <div class="text-center"> <span class="mb-3">{{ __('homepage.Enter_the_code_sent_to') }}</span>
                                     <small>
                                         {{ session('phone') }}
                                     </small>
@@ -360,7 +371,7 @@
                                 </div>
 
                                 <div class="text-center mt-3">
-                                    <button type="submit" class="btn btn-success">تسجبل الدخول</button>
+                                    <button type="submit" class="btn btn-success">{{ __('homepage.login') }}</button>
                                 </div>
 
                                 <div class="text-center mt-3">
@@ -382,12 +393,17 @@
     @push('script')
         <script>
             $('#verify').on('click', function(event) {
-                event.preventDefault(); // Prevent default link navigation
                 $('#exampleModalToggle2').modal('hide');
+                $.ajax({
+                    url: "{{ route('register') }}",
+                    type: 'POST',
+                });
                 $('#exampleModalToggle3').modal('show');
+                event.preventDefault();
             });
         </script>
     @endpush
 @endif --}}
+
 
 @endsection

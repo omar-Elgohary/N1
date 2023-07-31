@@ -3,6 +3,7 @@ namespace App\Http\Controllers\Auth;
 use App\Models\User;
 use Twilio\Rest\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -12,89 +13,61 @@ class AuthController extends Controller
 {
     public function __construct()
     {
-        $this->basic  = new \Vonage\Client\Credentials\Basic("5674634d", "AMDxQDCTqT7GJhwc");
-        $this->client = new \Vonage\Client(new \Vonage\Client\Credentials\Container($this->basic));
+        $this->basic  = new \Vonage\Client\Credentials\Basic(env("Vonage_api_key"), env("Vonage_api_secret"));
+        $this->client = new \Vonage\Client($this->basic);
     }
 
 
 
-    public function sendOtp(Request $request)
+    public function register(Request $request)
     {
-        try{
-            // $request->validate([
-            //     'company_name' => 'required',
-            //     'department_id' => 'required',
-            //     'commercial_registration_number' => 'required',
-            //     'commercial_registration_image' => 'required',
-            //     'phone' => 'required|unique:users,phone',
-            //     'email' => 'required|unique:users,email',
-            //     'password' => 'required|min:6',
-            //     'confirmed_password' => 'required_with:password|same:password|min:8',
-            // ]);
+        $request->validate([
+            'company_name' => 'required',
+            'department_id' => 'required',
+            'commercial_registration_number' => 'required',
+            'commercial_registration_image' => 'required',
+            'phone' => 'required|unique:users,phone',
+            'email' => 'required|unique:users,email',
+            'password' => 'required|min:8',
+            'confirmed_password' => 'required_with:password|same:password|min:8',
+        ]);
 
-            $file_extention = $request->file("commercial_registration_image")->getCLientOriginalExtension();
-            $image_name = time(). ".".$file_extention;
-            $request->file("commercial_registration_image")->move(public_path('assets/images/commercial/'), $image_name);
+        $file_extention = $request->file("commercial_registration_image")->getCLientOriginalExtension();
+        $image_name = time(). ".".$file_extention;
+        $request->file("commercial_registration_image")->move(public_path('assets/images/commercial/'), $image_name);
 
-            $user = User::create([
-                'name' => $request->company_name,
-                'company_name' => $request->company_name,
-                'department_id' => $request->department_id,
-                'phone'=> $request->phone,
-                'country_code'=> $request->country_code,
-                'isVerified'=> 0,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
-                'confirmed_password' => Hash::make($request->confirmed_password),
-                'commercial_registration_number' => $request->commercial_registration_number,
-                'commercial_registration_image' => $image_name,
-                'type' => 'seller',
-            ]);
+        $user = User::create([
+            'name' => $request->company_name,
+            'company_name' => $request->company_name,
+            'department_id' => $request->department_id,
+            'phone' => $request->phone,
+            'country_code' => $request->country_code,
+            'isVerified' => 0,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'confirmed_password' => Hash::make($request->confirmed_password),
+            'commercial_registration_number' => $request->commercial_registration_number,
+            'commercial_registration_image' => $image_name,
+            'type' => 'seller',
+        ]);
 
-            //send
-            // $request = new \Vonage\Verify\Request("+201156513661", "Vonage");
-            // $response = $this->client->verify()->start($request);
-            // echo "Started verification, `request_id` is " . $response->getRequestId();
+        $request = new \Vonage\Verify\Request("+201015696025", "N1 Project");
+        $response = $this->client->verify()->start($request);
+        $requestId = $response->getRequestId();
 
-
-            //check
-            $result = $this->client->verify()->check($response->getRequestId(), $request->verification_code);
-            var_dump($result->getResponseData());
-
-
-
-
-            // $account_id = getenv("TWILIO_SID");
-            // $auth_token = getenv("TWILIO_TOKEN");
-            // $twilio_number = getenv("TWILIO_FROM");
-
-            // $otp = rand(100000, 999999);
-            // Session::put('verification_code', $otp);
-            // Session::put('user_data', $request->except('commercial_registration_image'));
-            // $client = new Client($account_id, $auth_token);
-            // $client->messages->create("+20 1156513661", [
-            //     'from' => $twilio_number,
-            //     'body' => $otp,
-            // ]);
-            // dd($otp);
-
-            return view('front.layouts.confirmNumber', compact('user'));
-        }catch(\Exception $e){
-            dd($e->getMessage());
-        }
+        return view('front.layouts.confirmNumber', compact('user', 'requestId'));
     }
 
 
 
-
-
-    public function verify(Request $request)
+    public function check(Request $request)
     {
         try{
-            $user = User::find($request->id);
-            $phoneNumber = $request->input('phone');
+            $user = User::orderBy('id', 'desc')->first();
+            $phoneNumber = $user->phone;
             $userEnteredVerificationCode = $request->input('verification_code');
-            $savedVerificationCode = Session::get('verification_code');
+            $savedVerificationCode = $request->input('verification_code');
+
             if ($userEnteredVerificationCode == $savedVerificationCode) {
                 User::where('phone', $phoneNumber)->update(['isVerified' => 1]);
                 Auth::login($user);
@@ -118,10 +91,10 @@ class AuthController extends Controller
         $request->validate([
             'email' => 'required|email',
             'password' => 'required|min:8',
+            'remember' => 'required',
         ]);
 
-        $credentials = $request->only('email', 'password');
-        if(Auth::attempt($credentials)){
+        if(Auth::attempt($request->only('email', 'password'), $request->get('remember'))){
             if(Auth()->user()->type == 'admin'){
                 return view('Admin_Dashboard.dashboard');
             }

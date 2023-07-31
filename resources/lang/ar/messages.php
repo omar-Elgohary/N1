@@ -61,6 +61,6 @@ return [
     //shops
     'DeactiveShopProduct' => 'تم الغاء نشر المنتج بنجاح',
     'unDeactiveShopProduct' => 'تم اعادة نشر المنتج بنجاح',
-
+    'error' => 'هناك خطأ في تسجل الدخول',
 
 ];
