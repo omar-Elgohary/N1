@@ -38,7 +38,7 @@ return [
     'deleteSubCategory' => 'تم حذف الفئة الفرعية بنجاح ',
     'nameRequiredEn' => 'يجب ادخال اسم الفئة الفرعية انجليزي',
     'nameRequiredAr' => 'يجب ادخال اسم الفئة الفرعية عربي',
-
+    'remember' => 'يجب عليك اختبار تذكرني',
 
     // Food Menu
     'addRestaurentProduct' => 'تم اضافة المنتج بنجاح',

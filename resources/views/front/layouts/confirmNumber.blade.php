@@ -17,7 +17,7 @@
 
     <div class="modal-body">
         <div class="mt-5 mt-lg-0 text-end" data-aos-delay="100">
-            <form action="{{ route('check   ') }}" method="POST">
+            <form action="{{ route('check') }}" method="POST">
             @csrf
                 <div class="form-group my-5">
                     <div class="container height-100 d-flex justify-content-center align-items-center">

@@ -91,8 +91,13 @@ class AuthController extends Controller
         $request->validate([
             'email' => 'required|email',
             'password' => 'required|min:8',
-            'remember' => 'required',
+            // 'remember' => 'required',
         ]);
+
+        if($request->get('remember') == null){
+            session()->flash('remember');
+            return back();
+        }
 
         if(Auth::attempt($request->only('email', 'password'), $request->get('remember'))){
             if(Auth()->user()->type == 'admin'){

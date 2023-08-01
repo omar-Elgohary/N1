@@ -154,6 +154,17 @@
     </script>
 @endif
 
+@if (session()->has('remember'))
+    <script>
+        window.onload = function() {
+            notif({
+                msg: "{{ __('messages.remember') }}",
+                type: "error"
+            })
+        }
+    </script>
+@endif
+
 <section id="hero" class="d-flex justify-cntent-center align-items-center">
     <div id="heroCarousel" class="container carousel carousel-fade">
         <h3 class="text-white text-center">{{ __('homepage.bigheader') }}</h3>
@@ -249,8 +260,56 @@
 </section>
 </main>
 
+@guest
+
+{{-- loging modal --}}
+<div class="modal fade border-0" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1" dir="rtl">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+        <div class="modal-header">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="margin-right: calc(100% - 30px);"></button>
+        </div>
+
+        <div class="modal-body d-flex justify-content-center">
+            <div class="col-lg-6 mt-5 mt-lg-0 text-center" data-aos-delay="100">
+                <h2 class="text-bold text-center" style="color: #ff8000">{{ __('homepage.login') }}</h2>
+
+                <form action="{{ route('login') }}" method="post" autocomplete="off">
+                    @csrf
+                    <div class="form-group mt-3">
+                        <label class="mb-3">{{ __('homepage.email') }}</label>
+                        <input type="email" class="form-control rounded-0" name="email" @if(isset($_COOKIE['email'])) value="{{$_COOKIE['email']}}" @endif>
+                    </div>
+
+                    <div class="form-group mt-3">
+                        <label class="mb-3">{{ __('homepage.password') }}</label><br>
+                        <div class="position-relative">
+                            <input type="password" class="form-control rounded-0" name="password" id="password" @if(isset($_COOKIE['password'])) value="{{$_COOKIE['password']}}" @endif>
+                            <i class="bi bi-eye-slash" style="position: absolute; left: 10px; top: 30%;" id="togglePassword"></i>
+                        </div>
+                    </div>
+
+                    <div class="form-group mt-2">
+                            <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+                            <label class="form-check-label" for="remember">{{ __('homepage.Remember_Me')}}</label>
+                    </div>
+
+                    <div class="form-group mt-4 text-center mx-auto">
+                        <input type="submit" value="{{ __('homepage.login') }}" class="btn px-5 mb-3" id="login"><br>
+                        <a data-bs-target="#exampleModalToggle2" type="button" data-bs-toggle="modal" style="cursor: pointer;">{{ __('homepage.smalldesc1') }} <span class="text-danger text-decoration-underline">{{ __('homepage.smalldesc2') }}  </span></a>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+@endguest
+
 {{-- انشاء حساب تاجر --}}
-<div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1" dir="rtl">
+<div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggle2Label" tabindex="-1" dir="rtl">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
         <div class="modal-header">
@@ -298,7 +357,10 @@
 
                         <div class="form-group mt-3">
                             <label class="mb-3">{{ __('homepage.password') }}</label>
-                            <input type="password" class="form-control rounded-0" name="password">
+                            <div class="position-relative">
+                                <input type="password" class="form-control rounded-0" name="password" id="re_password">
+                                <i class="bi bi-eye-slash" style="position: absolute; left: 10px; top: 30%;" id="togglePassword2"></i>
+                            </div>
                         </div>
                     </div> <!-- col-6 -->
 
@@ -326,14 +388,16 @@
 
                         <div class="form-group mt-3">
                             <label class="mb-3">{{ __('homepage.confirmPassword') }}</label>
-                            <input type="password" class="form-control rounded-0" name="confirmed_password">
+                            <div class="position-relative">
+                                <input type="password" id="confirmed_password" class="form-control rounded-0" name="confirmed_password">
+                                <i class="bi bi-eye-slash" style="position: absolute; left: 10px; top: 30%;" id="togglePassword3"></i>
+                            </div>
                         </div>
                     </div> <!-- col-6 -->
 
                     <div class="form-group mt-4 text-center">
                         <button type="submit" id="verify" class="btn px-5 mb-3">{{ __('homepage.signup') }}</button><br>
-                        {{-- <a class="btn px-5 mb-3" id="login" data-bs-target="#exampleModalToggle3" data-bs-toggle="modal">انشاء الحساب</a> <br> --}}
-                        <a data-bs-target="#exampleModalToggle" data-bs-toggle="modal" style="cursor: pointer;"> {{ __('homepage.haveaccount') }} <span class="text-danger text-decoration-underline">{{ __('homepage.login') }}</span></a>
+                        <a id="loginbtn" data-bs-target="#exampleModalToggle" type="button" data-bs-toggle="modal" style="cursor: pointer;">{{ __('homepage.haveaccount') }} <span class="text-danger text-decoration-underline">{{ __('homepage.login') }}</span></a>
                     </div>
                 </div>
             </div> <!-- row -->
@@ -344,7 +408,7 @@
 
 
 {{-- Confirm Number --}}
-{{-- <div class="modal fade border-0" id="exampleModalToggle3" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1" dir="rtl">
+{{-- <div class="modal fade border-0" id="exampleModalToggle3" aria-hidden="true" aria-labelledby="exampleModalToggle3Label" tabindex="-1" dir="rtl">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
 
@@ -388,22 +452,15 @@
     </div>
 </div> --}}
 
-
-{{-- @if($signedup == 1)
-    @push('script')
-        <script>
-            $('#verify').on('click', function(event) {
-                $('#exampleModalToggle2').modal('hide');
-                $.ajax({
-                    url: "{{ route('register') }}",
-                    type: 'POST',
-                });
-                $('#exampleModalToggle3').modal('show');
-                event.preventDefault();
-            });
-        </script>
-    @endpush
-@endif --}}
-
-
 @endsection
+
+@push('script')
+    <script>
+        $('#loginbtn').on('click', function(event) {
+            $('#exampleModalToggle2').modal('hide');
+            setTimeout(() => {
+                $('#exampleModalToggle').modal('show');
+            }, 200);
+        });
+    </script>
+@endpush

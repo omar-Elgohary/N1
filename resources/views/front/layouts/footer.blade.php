@@ -67,6 +67,68 @@
 <!-- Template Main JS File -->
 <script src="assets/js/main.js"></script>
 
+<script>
+    window.addEventListener("DOMContentLoaded", function () {
+    const togglePassword = document.querySelector("#togglePassword");
+
+    togglePassword.addEventListener("click", function (e) {
+        // toggle the type attribute
+        const password = document.getElementById("password");
+        const type =
+        password.getAttribute("type") === "password" ? "text" : "password";
+        password.setAttribute("type", type);
+        // toggle the eye / eye slash icon
+        this.classList.toggle("bi-eye");
+    });
+    });
+</script>
+
+<script>
+    window.addEventListener("DOMContentLoaded", function () {
+    const togglePassword = document.querySelector("#togglePassword2");
+
+    togglePassword.addEventListener("click", function (e) {
+        // toggle the type attribute
+        const password = document.getElementById("re_password");
+        const type =
+        password.getAttribute("type") === "password" ? "text" : "password";
+        password.setAttribute("type", type);
+        // toggle the eye / eye slash icon
+        this.classList.toggle("bi-eye");
+    });
+    });
+</script>
+
+<script>
+    window.addEventListener("DOMContentLoaded", function () {
+    const togglePassword = document.querySelector("#togglePassword3");
+
+    togglePassword.addEventListener("click", function (e) {
+        // toggle the type attribute
+        const password = document.getElementById("confirmed_password");
+        const type =
+        password.getAttribute("type") === "password" ? "text" : "password";
+        password.setAttribute("type", type);
+        // toggle the eye / eye slash icon
+        this.classList.toggle("bi-eye");
+    });
+    });
+</script>
+
+<script>
+    $('#verify').on('click', function(event) {
+        $('#exampleModalToggle2').modal('hide');
+        $.ajax({
+            url: "{{ route('register') }}",
+            type: 'POST',
+        });
+        Phone = getElementById('phone').value;
+        consle.log('asd');
+        $('#exampleModalToggle3').modal('show');
+        // event.preventDefault();
+    });
+</script>
+
 @stack('script')
 
 </body>

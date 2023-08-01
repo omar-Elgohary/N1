@@ -25,11 +25,11 @@ Route::group(
     {
         return view('front.home');
     });
-
+    
 Route::controller(AuthController::class)->group(function(){
     Route::post('register', 'register')->name('register');
     Route::post('check', 'check')->name('check');
-    Route::post('login', 'login')->name('login');   
+    Route::post('login', 'login')->name('login');
     Route::get('logOut', 'logOut')->name('logOut');
 });
 

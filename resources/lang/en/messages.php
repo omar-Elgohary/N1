@@ -38,6 +38,7 @@ return [
     'deleteSubCategory' => 'Subcategory deleted successfully',
     'nameRequiredEn' => 'Sub Category English name is required',
     'nameRequiredAr' => 'Sub Category Arabic name is required',
+    'remember' => 'You must check remember me',
 
 
     // Food Menu
