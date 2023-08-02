@@ -1,4 +1,4 @@
-<footer id="footer">
+<footer class="bottom-0" id="footer">
 
 <div class="footer-top">
     <div class="container">
@@ -11,16 +11,16 @@
         </div>
 
         <div class="col-lg-3 col-md-6 footer-info">
-        <div class="social-links mt-3">
-            <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
-            <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
-            <a href="#" class="linkedin"><i class="bx bxl-whatsapp"></i></a>
-            <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
+            <div class="social-links mt-3">
+                <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
+                <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
+                <a href="#" class="linkedin"><i class="bx bxl-whatsapp"></i></a>
+                <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
+            </div>
+                <a href="{{ route('front.questions') }}" class="text-dark">{{ __('homepage.FAQ') }}</a><br>
+                <a href="#" class="text-dark">{{ __('homepage.privacy policy') }}</a><br>
+            </div>
         </div>
-            <a href="{{ route('front.questions') }}" class="text-dark">{{ __('homepage.FAQ') }}</a><br>
-            <a href="#" class="text-dark">{{ __('homepage.privacy policy') }}</a><br>
-        </div>
-    </div>
     </div>
 </div>
 

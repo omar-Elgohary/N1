@@ -8,24 +8,13 @@
     <div class="app col-lg-2 col-md-1">
 		<div class="menu-toggle">
 			<div class="hamburger">
-				<i class="fas fa-regular fa-arrow-right"></i>
+                <i class="fa-solid fa-circle-right"></i>			
 			</div>
 		</div>
+        
 
 
 		<aside class="sidebar">
-            {{-- <div class="dropdown">
-                <a id="year" class="btn d-flex justify-content-around flex-row-reverse" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    2023 <i class="fas fa-regular fa-angle-down mt-1 mx-3"></i>
-                </a>
-
-                <ul class="dropdown-menu text-end">
-                    <li><a class="dropdown-item" href="#">2022</a></li>
-                    <li><a class="dropdown-item" href="#">2021</a></li>
-                    <li><a class="dropdown-item" href="#">2020</a></li>
-                </ul>
-            </div> --}}
-
             <nav class="menu">
                 @foreach([1 => __('homepage.January'), 2 => __('homepage.February'), 3 => __('homepage.March'), 4 => __('homepage.April'), 5 => __('homepage.May'), 6 => __('homepage.June'), 7 => __('homepage.July'), 8 => __('homepage.August'), 9 => __('homepage.September'), 10 => __('homepage.October'), 11 => __('homepage.November'), 12 => __('homepage.December')] as $key => $month)
                     <a href="{{ route('filterRestaurantPurchases', $key) }}" class="menu-item monthes">{{ $month }}</a>
@@ -37,12 +26,12 @@
 
 <section class="container col-lg-10 col-md-11">
     <div class="container">
-    <div class="col-12 d-flex flex-row-reverse p-0">
+        <div class="col-12 p-0" id="rever">
         <div class="col-6 section-title text-end p-0">
             <h2 class="text-black">{{ __('shop.purchases') }}</h2>
         </div>
 
-        <div class="col-6 text-start mb-3">
+        <div class="col-6 mb-3" id="pdfs">
             <a href="{{ route('ExportShopPurchasesPDF') }}" id="pdf" class="btn btn-success"><i class="fa fa-thin fa-print"></i><br><small>PDF</small> </a>
             {{-- <a href="#importData" id="pdf" data-bs-toggle="modal" class="btn btn-success"><i class="fa fa-thin fa-file-excel"></i><br><small>Excel</small> </a> --}}
         </div>
@@ -50,7 +39,7 @@
 
     <div class="text-center">
         <div class="mb-5 restable">
-            <table class="table text-center" dir="rtl">
+            <table class="table text-center" id="tabledir">
                 <thead>
                     <tr>
                         <th>#</th>

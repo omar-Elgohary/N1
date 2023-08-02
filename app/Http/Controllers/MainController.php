@@ -20,12 +20,19 @@ class MainController extends Controller
         return view('front.contact');
     }
 
+
+
     public function store(Request $request)
     {
         $request->validate([
-            'email' => 'required',
+            'email' => 'required|email',
             'name' => 'required',
             'message' => 'required',
+        ],[
+            'email.required' => __('messages.emailrequired'),
+            'email.email' => __('messages.emailtype'),
+            'name.required' => __('messages.namerequired'),
+            'message.required' => __('messages.messagerequired'),
         ]);
 
         ContactUs::create([

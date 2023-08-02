@@ -2,13 +2,14 @@
 @section('content')
 
 @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
+    <script>
+        window.onload = function() {
+            notif({
+                msg: "@foreach($errors->all() as $error) {{ $error }} <br> @endforeach",
+                type: "error"
+            })
+        }
+    </script>
 @endif
 
 @if (session()->has('logout'))
@@ -214,7 +215,7 @@
 <section id="pricing" class="pricing">
     <div class="container">
     <div class="section-title">
-        <h2 class="text-black">{{ __('homepage.Partners') }}</h2>
+        <h2 class="text-black text-center">{{ __('homepage.Partners') }}</h2>
     </div>
 
     <div class="row">

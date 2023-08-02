@@ -64,6 +64,21 @@ return [
     'unDeactiveShopProduct' => 'The product has been successfully deactivated',
     'error' => 'There is an error when register',
 
+    // contact messages
+    'emailrequired' => 'Email field is required',
+    'emailtype' => 'Email should be email type',
+    'namerequired' => 'Name field is required',
+    'messagerequired' => 'Messages field is required',
 
 
+    //registeration
+    'CompanyNameRequired' => 'must enter company name',
+    'DepartmnetRequired' => 'must choose department',
+    'registration_number_required' => 'must enter registration number',
+    'registration_image_required' => 'must enter registration image',
+    'phone_required' => 'must enter phone',
+    'password_required' => 'must enter password',
+    'password_min' => 'must enter password large than 8 numbers',
+    'confirmed_password_required' => 'must enter confirmed password',
+    'confirmed_password_same' => 'must enter confirmed password same password',
 ];

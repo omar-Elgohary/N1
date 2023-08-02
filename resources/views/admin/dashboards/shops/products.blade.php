@@ -70,15 +70,15 @@
 @endif
 
 @section('content')
-<div class="col-12 d-flex flex-row-reverse text-end">
+<div class="col-12 text-end" id="side">
     <div class="app">
 		<div class="menu-toggle">
 			<div class="hamburger">
-				<i class="fas fa-regular fa-arrow-right"></i>
+                <i class="fa-solid fa-circle-right"></i>			
 			</div>
 		</div>
 
-		<aside class="sidebar">
+		<aside class="sidebar"> 
 			<a href="{{ route('shopCategories') }}" class="fw-bold fs-5 text-success mb-5">{{ __('shop.categories') }}</a>
 			<nav class="menu">
                 <a href="{{ route('products') }}" class="menu-item {{ !request('category_id') ? 'is-active' : '' }}">{{ __('shop.all') }}</a>
@@ -95,11 +95,11 @@
 
 <section class="container col-lg-12">
     <div class="col-12 d-flex flex-row-reverse p-0">
-        <div class="col-6 section-title text-end p-0">
+        <div class="col-6 section-title text-start p-0" id="headtitle">
             <h2 class="text-black">{{ __('shop.products_menu') }}</h2>
         </div>
 
-        <div class="col-6 text-start">
+        <div class="col-6 text-start" id="smbtn">
             <a href="{{ route('ExportShopPDF') }}" id="pdf" class="btn btn-success btns">PDF <i class="fa fa-thin fa-print fa-xl"></i></a>
             <a id="login" class="btn btns" data-bs-toggle="modal" href="#importData" role="button">{{ __('restaurent.exportexcel') }}<i class="fa-solid fa-file-excel fa-xl"></i></a>
             <a id="login" class="btn btns" href="{{ route('createShopProduct') }}">{{ __('shop.add_new_product') }}</a>

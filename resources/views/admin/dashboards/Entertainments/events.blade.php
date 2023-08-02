@@ -103,11 +103,11 @@
 @endif
 
 @section('content')
-<div class="col-12 d-flex flex-row-reverse text-end">
+<div class="col-12 text-end" id="side">
     <div class="app">
 		<div class="menu-toggle">
 			<div class="hamburger">
-				<i class="fas fa-regular fa-arrow-right"></i>
+                <i class="fa-solid fa-circle-right"></i>			
 			</div>
 		</div>
 

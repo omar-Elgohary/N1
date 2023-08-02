@@ -36,7 +36,7 @@
     @endif
 <body>
 
-<div class="navhead">
+    <div class="navhead">
     <div class="container d-flex align-items-center justify-content-between">
         <div class="dropdown">
             <button class="btn dropdown-toggle fw-bold border-0" dir="rtl" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -44,12 +44,11 @@
             </button>
 
             <ul class="dropdown-menu text-center border-0" style="background: transparent;">
-                <li><a class="dropdown-item" href="personalInfo">{{ __('staticpage.Profile') }}</a></li>
+                <li><a class="dropdown-item" href="{{ route('personalInfo') }}">{{ __('staticpage.Profile') }}</a></li>
                 <li><a class="dropdown-item text-danger" href="{{route('logOut')}}">{{ __('staticpage.logout') }}</a></li>
             </ul>
         </div>
-        
-        <div class="navhead">
+
             <nav id="navbar" class="navbar" dir="rtl">
             <img class="p-3" src="{{ asset('images/logo.png') }}" alt="logo">
             <ul>
@@ -97,10 +96,12 @@
                         </ul>
                     </div>
                 </li>
-        </nav>
+            </ul>
             <i class="bi bi-list mobile-nav-toggle" style="background-color: #ff8914"></i>
-            </nav><!-- .navbar -->
+        </nav>
         </div>
     </div>
-</div>
+
+
+
 

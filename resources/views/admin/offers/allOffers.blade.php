@@ -103,22 +103,22 @@
 @endif
 
 @section('content')
-<section>
-    <div class="container">
-        <div class="row text-center d-flex flex-row-reverse">
-            <div class="col-lg-6">
-                <h2 class="text-black text-end">{{ __('offers.offers') }}</h2>
-            </div>
+<section class="container col-lg-12">
+    <div class="col-12 d-flex flex-row-reverse p-0">
+        <div class="col-6 section-title text-start p-0" id="headtitle">
+            <h2 class="text-black text-end">{{ __('offers.offers') }}</h2>
+        </div>
 
-            <div class="col-lg-6 text-start">
-                <a href="{{ route('ExportOffersPDF') }}" id="pdf" class="btn btn-success"><i class="fa fa-thin fa-print"></i>PDF</a>
-                <a id="login" class="btn px-4" data-bs-toggle="modal" href="#staticBackdrop" role="button">{{ __('offers.add_offer') }}</a>
-            </div>
-        </div> <!-- row -->
+        <div class="col-6 text-start" id="smbtn">
+            <a href="{{ route('ExportOffersPDF') }}" id="pdf" class="btn btn-success"><i class="fa fa-thin fa-print"></i>PDF</a>
+            <a id="login" class="btn px-4" data-bs-toggle="modal" href="#staticBackdrop" role="button">{{ __('offers.add_offer') }}</a>
+        </div>
+    </div> <!-- row -->
 
         <div class="mt-4">
-            <table class="table text-center" dir="rtl">
-                <thead>
+        <div class="mb-5 restable">
+            <table class="table text-center" dir="rtl">                
+            <thead>
                     <tr>
                         <th>#</th>
                         <th>{{ __('offers.offer_type') }}</th>
@@ -137,7 +137,7 @@
                         <td>{{ $offer->offer_type }}</td>
                         <td>{{ $offer->users_count }}</td>
                         @if ($offer->status == 'مفعل')
-                            <td>
+                            <td class="fw-bold">
                                 @if ($offer->offer_type == 'coupon')
                                     <a href="{{ route('couponDetails', $offer->coupon_id) }}" class="text-success">{{ __('restaurent.available') }}</a>
                                 @else
@@ -145,7 +145,7 @@
                                 @endif
                             </td>
                         @else
-                            <td>
+                            <td class="fw-bold">
                                 @if ($offer->offer_type == 'coupon')
                                     <a href="{{ route('couponDetails', $offer->coupon_id) }}" class="text-danger">{{ __('restaurent.notavailable') }}</a>
                                 @else

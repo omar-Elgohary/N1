@@ -63,4 +63,21 @@ return [
     'unDeactiveShopProduct' => 'تم اعادة نشر المنتج بنجاح',
     'error' => 'هناك خطأ في تسجل الدخول',
 
+    // contact messages
+    'emailrequired' => 'يجب ادخال الايميل',
+    'emailtype' => 'يجب ان يكون المدخل من نوع ايميل',
+    'namerequired' => 'يجب ادخال الاسم',
+    'messagerequired' => 'يجب ادخال نص الرسالة',
+
+
+    //registeration
+    'CompanyNameRequired' => 'يجب ادخال اسم الشركة',
+    'DepartmnetRequired' => 'يجب اختيار القسم',
+    'registration_number_required' => 'يجب ادخال رقم السجل التجاري',
+    'registration_image_required' => 'يجب ادخال صورة السجل التجاري',
+    'phone_required' => 'يجب ادخال رقم الجوال',
+    'password_required' => 'يجب ادخال كلمة المرور',
+    'password_min' => 'يجب ألا تكون كلمة المرور أقل من 8 أرقام',
+    'confirmed_password_required' => 'يجب ادخال كلمة المرور التأكيدية',
+    'confirmed_password_same' => 'يجب أن يكون كلمتا المرور متطابقتان',
 ];

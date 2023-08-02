@@ -4,7 +4,7 @@
 <section id="faq" class="faq section-bg">
     <div class="container">
 
-    <div class="section-title">
+    <div class="section-title" id="quetitle">
         <h2 class="text-black">{{ __('homepage.FAQ') }}</h2>
     </div>
 

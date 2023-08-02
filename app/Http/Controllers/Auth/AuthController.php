@@ -30,7 +30,19 @@ class AuthController extends Controller
             'email' => 'required|unique:users,email',
             'password' => 'required|min:8',
             'confirmed_password' => 'required_with:password|same:password|min:8',
+        ],[
+            'company_name' => __('messages.CompanyNameRequired'),
+            'department_id' => __('messages.DepartmnetRequired'),
+            'commercial_registration_number' => __('messages.registration_number_required'),
+            'commercial_registration_image' => __('messages.registration_image_required'),
+            'phone' => __('messages.phone_required'),
+            'email' => __('messages.emailrequired'),
+            'password' => __('messages.password_required'),
+            'password' => __('messages.password_min'),
+            'confirmed_password' => __('messages.confirmed_password_required'),
+            'confirmed_password' => __('messages.confirmed_password_same'),
         ]);
+
 
         $file_extention = $request->file("commercial_registration_image")->getCLientOriginalExtension();
         $image_name = time(). ".".$file_extention;
@@ -91,13 +103,7 @@ class AuthController extends Controller
         $request->validate([
             'email' => 'required|email',
             'password' => 'required|min:8',
-            // 'remember' => 'required',
         ]);
-
-        if($request->get('remember') == null){
-            session()->flash('remember');
-            return back();
-        }
 
         if(Auth::attempt($request->only('email', 'password'), $request->get('remember'))){
             if(Auth()->user()->type == 'admin'){

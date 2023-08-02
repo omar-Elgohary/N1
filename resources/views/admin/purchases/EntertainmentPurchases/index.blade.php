@@ -8,7 +8,7 @@
     <div class="app">
 		<div class="menu-toggle">
 			<div class="hamburger">
-				<i class="fas fa-regular fa-arrow-right"></i>
+                <i class="fa-solid fa-circle-right"></i>			
 			</div>
 		</div>
 
@@ -25,12 +25,12 @@
 
 <section class="container col-lg-10 col-md-11">
     <div class="container">
-    <div class="col-12 d-flex flex-row-reverse p-0">
-        <div class="col-6 section-title text-end p-0">
+        <div class="col-12 p-0" id="rever">
+            <div class="col-6 section-title text-end p-0">
             <h2 class="text-black">{{ __('events.Reservations') }}</h2>
         </div>
 
-        <div class="col-6 text-start mb-3">
+        <div class="col-6 mb-3" id="pdfs">
             <a href="{{ route('ExportEventPurchasesPDF') }}" id="pdf" class="btn btn-success"><i class="fa fa-thin fa-print"></i><br><small>PDF</small> </a>
             <a href="#" id="pdf" class="btn btn-success"><i class="fa fa-thin fa-file-excel"></i><br><small>Excel</small> </a>
         </div>
@@ -38,7 +38,7 @@
 
     <div class="text-center">
         <div class="mb-5 restable">
-            <table class="table text-center" dir="rtl">
+            <table class="table text-center" id="tabledir">
                 <thead>
                     <tr>
                         <th>#</th>

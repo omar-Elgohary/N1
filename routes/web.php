@@ -14,7 +14,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\OfferController;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
-Route::group(
+Route::group(   
     [
         'prefix' => LaravelLocalization::setLocale(),
         'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]
