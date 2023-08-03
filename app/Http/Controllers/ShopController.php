@@ -77,9 +77,10 @@ class ShopController extends Controller
 
     public function filterShopPurchases($key)
     {
-        $purchases = ShopOrder::whereMonth('created_at', $key)->get();
-        return view('admin.purchases.ShopPurchases.index', compact('purchases'));
+        $orders = ShopOrder::whereMonth('created_at', $key)->get();
+        return view('admin.purchases.ShopPurchases.index', compact('orders'));
     }
+
 
 
 

@@ -114,10 +114,10 @@
             <a id="login" class="btn px-4" data-bs-toggle="modal" href="#staticBackdrop" role="button">{{ __('offers.add_offer') }}</a>
         </div>
     </div> <!-- row -->
-
+    
         <div class="mt-4">
         <div class="mb-5 restable">
-            <table class="table text-center" dir="rtl">                
+            <table class="table text-center" dir="rtl">
             <thead>
                     <tr>
                         <th>#</th>

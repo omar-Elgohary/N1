@@ -2780,7 +2780,7 @@ tr[data-href]{
 
 .sidebar .menu .menu-item:hover,
 .sidebar .menu .menu-item.is-active {
-	color: orange;  
+	color: orange;
 }
 
 
@@ -2809,7 +2809,7 @@ tr[data-href]{
 		position: fixed;
 		top: 0;
 		left: -300px;
-		height: 100vh;  
+		height: 100vh;
 		width: 60%;
 		max-width: 300px;
 		transition: 0.2s linear;
@@ -2826,5 +2826,11 @@ tr[data-href]{
     color: #e57504;
 }
 
+.error {
+    border: 1px solid red;
+}
 
+.error-message {
+    color: red;
+}
 

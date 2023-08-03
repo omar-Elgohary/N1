@@ -36,18 +36,18 @@
     </script>
 @endif
 
-@section('content')
-
 @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
+    <script>
+        window.onload = function() {
+            notif({
+                msg: "@foreach($errors->all() as $error) {{ $error }} <br> @endforeach",
+                type: "error"
+            })
+        }
+    </script>
 @endif
 
+@section('content')
 <section>
     <div class="container">
         <div class="row text-center d-flex flex-row-reverse">
@@ -138,6 +138,12 @@
 
                 <div class="col-lg-6">
                     <div class="form-group mt-3">
+                        <label class="text-black mb-3">{{ __('branches.name_ar') }}</label>
+                        <input type="text" class="form-control rounded-0" name="name_ar" id="arabicNameInput">
+                        <p id="errorText_ar" class="error-message"></p>
+                    </div>
+
+                    <div class="form-group mt-3">
                         <label class="text-black mb-3">{{ __('branches.branche_location') }}</label>
                         <input type="text" class="form-control rounded-0" name="branche_location">
                     </div>
@@ -146,17 +152,13 @@
                         <label class="text-black mb-3">{{ __('branches.phone') }}</label>
                         <input type="text" class="form-control rounded-0" name="phone">
                     </div>
-
-                    <div class="form-group mt-3">
-                        <label class="text-black mb-3">{{ __('homepage.confirmPassword') }}</label>
-                        <input type="password" class="form-control rounded-0" name="password">
-                    </div>
                 </div> <!-- col-4 -->
 
                 <div class="col-lg-6">
                     <div class="form-group mt-3">
-                        <label class="text-black mb-3">{{ __('branches.name') }}</label>
-                        <input type="text" class="form-control rounded-0" name="branche_title">
+                        <label class="text-black mb-3">{{ __('branches.name_en') }}</label>
+                        <input type="text" class="form-control rounded-0" name="name_en" id="englishNameInput">
+                        <p id="errorText_en" class="error-message"></p>
                     </div>
 
                     <div class="form-group mt-3">
@@ -166,6 +168,11 @@
 
                     <div class="form-group mt-3">
                         <label class="text-black mb-3">{{ __('homepage.password') }}</label>
+                        <input type="password" class="form-control rounded-0" name="password">
+                    </div>
+
+                    <div class="form-group mt-3">
+                        <label class="text-black mb-3">{{ __('homepage.confirmPassword') }}</label>
                         <input type="password" class="form-control rounded-0" name="confirmed_password">
                     </div>
                 </div> <!-- col-6 -->
@@ -182,3 +189,4 @@
 </div>
 
 @endsection
+

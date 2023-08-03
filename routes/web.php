@@ -3,6 +3,8 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\ShopController;
+use App\Http\Controllers\erserController;
+use App\Http\Controllers\OfferController;
 use App\Http\Controllers\BranchController;
 use App\Http\Controllers\CouponController;
 use App\Http\Controllers\SellerController;
@@ -11,10 +13,9 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\EntertainmentController;
 use App\Http\Controllers\Admin\CategoryController;
-use App\Http\Controllers\OfferController;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
-Route::group(   
+Route::group(
     [
         'prefix' => LaravelLocalization::setLocale(),
         'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]
@@ -25,7 +26,7 @@ Route::group(
     {
         return view('front.home');
     });
-    
+
 Route::controller(AuthController::class)->group(function(){
     Route::post('register', 'register')->name('register');
     Route::post('check', 'check')->name('check');
@@ -277,6 +278,8 @@ Route::middleware(['CheckEntertainment'])->group(function () {
     Route::get('entertainmentPurchases', [EntertainmentController::class, 'entertainmentPurchases'])->name('entertainmentPurchases');
     Route::get('eventOrderDetails/{id}', [EntertainmentController::class, 'eventOrderDetails'])->name('eventOrderDetails');
     Route::get('ExportEventPurchasesPDF', [EntertainmentController::class, 'ExportEventPurchasesPDF'])->name('ExportEventPurchasesPDF');
+    Route::get('filterEventPurchases/{cat_id}', [EntertainmentController::class, 'filterEventPurchases'])->name('filterEventPurchases');
+    Route::get('ExportEventPurchasesDetailsPDF/{event_id}', [EntertainmentController::class, 'ExportEventPurchasesDetailsPDF'])->name('ExportEventPurchasesDetailsPDF');
 
 }); // CheckEntertainment middleware
 

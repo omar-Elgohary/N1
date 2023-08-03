@@ -80,6 +80,96 @@
     });
 </script>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+    $('#englishNameInput').on('input', function() {
+        var inputText = $(this).val();
+        if (/[\u0600-\u06FF]/.test(inputText)) {
+            inputText == "";
+            $(this).addClass('error');
+            $('#errorText_en').text("{{__('messages.english_letters')}}");
+        } else {
+            $(this).removeClass('error');
+            $('#errorText_en').text('');
+        }
+        var inputText = $(this).reset();
+    });
+});
+
+$(document).ready(function() {
+    $('#arabicNameInput').on('input', function() {
+        var inputText = $(this).val();
+        if (/^[A-Za-z\s]+$/.test(inputText)) {
+            $(this).addClass('error');
+            $('#errorText_ar').text("{{__('messages.arabic_letters')}}");
+        } else {
+            $(this).removeClass('error');
+            $('#errorText_ar').text('');
+        }
+    });
+});
+</script>
+
+
+<script>
+    $(document).ready(function() {
+        $('#englishDescInput').on('input', function() {
+            var inputText = $(this).val();
+            if (/[\u0600-\u06FF]/.test(inputText)) {
+                $(this).addClass('error');
+                $('#errorDesc_en').text("{{__('messages.english_letters')}}");
+            } else {
+                $(this).removeClass('error');
+                $('#errorDesc_en').text('');
+            }
+        });
+    });
+
+    $(document).ready(function() {
+        $('#arabicDescInput').on('input', function() {
+            var inputText = $(this).val();
+            if (/^[A-Za-z\s]+$/.test(inputText)) {
+                $(this).addClass('error');
+                $('#errorDesc_ar').text("{{__('messages.arabic_letters')}}");
+            } else {
+                $(this).removeClass('error');
+                $('#errorDesc_ar').text('');
+            }
+        });
+    });
+</script>
+
+
+<script>
+    $(document).ready(function() {
+        $('#englishSubInput').on('input', function() {
+            var inputText = $(this).val();
+            if (/[\u0600-\u06FF]/.test(inputText)) {
+                $(this).addClass('error');
+                $('#errorSub_en').text("{{__('messages.english_letters')}}");
+            } else {
+                $(this).removeClass('error');
+                $('#errorSub_en').text('');
+            }
+        });
+    });
+
+    $(document).ready(function() {
+        $('#arabicSubInput').on('input', function() {
+            var inputText = $(this).val();
+            if (/^[A-Za-z\s]+$/.test(inputText)) {
+                $(this).addClass('error');
+                $('#errorSub_ar').text("{{__('messages.arabic_letters')}}");
+            } else {
+                $(this).removeClass('error');
+                $('#errorSub_ar').text('');
+            }
+        });
+    });
+    </script>
+
+
 <script>
     $(document).ready(function() {
         $('select[name="category_id"]').on('change', function() {

@@ -36,7 +36,7 @@
     @endif
 <body>
 
-    <div class="navhead">
+<div class="navhead">
     <div class="container d-flex align-items-center justify-content-between">
         <div class="dropdown">
             <button class="btn dropdown-toggle fw-bold border-0" dir="rtl" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -62,7 +62,7 @@
                     <li><a class="nav-link text-black scrollto <?= 'title' == 'الفعاليات' ? 'active' : ''?>" href="{{route('events')}}">{{ __('staticpage.Events') }}</a></li>
                 @endif
 
-                <li><a class="nav-link text-black scrollto <?= 'title' == 'العروض' ? 'active' : ''?>" href="/allOffers">{{ __('staticpage.Offers') }}</a></li>
+                <li><a class="nav-link text-black scrollto <?= 'title' == 'العروض' ? 'active' : ''?>" href="{{route('alloffers')}}">{{ __('staticpage.Offers') }}</a></li>
 
                 @if(auth()->user()->department_id == 1)
                     <li><a class="nav-link text-black scrollto <?= 'title' == 'عمليات الشراء' ? 'active' : ''?>" href="{{route('restaurantPurchases')}}">{{ __('staticpage.Purchases') }}</a></li>

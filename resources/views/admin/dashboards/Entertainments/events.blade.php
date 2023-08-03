@@ -107,7 +107,7 @@
     <div class="app">
 		<div class="menu-toggle">
 			<div class="hamburger">
-                <i class="fa-solid fa-circle-right"></i>			
+                <i class="fa-solid fa-circle-right"></i>
 			</div>
 		</div>
 
@@ -129,7 +129,7 @@
 <section class="container col-lg-12">
     <div class="container">
     <div class="col-lg-12 col-md-10 d-flex flex-row-reverse p-0">
-        <div class="col-6 section-title text-end p-0">
+        <div class="col-6 section-title text-start p-0" id="headtitle">
             <h2 class="text-black">{{ __('events.List_of_events') }}</h2>
         </div>
 
@@ -230,14 +230,16 @@
 
             <form action="{{ route('createEntertainmentCategory') }}" method="post">
                 @csrf
-                <div class="modal-body mb-2">
+                <div class="modal-body">
                     <h4 class="text-end">{{ __('restaurent.category_name_ar') }}</h4>
-                    <input type="text" name="name_ar" class="form-control rounded-0">
+                    <input type="text" name="name_ar" id="arabicNameInput" class="form-control mb-2 rounded-0">
+                    <p id="errorText_ar" class="error-message"></p>
                 </div>
 
-                <div class="modal-body mb-3">
+                <div class="modal-b mb-3">
                     <h4 class="text-end">{{ __('restaurent.category_name_en') }}</h4>
-                    <input type="text" name="name_en" class="form-control rounded-0">
+                    <input type="text" name="name_en" id="englishNameInput" class="form-control mb-2 rounded-0">
+                    <p id="errorText_en" class="error-message"></p>
                 </div>
 
                 <div class="d-flex justify-content-around mb-5">
@@ -308,8 +310,8 @@
 
         <form action="{{ route('addSubCategory') }}" method="POST">
         @csrf
-            <div class="modal-body my-3">
-                <h4 class="text-end">{{ __('restaurent.category_name') }}</h4>
+        <div class="modal-body my-2">
+            <h4 class="text-end">{{ __('restaurent.category_name') }}</h4>
                 <select name="category_id" class="form-control rounded-0 mb-4 mt-2 @error('category_id') is-invalid @enderror">
                     <option value="" selected disabled>{{ __('restaurent.choose_category') }}</option>
                     @foreach (\App\Models\Category::where('department_id', auth()->user()->department_id)->get() as $category)
@@ -318,10 +320,12 @@
                 </select>
 
                 <h4 class="text-end">{{ __('restaurent.sub_category_ar') }}</h4>
-                <input type="text" name="name_ar" class="form-control rounded-0 mb-4 mt-2 @error('name_ar') is-invalid @enderror">
+                <input type="text" name="name_ar" id="arabicSubInput" class="form-control rounded-0 mb-4 mt-2 @error('name_ar') is-invalid @enderror">
+                <p id="errorSub_ar" class="error-message"></p>
 
                 <h4 class="text-end">{{ __('restaurent.sub_category_en') }}</h4>
-                <input type="text" name="name_en" class="form-control rounded-0 mb-4 mt-2 @error('name_en') is-invalid @enderror">
+                <input type="text" name="name_en" id="englishSubInput" class="form-control rounded-0 mb-4 mt-2 @error('name_en') is-invalid @enderror">
+                <p id="errorSub_en" class="error-message"></p>
             </div>
 
             <div class="d-flex justify-content-around mb-5">

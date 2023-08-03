@@ -81,4 +81,11 @@ return [
     'password_min' => 'must enter password large than 8 numbers',
     'confirmed_password_required' => 'must enter confirmed password',
     'confirmed_password_same' => 'must enter confirmed password same password',
+
+
+    //create branch
+    'name_required' => 'must enter branche title',
+
+    'english_letters' => 'Please enter only English letters',
+    'arabic_letters' => 'Please enter only Arabic letters',
 ];

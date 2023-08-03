@@ -12,6 +12,7 @@ return new class extends Migration
             $table->string('random_id');
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->foreignId('department_id')->constrained('departments')->cascadeOnDelete();
+            $table->foreignId('category_id')->constrained('categories')->cascadeOnDelete();
             $table->foreignId('event_id')->constrained('events')->cascadeOnDelete();
             $table->foreignId('offer_id')->nullable()->constrained('offers')->cascadeOnDelete();
             $table->string('tickets_count');

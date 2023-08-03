@@ -74,6 +74,15 @@ class EntertainmentController extends Controller
 
 
 
+    public function filterEventPurchases($cat_id)
+    {
+        $orders = EventOrder::where('category_id', $cat_id)->get();
+        return view('admin.purchases.EntertainmentPurchases.index', compact('orders'));
+    }
+
+
+
+
     // SubCategories
     public function eventSubCategories($id)
     {
@@ -371,6 +380,18 @@ class EntertainmentController extends Controller
     }
 
 
+
+    public function ExportEventPurchasesDetailsPDF($event_id)
+    {
+        $order  = EventOrder::find($event_id);
+        $data = [
+            'title' => 'Welcome to N1.com',
+            'date' => date('m/d/Y'),
+            'order' => $order
+        ];
+        $pdf = PDF::loadView('pdf.eventPurchaseDetails', $data);
+        return $pdf->download('eventPurchaseDetails.pdf');
+    }
 
 
 

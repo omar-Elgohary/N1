@@ -47,22 +47,26 @@
 
                 <div class="form-group">
                     <label>{{ __('restaurent.name_en') }}</label>
-                    <input type="text" name="name_en" value="{{ $product->nameLocale('en') }}" class="form-control rounded-0 mb-4 mt-2">
+                    <input type="text" name="name_en" id="englishNameInput" value="{{ $product->nameLocale('en') }}" class="form-control rounded-0 mb-4 mt-2">
+                    <p id="errorText_en" class="error-message"></p>
                 </div> <!-- 3 -->
-
+                
                 <div class="form-group">
                     <label>{{ __('restaurent.name_ar') }}</label>
-                    <input type="text" name="name_ar" value="{{ $product->nameLocale('ar') }}" class="form-control rounded-0 mb-4 mt-2">
+                    <input type="text" name="name_ar" id="arabicNameInput" value="{{ $product->nameLocale('ar') }}" class="form-control rounded-0 mb-4 mt-2">
+                    <p id="errorText_ar" class="error-message"></p>
                 </div> <!-- 4 -->
 
                 <div class="form-group">
                     <label>{{ __('restaurent.description_en') }}</label>
-                    <input type="text" name="description_en" value="{{ $product->descriptionLocale('en') }}" class="form-control rounded-0 mb-4 mt-2">
+                    <input type="text" name="description_en" id="englishDescInput" value="{{ $product->descriptionLocale('en') }}" class="form-control rounded-0 mb-4 mt-2">
+                    <p id="errorDesc_en" class="error-message"></p>
                 </div> <!-- 5 -->
 
                 <div class="form-group">
                     <label>{{ __('restaurent.description_ar') }}</label>
-                    <input type="text" name="description_ar" value="{{ $product->descriptionLocale('ar') }}" class="form-control rounded-0 mb-4 mt-2">
+                    <input type="text" name="description_ar" id="arabicDescInput" value="{{ $product->descriptionLocale('ar') }}" class="form-control rounded-0 mb-4 mt-2">
+                    <p id="errorDesc_ar" class="error-message"></p>
                 </div> <!-- 6 -->
 
                 <div class="form-group">

@@ -4,20 +4,20 @@
 @endsection
 
 @section('content')
-<div class="col-12 d-flex flex-row-reverse text-end">
+
+<div class="col-12 text-end" id="side">
     <div class="app col-lg-2 col-md-1">
 		<div class="menu-toggle">
 			<div class="hamburger">
-                <i class="fa-solid fa-circle-right"></i>			
+                <i class="fa-solid fa-circle-right"></i>
 			</div>
 		</div>
-        
-
 
 		<aside class="sidebar">
             <nav class="menu">
+                <a href="{{ route('shopPurchases') }}" class="menu-item {{ !request('key') ? 'is-active' : '' }}">{{ __('restaurent.all') }}</a>
                 @foreach([1 => __('homepage.January'), 2 => __('homepage.February'), 3 => __('homepage.March'), 4 => __('homepage.April'), 5 => __('homepage.May'), 6 => __('homepage.June'), 7 => __('homepage.July'), 8 => __('homepage.August'), 9 => __('homepage.September'), 10 => __('homepage.October'), 11 => __('homepage.November'), 12 => __('homepage.December')] as $key => $month)
-                    <a href="{{ route('filterRestaurantPurchases', $key) }}" class="menu-item monthes">{{ $month }}</a>
+                    <a href="{{ route('filterShopPurchases', $key) }}" class="menu-item monthes {{ request('key') == $key ? 'is-active' : '' }}">{{ $month }}</a>
                 @endforeach
 			</nav>
 		</aside>
@@ -53,7 +53,7 @@
                     </tr>
                 </thead>
 
-                @forelse(\App\Models\ShopOrder::where('department_id', auth()->user()->department_id)->get() as $order)
+                @forelse($orders as $order)
                 <tbody>
                     <tr>
                         <th>{{$order->random_id}}</th>

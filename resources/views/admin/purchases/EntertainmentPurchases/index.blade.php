@@ -4,35 +4,36 @@
 @endsection
 
 @section('content')
-<div class="col-12 d-flex flex-row-reverse text-end">
+<div class="col-12 text-end" id="side">
     <div class="app">
 		<div class="menu-toggle">
 			<div class="hamburger">
-                <i class="fa-solid fa-circle-right"></i>			
+                <i class="fa-solid fa-circle-right"></i>
 			</div>
 		</div>
 
 		<aside class="sidebar">
 			<h3 class="text-black">{{ __('events.events') }}</h3>
 			<nav class="menu">
+                <a href="{{ route('entertainmentPurchases') }}" class="menu-item {{ !request('cat_id') ? 'is-active' : ''}}">{{ __('restaurent.all') }}</a>
                 @foreach (\App\Models\Category::where('department_id', auth()->user()->department_id)->get() as $category)
-                    <a href="#" class="menu-item is-active">{{ $category->name }}</a>
+                    <a href="{{ route('filterEventPurchases', $category->id) }}" class="menu-item {{request('cat_id') == $category->id ? 'is-active' : ''}}">{{ $category->name }}</a>
                 @endforeach
 			</nav>
 		</aside>
 	</div>
 
 
-<section class="container col-lg-10 col-md-11">
-    <div class="container">
-        <div class="col-12 p-0" id="rever">
-            <div class="col-6 section-title text-end p-0">
-            <h2 class="text-black">{{ __('events.Reservations') }}</h2>
+    <section class="container col-lg-10 col-md-11">
+        <div class="container">
+        <div class="col-12 d-flex flex-row-reverse p-0">
+            <div class="col-6 section-title text-end p-0" id="headtitle">
+                <h2 class="text-black">{{ __('events.Reservations') }}</h2>
         </div>
 
-        <div class="col-6 mb-3" id="pdfs">
+        <div class="col-6 text-start mb-3">
             <a href="{{ route('ExportEventPurchasesPDF') }}" id="pdf" class="btn btn-success"><i class="fa fa-thin fa-print"></i><br><small>PDF</small> </a>
-            <a href="#" id="pdf" class="btn btn-success"><i class="fa fa-thin fa-file-excel"></i><br><small>Excel</small> </a>
+            {{-- <a href="#" id="pdf" class="btn btn-success"><i class="fa fa-thin fa-file-excel"></i><br><small>Excel</small> </a> --}}
         </div>
     </div> <!-- col-12 -->
 

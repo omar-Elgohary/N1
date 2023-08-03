@@ -19,12 +19,21 @@ class BranchController extends Controller
     public function createBranche(Request $request)
     {
         $request->validate([
-            'branche_title' => 'required',
+            'name' => 'required',
             'branche_location' => 'bail|nullable',
             'phone' => 'required',
             'email' => 'required|email',
-            'password' => 'required|min:6',
-            'confirmed_password' => 'required_with:password|same:password|min:6'
+            'password' => 'required|min:8',
+            'confirmed_password' => 'required_with:password|same:password'
+        ],[
+            'name.required' => __('messages.name_required'),
+            'phone.required' => __('messages.phone_required'),
+            'email.required' => __('messages.emailrequired'),
+            'email.email' => __('messages.emailtype'),
+            'password.required' => __('messages.password_required'),
+            'password.min' => __('messages.password_min'),
+            'confirmed_password.required' => __('messages.confirmed_password_required'),
+            'confirmed_password.same' => __('messages.confirmed_password_same'),
         ]);
 
         $random_id = strtoupper('#'.substr(str_shuffle(uniqid()),0,4));
@@ -34,7 +43,11 @@ class BranchController extends Controller
 
         Branch::create([
             'random_id' => $random_id,
-            'branche_title' => $request->branche_title,
+            'department_id' => auth()->user()->department_id,
+            'name' => [
+                'en'=> $request->name_en,
+                'ar'=> $request->name_ar,
+            ],
             'branche_location' => $request->branche_location,
             'phone'=> $request->phone,
             'email' => $request->email,
@@ -67,7 +80,7 @@ class BranchController extends Controller
 
         $branch = Branch::find($id);
         $branch->update([
-            'branche_title' => $request->branche_title,
+            'name' => $request->name,
             'branche_location' => $request->branche_location,
             'email' => $request->email,
             'phone' => $request->phone,

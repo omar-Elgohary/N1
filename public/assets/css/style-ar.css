@@ -2793,3 +2793,14 @@ tr[data-href]{
 #quetitle{
     text-align: end;
 }
+
+
+/* input english - arabic */
+.error {
+    border: 1px solid red;
+}
+
+.error-message {
+    color: red;
+}
+

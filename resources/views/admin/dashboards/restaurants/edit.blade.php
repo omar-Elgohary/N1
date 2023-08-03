@@ -47,25 +47,29 @@
 
                 <div class="form-group">
                     <label>{{ __('restaurent.name_ar') }}</label>
-                    <input type="text" name="name_ar" value="{{ $product->nameLocale('ar') }}" class="form-control rounded-0 mb-4 mt-2 @error('name_ar') is-invalid @enderror">
+                    <input type="text" name="name_ar" id="arabicNameInput" value="{{ $product->nameLocale('ar') }}" class="form-control rounded-0 mb-4 mt-2 @error('name_ar') is-invalid @enderror">
+                    <p id="errorText_ar" class="error-message"></p>
                     @error('name_ar')<div class="alert alert-danger">{{ $message }}</div>@enderror
                 </div> <!-- 2 -->
 
                 <div class="form-group">
                     <label>{{ __('restaurent.name_en') }}</label>
-                    <input type="text" name="name_en" value="{{ $product->nameLocale('en') }}" class="form-control rounded-0 mb-4 mt-2 @error('name_en') is-invalid @enderror">
+                    <input type="text" name="name_en" id="englishNameInput" value="{{ $product->nameLocale('en') }}" class="form-control rounded-0 mb-4 mt-2 @error('name_en') is-invalid @enderror">
+                    <p id="errorText_en" class="error-message"></p>
                     @error('name_en')<div class="alert alert-danger">{{ $message }}</div>@enderror
                 </div> <!-- 3 -->
 
                 <div class="form-group">
                     <label>{{ __('restaurent.description_ar') }}</label>
-                    <input type="text" name="description_ar" value="{{ $product->descriptionLocale('ar') }}" class="form-control rounded-0 mb-4 mt-2 @error('description_ar') is-invalid @enderror">
+                    <input type="text" name="description_ar" id="arabicDescInput" value="{{ $product->descriptionLocale('ar') }}" class="form-control rounded-0 mb-4 mt-2 @error('description_ar') is-invalid @enderror">
+                    <p id="errorDesc_ar" class="error-message"></p>
                     @error('description_ar')<div class="alert alert-danger">{{ $message }}</div>@enderror
                 </div> <!-- 4 -->
 
                 <div class="form-group">
                     <label>{{ __('restaurent.description_en') }}</label>
-                    <input type="text" name="description_en" value="{{ $product->descriptionLocale('en') }}" class="form-control rounded-0 mb-4 mt-2 @error('description_en') is-invalid @enderror">
+                    <input type="text" name="description_en" id="englishDescInput" value="{{ $product->descriptionLocale('en') }}" class="form-control rounded-0 mb-4 mt-2 @error('description_en') is-invalid @enderror">
+                    <p id="errorDesc_en" class="error-message"></p>
                     @error('description_en')<div class="alert alert-danger">{{ $message }}</div>@enderror
                 </div> <!-- 5 -->
 

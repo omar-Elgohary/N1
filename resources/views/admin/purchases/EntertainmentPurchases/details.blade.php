@@ -12,7 +12,7 @@
             </div>
 
             <div class="col-6 text-start">
-                <a href="#" id="pdf" class="btn btn-success"><i class="fa fa-thin fa-print"></i><br><small>PDF</small> </a>
+                <a href="{{route('ExportEventPurchasesDetailsPDF', $order->id)}}" id="pdf" class="btn btn-success"><i class="fa fa-thin fa-print"></i><br><small>PDF</small> </a>
                 {{-- <a href="#" id="pdf" class="btn btn-success"><i class="fa fa-thin fa-file-excel"></i><br><small>Excel</small> </a> --}}
             </div>
         </div> <!-- col-12 -->

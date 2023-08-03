@@ -80,4 +80,11 @@ return [
     'password_min' => 'يجب ألا تكون كلمة المرور أقل من 8 أرقام',
     'confirmed_password_required' => 'يجب ادخال كلمة المرور التأكيدية',
     'confirmed_password_same' => 'يجب أن يكون كلمتا المرور متطابقتان',
+
+
+    //create branch
+    'name_required' => 'يجب ادخال اسم الفرع',
+
+    'english_letters' => 'الرجاء إدخال الأحرف الإنجليزية فقط',
+    'arabic_letters' => 'الرجاء إدخال الأحرف العربية فقط',
 ];
