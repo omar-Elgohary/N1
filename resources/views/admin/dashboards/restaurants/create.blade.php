@@ -79,7 +79,7 @@
 
                 <div class="form-group">
                     <label>{{ __('restaurent.price') }}</label>
-                    <input type="text" name="price" placeholder="ريال سعودي" class="form-control rounded-0 mb-4 mt-2 @error('price') is-invalid @enderror">
+                    <input type="text" name="price" placeholder="{{__('restaurent.SAR')}}" class="form-control rounded-0 mb-4 mt-2 @error('price') is-invalid @enderror">
                     @error('price')<div class="alert alert-danger">{{ $message }}</div>@enderror
                 </div> <!-- 5 -->
 

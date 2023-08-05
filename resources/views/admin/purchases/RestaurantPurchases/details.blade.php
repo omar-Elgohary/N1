@@ -3,17 +3,39 @@
     {{ __('restaurent.purchases_details') }}
 @endsection
 
+@if (session()->has('processing'))
+    <script>
+        window.onload = function() {
+            notif({
+                msg: "{{ __('messages.processing') }}",
+                type: "warining"
+            })
+        }
+    </script>
+@endif
+
+@if (session()->has('recived'))
+    <script>
+        window.onload = function() {
+            notif({
+                msg: "{{ __('messages.recived') }}",
+                type: "success"
+            })
+        }
+    </script>
+@endif
+
 @section('content')
 <section>
     <div class="container mt-2" dir="rtl">
         <div class="col-12 d-flex p-0">
-            <div class="col-6 section-title text-end p-0">
+            <div class="col-6 p-0">
                 <h2 class="text-black">{{ __('restaurent.purchases_details') }}</h2>
             </div>
 
-            <div class="col-6 text-start mb-3">
-                <a href="#" id="pdf" class="btn btn-success"><i class="fa fa-thin fa-print"></i><br><small>PDF</small> </a>
-                <a href="#" id="pdf" class="btn btn-success"><i class="fa fa-thin fa-file-excel"></i><br><small>Excel</small> </a>
+            <div class="col-6 text-start">
+                <a href="{{ route('ExportrestaurentPurchasesDetailsPDF', $purchase->id) }}" id="pdf" class="btn btn-success"><i class="fa fa-thin fa-print"></i><br><small>PDF</small> </a>
+                {{-- <a href="#" id="pdf" class="btn btn-success"><i class="fa fa-thin fa-file-excel"></i><br><small>Excel</small> </a> --}}
             </div>
         </div> <!-- col-12 -->
 

@@ -88,4 +88,9 @@ return [
 
     'english_letters' => 'Please enter only English letters',
     'arabic_letters' => 'Please enter only Arabic letters',
+
+
+    // purchases
+    'processing' => 'Status changes successfully to processing',
+    'recived' => 'Status changes successfully to recived',
 ];

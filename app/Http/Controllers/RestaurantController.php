@@ -456,10 +456,12 @@ class RestaurantController extends Controller
             $order->update([
                 'order_status' => 'قيد التجهيز'
             ]);
+            session()->flash('processing');
         }elseif($order->order_status == 'قيد التجهيز'){
             $order->update([
                 'order_status' => 'تم الاستلام'
             ]);
+            session()->flash('recived');
         }
         return back();
     }
@@ -539,6 +541,21 @@ class RestaurantController extends Controller
         $pdf = PDF::loadView('pdf.restaurentPurchases', $data);
         return $pdf->download('restaurentPurchases.pdf');
     }
+
+
+
+    public function ExportrestaurentPurchasesDetailsPDF($product_id)
+    {
+        $purchase  = restaurentOrder::find($product_id);
+        $data = [
+            'title' => 'Welcome to N1.com',
+            'date' => date('m/d/Y'),
+            'purchase' => $purchase
+        ];
+        $pdf = PDF::loadView('pdf.restaurentPurchaseDetails', $data);
+        return $pdf->download('restaurentPurchaseDetails.pdf');
+    }
+
 
 
     // Excel

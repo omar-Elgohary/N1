@@ -256,7 +256,8 @@ Route::middleware(['CheckRestaurent'])->group(function () {
     Route::get('changePurchaseStatus/{id}', [RestaurantController::class, 'changePurchaseStatus'])->name('changePurchaseStatus');
     Route::get('ExportrestaurantPurchasesPDF', [RestaurantController::class, 'ExportrestaurantPurchasesPDF'])->name('ExportrestaurantPurchasesPDF');
     Route::get('filterRestaurantPurchases/{key}', [RestaurantController::class, 'filterRestaurantPurchases'])->name('filterRestaurantPurchases');
-
+    Route::get('ExportrestaurentPurchasesDetailsPDF/{product_id}', [RestaurantController::class, 'ExportrestaurentPurchasesDetailsPDF'])->name('ExportrestaurentPurchasesDetailsPDF');
+    
 }); // CheckRestaurent middleware
 ###############################################################################################################################
 

@@ -65,7 +65,7 @@
                     <p id="errorDesc_ar" class="error-message"></p>
                     @error('description_ar')<div class="alert alert-danger">{{ $message }}</div>@enderror
                 </div> <!-- 4 -->
-
+                
                 <div class="form-group">
                     <label>{{ __('restaurent.description_en') }}</label>
                     <input type="text" name="description_en" id="englishDescInput" value="{{ $product->descriptionLocale('en') }}" class="form-control rounded-0 mb-4 mt-2 @error('description_en') is-invalid @enderror">
