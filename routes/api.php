@@ -5,18 +5,22 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\HomeController;
 use App\Http\Controllers\MainController;
 
-// Route::middleware('auth:sanctum')->group(function () {
 
-    // Auth
-    Route::post('/auth/register', [AuthController::class, 'register']);
-    Route::post('/auth/login', [AuthController::class, 'login']);
-    Route::post('/auth/check', [AuthController::class, 'check']);
+// Auth
+Route::post('/auth/register', [AuthController::class, 'register']);
+Route::post('/auth/login', [AuthController::class, 'login']);
+Route::post('/auth/check', [AuthController::class, 'check']);
 
+
+
+Route::middleware('auth:sanctum')->group(function(){
 
     // HomePage
     Route::get('home', [HomeController::class, 'home']);
+    Route::get('restaurentProducts', [HomeController::class, 'restaurentProducts']);
+    Route::get('shopProducts', [HomeController::class, 'shopProducts']);
+    Route::get('EventProducts', [HomeController::class, 'EventProducts']);
 
 
-
-// });
+});
 
