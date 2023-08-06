@@ -52,13 +52,14 @@ class AuthController extends Controller
                 'type' => 'user',
             ]);
 
-            $request = new \Vonage\Verify\Request("+201015696025", "N1 Project");
-            $response = $this->client->verify()->start($request);
-            $requestId = $response->getRequestId();
+            // $request = new \Vonage\Verify\Request("+201015696025", "N1 Project");
+            // $response = $this->client->verify()->start($request);
+            // $requestId = $response->getRequestId();
 
             return response()->json([
                 'status' => true,
-                'message' => 'User Created Successfully You Must Verify Your Phone',
+                'message' => 'User Created Successfully`',
+                'token' => $user->createToken("API TOKEN")->plainTextToken
             ], 200);
 
         }catch (\Throwable $th){
@@ -117,6 +118,13 @@ class AuthController extends Controller
                     'errors' => $validateUser->errors()
                 ], 401);
             }
+
+            // if(!Auth::attempt($request->only(['country_code']))){
+            //     return response()->json([
+            //         'status' => false,
+            //         'message' => 'You Must Choose Your Correct Country Code.',
+            //     ], 401);
+            // }
 
             if(!Auth::attempt($request->only(['phone', 'password']))){
                 return response()->json([
