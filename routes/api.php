@@ -5,7 +5,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\HomeController;
 use App\Http\Controllers\MainController;
 
-Route::middleware('auth:sanctum')->group(function () {
+// Route::middleware('auth:sanctum')->group(function () {
 
     // Auth
     Route::post('/auth/register', [AuthController::class, 'register']);
@@ -18,5 +18,5 @@ Route::middleware('auth:sanctum')->group(function () {
 
 
 
-});
+// });
 
