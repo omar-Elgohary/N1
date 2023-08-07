@@ -25,7 +25,7 @@
 
             <div class="drop-zone">
                 <span class="drop-zone__prompt">{{ __('restaurent.upload_photo') }}</span>
-                <input type="file" name="event_image" class="drop-zone__input" multiple>
+                <input type="file" name="product_image" class="drop-zone__input" multiple>
             </div>
 
             <div class="col-lg-4 mt-3">
@@ -82,8 +82,8 @@
 
                 <div class="form-group">
                     <label>{{ __('events.tickets_number') }}</label>
-                    <input type="text" name="tickets_quantity" class="form-control rounded-0 mb-4 mt-2 @error('tickets_quantity') is-invalid @enderror">
-                    @error('tickets_quantity')<div class="alert alert-danger">{{ $message }}</div>@enderror
+                    <input type="text" name="quantity" class="form-control rounded-0 mb-4 mt-2 @error('quantity') is-invalid @enderror">
+                    @error('quantity')<div class="alert alert-danger">{{ $message }}</div>@enderror
                 </div> <!-- 8 -->
 
 

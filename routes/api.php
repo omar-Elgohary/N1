@@ -19,7 +19,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('home', [HomeController::class, 'home']);
     Route::get('restaurentProducts', [HomeController::class, 'restaurentProducts']);
     Route::get('shopProducts', [HomeController::class, 'shopProducts']);
-    Route::get('EventProducts', [HomeController::class, 'EventProducts']);
+    Route::get('eventProducts', [HomeController::class, 'eventProducts']);
 
 
 });

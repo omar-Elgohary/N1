@@ -13,7 +13,7 @@ return new class extends Migration
             $table->foreignId('department_id')->constrained('departments')->cascadeOnDelete();
             $table->foreignId('category_id')->constrained('categories')->cascadeOnDelete();
             $table->foreignId('sub_category_id')->constrained('sub_categories')->cascadeOnDelete();
-            $table->string('event_image');
+            $table->string('product_image');
             $table->json('name');
             $table->json('description');
             $table->string('ticket_price');
@@ -23,9 +23,9 @@ return new class extends Migration
             $table->time('reservation_time');
             $table->date('start_reservation_date');
 
-            $table->string('tickets_quantity');
-            $table->string('tickets_sold_quantity')->nullable()->default(0);
-            $table->string('tickets_remaining_quantity')->nullable();
+            $table->string('quantity');
+            $table->string('sold_quantity')->nullable()->default(0);
+            $table->string('remaining_quantity')->nullable();
             $table->timestamps();
         });
     }

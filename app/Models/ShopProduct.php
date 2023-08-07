@@ -86,4 +86,10 @@ class ShopProduct extends Model
     {
         return $this->hasMany(Color::class);
     }
+
+
+    public function rates()
+    {
+        return $this->hasMany(Rate::class);
+    }
 }

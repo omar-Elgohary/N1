@@ -121,7 +121,7 @@
 		<div class="invoice-box">
 			<table cellpadding="0" cellspacing="0">
 				<tr class="top">
-					<td colspan="2">    
+					<td colspan="2">
 						<table>
 							<tr>
 								<td class="title">
@@ -171,12 +171,12 @@
                                 <td class="fw-bold">{{ $event->subCategory->name }}</td>
                                 <td>{{ $event->start_reservation_date }}</td>
                                 <td>{{ $event->ticket_price }}</td>
-                                <td>{{ $event->tickets_sold_quantity }} / {{ $event->tickets_quantity }}</td>
+                                <td>{{ $event->sold_quantity }} / {{ $event->quantity }}</td>
                             </tr>
                         @empty
                             <tr>
                                 <th class="text-danger" colspan="10">
-                                    {{ __('restaurent.nodata') }} 
+                                    {{ __('restaurent.nodata') }}
                                 </th>
                             </tr>
                         @endforelse

@@ -168,11 +168,11 @@ class EntertainmentController extends Controller
         $this->validate($request, [
             'category_id' => 'required',
             'sub_category_name' => 'required',
-            'event_image' => 'required',
+            'product_image' => 'required',
             'event_name' => 'required',
             'description' => 'required',
             'ticket_price' => 'required|numeric',
-            'tickets_quantity' => 'required|numeric',
+            'quantity' => 'required|numeric',
             'reservations_type_id' => 'required',
             'reservation_date' => 'required',
             'reservation_time' => 'required',
@@ -184,9 +184,9 @@ class EntertainmentController extends Controller
             $random_id = strtoupper('#'.substr(str_shuffle(uniqid()),0,4));
         }
 
-        $file_extention = $request->file("event_image")->getCLientOriginalExtension();
+        $file_extention = $request->file("product_image")->getCLientOriginalExtension();
         $image_name = time(). ".".$file_extention;
-        $request->file("event_image")->move(public_path('assets/images/products/'), $image_name);
+        $request->file("product_image")->move(public_path('assets/images/products/'), $image_name);
 
         $reservation_types = implode(',', $request->reservations_type_id);
 
@@ -196,14 +196,14 @@ class EntertainmentController extends Controller
         Event::create([
             'random_id' => $random_id,
             'department_id' => auth()->user()->department_id,
-            'event_image' => $image_name,
+            'product_image' => $image_name,
             'category_id' => $request->category_id,
             'sub_category_id' => $element,
             'event_name' => $request->event_name,
             'description' => $request->description,
             'ticket_price' => $request->ticket_price,
-            'tickets_quantity' => $request->tickets_quantity,
-            'tickets_remaining_quantity' => ($request->tickets_quantity - $request->tickets_sold_quantity),
+            'quantity' => $request->quantity,
+            'remaining_quantity' => ($request->quantity - $request->sold_quantity),
             'reservations_type_id' => $reservation_types,
             'reservation_date' => $request->reservation_date,
             'reservation_time' => $request->reservation_time,
@@ -230,17 +230,17 @@ class EntertainmentController extends Controller
     {
         $event = Event::find($id);
 
-        if($request->hasFile('event_image'))
+        if($request->hasFile('product_image'))
         {
             $oldImage = 'assets/images/products/'.$event->image;
             if(File::exists($oldImage))
             {
                 File::delete($oldImage);
             }
-            $file_extention = $request->file("event_image")->getCLientOriginalExtension();
+            $file_extention = $request->file("product_image")->getCLientOriginalExtension();
             $newImage = time(). "." .$file_extention;
-            $request->file("event_image")->move(public_path('assets/images/products/'), $newImage);
-            $event->event_image = $newImage;
+            $request->file("product_image")->move(public_path('assets/images/products/'), $newImage);
+            $event->product_image = $newImage;
         }
 
         $reservation_types = implode(',', $request->reservations_type_id);
@@ -249,13 +249,13 @@ class EntertainmentController extends Controller
         $event->update([
             'category_id' => $request->category_id,
             'sub_category_id' => $subCatName,
-            'event_image' => $event->event_image,
+            'product_image' => $event->product_image,
             'event_name' => $request->event_name,
             'description' => $request->description,
             'ticket_price' => $request->ticket_price,
-            'tickets_quantity' => $request->tickets_quantity,
-            'tickets_sold_quantity' => $request->tickets_sold_quantity,
-            'tickets_remaining_quantity' => ($request->tickets_quantity - $request->tickets_sold_quantity),
+            'quantity' => $request->quantity,
+            'sold_quantity' => $request->sold_quantity,
+            'remaining_quantity' => ($request->quantity - $request->sold_quantity),
             'reservations_type_id' => $reservation_types,
             'reservation_date' => $request->reservation_date,
             'reservation_time' => $request->reservation_time,

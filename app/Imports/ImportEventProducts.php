@@ -16,7 +16,7 @@ class ImportEventProducts implements ToModel
             'department_id' => (int) $row[1],
             'category_id' => (int) $row[2],
             'sub_category_id' => (int) $row[3],
-            'event_image' => $row[4],
+            'product_image' => $row[4],
             'name' => [
                 'en' => $row[5],
                 'ar' => $row[6],
@@ -24,7 +24,7 @@ class ImportEventProducts implements ToModel
             'description' => [
                 'en' => $row[7],
                 'ar' => $row[8],
-            ],            
+            ],
             'ticket_price' => (int) $row[9],
             'reservations_type_id' => (int) $row[10],
             'status' => $row[11],
@@ -32,9 +32,9 @@ class ImportEventProducts implements ToModel
             // 'reservation_time' => date('h:i:s', strtotime($row[13])),
             'reservation_time' => $row[13],
             'start_reservation_date' => date('Y-m-d H:i:s' , strtotime($row[14])),
-            'tickets_quantity' => $row[15],
-            'tickets_sold_quantity' => $row[16],
-            'tickets_remaining_quantity' => $row[17],
+            'quantity' => $row[15],
+            'sold_quantity' => $row[16],
+            'remaining_quantity' => $row[17],
         ]);
     }
 }

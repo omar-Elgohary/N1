@@ -10,6 +10,8 @@ class Rate extends Model
 
     protected $guarded = [];
 
+    // protected $with = ['shop_product'];
+
     public function restaurent_product()
     {
         return $this->belongsTo(RestaurentProduct::class);

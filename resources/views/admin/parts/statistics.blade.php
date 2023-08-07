@@ -77,9 +77,9 @@
                                     data-readOnly=true data-thickness=".1"/>
                             @endforeach
                         @else
-                            @foreach(\App\Models\Event::orderBy('tickets_sold_quantity', 'desc')->limit(3)->get() as $product)
+                            @foreach(\App\Models\Event::orderBy('sold_quantity', 'desc')->limit(3)->get() as $product)
                                 <div class="col-lg-2 col-md-2 text-center mx-3" dir="ltr">
-                                    <h5>{{ $product->tickets_sold_quantity }}</h5>
+                                    <h5>{{ $product->sold_quantity }}</h5>
                                     <h5>{{ $product->name }}</h5>
                                 </div>
 

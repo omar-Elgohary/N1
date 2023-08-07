@@ -7,6 +7,7 @@ use App\Models\Department;
 use App\Models\ShopProduct;
 use Illuminate\Http\Request;
 use App\Models\RestaurentProduct;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Api\ApiResponseTrait;
 
@@ -14,41 +15,55 @@ class HomeController extends Controller
 {
     use ApiResponseTrait;
 
-    // public function home()
-    // {
-    //     try {
-    //         $departments = Department::select('name')->get();
-    //         $mostSelling =
+    public function home()
+    {
+        $departments = Department::select('name')->get();
+        $allShops = User::where('department_id', '!=', null)->select('commercial_registration_image', 'company_name')->get();
 
-    //         return $this->returnData(200, 'Reached Home Page Successfully', compact('departments'));
-    //     } catch (\Exception $e) {
-    //         dd($e->getMessage());
-    //     }
-    // }
+        foreach($allShops as $shop){
+            $shop['commercial_registration_image'] = asset('assets/images/commercial/'.$shop->commercial_registration_image);
+            $rates = Rate::where('user_id', auth()->user()->id)->sum('rate');
+            $shop['rate'] = $rates / 5;
+        }
+
+        $restaurent = collect(RestaurentProduct::select('id', 'name', 'product_image','sold_quantity')->get()->toArray());
+        $restaurent = $restaurent->merge(ShopProduct::select('id', 'name', 'product_image', 'sold_quantity')->get()->toArray());
+        $restaurent = $restaurent->merge(Event::select('id', 'name', 'product_image', 'sold_quantity')->get()->toArray());
+        $restaurent = $restaurent->sortByDesc('sold_quantity');
+
+        $products = collect(RestaurentProduct::select('id', 'name', 'product_image','sold_quantity')->get());
+        $products = $products->merge(ShopProduct::select('id', 'name', 'product_image', 'sold_quantity')->get());
+        $products = $products->merge(Event::select('id', 'name', 'product_image', 'sold_quantity')->get());
+        $products = $products->sortByDesc('sold_quantity');
+
+        foreach ($products as $product) {
+            $product['product_image'] = asset('assets/images/products/'.$product->product_image);
+            $product['rate'] = Rate::where('user_id', auth()->user()->id)->sum('rate');
+        }
+
+        // $highRates = Rate::where('shop_product_id', '!=', null)->orderby('rate', 'desc')->select('rate', 'shop_product_id')->get();
+        // foreach($highRates as $highRate){
+        //     $highRate->shop_product['product_image'] = asset('assets/images/products/'.$highRate->shop_product->product_image);
+        // }
+
+        return $this->returnData(200, 'Reached Home Page Successfully', compact('departments', 'allShops', 'products'));
+    }
 
 
 
 
     public function restaurentProducts()
     {
-        try {
-            $restaurents = User::where('department_id', 1)->get();
-            foreach ($restaurents as $restaurent) {
-                $rates = Rate::where('user_id', auth()->user()->id)->sum('rate');
-                $restaurent['rate'] = $rates / 5;
-            }
+        $departments = Department::select('name')->get();
+        $restaurents = User::where('department_id', 1)->select('commercial_registration_image', 'company_name')->get();
 
-            return response()->json([
-                'status' => 200,
-                'message' => 'Data Returned Successfully',
-                'data' => $restaurents,
-            ]);
-        } catch (\Throwable $th) {
-            return response()->json([
-                'status' => false,
-                'message' => $th->getMessage()
-            ], 500);
+        foreach($restaurents as $restaurent){
+            $restaurent['commercial_registration_image'] = asset('assets/images/commercial/'.$restaurent->commercial_registration_image);
+            $rates = Rate::where('user_id', auth()->user()->id)->sum('rate');
+            $restaurent['rate'] = $rates / 5;
         }
+
+        return $this->returnData(200, 'Data Returned Successfully', compact('departments', 'restaurents'));
     }
 
 
@@ -56,27 +71,61 @@ class HomeController extends Controller
 
     public function shopProducts()
     {
-        $shops = User::where('department_id', 2)->get();
-        foreach ($shops as $shop) {
+        $departments = Department::select('name')->get();
+        $shops = User::where('department_id', 2)->select('commercial_registration_image', 'company_name')->get();
+
+        foreach($shops as $shop){
+            $shop['commercial_registration_image'] = asset('assets/images/commercial/'.$shop->commercial_registration_image);
             $rates = Rate::where('user_id', auth()->user()->id)->sum('rate');
             $shop['rate'] = $rates / 5;
         }
 
-        $shops['bestSelles'] = ShopProduct::orderby('sold_quantity', 'desc')->get();
+        $bestSelles = ShopProduct::orderby('sold_quantity', 'desc')->get();
+        foreach($bestSelles as $bestSelle){
+            $bestSelle['product_image'] = asset('assets/images/products/'.$bestSelle->product_image);
+            $bestSelle['rate'] = Rate::where('shop_product_id', $bestSelle->id)->sum('rate');
+        }
 
-        return response()->json([
-            'status' => 200,
-            'message' => 'Data Returned Successfully',
-            'data' => $shops,
-        ]);
+        $highRates = Rate::where('shop_product_id', '!=', null)->orderby('rate', 'desc')->select('rate', 'shop_product_id')->get();
+        foreach($highRates as $highRate){
+            $highRate->shop_product['product_image'] = asset('assets/images/products/'.$highRate->shop_product->product_image);
+        }
+
+        return $this->returnData(200, 'Data Returned Successfully', compact('departments', 'shops', 'bestSelles', 'highRates'));
     }
 
 
 
 
-    public function EventProducts()
+    public function eventProducts()
     {
-        $products = Event::get();
+        $departments = Department::select('name')->get();
+        $events = User::where('department_id', 3)->select('commercial_registration_image', 'company_name')->get();
+
+        foreach($events as $event){
+            $event['commercial_registration_image'] = asset('assets/images/commercial/'.$event->commercial_registration_image);
+            $rates = Rate::where('user_id', auth()->user()->id)->sum('rate');
+            $event['rate'] = $rates / 5;
+        }
+
+        $newests = Event::orderby('created_at', 'desc')->get();
+        foreach($newests as $newest){
+            $newest['product_image'] = asset('assets/images/products/'.$newest->product_image);
+            $newest['rate'] = Rate::where('shop_product_id', $newest->id)->sum('rate');
+        }
+
+        $highRates = Rate::where('event_product_id', '!=', null)->orderby('rate', 'desc')->select('rate', 'event_product_id')->get();
+        foreach($highRates as $highRate){
+            $highRate->event_product['product_image'] = asset('assets/images/products/'.$highRate->event_product->product_image);
+        }
+
+        $famoustes = Event::orderby('sold_quantity', 'desc')->get();
+        foreach($famoustes as $famouste){
+            $famouste['product_image'] = asset('assets/images/products/'.$famouste->product_image);
+            $famouste['rate'] = Rate::where('shop_product_id', $famouste->id)->sum('rate');
+        }
+
+        return $this->returnData(200, 'Data Returned Successfully', compact('departments', 'events', 'newests', 'highRates', 'famoustes'));
     }
 
 

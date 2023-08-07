@@ -70,7 +70,7 @@
 
                             <td>{{ $event->start_reservation_date}}</td>
                             <td>{{ $event->ticket_price}}</td>
-                            <td>{{ $event->tickets_sold_quantity}} / {{ $event->tickets_quantity}}</td>
+                            <td>{{ $event->sold_quantity}} / {{ $event->quantity}}</td>
                             <td>
                                 <a href="{{ route('eventAdminDetails', $event->id) }}" class="btn bg-white text-warning"><i class="fa fa-eye"></i></a>
                             </td>

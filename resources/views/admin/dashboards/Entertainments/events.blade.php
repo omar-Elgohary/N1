@@ -178,7 +178,7 @@
                         <td class="fw-bold">{{ $event->subCategory->name }}</td>
                         <td>{{ date('Y-m-d' , strtotime($event->start_reservation_date)) }}
                         <td>{{ $event->ticket_price}}</td>
-                        <td>{{ $event->tickets_sold_quantity}} / {{ $event->tickets_quantity}}</td>
+                        <td>{{ $event->sold_quantity}} / {{ $event->quantity}}</td>
                         <td>
                             <a href="{{ route('editEvent', $event->id) }}" class="btn bg-white text-success"><i class="fa fa-edit"></i></a>
                             <a href="#deleteEvent{{$event->id}}" class="btn bg-white text-danger" data-bs-toggle="modal"><i class="fa fa-trash"></i></a>

@@ -154,14 +154,14 @@
                             <tr>
                                 <th>{{ $purchase->random_id }}</th>
                                 <td>{{ $purchase->user->name }}</td>
-                                <td>{{ $purchase->event->tickets_quantity }}</td>
-        
+                                <td>{{ $purchase->event->quantity }}</td>
+
                                 @foreach (\App\Models\ReservationType::where('id', $purchase->event->reservations_type_id)->get() as $type)
                                     <td>
                                         {{ $type->name }}
                                     </td>
                                 @endforeach
-        
+
                                 <td>{{ \App\Models\Event::where('id', $purchase->event_id)->first()->ticket_price }}</td>
                                 <td><i class="fa fa-thin fa-star text-warning"></i> 4.5</td>
                             </tr>

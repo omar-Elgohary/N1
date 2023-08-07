@@ -57,7 +57,7 @@
                     <tr>
                         <th>{{ $order->random_id }}</th>
                         <td>{{ $order->user->name }}</td>
-                        <td>{{ $order->event->tickets_quantity }}</td>
+                        <td>{{ $order->event->quantity }}</td>
 
                         @foreach (\App\Models\ReservationType::where('id', $order->event->reservations_type_id)->get() as $type)
                             <td>

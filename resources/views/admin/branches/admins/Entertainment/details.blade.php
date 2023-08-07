@@ -14,7 +14,7 @@
         </div>
 
             <div class="col-lg-12 pt-0 p-2">
-                <img src="{{ asset('assets/images/products/'.$event->event_image) }}" class="m-1 mt-0" height="250" alt="">
+                <img src="{{ asset('assets/images/products/'.$event->product_image) }}" class="m-1 mt-0" height="250" alt="">
             </div>
 
             <div class="col-lg-4 mt-3">
@@ -43,12 +43,12 @@
 
                 <div class="form-group my-4">
                     <label>عدد التذاكر</label>
-                    <label class="mx-5">{{ $event->tickets_quantity }} تذكرة</label>
+                    <label class="mx-5">{{ $event->quantity }} تذكرة</label>
                 </div> <!-- 4 -->
 
                 <div class="form-group my-4">
                     <label>الحجوزات</label>
-                    <label class="mx-5">{{ $event->tickets_sold_quantity }} تذكرة</label>
+                    <label class="mx-5">{{ $event->sold_quantity }} تذكرة</label>
                 </div> <!-- 5 -->
 
                 <hr>
