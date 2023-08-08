@@ -16,16 +16,16 @@ return new class extends Migration
             $table->string('product_image');
             $table->json('name');
             $table->json('description');
-            $table->string('ticket_price');
+            $table->double('ticket_price');
             $table->string('reservations_type_id')->constrained('reservation_types')->cascadeOnDelete();
             $table->enum('status', ['لم يبدأ', 'متاح', 'متوقف', 'منتهي'])->default('لم يبدأ');
             $table->date('reservation_date');
             $table->time('reservation_time');
             $table->date('start_reservation_date');
 
-            $table->string('quantity');
-            $table->string('sold_quantity')->nullable()->default(0);
-            $table->string('remaining_quantity')->nullable();
+            $table->integer('quantity');
+            $table->integer('sold_quantity')->default(0);
+            $table->integer('remaining_quantity')->default(0);
             $table->timestamps();
         });
     }

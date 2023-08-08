@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('product_image');
             $table->json('name');
             $table->json('description');
-            $table->string('price');
+            $table->double('price');
             $table->string('calories')->nullable();
             $table->enum('status', ['متوفر', 'غير متوفر'])->default('متوفر');
 
@@ -24,9 +24,9 @@ return new class extends Migration
             $table->string('without_id')->constrained('withouts')->nullable();
             $table->string('branche_id')->constrained('branches')->nullable();
 
-            $table->string('quantity');
-            $table->string('sold_quantity')->nullable()->default(0);
-            $table->string('remaining_quantity')->nullable();
+            $table->integer('quantity');
+            $table->integer('sold_quantity')->default(0);
+            $table->integer('remaining_quantity')->default(0);
             $table->timestamps();
         });
     }

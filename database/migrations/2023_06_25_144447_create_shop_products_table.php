@@ -16,16 +16,17 @@ return new class extends Migration
             $table->string('product_image');
             $table->json('name');
             $table->json('description');
-            $table->string('price');    
+            $table->double('price');
             $table->string('size_id');
             $table->string('color_id');
             $table->enum('returnable', ['لا', 'نعم'])->default('لا');
             $table->enum('guarantee', ['لا', 'نعم'])->default('لا');
             $table->enum('status', ['متوفر', 'غير متوفر'])->default('متوفر');
             $table->string('branche_id')->nullable();
-            $table->string('quantity');
-            $table->string('sold_quantity')->nullable()->default(0);
-            $table->string('remaining_quantity')->nullable();
+
+            $table->integer('quantity');
+            $table->integer('sold_quantity')->default(0);
+            $table->integer('remaining_quantity')->default(0);
             $table->timestamps();
         });
     }

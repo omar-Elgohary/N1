@@ -16,6 +16,10 @@ class ShopProduct extends Model
         'description' => 'array',
     ];
 
+    protected $hidden = [
+        'rates'
+    ];
+
     private $locale = null;
 
     public function name(string $locale = null): Attribute {
@@ -91,5 +95,19 @@ class ShopProduct extends Model
     public function rates()
     {
         return $this->hasMany(Rate::class);
+    }
+
+    public function getRateAttribute() {
+        $rates = $this->rates;
+        $count = $rates->count();
+        $sum = 0;
+        foreach ($rates as $rate) {
+            $sum += $rate->rate;
+        }
+
+        if ($count == 0 || $sum == 0)
+            return 0;
+        else
+            return round($sum/$count, 1);
     }
 }
