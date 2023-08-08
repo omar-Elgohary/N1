@@ -79,7 +79,7 @@ class HomeController extends Controller
 
         foreach($shops as $shop){
             $shop['commercial_registration_image'] = asset('assets/images/commercial/'.$shop->commercial_registration_image);
-            $rates = Rate::where('user_id', auth()->user()->id)->sum('rate');
+            $rates = Rate::where('department_id', 2)->sum('rate');
             $shop['rate'] = $rates / 5;
         }
 
