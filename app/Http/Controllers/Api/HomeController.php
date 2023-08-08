@@ -57,16 +57,25 @@ class HomeController extends Controller
 
     public function restaurentProducts()
     {
-        $departments = Department::select('name')->get();
-        $restaurents = User::where('department_id', 1)->select('commercial_registration_image', 'company_name')->get();
+        $departments = Department::select('id', 'name')->get();
+        $restaurents = User::where('department_id', 1)->select('id', 'commercial_registration_image', 'company_name')->get();
 
         foreach($restaurents as $restaurent){
             $restaurent['commercial_registration_image'] = asset('assets/images/commercial/'.$restaurent->commercial_registration_image);
-            $rates = Rate::where('user_id', auth()->user()->id)->sum('rate');
+            $rates = Rate::where('department_id', 1)->sum('rate');
             $restaurent['rate'] = $rates / 5;
         }
 
-        return $this->returnData(200, 'Data Returned Successfully', compact('departments', 'restaurents'));
+
+        $highRates = RestaurentProduct::get();
+        foreach($highRates as $highRate){
+            $highRate['product_image'] = asset('assets/images/products/'.$highRate->product_image);
+            $highRate['rate'] = Rate::where('shop_product_id', $highRate->id)->sum('rate');
+        }
+
+        
+
+        return $this->returnData(200, 'Data Returned Successfully', compact('departments', 'restaurents', 'highRates'));
     }
 
 

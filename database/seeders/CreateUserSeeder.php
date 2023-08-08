@@ -38,7 +38,7 @@ class CreateUserSeeder extends Seeder
             'company_name' => 'Ahmed KFC Company',
             'department_id' => 1,
             'commercial_registration_number' => '47544125646',
-            'commercial_registration_image' => 'image.jpg',
+            'commercial_registration_image' => '1.jpg',
         ]);
 
         $user = User::create([
@@ -52,7 +52,7 @@ class CreateUserSeeder extends Seeder
             'company_name' => 'Sara Shop Company',
             'department_id' => 2,
             'commercial_registration_number' => '89545648484',
-            'commercial_registration_image' => 'image.jpg',
+            'commercial_registration_image' => '2.jpg',
         ]);
 
         $user = User::create([
@@ -66,7 +66,7 @@ class CreateUserSeeder extends Seeder
             'company_name' => 'Ghada Entertainments Company',
             'department_id' => 3,
             'commercial_registration_number' => '453745364753',
-            'commercial_registration_image' => 'image.jpg',
+            'commercial_registration_image' => '3.jpg',
         ]);
     }
 }

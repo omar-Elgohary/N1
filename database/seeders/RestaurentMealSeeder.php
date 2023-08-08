@@ -23,7 +23,8 @@ class RestaurentMealSeeder extends Seeder
             'without_id' => 3,
             'branche_id' => 1,
             'quantity' => 500,
-            'remaining_quantity' => 500,
+            'sold_quantity' => 300,
+            'remaining_quantity' => 200,
         ]);
 
         RestaurentProduct::create([
@@ -40,8 +41,9 @@ class RestaurentMealSeeder extends Seeder
             'extra_id' =>  2,
             'without_id' => 4,
             'branche_id' => 2,
-            'quantity' => 350,
-            'remaining_quantity' => 350,
+            'quantity' => 280,
+            'sold_quantity' => 180,
+            'remaining_quantity' => 100,
         ]);
 
         RestaurentProduct::create([
@@ -56,8 +58,9 @@ class RestaurentMealSeeder extends Seeder
             'calories' => 99,
             'status' => 'متوفر',
             'branche_id' => 2,
-            'quantity' => 230,
-            'remaining_quantity' => 230,
+            'quantity' => 120,
+            'sold_quantity' => 60,
+            'remaining_quantity' => 60,
         ]);
     }
-}
+}   

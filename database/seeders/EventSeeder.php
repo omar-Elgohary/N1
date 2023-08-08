@@ -24,7 +24,8 @@ class EventSeeder extends Seeder
             'start_reservation_date' => '2023-07-16',
 
             'quantity' => 200,
-            'remaining_quantity' => 200,
+            'sold_quantity' => 150,
+            'remaining_quantity' => 50,
         ]);
 
 
@@ -44,7 +45,8 @@ class EventSeeder extends Seeder
             'start_reservation_date' => '2023-07-01',
 
             'quantity' => 500,
-            'remaining_quantity' => 500,
+            'sold_quantity' => 400,
+            'remaining_quantity' => 100,
         ]);
 
 
@@ -64,7 +66,8 @@ class EventSeeder extends Seeder
             'start_reservation_date' => '2023-07-01',
 
             'quantity' => 900,
-            'remaining_quantity' => 900,
+            'sold_quantity' => 630,
+            'remaining_quantity' => 270,
         ]);
     }
 }

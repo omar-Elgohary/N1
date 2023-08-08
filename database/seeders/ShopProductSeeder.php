@@ -23,8 +23,9 @@ class ShopProductSeeder extends Seeder
             'guarantee' => 'لا',
             'status' => 'متوفر',
             'branche_id' => 3,
-            'quantity' => 95,
-            'remaining_quantity' => 95,
+            'quantity' => 100,
+            'sold_quantity' => 60,
+            'remaining_quantity' => 40,
         ]);
 
         ShopProduct::create([
@@ -43,7 +44,8 @@ class ShopProductSeeder extends Seeder
             'status' => 'غير متوفر',
             'branche_id' => 4,
             'quantity' => 250,
-            'remaining_quantity' => 250,
+            'sold_quantity' => 150,
+            'remaining_quantity' => 100,
         ]);
 
         ShopProduct::create([
@@ -62,7 +64,8 @@ class ShopProductSeeder extends Seeder
             'status' => 'متوفر',
             'branche_id' => 4,
             'quantity' => 600,
-            'remaining_quantity' => 600,
+            'sold_quantity' => 450,
+            'remaining_quantity' => 150,
         ]);
     }
 }

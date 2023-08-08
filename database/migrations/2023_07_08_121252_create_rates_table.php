@@ -14,7 +14,7 @@ return new class extends Migration
             $table->foreignId('restaurent_product_id')->nullable()->constrained('restaurent_products')->cascadeOnDelete();
             $table->foreignId('shop_product_id')->nullable()->constrained('shop_products')->cascadeOnDelete();
             $table->foreignId('event_product_id')->nullable()->constrained('events')->cascadeOnDelete();
-            $table->string('rate');
+            $table->double('rate');
             $table->timestamps();
         });
     }

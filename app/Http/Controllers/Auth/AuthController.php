@@ -42,7 +42,9 @@ class AuthController extends Controller
             'confirmed_password' => __('messages.confirmed_password_same'),
         ]);
 
-
+        $ipAddress = $request->ip();
+        dd($ipAddress);
+        
         $file_extention = $request->file("commercial_registration_image")->getCLientOriginalExtension();
         $image_name = time(). ".".$file_extention;
         $request->file("commercial_registration_image")->move(public_path('assets/images/commercial/'), $image_name);
