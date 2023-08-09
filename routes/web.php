@@ -1,6 +1,7 @@
 <?php
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Request;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\erserController;
@@ -14,6 +15,8 @@ use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\EntertainmentController;
 use App\Http\Controllers\Admin\CategoryController;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
+
+// https://ipinfo.io/json?callback=recordData
 
 Route::group(
     [
@@ -257,7 +260,7 @@ Route::middleware(['CheckRestaurent'])->group(function () {
     Route::get('ExportrestaurantPurchasesPDF', [RestaurantController::class, 'ExportrestaurantPurchasesPDF'])->name('ExportrestaurantPurchasesPDF');
     Route::get('filterRestaurantPurchases/{key}', [RestaurantController::class, 'filterRestaurantPurchases'])->name('filterRestaurantPurchases');
     Route::get('ExportrestaurentPurchasesDetailsPDF/{product_id}', [RestaurantController::class, 'ExportrestaurentPurchasesDetailsPDF'])->name('ExportrestaurentPurchasesDetailsPDF');
-    
+
 }); // CheckRestaurent middleware
 ###############################################################################################################################
 

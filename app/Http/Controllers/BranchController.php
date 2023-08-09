@@ -18,6 +18,7 @@ class BranchController extends Controller
 
     public function createBranche(Request $request)
     {
+        return $request;
         $request->validate([
             'name' => 'required',
             'branche_location' => 'bail|nullable',

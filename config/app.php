@@ -204,6 +204,9 @@ return [
         //excel
         Maatwebsite\Excel\ExcelServiceProvider::class,
 
+        //location
+        Stevebauman\Location\LocationServiceProvider::class,
+
     ],
 
     /*
@@ -221,6 +224,7 @@ return [
         // 'ExampleClass' => App\Example\ExampleClass::class,
         'PDF' => Mccarlosen\LaravelMpdf\Facades\LaravelMpdf::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        'Location' => Stevebauman\Location\Facades\Location::class,
     ])->toArray(),
 
 ];

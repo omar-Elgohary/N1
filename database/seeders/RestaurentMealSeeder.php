@@ -13,7 +13,7 @@ class RestaurentMealSeeder extends Seeder
             'department_id' => 1,
             'category_id' => 1,
             'sub_category_id' => 1,
-            'product_image' => '1686825194.jfif',
+            'product_image' => 'fgh.jpg',
             'name' => ['en' => 'mshkl mashwey', 'ar' => 'مشوي مشكل'],
             'description' => ['en' => 'A kilo of grilled kebab and kofta mixed with salad, tahini and rice', 'ar' => 'كيلو مشويات كباب وكفتة مشكل بسلطة وطحينة وارز'],
             'price' => '730',
@@ -32,7 +32,7 @@ class RestaurentMealSeeder extends Seeder
             'department_id' => 1,
             'category_id' => 2,
             'sub_category_id' => 2,
-            'product_image' => '1686825194.jfif',
+            'product_image' => 'fgh.jpg',
             'name' => ['en' => 'ranch pizza', 'ar' => 'بيتزا رانش'],
             'description' => ['en' => 'Extra chicken ranch pizza', 'ar' => 'بيتزا اكسترا تشيكن رانش'],
             'price' => '160',
@@ -51,7 +51,7 @@ class RestaurentMealSeeder extends Seeder
             'department_id' => 1,
             'category_id' => 3,
             'sub_category_id' => 3,
-            'product_image' => '1686825194.jfif',
+            'product_image' => 'fgh.jpg',
             'name' => ['en' => 'mango juice', 'ar' => 'عصير مانجا'],
             'description' => ['en' => 'Fresh natural mango juice with lemon', 'ar' => 'عصير مانجا طبيعي فريش مع ليمون'],
             'price' => '80',
@@ -63,4 +63,4 @@ class RestaurentMealSeeder extends Seeder
             'remaining_quantity' => 60,
         ]);
     }
-}   
+}

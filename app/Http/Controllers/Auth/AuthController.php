@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
+use Stevebauman\Location\Facades\Location;
+use Illuminate\Support\Facades\Http;
 
 class AuthController extends Controller
 {
@@ -15,7 +17,6 @@ class AuthController extends Controller
         $this->basic  = new \Vonage\Client\Credentials\Basic(env("Vonage_api_key"), env("Vonage_api_secret"));
         $this->client = new \Vonage\Client($this->basic);
     }
-
 
 
     public function register(Request $request)
@@ -42,9 +43,8 @@ class AuthController extends Controller
             'confirmed_password' => __('messages.confirmed_password_same'),
         ]);
 
-        $ipAddress = $request->ip();
-        dd($ipAddress);
-        
+
+
         $file_extention = $request->file("commercial_registration_image")->getCLientOriginalExtension();
         $image_name = time(). ".".$file_extention;
         $request->file("commercial_registration_image")->move(public_path('assets/images/commercial/'), $image_name);

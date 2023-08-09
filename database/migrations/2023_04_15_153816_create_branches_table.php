@@ -12,12 +12,13 @@ return new class extends Migration
             $table->string('random_id');
             $table->foreignId('department_id')->constrained('departments')->cascadeOnDelete();
             $table->json('name');
-            $table->string('branche_location')->nullable();
             $table->string('email')->unique();
             $table->string('phone')->unique();
             $table->string('password');
             $table->string('confirmed_password');
-
+            $table->string('branche_location')->nullable();
+            $table->double('address_latitude')->nullable();
+            $table->double('address_longitude')->nullable();
             // edit
             $table->string('image', 50)->nullable();
             $table->time('start_time')->nullable();

@@ -145,7 +145,7 @@
 
                     <div class="form-group mt-3">
                         <label class="text-black mb-3">{{ __('branches.branche_location') }}</label>
-                        <input type="text" class="form-control rounded-0" name="branche_location">
+                        <input type="button" class="form-control rounded-0" name="branche_location" onclick="showMap()">
                     </div>
 
                     <div class="form-group mt-3">
