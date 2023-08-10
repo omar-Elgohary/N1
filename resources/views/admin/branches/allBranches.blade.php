@@ -145,7 +145,12 @@
 
                     <div class="form-group mt-3">
                         <label class="text-black mb-3">{{ __('branches.branche_location') }}</label>
-                        <input type="button" class="form-control rounded-0" name="branche_location" onclick="showMap()">
+                        <div class="position-relative">
+                            <input type="hidden" name="latitude" id="latitude">
+                            <input type="hidden" name="longitude" id="longitude">
+                            <input type="text" class="form-control rounded-0" name="branche_location" id="branche_location">
+                            <a onclick="initModal()"><i class="fa-solid fa-location-dot" style="position: absolute; left: 10px; top: 30%;"></i></a>
+                        </div>
                     </div>
 
                     <div class="form-group mt-3">
@@ -182,6 +187,29 @@
 
     <div class="d-flex justify-content-around mt-4 mb-5">
         <button id="package" type="submit" class="btn btn-block px-5 text-white">{{ __('branches.add_branche_account') }}</button>
+    </div>
+</form>
+    </div>
+</div>
+</div>
+
+
+{{-- location_modal --}}
+<div class="modal fade border-0" id="location_modal" aria-hidden="true" aria-labelledby="location_modalLabel" tabindex="-1" dir="rtl">
+    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+
+        <div class="d-flex justify-content-between p-3 mb-2">
+            <h3 class="modal-title font-bold" id="address-label" style="color: #ed7802; font: x-large">Branche Location</h3>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body">
+            <div id="map"></div>
+        </div>
+
+    <div class="d-flex justify-content-around mt-4 mb-5">
+        <button type="submit" class="btn btn-block btn-success px-5 text-white">Done</button>
     </div>
 </form>
     </div>

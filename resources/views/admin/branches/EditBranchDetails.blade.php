@@ -23,6 +23,11 @@
                 <div class="row d-flex justify-content-center col-12">
                     <div class="col-lg-4">
                         <div class="form-group mt-3">
+                            <label class="mb-3">{{ __('branches.name_ar') }}</label>
+                            <input type="text" class="form-control rounded-0" name="name_ar" value="{{$branch->nameLocale('ar')}}">
+                        </div>
+
+                        <div class="form-group mt-3">
                             <label class="mb-3">{{ __('branches.branche_location') }}</label>
                             <input type="text" class="form-control rounded-0" name="branche_location" value="{{$branch->branche_location}}">
                         </div>
@@ -40,8 +45,8 @@
 
                     <div class="col-lg-4">
                         <div class="form-group mt-3">
-                            <label class="mb-3">{{ __('branches.name') }}</label>
-                            <input type="text" class="form-control rounded-0" name="branche_title" value="{{$branch->branche_title}}">
+                            <label class="mb-3">{{ __('branches.name_en') }}</label>
+                            <input type="text" class="form-control rounded-0" name="name_en" value="{{$branch->nameLocale('en')}}">
                         </div>
 
                         <div class="form-group mt-3">
@@ -71,6 +76,7 @@
                             </label>
                         </div> <!-- 2 -->
                     </div> <!-- col-4 -->
+                </div> <!-- col-4 -->
 
                 </div> <!-- row -->
                 <div class="text-center d-flex justify-content-evenly mt-5">

@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('password');
             $table->string('confirmed_password');
             $table->string('branche_location')->nullable();
-            $table->double('address_latitude')->nullable();
-            $table->double('address_longitude')->nullable();
+            $table->double('latitude')->nullable();
+            $table->double('longitude')->nullable();
             // edit
             $table->string('image', 50)->nullable();
             $table->time('start_time')->nullable();

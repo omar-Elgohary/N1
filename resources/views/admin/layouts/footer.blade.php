@@ -68,8 +68,8 @@
 <script src="{{ asset('assets/js/pages/jquery-knob.init.js') }}"></script>
 <!-- App js -->
 <script src="{{ asset('assets/js/app.js') }}"></script>
-{{-- <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script> --}}
-{{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script> --}}
+<script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
 <script>
     const menu_toggle = document.querySelector('.menu-toggle');
     const sidebar = document.querySelector('.sidebar');
@@ -80,41 +80,6 @@
     });
 </script>
 
-
-{{-- location --}}
-<script>
-// Initialize and add the map
-let map;
-
-async function initMap() {
-  // The location of Uluru
-  const position = { lat: -25.344, lng: 131.031 };
-  // Request needed libraries.
-  //@ts-ignore
-  const { Map } = await google.maps.importLibrary("maps");
-  const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
-
-  // The map, centered at Uluru
-  map = new Map(document.getElementById("map"), {
-    zoom: 4,
-    center: position,
-    mapId: "DEMO_MAP_ID",
-  });
-
-  // The marker, positioned at Uluru
-  const marker = new AdvancedMarkerElement({
-    map: map,
-    position: position,
-    title: "Uluru",
-  });
-}
-
-initMap();
-</script>
-{{-- <script src="https://ipinfo.io/json?callback=recordData"></script> --}}
-
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 $(document).ready(function() {
     $('#englishNameInput').on('input', function() {
@@ -313,7 +278,106 @@ function updateThumbnail(dropZoneElement, file) {
 		thumbnailElement.style.backgroundImage = null;
 	}
 }
-
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+{{-- location --}}
+<script>
+    var map, marker;
+    function initModal() {
+        $("#location_modal").modal('show')
+        // var location = new google.maps.LatLng(31.032462916883375, 31.36317377474954);
+        // var location = new google.maps.LatLng(31.03075243779175, 31.362107203703385);
+        var location = new google.maps.LatLng(26.768167521490252, 29.88884504734696);
+        var mapProperty ={
+            center: location,
+            zoom: 5,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+
+        map = new google.maps.Map(document.getElementById('map'), mapProperty);
+        marker = new google.maps.Marker({
+            map: map,
+            draggable: true,
+            animation: google.maps.Animation.DROP,
+            position: location
+        });
+
+        geocodePosition(marker.getPosition());
+        google.maps.event.addListener(marker, 'dragend', function(){
+            map.setCenter(marker.getPosition());
+            geocodePosition(marker.getPosition());
+            $('#latitude').val(marker.getPosition().lat());
+            $('#longitude').val(marker.getPosition().lng());
+        });
+
+        currentLat = $('#latitude').val();
+        currentLng = $('#longitude').val();
+
+        if(navigator.geolocation){
+            navigator.geolocation.getCurrentPosition(function (position){
+                pos = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude,
+                };
+                $('#latitude').val(pos.lat);
+                $('#longitude').val(pos.lng);
+                marker.setPosition(pos);
+                map.setCenter(marker.getPosition);
+                geocodePosition(marker.getPosition);
+            });
+        }
+    }
+
+    function geocodePosition(pos){
+        geocoder = new google.maps.Geocoder();
+        geocoder.geocode({
+            latLng: pos
+        },
+
+        function(results, status){
+            if(status == google.maps.GeocoderStatus.OK){
+                $('#address-label').html(results[0].formatted_address);
+                $('#branche_location').val(results[0].formatted_address);
+            }else{
+                $('#address-label').html('Cannot determinr address at this location');
+            }
+        }
+        );
+    }
+
+    // var searchInput = 'search_input';
+    // $(document).ready(function () {
+    //     var autocomplete;
+    //     autocomplete = new google.maps.places.Autocomplete((document.getElementById(searchInput)), {
+    //     types: ['geocode'],
+    //     // componentRestrictions: {
+    //     // country: "EGYPT"
+    //     // }
+    // });
+
+    // google.maps.event.addListener(autocomplete, 'place_changed', function () {
+    //     var near_place = autocomplete.getPlace();
+    //     });
+    // });
+</script>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC65lO9OQS_OZ-13GYeZH61dIHEl1jNFsw&callback=initMap"></script>
+<script src="https://ipinfo.io/json?callback=recordData"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 </body>
 </html>

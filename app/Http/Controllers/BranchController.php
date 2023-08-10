@@ -18,9 +18,9 @@ class BranchController extends Controller
 
     public function createBranche(Request $request)
     {
-        return $request;
         $request->validate([
-            'name' => 'required',
+            'name_ar' => 'required',
+            'name_en' => 'required',
             'branche_location' => 'bail|nullable',
             'phone' => 'required',
             'email' => 'required|email',
@@ -50,6 +50,8 @@ class BranchController extends Controller
                 'ar'=> $request->name_ar,
             ],
             'branche_location' => $request->branche_location,
+            'latitude' => $request->latitude,
+            'longitude' => $request->longitude,
             'phone'=> $request->phone,
             'email' => $request->email,
             'password' => Hash::make($request->password),
@@ -81,9 +83,13 @@ class BranchController extends Controller
 
         $branch = Branch::find($id);
         $branch->update([
-            'name' => $request->name,
+            'name' => [
+                'en'=> $request->name_en,
+                'ar'=> $request->name_ar,
+            ],
             'branche_location' => $request->branche_location,
-            'email' => $request->email,
+            'latitude' => $request->latitude,
+            'longitude' => $request->longitude,            'email' => $request->email,
             'phone' => $request->phone,
             'start_time' => $request->start_time,
             'end_time' => $request->end_time,
