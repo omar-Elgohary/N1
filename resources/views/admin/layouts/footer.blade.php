@@ -70,6 +70,7 @@
 <script src="{{ asset('assets/js/app.js') }}"></script>
 <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+
 <script>
     const menu_toggle = document.querySelector('.menu-toggle');
     const sidebar = document.querySelector('.sidebar');
@@ -356,22 +357,8 @@ function updateThumbnail(dropZoneElement, file) {
         }
         );
     }
-
-    // var searchInput = 'search_input';
-    // $(document).ready(function () {
-    //     var autocomplete;
-    //     autocomplete = new google.maps.places.Autocomplete((document.getElementById(searchInput)), {
-    //     types: ['geocode'],
-    //     // componentRestrictions: {
-    //     // country: "EGYPT"
-    //     // }
-    // });
-
-    // google.maps.event.addListener(autocomplete, 'place_changed', function () {
-    //     var near_place = autocomplete.getPlace();
-    //     });
-    // });
 </script>
+
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>

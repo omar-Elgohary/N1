@@ -84,7 +84,7 @@ return [
 
     //create branch
     'name_required' => 'يجب ادخال اسم الفرع',
-
+    'imageRequired' => 'يجب ادخال صورة الفرع',
     'english_letters' => 'الرجاء إدخال الأحرف الإنجليزية فقط',
     'arabic_letters' => 'الرجاء إدخال الأحرف العربية فقط',
 

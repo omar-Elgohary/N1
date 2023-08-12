@@ -24,6 +24,7 @@ class BranchController extends Controller
             'branche_location' => 'bail|nullable',
             'phone' => 'required',
             'email' => 'required|email',
+            'image' => 'required',
             'password' => 'required|min:8',
             'confirmed_password' => 'required_with:password|same:password'
         ],[
@@ -31,6 +32,7 @@ class BranchController extends Controller
             'phone.required' => __('messages.phone_required'),
             'email.required' => __('messages.emailrequired'),
             'email.email' => __('messages.emailtype'),
+            'image.required' => __('messages.imageRequired'),
             'password.required' => __('messages.password_required'),
             'password.min' => __('messages.password_min'),
             'confirmed_password.required' => __('messages.confirmed_password_required'),
@@ -41,6 +43,10 @@ class BranchController extends Controller
         while(Branch::where('random_id', $random_id )->exists()){
             $random_id = strtoupper('#'.substr(str_shuffle(uniqid()),0,4));
         }
+
+        $file_extention = $request->file("image")->getCLientOriginalExtension();
+        $image_name = time(). ".".$file_extention;
+        $request->file("image")->move(public_path('assets/images/branches/'), $image_name);
 
         Branch::create([
             'random_id' => $random_id,
@@ -56,6 +62,7 @@ class BranchController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'confirmed_password' => Hash::make($request->confirmed_password),
+            'image' => $image_name,
         ]);
 
         session()->flash('addBranch');

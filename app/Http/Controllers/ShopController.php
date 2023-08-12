@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 use PDF;
+use App\Models\Rate;
 use App\Models\Size;
 use App\Models\Color;
 use App\Models\Category;

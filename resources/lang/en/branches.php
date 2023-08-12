@@ -19,6 +19,7 @@ return [
     "change_password" => "Change Password",
     "name_ar" => 'Arabic Branche Title',
     "name_en" => 'English Branche Title',
+    'image' => 'Branche Image',
 
 
 

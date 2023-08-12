@@ -78,23 +78,26 @@ class ShopProduct extends Model
 
     public function sizes()
     {
-        return $this->belongsToMany(Size::class);
+        $ids = explode(',', $this->size_id);
+        return Size::select('size')->whereIn('id', $ids)->get();
     }
-
-    // public function sizes()
-    // {
-    //     return $this->hasMany(Size::class);
-    // }
 
     public function colors()
     {
-        return $this->hasMany(Color::class);
+        $ids = explode(',', $this->color_id);
+        return Color::select('color')->whereIn('id', $ids)->get();
     }
 
 
     public function rates()
     {
         return $this->hasMany(Rate::class);
+    }
+
+
+    public function branche()
+    {
+        return $this->belongsTo(Branch::class);
     }
 
     public function getRateAttribute() {

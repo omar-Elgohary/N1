@@ -24,7 +24,6 @@ Route::group(
         'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]
     ], function(){
 
-
     Route::get('/', function()
     {
         return view('front.home');
@@ -320,3 +319,5 @@ Route::middleware(['CheckEntertainment'])->group(function () {
 }); // middleware authenticated
 
 }); // Localization
+
+

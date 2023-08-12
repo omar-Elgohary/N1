@@ -1,9 +1,8 @@
 <?php
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\HomeController;
-use App\Http\Controllers\MainController;
+use App\Http\Controllers\Api\shopController;
 
 
 // Auth
@@ -22,5 +21,10 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('eventProducts', [HomeController::class, 'eventProducts']);
 
 
+    // Shop
+    Route::get('getShopBrancheById/{id}', [shopController::class, 'getShopBrancheById']);
+    Route::get('getShopProductById/{id}', [shopController::class, 'getShopProductById']);
+
 });
 
+    

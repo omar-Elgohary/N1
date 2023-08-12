@@ -31,4 +31,17 @@ class Branch extends Model
         $this->locale = $locale;
         return $this->name;
     }
+
+
+
+    public function products()
+    {
+        return $this->hasMany(ShopProduct::class);
+    }
+
+
+    public function department()
+    {
+        return $this->belongsTo(Department::class);
+    }
 }

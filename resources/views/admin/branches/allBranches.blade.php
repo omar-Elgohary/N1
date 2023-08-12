@@ -130,7 +130,7 @@
         </div>
 
         <div class="modal-body">
-        <form action="{{ route('createBranche') }}" method="post" autocomplete="off">
+        <form action="{{ route('createBranche') }}" method="post" enctype="multipart/form-data" autocomplete="off">
             @csrf
 
             <div class="mt-lg-0 text-end">
@@ -157,6 +157,11 @@
                         <label class="text-black mb-3">{{ __('branches.phone') }}</label>
                         <input type="text" class="form-control rounded-0" name="phone">
                     </div>
+
+                    <div class="form-group mt-3">
+                        <label class="text-black mb-3">{{ __('homepage.confirmPassword') }}</label>
+                        <input type="password" class="form-control rounded-0" name="confirmed_password">
+                    </div>
                 </div> <!-- col-4 -->
 
                 <div class="col-lg-6">
@@ -167,6 +172,11 @@
                     </div>
 
                     <div class="form-group mt-3">
+                        <label class="text-black mb-3">{{ __('branches.image') }}</label>
+                        <input type="file" class="form-control rounded-0" name="image">
+                    </div>
+
+                    <div class="form-group mt-3">
                         <label class="text-black mb-3">{{ __('branches.email') }}</label>
                         <input type="email" class="form-control rounded-0" name="email">
                     </div>
@@ -174,11 +184,6 @@
                     <div class="form-group mt-3">
                         <label class="text-black mb-3">{{ __('homepage.password') }}</label>
                         <input type="password" class="form-control rounded-0" name="password">
-                    </div>
-
-                    <div class="form-group mt-3">
-                        <label class="text-black mb-3">{{ __('homepage.confirmPassword') }}</label>
-                        <input type="password" class="form-control rounded-0" name="confirmed_password">
                     </div>
                 </div> <!-- col-6 -->
             </div> <!-- row -->
@@ -208,9 +213,9 @@
             <div id="map"></div>
         </div>
 
-    <div class="d-flex justify-content-around mt-4 mb-5">
-        <button type="submit" class="btn btn-block btn-success px-5 text-white">Done</button>
-    </div>
+        {{-- <div class="d-flex justify-content-around mt-4 mb-5">
+            <button type="submit" class="btn btn-block btn-success px-5 text-white">Done</button>
+        </div> --}}
 </form>
     </div>
 </div>

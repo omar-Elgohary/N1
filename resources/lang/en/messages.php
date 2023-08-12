@@ -85,7 +85,7 @@ return [
 
     //create branch
     'name_required' => 'must enter branche title',
-
+    'imageRequired' => 'must enter branche image',
     'english_letters' => 'Please enter only English letters',
     'arabic_letters' => 'Please enter only Arabic letters',
 
