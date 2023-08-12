@@ -10,6 +10,8 @@ use App\Models\RestaurentProduct;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Api\ApiResponseTrait;
+use App\Models\Branch;
+use App\Models\BrancheRate;
 
 class HomeController extends Controller
 {
@@ -73,7 +75,7 @@ class HomeController extends Controller
             $highRate['rate'] = Rate::where('shop_product_id', $highRate->id)->sum('rate');
         }
 
-        
+
 
         return $this->returnData(200, 'Data Returned Successfully', compact('departments', 'restaurents', 'highRates'));
     }
@@ -84,12 +86,12 @@ class HomeController extends Controller
     public function shopProducts()
     {
         $departments = Department::select('id', 'name')->get();
-        $shops = User::where('department_id', 2)->select('id', 'commercial_registration_image', 'company_name')->get();
+        // $shops = User::where('department_id', 2)->select('id', 'commercial_registration_image', 'company_name')->get();
+        $shops = Branch::where('department_id', 2)->select('id', 'image', 'name')->get();
 
         foreach($shops as $shop){
-            $shop['commercial_registration_image'] = asset('assets/images/commercial/'.$shop->commercial_registration_image);
-            $rates = Rate::where('department_id', 2)->sum('rate');
-            $shop['rate'] = $rates / 5;
+            $shop['image'] = asset('assets/images/branches/'.$shop->image);
+            $shop['rate'] = BrancheRate::where('branche_id', $shop->id)->sum('rate');
         }
 
         $bestSelles = ShopProduct::orderby('sold_quantity', 'desc')->get();

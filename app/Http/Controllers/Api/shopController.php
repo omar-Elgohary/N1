@@ -16,7 +16,7 @@ class shopController extends Controller
     public function getShopBrancheById($id)
     {
         try{
-            $branche = Branch::select('id', 'department_id', 'name', 'image', 'branche_location')->find($id);
+            $branche = Branch::select('id', 'department_id', 'name', 'image', 'branche_location', 'latitude', 'longitude')->find($id);
             $branche['image'] = asset('assets/images/branches/'.$branche->image);
             if($branche->rate){
                 $branche['rate'] = BrancheRate::where('branche_id', $id)->first()->rate;
