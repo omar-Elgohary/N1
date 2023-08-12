@@ -143,7 +143,6 @@ class shopController extends Controller
             $product['rate'] = Rate::where('shop_product_id', $highRate->id)->sum('rate');
         }
 
-
         return response()->json([
             'status' => 200,
             'massage' => 'Shop Product Returned Successfully',
