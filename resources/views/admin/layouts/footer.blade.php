@@ -363,7 +363,7 @@ function updateThumbnail(dropZoneElement, file) {
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC65lO9OQS_OZ-13GYeZH61dIHEl1jNFsw&callback=initMap"></script>
-<script src="https://ipinfo.io/json?callback=recordData"></script>
+{{-- <script src="https://ipinfo.io/json?callback=recordData"></script> --}}
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 </body>
