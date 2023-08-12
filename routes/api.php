@@ -24,7 +24,7 @@ Route::middleware('auth:sanctum')->group(function(){
     // Shop
     Route::get('getShopBrancheById/{id}', [shopController::class, 'getShopBrancheById']);
     Route::get('getShopProductById/{id}', [shopController::class, 'getShopProductById']);
+    Route::get('getBrancheProductsOfCategory/{branche_id}/{cat_id}', [shopController::class, 'getBrancheProductsOfCategory']);
 
 });
 
-    
