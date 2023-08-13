@@ -102,8 +102,8 @@ class shopController extends Controller
             $comment['user_id'] = $comment->user->name;
         }
 
-        $like = Like::find($id);
-        if(auth()->user()->id == $like->user_id){
+        $like = Like::where('likesable_id', $id)->where('user_id', auth()->user()->id)->first();
+        if($like){
             $isLiked = true;
         }else{
             $isLiked = false;
