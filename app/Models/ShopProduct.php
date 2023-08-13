@@ -85,7 +85,7 @@ class ShopProduct extends Model
     public function colors()
     {
         $ids = explode(',', $this->color_id);
-        return Color::select('color')->whereIn('id', $ids)->get();
+        return Color::select('color', 'hex')->whereIn('id', $ids)->get();
     }
 
 

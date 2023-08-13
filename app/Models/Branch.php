@@ -44,4 +44,21 @@ class Branch extends Model
     {
         return $this->belongsTo(Department::class);
     }
+
+
+
+
+    public function scopeWithinRadius($query, $latitude, $longitude, $radius)
+    {
+        return $query->select("id", "name", "image", "branche_location", "latitude", "longitude")
+            ->selectRaw("FORMAT(6371 * acos(
+                cos(radians(?))
+                * cos(radians(latitude))
+                * cos(radians(longitude) - radians(?))
+                + sin(radians(?))
+                * sin(radians(latitude))
+            ), 3) AS distance", [$latitude, $longitude, $latitude])
+            ->having("distance", "<", $radius)
+            ->where("department_id", 1)->orderby('distance', 'asc');
+    }
 }

@@ -12,6 +12,7 @@ class Color extends Model
 
     private $locale = null;
 
+
     public function color(string $locale = null): Attribute {
         return Attribute::make(
             get: function ($value) {

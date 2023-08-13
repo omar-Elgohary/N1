@@ -60,14 +60,12 @@ class HomeController extends Controller
     public function restaurentProducts()
     {
         $departments = Department::select('id', 'name')->get();
-        $restaurents = User::where('department_id', 1)->select('id', 'commercial_registration_image', 'company_name')->get();
+        $restaurents = Branch::where('department_id', 1)->select('id', 'image', 'name')->get();
 
         foreach($restaurents as $restaurent){
-            $restaurent['commercial_registration_image'] = asset('assets/images/commercial/'.$restaurent->commercial_registration_image);
-            $rates = Rate::where('department_id', 1)->sum('rate');
-            $restaurent['rate'] = $rates / 5;
+            $restaurent['image'] = asset('assets/images/branches/'.$restaurent->image);
+            $restaurent['rate'] = BrancheRate::where('branche_id', $restaurent->id)->sum('rate');
         }
-
 
         $highRates = RestaurentProduct::get();
         foreach($highRates as $highRate){
@@ -75,9 +73,17 @@ class HomeController extends Controller
             $highRate['rate'] = Rate::where('shop_product_id', $highRate->id)->sum('rate');
         }
 
+        $latitude = auth("sanctum")->user()->latitude;
+        $longitude = auth("sanctum")->user()->longitude;
 
+        $radius = 2500 / 100;
 
-        return $this->returnData(200, 'Data Returned Successfully', compact('departments', 'restaurents', 'highRates'));
+        $nearests = Branch::where("department_id", 1)->withinRadius($latitude, $longitude, $radius)->get();
+        foreach($nearests as $nearest){
+            $nearest['image'] = asset('assets/images/branches/'.$nearest->image);
+            $nearest['rate'] = BrancheRate::where('branche_id', $nearest->id)->sum('rate');
+        }
+        return $this->returnData(200, 'Data Returned Successfully', compact('departments', 'restaurents', 'highRates', 'nearests'));
     }
 
 
@@ -86,7 +92,6 @@ class HomeController extends Controller
     public function shopProducts()
     {
         $departments = Department::select('id', 'name')->get();
-        // $shops = User::where('department_id', 2)->select('id', 'commercial_registration_image', 'company_name')->get();
         $shops = Branch::where('department_id', 2)->select('id', 'image', 'name')->get();
 
         foreach($shops as $shop){

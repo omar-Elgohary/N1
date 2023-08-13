@@ -25,8 +25,10 @@ class CreateUserSeeder extends Seeder
             'password' => bcrypt('12345678'),
             'confirmed_password' => bcrypt('12345678'),
             'type' => 'user',
+            'latitude' => 31.030737029693444,
+            'longitude' => 31.362085322087935,
         ]);
-
+        
         $user = User::create([
             'name' => 'Ahmed KFC',
             'email' => 'Ahmed@KFC.com',

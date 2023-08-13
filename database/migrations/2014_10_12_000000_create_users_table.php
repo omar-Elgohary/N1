@@ -21,6 +21,8 @@ return new class extends Migration
             $table->string('company_name')->nullable();
             $table->string('commercial_registration_number', 20)->nullable();
             $table->string('commercial_registration_image')->nullable();
+            $table->double('latitude')->nullable();
+            $table->double('longitude')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
