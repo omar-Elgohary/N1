@@ -2,8 +2,10 @@
 namespace App\Http\Controllers\Api;
 use App\Models\Rate;
 use App\Models\Size;
+use App\Models\User;
 use App\Models\Color;
 use App\Models\Branch;
+use App\Models\Comment;
 use App\Models\Category;
 use App\Models\BrancheRate;
 use App\Models\ShopProduct;
@@ -70,7 +72,7 @@ class shopController extends Controller
 
     public function getShopProductById($id)
     {
-        $product = ShopProduct::select('id', 'product_image', 'name', 'description', 'price', 'size_id', 'color_id')->find($id);
+        $product = ShopProduct::select('id', 'product_image', 'name', 'description', 'price', 'size_id', 'color_id', 'branche_id')->find($id);
         $product['product_image'] = asset('assets/images/products/'.$product->product_image);
 
         $sizes = $product->sizes();
@@ -79,13 +81,35 @@ class shopController extends Controller
         $colors = $product->colors();
         $product['color_id'] = $colors;
 
-        $product['rate'] = Rate::where('shop_product_id', $id)->first()->rate;
+        if($product['rate']){
+            $product['rate'] = Rate::where('shop_product_id', $id)->first()->rate;
+        }else{
+            $product['rate'] = 0;
+        }
+
+        $branche = Branch::select('id', 'name', 'image')->find($product->branche_id);
+        $branche['image'] = asset('assets/images/branches/'.$branche->image);
+        if($branche['rate']){
+            $branche['rate'] = BrancheRate::where('branche_id', $branche->id)->sum('rate');
+        }else{
+            $branche['rate'] = 0;
+        }
+
+        $comments = Comment::select('id', 'user_id', 'comment', 'rate')->where('shop_product_id', $id)->get();
+        $users = User::get();
+        foreach ($comments as $comment) {
+            foreach($users as $user){
+                $comment['user_id'] = User::where('id', $comment->user_id)->name;
+            }
+        }
 
         if($product){
             return response()->json([
                 'status' => 200,
                 'massage' => 'Shop Product Returned Successfully',
                 'product' => $product,
+                'branche' => $branche,
+                'comments' => $comments,
             ]);
         }else{
             return response()->json([

@@ -44,6 +44,7 @@ class DatabaseSeeder extends Seeder
             EventOrderSeeder::class,
             RateSeeder::class,
             BrancheRateSeeder::class,
+            CommentSeeder::class,
         ]);
     }
 }

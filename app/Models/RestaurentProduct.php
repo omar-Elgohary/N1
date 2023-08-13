@@ -88,5 +88,11 @@ class RestaurentProduct extends Model
     {
         return $this->hasMany(Without::class);
     }
+
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 }
 

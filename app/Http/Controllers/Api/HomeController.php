@@ -60,16 +60,10 @@ class HomeController extends Controller
     public function restaurentProducts()
     {
         $departments = Department::select('id', 'name')->get();
-        $restaurents = Branch::where('department_id', 1)->select('id', 'image', 'name')->get();
 
-        foreach($restaurents as $restaurent){
-            $restaurent['image'] = asset('assets/images/branches/'.$restaurent->image);
-            $restaurent['rate'] = BrancheRate::where('branche_id', $restaurent->id)->sum('rate');
-        }
-
-        $highRates = RestaurentProduct::get();
+        $highRates = Branch::select('id', 'name', 'image')->where('department_id', 1)->get();
         foreach($highRates as $highRate){
-            $highRate['product_image'] = asset('assets/images/products/'.$highRate->product_image);
+            $highRate['image'] = asset('assets/images/branches/'.$highRate->image);
             $highRate['rate'] = Rate::where('shop_product_id', $highRate->id)->sum('rate');
         }
 
@@ -83,7 +77,10 @@ class HomeController extends Controller
             $nearest['image'] = asset('assets/images/branches/'.$nearest->image);
             $nearest['rate'] = BrancheRate::where('branche_id', $nearest->id)->sum('rate');
         }
-        return $this->returnData(200, 'Data Returned Successfully', compact('departments', 'restaurents', 'highRates', 'nearests'));
+
+        $mostWanted = [];
+
+        return $this->returnData(200, 'Data Returned Successfully', compact('departments', 'highRates', 'nearests', 'mostWanted'));
     }
 
 
