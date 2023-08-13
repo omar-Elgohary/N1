@@ -30,9 +30,9 @@ class CreateUserSeeder extends Seeder
         ]);
 
         $user = User::create([
-            'name' => 'Ahmed Mahmoud',
+            'name' => 'Mahmoud ElSayed',
             'email' => 'ahmed@dgfc.com',
-            'phone' => '1026895475',
+            'phone' => '1015696025',
             'country_code' => '+20',
             'password' => bcrypt('12345678'),
             'confirmed_password' => bcrypt('12345678'),
