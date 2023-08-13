@@ -100,6 +100,12 @@ class ShopProduct extends Model
         return $this->belongsTo(Branch::class);
     }
 
+
+    public function likes() {
+        return $this->hasMany(Like::class, 'likesable_id');
+    }
+    
+
     public function getRateAttribute() {
         $rates = $this->rates;
         $count = $rates->count();

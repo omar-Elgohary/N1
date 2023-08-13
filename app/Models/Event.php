@@ -76,4 +76,9 @@ class Event extends Model
     {
         return $this->hasone(ReservationType::class);
     }
+
+    
+    public function likes() {
+        return $this->hasMany(Like::class, 'likesable_id');
+    }
 }

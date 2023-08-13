@@ -1,20 +1,18 @@
 <?php
 namespace App\Http\Controllers\Api;
 use App\Models\Rate;
-use App\Models\Size;
-use App\Models\User;
-use App\Models\Color;
 use App\Models\Branch;
 use App\Models\Comment;
 use App\Models\Category;
 use App\Models\BrancheRate;
 use App\Models\ShopProduct;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
 class shopController extends Controller
 {
+    use ApiResponseTrait;
+
+
     public function getShopBrancheById($id)
     {
         try{
@@ -87,19 +85,22 @@ class shopController extends Controller
             $product['rate'] = 0;
         }
 
-        $branche = Branch::select('id', 'name', 'image')->find($product->branche_id);
+
+        $branche = Branch::select('id', 'department_id', 'name', 'image', 'branche_location', 'latitude', 'longitude')->find($product->branche_id);
         $branche['image'] = asset('assets/images/branches/'.$branche->image);
-        if($branche['rate']){
-            $branche['rate'] = BrancheRate::where('branche_id', $branche->id)->sum('rate');
+        if($branche->rate){
+            $branche['rate'] = BrancheRate::where('branche_id', $branche->id)->first()->rate;
+                // $branche['rate'] = BrancheRate::where('branche_id', $branche->id)->sum('rate');
         }else{
             $branche['rate'] = 0;
         }
 
+
         $comments = Comment::select('id', 'user_id', 'comment', 'rate')->where('shop_product_id', $id)->get();
-        $users = User::get();
         foreach ($comments as $comment) {
             $comment['user_id'] = $comment->user->name;
         }
+
 
         if($product){
             return response()->json([
@@ -177,4 +178,37 @@ class shopController extends Controller
     }
 
 
+
+
+
+    public function addOrRemoveShopProductLikes($id)
+    {
+        try{
+        $product = ShopProduct::findOrFail($id);
+
+        if($product->likes->where("user_id", auth()->user()->id)->count() == 0){
+            $product->likes()->create([
+                "user_id" => auth()->user()->id,
+                'likesable_type' => ShopProduct::class,
+                'likesable_id' => $product->id,
+            ]);
+        }else{
+            $product->likes()->where("user_id", auth()->user()->id)->delete();
+            return response()->json([
+                'status' => 200,
+                'massage' => 'Remove Like Successfully',
+            ]);
+        }
+            $flag = true;
+            return response()->json([
+                'status' => 200,
+                'massage' => 'Add Like Successfully',
+            ]);
+        }catch(\Exception $e){
+            return response()->json([
+                'status' => 200,
+                'massage' => 'Product Not Found',
+            ]);
+        }
+    }
 }
