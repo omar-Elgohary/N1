@@ -98,9 +98,7 @@ class shopController extends Controller
         $comments = Comment::select('id', 'user_id', 'comment', 'rate')->where('shop_product_id', $id)->get();
         $users = User::get();
         foreach ($comments as $comment) {
-            foreach($users as $user){
-                $comment['user_id'] = User::where('id', $comment->user_id)->name;
-            }
+            $comment['user_id'] = $comment->user->name;
         }
 
         if($product){
