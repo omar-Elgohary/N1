@@ -1,5 +1,6 @@
 <?php
 namespace App\Http\Controllers\Api;
+use App\Models\Like;
 use App\Models\Rate;
 use App\Models\Branch;
 use App\Models\Comment;
@@ -47,7 +48,7 @@ class shopController extends Controller
             if($branche->department_id == 2){
                 return response()->json([
                     'status' => 200,
-                    'massage' => 'Branche Returned Successfully',
+                    'message' => 'Branche Returned Successfully',
                     'branche' => $branche,
                     'categories' => $categories,
                     'bestSelles' => $bestSelles,
@@ -57,7 +58,7 @@ class shopController extends Controller
             }else{
                 return response()->json([
                     'status' => 200,
-                    'massage' => 'Branche Returned Failed Is Not Shop Store',
+                    'message' => 'Branche Returned Failed Is Not Shop Store',
                 ]);
             }
         }catch(\Exception $e){
@@ -101,19 +102,26 @@ class shopController extends Controller
             $comment['user_id'] = $comment->user->name;
         }
 
+        $like = Like::find($id);
+        if(auth()->user()->id == $like->user_id){
+            $isLiked = true;
+        }else{
+            $isLiked = false;
+        }
 
         if($product){
             return response()->json([
                 'status' => 200,
-                'massage' => 'Shop Product Returned Successfully',
+                'message' => 'Shop Product Returned Successfully',
                 'product' => $product,
                 'branche' => $branche,
                 'comments' => $comments,
+                'isLiked' => $isLiked,
             ]);
         }else{
             return response()->json([
                 'status' => 200,
-                'massage' => "Shop Product Not Found",
+                'message' => "Shop Product Not Found",
             ]);
         }
     }
@@ -135,7 +143,7 @@ class shopController extends Controller
         if($branche->department_id != 2){
             return response()->json([
                 'status' => 200,
-                'massage' => 'Branche Returned Failed Is Not Shop Store',
+                'message' => 'Branche Returned Failed Is Not Shop Store',
             ]);
         }
 
@@ -143,7 +151,7 @@ class shopController extends Controller
         if($category->department_id != 2){
             return response()->json([
                 'status' => 200,
-                'massage' => 'Category Returned Failed Is Not Shop Store',
+                'message' => 'Category Returned Failed Is Not Shop Store',
             ]);
         }
 
@@ -168,7 +176,7 @@ class shopController extends Controller
 
         return response()->json([
             'status' => 200,
-            'massage' => 'Shop Product Returned Successfully',
+            'message' => 'Shop Product Returned Successfully',
             'branche' => $branche,
             'categories' => $categories,
             'bestSelles' => $bestSelles,
@@ -196,18 +204,18 @@ class shopController extends Controller
             $product->likes()->where("user_id", auth()->user()->id)->delete();
             return response()->json([
                 'status' => 200,
-                'massage' => 'Remove Like Successfully',
+                'message' => 'Remove Like Successfully',
             ]);
         }
             $flag = true;
             return response()->json([
                 'status' => 200,
-                'massage' => 'Add Like Successfully',
+                'message' => 'Add Like Successfully',
             ]);
         }catch(\Exception $e){
             return response()->json([
                 'status' => 200,
-                'massage' => 'Product Not Found',
+                'message' => 'Product Not Found',
             ]);
         }
     }
