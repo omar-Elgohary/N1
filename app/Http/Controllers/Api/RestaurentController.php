@@ -31,6 +31,7 @@ class RestaurentController extends Controller
                 $meal['without_id'] = $meal->withouts();
             }
 
+
             if($branche->department_id == 1){
                 return response()->json([
                     'status' => 200,
@@ -92,6 +93,7 @@ class RestaurentController extends Controller
                 'message' => 'Branche Returned Failed There Is Not Restaurent Store',
             ]);
         }
+
         $branche['image'] = asset('assets/images/branches/'.$branche->image);
         if($branche->rate){
             $branche['rate'] = BrancheRate::where('branche_id', $branche_id)->first()->rate;
@@ -108,20 +110,27 @@ class RestaurentController extends Controller
             ]);
         }
 
-        $meals = RestaurentProduct::where('category_id', $cat_id)->get();
+
+        $meals = RestaurentProduct::where('branche_id', $branche_id)->where('category_id', $cat_id)->get();
         foreach($meals as $meal){
             $meal['product_image'] = asset('assets/images/products/'.$meal->product_image);
             $meal['extra_id'] = $meal->extras();
             $meal['without_id'] = $meal->withouts();
         }
 
-
-        return response()->json([
-            'status' => 200,
-            'message' => 'Shop Product Returned Successfully',
-            'branche' => $branche,
-            'categories' => $categories,
-            'meals' => $meals,
-        ]);
+        if($meals){
+            return response()->json([
+                'status' => 200,
+                'message' => 'Shop Product Returned Successfully',
+                'branche' => $branche,
+                'categories' => $categories,
+                'meals' => $meals,
+            ]);
+        }else{
+            return response()->json([
+                'status' => 404,
+                'message' => 'There Is No Meals',
+            ]);
+        }
     }
 }

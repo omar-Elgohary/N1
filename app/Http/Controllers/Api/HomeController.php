@@ -127,13 +127,12 @@ class HomeController extends Controller
 
     public function eventProducts()
     {
-        $departments = Department::select('name')->get();
-        $events = User::where('department_id', 3)->select('commercial_registration_image', 'company_name')->get();
+        $departments = Department::select('id', 'name')->get();
+        $events = Branch::where('department_id', 2)->select('id', 'image', 'name')->get();
 
         foreach($events as $event){
-            $event['commercial_registration_image'] = asset('assets/images/commercial/'.$event->commercial_registration_image);
-            $rates = Rate::where('user_id', auth()->user()->id)->sum('rate');
-            $event['rate'] = $rates / 5;
+            $event['image'] = asset('assets/images/branches/'.$event->image);
+            $event['rate'] = BrancheRate::where('branche_id', $event->id)->sum('rate');
         }
 
         $newests = Event::orderby('created_at', 'desc')->get();
