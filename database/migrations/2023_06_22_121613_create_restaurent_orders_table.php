@@ -15,7 +15,7 @@ return new class extends Migration
             $table->foreignId('restaurent_product_id')->constrained('restaurent_products')->cascadeOnDelete();
             $table->foreignId('offer_id')->nullable()->constrained('offers')->cascadeOnDelete();
             $table->string('products_count');
-            $table->string('total_price');
+            $table->double('total_price');
             $table->enum('order_status', ['جديد', 'قيد التجهيز', 'تم الاستلام', 'مكتمل'])->default('جديد');
             $table->timestamps();
         });

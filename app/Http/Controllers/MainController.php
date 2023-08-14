@@ -1,7 +1,5 @@
 <?php
 namespace App\Http\Controllers;
-
-use App\Models\Category;
 use App\Models\ContactUs;
 use Illuminate\Http\Request;
 

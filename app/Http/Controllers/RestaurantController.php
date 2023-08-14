@@ -2,8 +2,11 @@
 namespace App\Http\Controllers;
 use PDF;
 use App\Models\Extra;
+use App\Models\Branch;
 use App\Models\Without;
 use App\Models\Category;
+use App\Models\ShopOrder;
+use App\Models\BrancheRate;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -14,7 +17,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\ImportRestaurentProducts;
-use App\Models\ShopOrder;
 
 class RestaurantController extends Controller
 {

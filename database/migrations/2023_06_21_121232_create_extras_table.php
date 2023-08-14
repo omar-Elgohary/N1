@@ -11,6 +11,7 @@ return new class extends Migration
         Schema::create('extras', function (Blueprint $table) {
             $table->id();
             $table->json('name');
+            $table->double('price');
             $table->timestamps();
         });
     }

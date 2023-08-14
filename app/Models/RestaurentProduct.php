@@ -13,6 +13,8 @@ class RestaurentProduct extends Model
 
     // public $timestamps = false;
 
+    protected $hidden = ['quantity', 'sold_quantity', 'remaining_quantity', 'created_at', 'updated_at'];
+
     protected $casts = [
         'name' => 'array',
         'description' => 'array',
@@ -81,13 +83,16 @@ class RestaurentProduct extends Model
 
     public function extras()
     {
-        return $this->hasMany(Extra::class);
+        $ids = explode(',', $this->extra_id);
+        return Extra::select('id', 'name', 'price')->whereIn('id', $ids)->get();
     }
 
     public function withouts()
     {
-        return $this->hasMany(Without::class);
+        $ids = explode(',', $this->without_id);
+        return Without::select('id', 'name')->whereIn('id', $ids)->get();
     }
+
 
 
     public function comments()

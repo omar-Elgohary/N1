@@ -15,7 +15,7 @@ class RestaurentOrderSeeder extends Seeder
             'restaurent_product_id' => 1,
             'offer_id' => 1,
             'products_count' => 2,
-            'total_price' => ((2 * 730) * 10 /100),
+            'total_price' => ((2 * 730) - (10 /100)),
         ]);
 
         RestaurentOrder::create([

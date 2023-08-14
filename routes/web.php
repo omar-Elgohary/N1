@@ -1,16 +1,13 @@
 <?php
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Request;
 use App\Http\Controllers\MainController;
-// use App\Http\Controllers\ShopController;
-use App\Http\Controllers\erserController;
+use App\Http\Controllers\ShopController;
 use App\Http\Controllers\OfferController;
 use App\Http\Controllers\BranchController;
 use App\Http\Controllers\CouponController;
 use App\Http\Controllers\SellerController;
 use App\Http\Controllers\PackageController;
-use App\Http\Controllers\Api\shopController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\EntertainmentController;
