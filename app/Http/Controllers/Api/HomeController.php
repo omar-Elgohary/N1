@@ -13,6 +13,7 @@ use App\Models\RestaurentProduct;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Api\ApiResponseTrait;
+use App\Models\ReservationType;
 
 class HomeController extends Controller
 {
@@ -80,7 +81,6 @@ class HomeController extends Controller
             $nearest['rate'] = BrancheRate::where('branche_id', $nearest->id)->sum('rate');
         }
 
-
         $mostOrders = RestaurentOrder::where('user_id', auth()->user()->id)
             ->groupBy('branche_id')->select('branche_id', DB::raw('count(*) as repeat_count'))
             ->orderByDesc('repeat_count')->get();
@@ -128,31 +128,40 @@ class HomeController extends Controller
     public function eventProducts()
     {
         $departments = Department::select('id', 'name')->get();
-        $events = Branch::where('department_id', 2)->select('id', 'image', 'name')->get();
 
-        foreach($events as $event){
-            $event['image'] = asset('assets/images/branches/'.$event->image);
-            $event['rate'] = BrancheRate::where('branche_id', $event->id)->sum('rate');
+        $latitude = auth("sanctum")->user()->latitude;
+        $longitude = auth("sanctum")->user()->longitude;
+        $radius = 6;
+
+        $nearests = Branch::where('department_id', 3)->withinRadius($latitude, $longitude, $radius)->get();
+        foreach($nearests as $nearest){
+            $nearest['department_id'] = 3;
+            $nearest['image'] = asset('assets/images/branches/'.$nearest->image);
+            $nearest['rate'] = BrancheRate::where('branche_id', $nearest->id)->sum('rate');
         }
 
         $newests = Event::orderby('created_at', 'desc')->get();
         foreach($newests as $newest){
             $newest['product_image'] = asset('assets/images/products/'.$newest->product_image);
+            $newest['reservations_type_id'] = ReservationType::select('id', 'name')->where('id', $newest->reservations_type_id)->get();
             $newest['rate'] = Rate::where('shop_product_id', $newest->id)->sum('rate');
         }
 
-        $highRates = Rate::where('event_product_id', '!=', null)->orderby('rate', 'desc')->select('rate', 'event_product_id')->get();
+        $highRates = Event::get();
         foreach($highRates as $highRate){
-            $highRate->event_product['product_image'] = asset('assets/images/products/'.$highRate->event_product->product_image);
+            $highRate['product_image'] = asset('assets/images/products/'.$highRate->product_image);
+            $highRate['reservations_type_id'] = ReservationType::select('id', 'name')->where('id', $highRate->reservations_type_id)->get();
+            $highRate['rate'] = Rate::where('shop_product_id', $highRate->id)->sum('rate');
         }
 
         $famoustes = Event::orderby('sold_quantity', 'desc')->get();
         foreach($famoustes as $famouste){
             $famouste['product_image'] = asset('assets/images/products/'.$famouste->product_image);
+            $famouste['reservations_type_id'] = ReservationType::select('id', 'name')->where('id', $famouste->reservations_type_id)->get();
             $famouste['rate'] = Rate::where('shop_product_id', $famouste->id)->sum('rate');
         }
 
-        return $this->returnData(200, 'Data Returned Successfully', compact('departments', 'events', 'newests', 'highRates', 'famoustes'));
+        return $this->returnData(200, 'Data Returned Successfully', compact('departments', 'nearests', 'newests', 'highRates', 'famoustes'));
     }
 
 

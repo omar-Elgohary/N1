@@ -18,6 +18,9 @@ class Event extends Model
 
     private $locale = null;
 
+    protected $hidden = ['quantity', 'remaining_quantity'];
+
+
     public function name(string $locale = null): Attribute {
         return Attribute::make(
             get: function ($value) {
@@ -77,7 +80,7 @@ class Event extends Model
         return $this->hasone(ReservationType::class);
     }
 
-    
+
     public function likes() {
         return $this->hasMany(Like::class, 'likesable_id');
     }

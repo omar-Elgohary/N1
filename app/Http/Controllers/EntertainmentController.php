@@ -92,6 +92,7 @@ class EntertainmentController extends Controller
     }
 
 
+    
     public function createEventSubCategory(Request $request, $id)
     {
         if($request->name_en == ''){
