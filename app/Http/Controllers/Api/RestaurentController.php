@@ -27,6 +27,8 @@ class RestaurentController extends Controller
             $meals = RestaurentProduct::where('branche_id', $branche->id)->get();
             foreach($meals as $meal){
                 $meal['product_image'] = asset('assets/images/products/'.$meal->product_image);
+                $meal['extra_id'] = $meal->extras();
+                $meal['without_id'] = $meal->withouts();
             }
 
             if($branche->department_id == 1){
@@ -109,7 +111,10 @@ class RestaurentController extends Controller
         $meals = RestaurentProduct::where('category_id', $cat_id)->get();
         foreach($meals as $meal){
             $meal['product_image'] = asset('assets/images/products/'.$meal->product_image);
+            $meal['extra_id'] = $meal->extras();
+            $meal['without_id'] = $meal->withouts();
         }
+
 
         return response()->json([
             'status' => 200,
