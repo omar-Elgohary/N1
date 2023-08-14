@@ -23,9 +23,10 @@ Route::middleware('auth:sanctum')->group(function(){
 
 
     // Restaurent
-    Route::get('getRestaurentBrancheById/{id}', [RestaurentController::class, 'getRestaurentBrancheById']);
+    Route::get('getRestaurentById/{id}', [RestaurentController::class, 'getRestaurentById']);
+    Route::get('getBranchMealById/{branche_id}/{meal_id}', [RestaurentController::class, 'getBranchMealById']);
 
-    
+
     // Shop
     Route::get('getShopBrancheById/{id}', [shopController::class, 'getShopBrancheById']);
     Route::get('getShopProductById/{id}', [shopController::class, 'getShopProductById']);
