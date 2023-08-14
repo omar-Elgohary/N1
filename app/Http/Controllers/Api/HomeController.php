@@ -3,15 +3,16 @@ namespace App\Http\Controllers\Api;
 use App\Models\Rate;
 use App\Models\User;
 use App\Models\Event;
+use App\Models\Branch;
 use App\Models\Department;
+use App\Models\BrancheRate;
 use App\Models\ShopProduct;
 use Illuminate\Http\Request;
+use App\Models\RestaurentOrder;
 use App\Models\RestaurentProduct;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Api\ApiResponseTrait;
-use App\Models\Branch;
-use App\Models\BrancheRate;
 
 class HomeController extends Controller
 {
@@ -78,9 +79,17 @@ class HomeController extends Controller
             $nearest['rate'] = BrancheRate::where('branche_id', $nearest->id)->sum('rate');
         }
 
-        $mostWanted = [];
 
-        return $this->returnData(200, 'Data Returned Successfully', compact('departments', 'highRates', 'nearests', 'mostWanted'));
+        $mostOrders = RestaurentOrder::where('user_id', auth()->user()->id)
+            ->groupBy('branche_id')->select('branche_id', DB::raw('count(*) as repeat_count'))
+            ->orderByDesc('repeat_count')->get();
+
+        foreach($mostOrders as $mostOrder){
+            $mostOrder->branche['image'] = asset('assets/images/branches/'.$mostOrder->branche->image);
+            $mostOrder->branche['rate'] = BrancheRate::where('branche_id', $mostOrder->branche->id)->sum('rate');
+        }
+
+        return $this->returnData(200, 'Data Returned Successfully', compact('departments', 'highRates', 'nearests', 'mostOrders'));
     }
 
 

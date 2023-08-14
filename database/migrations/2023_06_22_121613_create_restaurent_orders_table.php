@@ -11,7 +11,7 @@ return new class extends Migration
             $table->id();
             $table->string('random_id');
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
-            $table->foreignId('department_id')->constrained('departments')->cascadeOnDelete();
+            $table->foreignId('branche_id')->constrained('branches')->cascadeOnDelete();
             $table->foreignId('restaurent_product_id')->constrained('restaurent_products')->cascadeOnDelete();
             $table->foreignId('offer_id')->nullable()->constrained('offers')->cascadeOnDelete();
             $table->string('products_count');

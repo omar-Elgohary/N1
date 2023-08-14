@@ -9,6 +9,8 @@ class RestaurentOrder extends Model
 
     protected $guarded = [];
 
+    protected $hidden = ['branche_id', 'repeat_count'];
+
     public function getFormattedCreatedAtAttribute()
     {
         return $this->created_at->format('Y-m-d'); // Adjust the format as needed
@@ -17,6 +19,12 @@ class RestaurentOrder extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+
+    public function branche()
+    {
+        return $this->belongsTo(Branch::class);
     }
 
     public function product()
