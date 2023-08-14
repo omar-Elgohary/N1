@@ -10,7 +10,7 @@ class Branch extends Model
 
     protected $guarded = [];
 
-    protected $hidden = ['random_id', 'department_id', 'email', 'phone', 'start_time', 'end_time', 'password', 'confirmed_password', 'delivery', 'created_at', 'updated_at'];
+    protected $hidden = ['random_id', 'email', 'phone', 'start_time', 'end_time', 'password', 'confirmed_password', 'delivery', 'created_at', 'updated_at'];
 
     private $locale = null;
 

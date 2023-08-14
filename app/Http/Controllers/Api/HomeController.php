@@ -62,7 +62,7 @@ class HomeController extends Controller
     {
         $departments = Department::select('id', 'name')->get();
 
-        $highRates = Branch::select('id', 'name', 'image')->where('department_id', 1)->get();
+        $highRates = Branch::select('id', 'department_id', 'name', 'image')->where('department_id', 1)->get();
         foreach($highRates as $highRate){
             $highRate['image'] = asset('assets/images/branches/'.$highRate->image);
             $highRate['rate'] = Rate::where('shop_product_id', $highRate->id)->sum('rate');
@@ -75,6 +75,7 @@ class HomeController extends Controller
 
         $nearests = Branch::where("department_id", 1)->withinRadius($latitude, $longitude, $radius)->get();
         foreach($nearests as $nearest){
+            $nearest['department_id'] = 1;
             $nearest['image'] = asset('assets/images/branches/'.$nearest->image);
             $nearest['rate'] = BrancheRate::where('branche_id', $nearest->id)->sum('rate');
         }
