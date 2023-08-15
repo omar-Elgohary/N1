@@ -13,7 +13,7 @@ class RestaurentProduct extends Model
 
     // public $timestamps = false;
 
-    protected $hidden = ['quantity', 'sold_quantity', 'remaining_quantity', 'created_at', 'updated_at'];
+    protected $hidden = ['quantity', 'remaining_quantity', 'created_at', 'updated_at'];
 
     protected $casts = [
         'name' => 'array',
@@ -93,7 +93,10 @@ class RestaurentProduct extends Model
         return Without::select('id', 'name')->whereIn('id', $ids)->get();
     }
 
-
+    public function rates()
+    {
+        return $this->hasMany(MealRate::class);
+    }
 
     public function comments()
     {

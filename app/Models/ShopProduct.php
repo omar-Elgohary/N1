@@ -91,7 +91,7 @@ class ShopProduct extends Model
 
     public function rates()
     {
-        return $this->hasMany(Rate::class);
+        return $this->hasMany(ProductRate::class);
     }
 
 
@@ -104,7 +104,7 @@ class ShopProduct extends Model
     public function likes() {
         return $this->hasMany(Like::class, 'likesable_id');
     }
-    
+
 
     public function getRateAttribute() {
         $rates = $this->rates;

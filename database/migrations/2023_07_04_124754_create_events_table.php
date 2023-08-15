@@ -11,6 +11,7 @@ return new class extends Migration
             $table->id();
             $table->string('random_id');
             $table->foreignId('department_id')->constrained('departments')->cascadeOnDelete();
+            $table->string('branche_id')->constrained('branches')->nullable();
             $table->foreignId('category_id')->constrained('categories')->cascadeOnDelete();
             $table->foreignId('sub_category_id')->constrained('sub_categories')->cascadeOnDelete();
             $table->string('product_image');

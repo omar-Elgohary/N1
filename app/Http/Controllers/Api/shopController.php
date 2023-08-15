@@ -1,13 +1,13 @@
 <?php
 namespace App\Http\Controllers\Api;
 use App\Models\Like;
-use App\Models\Rate;
 use App\Models\Branch;
 use App\Models\Comment;
 use App\Models\Category;
 use App\Models\BrancheRate;
 use App\Models\ShopProduct;
 use App\Http\Controllers\Controller;
+use App\Models\ProductRate;
 
 class shopController extends Controller
 {
@@ -30,19 +30,19 @@ class shopController extends Controller
             $bestSelles = ShopProduct::where('branche_id', $id)->orderby('sold_quantity', 'desc')->get();
             foreach($bestSelles as $bestSelle){
                 $bestSelle['product_image'] = asset('assets/images/products/'.$bestSelle->product_image);
-                $bestSelle['rate'] = Rate::where('shop_product_id', $bestSelle->id)->sum('rate');
+                $bestSelle['rate'] = ProductRate::where('shop_product_id', $bestSelle->id)->avg('rate');
             }
 
             $highRates = ShopProduct::where('branche_id', $id)->get();
             foreach($highRates as $highRate){
                 $highRate['product_image'] = asset('assets/images/products/'.$highRate->product_image);
-                $highRate['rate'] = Rate::where('shop_product_id', $highRate->id)->sum('rate');
+                $highRate['rate'] = ProductRate::where('shop_product_id', $highRate->id)->avg('rate');
             }
 
             $allProducts = ShopProduct::where('branche_id', $id)->get();
             foreach($allProducts as $product){
                 $product['product_image'] = asset('assets/images/products/'.$product->product_image);
-                $product['rate'] = Rate::where('shop_product_id', $highRate->id)->sum('rate');
+                $product['rate'] = ProductRate::where('shop_product_id', $highRate->id)->avg('rate');
             }
 
             if($branche->department_id == 2){
@@ -81,7 +81,7 @@ class shopController extends Controller
         $product['color_id'] = $colors;
 
         if($product['rate']){
-            $product['rate'] = Rate::where('shop_product_id', $id)->first()->rate;
+            $product['rate'] = ProductRate::where('shop_product_id', $id)->first()->rate;
         }else{
             $product['rate'] = 0;
         }

@@ -3,6 +3,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\HomeController;
 use App\Http\Controllers\Api\shopController;
+use App\Http\Controllers\Api\EventController;
 use App\Http\Controllers\Api\RestaurentController;
 
 
@@ -35,6 +36,9 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('getBrancheProductsOfCategory/{branche_id}/{cat_id}', [shopController::class, 'getBrancheProductsOfCategory']);
 
 
+    // Event
+    Route::get('getEventById/{id}', [EventController::class, 'getEventById']);
+    Route::get('getEventProductById/{id}', [EventController::class, 'getEventProductById']);
 
 });
 

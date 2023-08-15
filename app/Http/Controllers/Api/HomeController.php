@@ -1,19 +1,19 @@
 <?php
 namespace App\Http\Controllers\Api;
-use App\Models\Rate;
-use App\Models\User;
 use App\Models\Event;
 use App\Models\Branch;
 use App\Models\Department;
 use App\Models\BrancheRate;
 use App\Models\ShopProduct;
-use Illuminate\Http\Request;
+use App\Models\ReservationType;
 use App\Models\RestaurentOrder;
 use App\Models\RestaurentProduct;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Api\ApiResponseTrait;
-use App\Models\ReservationType;
+use App\Models\EventRate;
+use App\Models\MealRate;
+use App\Models\ProductRate;
 
 class HomeController extends Controller
 {
@@ -21,39 +21,51 @@ class HomeController extends Controller
 
     public function home()
     {
-        $departments = Department::select('name')->get();
-        $allShops = User::where('department_id', '!=', null)->select('commercial_registration_image', 'company_name')->get();
+        $departments = Department::select('id', 'name')->get();
+        $allShops = Branch::select('id', 'department_id', 'name', 'image', 'branche_location', 'latitude', 'longitude')->get();
 
         foreach($allShops as $shop){
-            $shop['commercial_registration_image'] = asset('assets/images/commercial/'.$shop->commercial_registration_image);
-            $shop['department'] = Department::where('id', 2)->first()->name;
-            $rates = Rate::where('user_id', auth()->user()->id)->sum('rate');
-            $shop['rate'] = $rates / 5;
+            $shop['image'] = asset('assets/images/branches/'.$shop->image);
+            $shop['department_id'] = Department::where('id', $shop->department_id)->first()->name;
+            $shop['rate'] = BrancheRate::where('branche_id', $shop->id)->avg('rate');
         }
 
-        $restaurent = collect(RestaurentProduct::select('name', 'product_image','sold_quantity')->get()->toArray());
-        $restaurent = $restaurent->merge(ShopProduct::select('name', 'product_image', 'sold_quantity')->get()->toArray());
-        $restaurent = $restaurent->merge(Event::select('name', 'product_image', 'sold_quantity')->get()->toArray())->toArray();
-        sort($restaurent);
+        // $bestSelles = collect(RestaurentProduct::get()->toArray())
+        // ->merge(ShopProduct::get()->toArray())
+        // ->merge(Event::get()->toArray())->toArray();
 
-        // $bestSelles = collect(RestaurentProduct::select('id', 'name', 'product_image','sold_quantity')->get());
-        // $bestSelles = $bestSelles->merge(ShopProduct::select('id', 'name', 'product_image', 'sold_quantity')->get());
-        // $bestSelles = $bestSelles->merge(Event::select('id', 'name', 'product_image', 'sold_quantity')->get());
-        // $bestSelles = $bestSelles->sortByDesc('sold_quantity');
+        // usort($bestSelles, function ($item1, $item2) {
+        //     return $item2['sold_quantity'] - $item1['sold_quantity'];
+        // });
 
-        // foreach ($bestSelles as $bestSelle) {
+        // foreach($bestSelles as $bestSelle){
         //     $bestSelle['product_image'] = asset('assets/images/products/'.$bestSelle->product_image);
-        //     $bestSelle['rate'] = Rate::where('department_id', $bestSelle->department_id)
-        //         ->where('restaurent_product_id', $bestSelle->id)
-        //         ->select('rate')->get();
         // }
+
+        $restaurantProducts = RestaurentProduct::get();
+        $shopProducts = ShopProduct::get();
+        $events = Event::get();
+
+        $mergedData = $restaurantProducts->concat($shopProducts)->concat($events);
+        $bestSelles = $mergedData->sortByDesc('sold_quantity')->values()->all();
+
+        foreach ($bestSelles as $bestSelle) {
+            $bestSelle['product_image'] = asset('assets/images/products/'.$bestSelle->product_image);
+            $bestSelle['rate'] = $bestSelle->rates()->avg('rate');
+
+            // if($bestSelle['rate']){
+            //     $bestSelle['rate'] = $bestSelle->rates;
+            // }else{
+            //     $bestSelle['rate'] = [];
+            // }
+        }
 
         // $highRates = Rate::where('shop_product_id', '!=', null)->orderby('rate', 'desc')->select('rate', 'shop_product_id')->get();
         // foreach($highRates as $highRate){
         //     $highRate->shop_product['product_image'] = asset('assets/images/products/'.$highRate->shop_product->product_image);
         // }
 
-        return $this->returnData(200, 'Reached Home Page Successfully', compact('departments', 'allShops', 'restaurent'));
+        return $this->returnData(200, 'Reached Home Page Successfully', compact('departments', 'allShops', 'bestSelles'));
     }
 
 
@@ -66,7 +78,7 @@ class HomeController extends Controller
         $highRates = Branch::select('id', 'department_id', 'name', 'image')->where('department_id', 1)->get();
         foreach($highRates as $highRate){
             $highRate['image'] = asset('assets/images/branches/'.$highRate->image);
-            $highRate['rate'] = Rate::where('shop_product_id', $highRate->id)->sum('rate');
+            $highRate['rate'] = BrancheRate::where('department_id', 1)->where('branche_id', $highRate->id)->avg('rate');
         }
 
         $latitude = auth("sanctum")->user()->latitude;
@@ -103,19 +115,19 @@ class HomeController extends Controller
 
         foreach($shops as $shop){
             $shop['image'] = asset('assets/images/branches/'.$shop->image);
-            $shop['rate'] = BrancheRate::where('branche_id', $shop->id)->sum('rate');
+            $shop['rate'] = BrancheRate::where('branche_id', $shop->id)->avg('rate');
         }
 
         $bestSelles = ShopProduct::orderby('sold_quantity', 'desc')->get();
         foreach($bestSelles as $bestSelle){
             $bestSelle['product_image'] = asset('assets/images/products/'.$bestSelle->product_image);
-            $bestSelle['rate'] = Rate::where('shop_product_id', $bestSelle->id)->sum('rate');
+            $bestSelle['rate'] = ProductRate::where('shop_product_id', $bestSelle->id)->avg('rate');
         }
 
         $highRates = ShopProduct::get();
         foreach($highRates as $highRate){
             $highRate['product_image'] = asset('assets/images/products/'.$highRate->product_image);
-            $highRate['rate'] = Rate::where('shop_product_id', $highRate->id)->sum('rate');
+            $highRate['rate'] = ProductRate::where('shop_product_id', $highRate->id)->avg('rate');
         }
 
         return $this->returnData(200, 'Data Returned Successfully', compact('departments', 'shops', 'bestSelles', 'highRates'));
@@ -137,28 +149,28 @@ class HomeController extends Controller
         foreach($nearests as $nearest){
             $nearest['department_id'] = 3;
             $nearest['image'] = asset('assets/images/branches/'.$nearest->image);
-            $nearest['rate'] = BrancheRate::where('branche_id', $nearest->id)->sum('rate');
+            $nearest['rate'] = BrancheRate::where('branche_id', $nearest->id)->avg('rate');
         }
 
         $newests = Event::orderby('created_at', 'desc')->get();
         foreach($newests as $newest){
             $newest['product_image'] = asset('assets/images/products/'.$newest->product_image);
             $newest['reservations_type_id'] = ReservationType::select('id', 'name')->where('id', $newest->reservations_type_id)->get();
-            $newest['rate'] = Rate::where('shop_product_id', $newest->id)->sum('rate');
+            $newest['rate'] = EventRate::where('event_id', $newest->id)->avg('rate');
         }
 
         $highRates = Event::get();
         foreach($highRates as $highRate){
             $highRate['product_image'] = asset('assets/images/products/'.$highRate->product_image);
             $highRate['reservations_type_id'] = ReservationType::select('id', 'name')->where('id', $highRate->reservations_type_id)->get();
-            $highRate['rate'] = Rate::where('shop_product_id', $highRate->id)->sum('rate');
+            $highRate['rate'] = EventRate::where('event_id', $highRate->id)->avg('rate');
         }
 
         $famoustes = Event::orderby('sold_quantity', 'desc')->get();
         foreach($famoustes as $famouste){
             $famouste['product_image'] = asset('assets/images/products/'.$famouste->product_image);
             $famouste['reservations_type_id'] = ReservationType::select('id', 'name')->where('id', $famouste->reservations_type_id)->get();
-            $famouste['rate'] = Rate::where('shop_product_id', $famouste->id)->sum('rate');
+            $famouste['rate'] = EventRate::where('event_id', $famouste->id)->avg('rate');
         }
 
         return $this->returnData(200, 'Data Returned Successfully', compact('departments', 'nearests', 'newests', 'highRates', 'famoustes'));

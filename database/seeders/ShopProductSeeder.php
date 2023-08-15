@@ -11,6 +11,7 @@ class ShopProductSeeder extends Seeder
         ShopProduct::create([
             'random_id' => '#T8W2K4',
             'department_id' => 2,
+            'branche_id' => 3,
             'category_id' => 4,
             'sub_category_id' => 4,
             'product_image' => 'fgh.jpg',
@@ -22,7 +23,6 @@ class ShopProductSeeder extends Seeder
             'returnable' => 'نعم',
             'guarantee' => 'لا',
             'status' => 'متوفر',
-            'branche_id' => 3,
             'quantity' => 100,
             'sold_quantity' => 60,
             'remaining_quantity' => 40,
@@ -31,6 +31,7 @@ class ShopProductSeeder extends Seeder
         ShopProduct::create([
             'random_id' => '#B7M3Z9',
             'department_id' => 2,
+            'branche_id' => 4,
             'category_id' => 5,
             'sub_category_id' => 5,
             'product_image' => 'fgh.jpg',
@@ -42,7 +43,6 @@ class ShopProductSeeder extends Seeder
             'returnable' => 'نعم',
             'guarantee' => 'نعم',
             'status' => 'غير متوفر',
-            'branche_id' => 4,
             'quantity' => 250,
             'sold_quantity' => 150,
             'remaining_quantity' => 100,
@@ -51,6 +51,7 @@ class ShopProductSeeder extends Seeder
         ShopProduct::create([
             'random_id' => '#B7M3Z9',
             'department_id' => 2,
+            'branche_id' => 4,
             'category_id' => 6,
             'sub_category_id' => 6,
             'product_image' => 'fgh.jpg',
@@ -62,7 +63,6 @@ class ShopProductSeeder extends Seeder
             'returnable' => 'نعم',
             'guarantee' => 'نعم',
             'status' => 'متوفر',
-            'branche_id' => 4,
             'quantity' => 600,
             'sold_quantity' => 450,
             'remaining_quantity' => 150,
