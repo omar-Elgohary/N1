@@ -30,18 +30,6 @@ class HomeController extends Controller
             $shop['rate'] = BrancheRate::where('branche_id', $shop->id)->avg('rate');
         }
 
-        // $bestSelles = collect(RestaurentProduct::get()->toArray())
-        // ->merge(ShopProduct::get()->toArray())
-        // ->merge(Event::get()->toArray())->toArray();
-
-        // usort($bestSelles, function ($item1, $item2) {
-        //     return $item2['sold_quantity'] - $item1['sold_quantity'];
-        // });
-
-        // foreach($bestSelles as $bestSelle){
-        //     $bestSelle['product_image'] = asset('assets/images/products/'.$bestSelle->product_image);
-        // }
-
         $restaurantProducts = RestaurentProduct::get();
         $shopProducts = ShopProduct::get();
         $events = Event::get();
@@ -49,23 +37,36 @@ class HomeController extends Controller
         $mergedData = $restaurantProducts->concat($shopProducts)->concat($events);
         $bestSelles = $mergedData->sortByDesc('sold_quantity')->values()->all();
 
-        foreach ($bestSelles as $bestSelle) {
+        foreach($bestSelles as $bestSelle){
             $bestSelle['product_image'] = asset('assets/images/products/'.$bestSelle->product_image);
             $bestSelle['rate'] = $bestSelle->rates()->avg('rate');
 
-            // if($bestSelle['rate']){
-            //     $bestSelle['rate'] = $bestSelle->rates;
-            // }else{
-            //     $bestSelle['rate'] = [];
-            // }
+            if($bestSelle['rate']){
+                $bestSelle['rate'] = $bestSelle->rate;
+            }else{
+                $bestSelle['rate'] = [];
+            }
         }
 
-        // $highRates = Rate::where('shop_product_id', '!=', null)->orderby('rate', 'desc')->select('rate', 'shop_product_id')->get();
-        // foreach($highRates as $highRate){
-        //     $highRate->shop_product['product_image'] = asset('assets/images/products/'.$highRate->shop_product->product_image);
-        // }
+        $restaurantProducts = RestaurentProduct::get();
+        $shopProducts = ShopProduct::get();
+        $events = Event::get();
 
-        return $this->returnData(200, 'Reached Home Page Successfully', compact('departments', 'allShops', 'bestSelles'));
+        $mergedData = $restaurantProducts->concat($shopProducts)->concat($events);
+        $highRates = $mergedData->sortByDesc('sold_quantity')->values()->all();
+
+        foreach ($highRates as $highRate) {
+            $highRate['product_image'] = asset('assets/images/products/'.$highRate->product_image);
+            $highRate['rate'] = $highRate->rates()->avg('rate');
+
+            if($highRate['rate']){
+                $highRate['rate'] = $highRate->rate;
+            }else{
+                $highRate['rate'] = [];
+            }
+        }
+
+        return $this->returnData(200, 'Reached Home Page Successfully', compact('departments', 'allShops', 'bestSelles', 'highRates'));
     }
 
 

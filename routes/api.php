@@ -39,6 +39,6 @@ Route::middleware('auth:sanctum')->group(function(){
     // Event
     Route::get('getEventById/{id}', [EventController::class, 'getEventById']);
     Route::get('getEventProductById/{id}', [EventController::class, 'getEventProductById']);
-
+    
 });
 
