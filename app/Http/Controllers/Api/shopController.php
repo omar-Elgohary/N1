@@ -71,7 +71,7 @@ class shopController extends Controller
 
     public function getShopProductById($id)
     {
-        $product = ShopProduct::select('id', 'product_image', 'name', 'description', 'price', 'size_id', 'color_id', 'branche_id')->find($id);
+        $product = ShopProduct::select('id', 'category_id', 'product_image', 'name', 'description', 'price', 'size_id', 'color_id', 'branche_id')->find($id);
         $product['product_image'] = asset('assets/images/products/'.$product->product_image);
 
         $sizes = $product->sizes();
@@ -86,12 +86,18 @@ class shopController extends Controller
             $product['rate'] = 0;
         }
 
+        $like = Like::where('likesable_id', $id)->where('user_id', auth()->user()->id)->first();
+        if($like){
+            $isLiked = true;
+        }else{
+            $isLiked = false;
+        }
 
         $branche = Branch::select('id', 'department_id', 'name', 'image', 'branche_location', 'latitude', 'longitude')->find($product->branche_id);
         $branche['image'] = asset('assets/images/branches/'.$branche->image);
         if($branche->rate){
-            $branche['rate'] = BrancheRate::where('branche_id', $branche->id)->first()->rate;
-                // $branche['rate'] = BrancheRate::where('branche_id', $branche->id)->sum('rate');
+            // $branche['rate'] = BrancheRate::where('branche_id', $branche->id)->first()->rate;
+                $branche['rate'] = BrancheRate::where('branche_id', $branche->id)->avg('rate');
         }else{
             $branche['rate'] = 0;
         }
@@ -102,21 +108,26 @@ class shopController extends Controller
             $comment['user_id'] = $comment->user->name;
         }
 
-        $like = Like::where('likesable_id', $id)->where('user_id', auth()->user()->id)->first();
-        if($like){
-            $isLiked = true;
-        }else{
-            $isLiked = false;
+        $similarProducts = ShopProduct::where('category_id', $product->category_id)->get();
+        foreach ($similarProducts as $similarProduct) {
+            $similarProduct['product_image'] = asset('assets/images/products/'.$similarProduct->product_image);
+
+            $sizes = $similarProduct->sizes();
+            $similarProduct['size_id'] = $sizes;
+
+            $colors = $similarProduct->colors();
+            $similarProduct['color_id'] = $colors;
         }
 
         if($product){
             return response()->json([
                 'status' => 200,
                 'message' => 'Shop Product Returned Successfully',
+                'isLiked' => $isLiked,
                 'product' => $product,
                 'branche' => $branche,
                 'comments' => $comments,
-                'isLiked' => $isLiked,
+                'similarProducts' => $similarProducts,
             ]);
         }else{
             return response()->json([
