@@ -1,11 +1,14 @@
 <?php
 namespace App\Http\Controllers\Api;
+use App\Models\Cart;
 use App\Models\Branch;
 use App\Models\Category;
 use App\Models\BrancheRate;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Models\RestaurentProduct;
+use App\Http\Controllers\Controller;
+use App\Models\RestaurentOrder;
+use App\Models\ShopProduct;
 
 class RestaurentController extends Controller
 {
@@ -131,6 +134,65 @@ class RestaurentController extends Controller
                 'status' => 404,
                 'message' => 'There Is No Meals',
             ]);
+        }
+    }
+
+
+
+    public function getMealsCart()
+    {
+        $cart = Cart::where('cartsable_type', RestaurentProduct::class)->where('user_id', auth()->user()->id)->get();
+
+        if($cart){
+            return response()->json([
+                'status' => 200,
+                'message' => 'Cart Returned Successfully',
+                'cart' => $cart,
+            ]);
+        }else{
+            return response()->json([
+                'status' => 200,
+                'message' => 'Cart is Empty',
+            ]);
+        }
+    }
+
+
+
+
+    public function addMealToCart($id)
+    {
+        if(!Cart::where('cartsable_type' , RestaurentProduct::class)->where('user_id', auth()->user()->id)->where('cartsable_id', $id)->exists())
+        {
+            $meal = RestaurentOrder::findorfail($id);
+            $product = Cart::create([
+                'user_id' => auth()->user()->id,
+                'price' => $meal->total_price,
+                'cartsable_type' => RestaurentProduct::class,
+                'cartsable_id' => $id,
+            ]);
+            return $this->returnData(200, 'Meal Add to Cart Successfully', $product);
+        }else{
+            return $this->returnData(201, 'Meal Already On Cart');
+        }
+    }
+
+
+
+
+
+    public function removeMealFromCart($id)
+    {
+        try{
+            if(RestaurentProduct::find($id)){
+                cart::where('cartsable_type', RestaurentProduct::class)->where('user_id', auth()->user()->id)->where('cartsable_id', $id)->delete();
+                return $this->returnData(200, 'Meal Deleted From Cart Successfully');
+            }else{
+            return $this->returnError(400, "Meal Doesn't Exists");
+            }
+        }catch(\Exception $e){
+            echo $e;
+            return $this->returnError(400, 'Fail Delete From Cart');
         }
     }
 }

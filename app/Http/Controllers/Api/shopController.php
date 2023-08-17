@@ -108,7 +108,7 @@ class shopController extends Controller
             $comment['user_id'] = $comment->user->name;
         }
 
-        $similarProducts = ShopProduct::where('category_id', $product->category_id)->get();
+        $similarProducts = ShopProduct::where('category_id', $product->category_id)->where('id', '!=', $product->id)->get();
         foreach ($similarProducts as $similarProduct) {
             $similarProduct['product_image'] = asset('assets/images/products/'.$similarProduct->product_image);
 
@@ -205,14 +205,15 @@ class shopController extends Controller
         try{
         $product = ShopProduct::findOrFail($id);
 
-        if($product->likes->where("user_id", auth()->user()->id)->count() == 0){
+        if($product->likes->where("user_id", auth()->user()->id)->count() == 0 && $product->department_id == 2){
             $product->likes()->create([
                 "user_id" => auth()->user()->id,
                 'likesable_type' => ShopProduct::class,
                 'likesable_id' => $product->id,
             ]);
         }else{
-            $product->likes()->where("user_id", auth()->user()->id)->delete();
+            $product->likes()->where('likesable_type', ShopProduct::class)->where("user_id", auth()->user()->id)
+            ->delete();
             return response()->json([
                 'status' => 200,
                 'message' => 'Remove Like Successfully',

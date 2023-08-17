@@ -107,5 +107,10 @@ class RestaurentProduct extends Model
     public function likes() {
         return $this->hasMany(Like::class, 'likesable_id');
     }
+
+
+    public function carts(){
+        return $this->morphMany(Cart::class, "cartsable");
+    }
 }
 

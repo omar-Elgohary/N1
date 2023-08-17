@@ -66,6 +66,6 @@ class Branch extends Model
                 * sin(radians(latitude))
             ), 3) AS distance", [$latitude, $longitude, $latitude])
             ->having("distance", "<", $radius)
-            ->orderby('distance', 'asc');
+            ->orderby('distance', 'desc');
     }
 }

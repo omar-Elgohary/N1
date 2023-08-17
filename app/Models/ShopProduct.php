@@ -106,6 +106,10 @@ class ShopProduct extends Model
     }
 
 
+    public function carts(){
+        return $this->morphMany(Cart::class, "cartsable");
+    }
+
     public function getRateAttribute() {
         $rates = $this->rates;
         $count = $rates->count();

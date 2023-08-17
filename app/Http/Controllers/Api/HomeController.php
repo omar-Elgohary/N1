@@ -144,7 +144,7 @@ class HomeController extends Controller
 
         $latitude = auth("sanctum")->user()->latitude;
         $longitude = auth("sanctum")->user()->longitude;
-        $radius = 6;
+        $radius = 40;
 
         $nearests = Branch::where('department_id', 3)->withinRadius($latitude, $longitude, $radius)->get();
         foreach($nearests as $nearest){

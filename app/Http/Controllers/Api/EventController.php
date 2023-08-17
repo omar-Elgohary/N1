@@ -1,11 +1,12 @@
 <?php
 namespace App\Http\Controllers\Api;
+use App\Models\Like;
 use App\Models\Event;
 use App\Models\Branch;
+use App\Models\EventRate;
 use App\Models\BrancheRate;
 use App\Models\ReservationType;
 use App\Http\Controllers\Controller;
-use App\Models\EventRate;
 
 class EventController extends Controller
 {
@@ -24,7 +25,7 @@ class EventController extends Controller
             foreach($newests as $newest){
                 $newest['product_image'] = asset('assets/images/products/'.$newest->product_image);
                 $newest['reservations_type_id'] = ReservationType::select('id', 'name')->where('id', $newest->reservations_type_id)->get();
-                $event['rate'] = EventRate::where('event_product_id', $newest->id)->avg('rate');
+                $event['rate'] = EventRate::where('event_id', $newest->id)->avg('rate');
 
             }
 
@@ -32,7 +33,7 @@ class EventController extends Controller
             foreach($highRates as $highRate){
                 $highRate['product_image'] = asset('assets/images/products/'.$highRate->product_image);
                 $highRate['reservations_type_id'] = ReservationType::select('id', 'name')->where('id', $highRate->reservations_type_id)->get();
-                $event['rate'] = EventRate::where('event_product_id', $highRate->id)->avg('rate');
+                $event['rate'] = EventRate::where('event_id', $highRate->id)->avg('rate');
 
             }
 
@@ -40,7 +41,7 @@ class EventController extends Controller
             if($branche->department_id == 3){
                 return response()->json([
                     'status' => 200,
-                    'message' => 'Branche Returned Successfully',
+                    'message' => 'Event Returned Successfully',
                     'branche' => $branche,
                     'newests' => $newests,
                     'highRates' => $highRates,
@@ -48,7 +49,7 @@ class EventController extends Controller
             }else{
                 return response()->json([
                     'status' => 200,
-                    'message' => 'Branche Returned Failed Is Not Event Store',
+                    'message' => 'Event Not Found',
                 ]);
             }
         }catch(\Exception $e){
@@ -64,9 +65,14 @@ class EventController extends Controller
         $event = Event::find($id);
         $event['product_image'] = asset('assets/images/products/'.$event->product_image);
         $event['reservations_type_id'] = ReservationType::select('id', 'name')->where('id', $event->reservations_type_id)->get();
-        $event['rate'] = EventRate::where('event_product_id', $id)->avg('rate');
+        $event['rate'] = EventRate::where('event_id', $id)->avg('rate');
 
-
+        $like = Like::where('likesable_id', $id)->where('user_id', auth()->user()->id)->first();
+        if($like){
+            $isLiked = true;
+        }else{
+            $isLiked = false;
+        }
 
         $branche = Branch::select('id', 'department_id', 'name', 'image', 'branche_location', 'latitude', 'longitude')->find($event->branche_id);
         $branche['image'] = asset('assets/images/branches/'.$branche->image);
@@ -76,7 +82,9 @@ class EventController extends Controller
             $branche['rate'] = 0;
         }
 
-        $similarEvents = Event::where('branche_id', $event->branche_id)->get();
+        $similarEvents = Event::where('category_id', $event->category_id)
+        ->where('branche_id', $event->branche_id)
+        ->where('id', '!=', $event->id)->get();
         foreach($similarEvents as $similarEvent){
             $similarEvent['product_image'] = asset('assets/images/products/'.$similarEvent->product_image);
             $similarEvent['reservations_type_id'] = ReservationType::select('id', 'name')->where('id', $similarEvent->reservations_type_id)->get();
@@ -86,6 +94,7 @@ class EventController extends Controller
             return response()->json([
                 'status' => 200,
                 'message' => 'Event Product Returned Successfully',
+                'isLiked' => $isLiked,
                 'event' => $event,
                 'branche' => $branche,
                 'similarEvents' => $similarEvents,
@@ -94,6 +103,41 @@ class EventController extends Controller
             return response()->json([
                 'status' => 200,
                 'message' => "Event Product Not Found",
+            ]);
+        }
+    }
+
+
+
+
+    public function addOrRemoveEventProductLikes($id)
+    {
+        try{
+        $event = Event::findOrFail($id);
+
+        if($event->likes->where('likesable_type', Event::class)->where("user_id", auth()->user()->id)->count() == 0 && $event->department_id == 3){
+            $event->likes()->create([
+                "user_id" => auth()->user()->id,
+                'likesable_type' => Event::class,
+                'likesable_id' => $event->id,
+            ]);
+        }else{
+            $event->likes()->where('likesable_type', Event::class)->where("user_id", auth()->user()->id)
+            ->delete();
+            return response()->json([
+                'status' => 200,
+                'message' => 'Remove Like Successfully',
+            ]);
+        }
+            $flag = true;
+            return response()->json([
+                'status' => 200,
+                'message' => 'Add Like Successfully',
+            ]);
+        }catch(\Exception $e){
+            return response()->json([
+                'status' => 200,
+                'message' => 'Event Not Found',
             ]);
         }
     }

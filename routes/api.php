@@ -28,6 +28,10 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('getRestaurentMealById/{branche_id}/{meal_id}', [RestaurentController::class, 'getRestaurentMealById']);
     Route::get('getRestaurentMealsOfCategory/{branche_id}/{cat_id}', [RestaurentController::class, 'getRestaurentMealsOfCategory']);
 
+    Route::get('addMealToCart/{id}', [RestaurentController::class,'addMealToCart']);
+    Route::get('removeMealFromCart/{id}',[RestaurentController::class,'removeMealFromCart']);
+    Route::get('getMealsCart', [RestaurentController::class, 'getMealsCart']);
+
 
     // Shop
     Route::get('getShopBrancheById/{id}', [shopController::class, 'getShopBrancheById']);
@@ -39,6 +43,8 @@ Route::middleware('auth:sanctum')->group(function(){
     // Event
     Route::get('getEventById/{id}', [EventController::class, 'getEventById']);
     Route::get('getEventProductById/{id}', [EventController::class, 'getEventProductById']);
-    
+    Route::get('addOrRemoveEventProductLikes/{id}', [EventController::class, 'addOrRemoveEventProductLikes']);
+
+
 });
 
