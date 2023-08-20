@@ -1,14 +1,14 @@
 <?php
 namespace App\Http\Controllers\Api;
-use App\Models\Cart;
+use Carbon\Carbon;
 use App\Models\Branch;
+use App\Models\Coupon;
 use App\Models\Category;
 use App\Models\BrancheRate;
 use Illuminate\Http\Request;
+use App\Models\RestaurentOrder;
 use App\Models\RestaurentProduct;
 use App\Http\Controllers\Controller;
-use App\Models\RestaurentOrder;
-use App\Models\ShopProduct;
 
 class RestaurentController extends Controller
 {
@@ -141,13 +141,22 @@ class RestaurentController extends Controller
 
     public function getMealsCart()
     {
-        $cart = Cart::where('cartsable_type', RestaurentProduct::class)->where('user_id', auth()->user()->id)->get();
+        $Order_Price = 0;
+        $currentDate = Carbon::now()->format('Y-m-d');
+        $carts = RestaurentOrder::whereDate('created_at', $currentDate)->where('user_id', auth()->user()->id)->get();
 
-        if($cart){
+        foreach ($carts as $cart) {
+            $cart['restaurent_product_id'] = RestaurentProduct::where('id', $cart->restaurent_product_id)->get();
+            $Order_Price += $cart['total_price'];
+        }
+
+
+        if($carts){
             return response()->json([
                 'status' => 200,
                 'message' => 'Cart Returned Successfully',
-                'cart' => $cart,
+                'cart' => $carts,
+                'Order_Price' => $Order_Price,
             ]);
         }else{
             return response()->json([
@@ -160,20 +169,37 @@ class RestaurentController extends Controller
 
 
 
-    public function addMealToCart($id)
+    public function addMealToCart(Request $request, $id)
     {
-        if(!Cart::where('cartsable_type' , RestaurentProduct::class)->where('user_id', auth()->user()->id)->where('cartsable_id', $id)->exists())
+        if(!RestaurentOrder::where('user_id', auth()->user()->id)->where('restaurent_product_id', $id)->exists())
         {
-            $meal = RestaurentOrder::findorfail($id);
-            $product = Cart::create([
+            $meal = RestaurentProduct::findorfail($id);
+
+            $random_id = strtoupper('#'.substr(str_shuffle(uniqid()),0,4));
+            while(RestaurentProduct::where('random_id', $random_id )->exists()){
+                $random_id = strtoupper('#'.substr(str_shuffle(uniqid()),0,4));
+            }
+
+            $product = RestaurentOrder::create([
+                'random_id' => $random_id,
                 'user_id' => auth()->user()->id,
-                'price' => $meal->total_price,
-                'cartsable_type' => RestaurentProduct::class,
-                'cartsable_id' => $id,
+                'branche_id' => $meal->branche_id,
+                'restaurent_product_id' => $meal->id,
+                'products_count' => $request->products_count,
+                'order_status' => 'جديد',
+                'total_price' => $meal->price * $request->products_count,
             ]);
-            return $this->returnData(200, 'Meal Add to Cart Successfully', $product);
+
+            return response()->json([
+                'status' => 200,
+                'message' => 'Meal Add to Cart Successfully',
+                'cart' => $product,
+            ]);
         }else{
-            return $this->returnData(201, 'Meal Already On Cart');
+            return response()->json([
+                'status' => 201,
+                'message' => 'Meal Already On Cart',
+            ]);
         }
     }
 
@@ -184,11 +210,18 @@ class RestaurentController extends Controller
     public function removeMealFromCart($id)
     {
         try{
-            if(RestaurentProduct::find($id)){
-                cart::where('cartsable_type', RestaurentProduct::class)->where('user_id', auth()->user()->id)->where('cartsable_id', $id)->delete();
-                return $this->returnData(200, 'Meal Deleted From Cart Successfully');
+            if(RestaurentOrder::where('user_id', auth()->user()->id)->where('restaurent_product_id', $id)->exists())
+            {
+                RestaurentOrder::where('user_id', auth()->user()->id)->where('restaurent_product_id', $id)->delete();
+                return response()->json([
+                    'status' => 200,
+                    'message' => "Meal Deleted From Cart Successfully",
+                ]);
             }else{
-            return $this->returnError(400, "Meal Doesn't Exists");
+                return response()->json([
+                    'status' => 400,
+                    'message' => "Meal Doesn't Exists In Cart",
+                ]);
             }
         }catch(\Exception $e){
             echo $e;

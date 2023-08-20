@@ -10,8 +10,9 @@ return new class extends Migration
         Schema::create('carts', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->references('id')->on('users')->cascadeOnDelete()->cascadeOnUpdate();
-            $table->double('price');
             $table->morphs('cartsable');
+            $table->integer('count');
+            $table->double('price');
             $table->timestamps();
         });
     }

@@ -1,6 +1,7 @@
 <?php
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\CartController;
 use App\Http\Controllers\Api\HomeController;
 use App\Http\Controllers\Api\shopController;
 use App\Http\Controllers\Api\EventController;
@@ -28,7 +29,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('getRestaurentMealById/{branche_id}/{meal_id}', [RestaurentController::class, 'getRestaurentMealById']);
     Route::get('getRestaurentMealsOfCategory/{branche_id}/{cat_id}', [RestaurentController::class, 'getRestaurentMealsOfCategory']);
 
-    Route::get('addMealToCart/{id}', [RestaurentController::class,'addMealToCart']);
+    Route::post('addMealToCart/{id}', [RestaurentController::class,'addMealToCart']);
     Route::get('removeMealFromCart/{id}',[RestaurentController::class,'removeMealFromCart']);
     Route::get('getMealsCart', [RestaurentController::class, 'getMealsCart']);
 
@@ -44,7 +45,6 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('getEventById/{id}', [EventController::class, 'getEventById']);
     Route::get('getEventProductById/{id}', [EventController::class, 'getEventProductById']);
     Route::get('addOrRemoveEventProductLikes/{id}', [EventController::class, 'addOrRemoveEventProductLikes']);
-
 
 });
 
