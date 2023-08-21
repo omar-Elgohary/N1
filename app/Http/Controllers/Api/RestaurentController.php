@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\BrancheRate;
 use Illuminate\Http\Request;
 use App\Models\RestaurentOrder;
+use App\Models\ReservationType;
 use App\Models\TableReservation;
 use App\Models\RestaurentProduct;
 use App\Http\Controllers\Controller;
@@ -270,19 +271,38 @@ class RestaurentController extends Controller
 
 
 
-    public function table_reservation(Request $request)
+    public function table_reservation(Request $request, $branche_id)
     {
-        TableReservation::create([
-            'user_id' => auth()->user()->id,
-            'clients_count' => $request->clients_count,
-            'table_type' => $request->table_type,
-            'reservation_date' => $request->reservation_date,
-            'reservation_time' => $request->reservation_time,
-        ]);
+        $branche = Branch::find($branche_id);
+        if($branche->department_id != 1){
+            return response()->json([
+                'status' => 200,
+                'message' => 'Branche Returned Failed There Is Not Restaurent Store',
+            ]);
+        }
+
+        $reservationType = ReservationType::find($request->reservations_type_id);
+        if($reservationType->department_id != 1){
+            return response()->json([
+                'status' => 200,
+                'message' => 'Reservation Type Not Found',
+            ]);
+        }else{
+            $time = Carbon::parse($request->reservation_time);
+            $reservation = TableReservation::create([
+                'user_id' => auth()->user()->id,
+                'branche_id' => $branche_id,
+                'clients_count' => $request->clients_count,
+                'reservations_type_id' => $request->reservations_type_id,
+                'reservation_date' =>  date('Y-m-d H:i:s' , strtotime($request->reservation_date)),
+                'reservation_time' => $time->format('H:i:s'),
+            ]);
+        }
 
         return response()->json([
             'status' => 200,
             'message' => 'Table Reservation',
+            'reservation' => $reservation,
         ]);
     }
 }

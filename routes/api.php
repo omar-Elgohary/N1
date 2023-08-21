@@ -32,7 +32,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::post('addMealToCart/{id}', [RestaurentController::class,'addMealToCart']);
     Route::get('removeMealFromCart/{id}',[RestaurentController::class,'removeMealFromCart']);
     Route::get('getMealsCart/{branche_id}', [RestaurentController::class, 'getMealsCart']);
-    Route::post('table_reservation', [RestaurentController::class, 'table_reservation']);
+    Route::post('table_reservation/{branche_id}', [RestaurentController::class, 'table_reservation']);
 
     // Shop
     Route::get('getShopBrancheById/{id}', [shopController::class, 'getShopBrancheById']);
@@ -40,6 +40,9 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('addOrRemoveShopProductLikes/{id}', [shopController::class, 'addOrRemoveShopProductLikes']);
     Route::get('getBrancheProductsOfCategory/{branche_id}/{cat_id}', [shopController::class, 'getBrancheProductsOfCategory']);
 
+    Route::post('addProductToCart/{id}', [shopController::class,'addProductToCart']);
+    Route::get('removeProductFromCart/{id}',[shopController::class,'removeProductFromCart']);
+    Route::get('getProductsCart/{branche_id}', [shopController::class, 'getProductsCart']);
 
     // Event
     Route::get('getEventById/{id}', [EventController::class, 'getEventById']);

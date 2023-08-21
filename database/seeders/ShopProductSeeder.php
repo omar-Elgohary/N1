@@ -26,6 +26,7 @@ class ShopProductSeeder extends Seeder
             'quantity' => 100,
             'sold_quantity' => 60,
             'remaining_quantity' => 40,
+            'coupon_id' => 3,
         ]);
 
         ShopProduct::create([
@@ -46,6 +47,7 @@ class ShopProductSeeder extends Seeder
             'quantity' => 250,
             'sold_quantity' => 150,
             'remaining_quantity' => 100,
+            'coupon_id' => 4,
         ]);
 
         ShopProduct::create([

@@ -2,12 +2,15 @@
 namespace App\Http\Controllers\Api;
 use App\Models\Like;
 use App\Models\Branch;
+use App\Models\Coupon;
 use App\Models\Comment;
 use App\Models\Category;
+use App\Models\ShopOrder;
 use App\Models\BrancheRate;
-use App\Models\ShopProduct;
-use App\Http\Controllers\Controller;
 use App\Models\ProductRate;
+use App\Models\ShopProduct;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class shopController extends Controller
 {
@@ -229,6 +232,136 @@ class shopController extends Controller
                 'status' => 200,
                 'message' => 'Product Not Found',
             ]);
+        }
+    }
+
+
+
+
+    // public function getProductsCart(Request $request, $branche_id)
+    // {
+    //     $Order_Price = 0;
+    //     $delivery_price = 0;
+    //     $Order_Price_with_Coupon = 0;
+    //     $currentDate = Carbon::now()->format('Y-m-d');
+    //     $carts = RestaurentOrder::whereDate('created_at', $currentDate)->where('user_id', auth()->user()->id)->where('branche_id', $branche_id)->get();
+
+
+    //     $branche = Branch::find($branche_id);
+    //     if($branche->delivery == 1){
+    //         $delivery_price = $branche->delivery_price;
+    //     }
+
+
+    //     if($request->offer_id){
+    //         $coupon = Coupon::find($request->offer_id);
+    //         if($coupon->status == 'غير مفعل'){
+    //             return response()->json([
+    //                 'status' => 404,
+    //                 'message' => 'Coupon Is Not Active',
+    //             ]);
+    //         }
+    //         foreach ($carts as $cart) {
+    //             $cart['restaurent_product_id'] = RestaurentProduct::where('id', $cart->restaurent_product_id)->get();
+    //             $Order_Price += $cart['total_price'] + $delivery_price;
+    //             $Order_Price_with_Coupon = $Order_Price - ($Order_Price * $coupon->discount_percentage /100) + $delivery_price;
+    //         }
+    //     }else{
+    //         foreach ($carts as $cart) {
+    //             $cart['restaurent_product_id'] = RestaurentProduct::where('id', $cart->restaurent_product_id)->get();
+    //             $Order_Price += $cart['total_price'] + $delivery_price;
+    //             $Order_Price_with_Coupon = 'There is no discount';
+    //         }
+    //     }
+
+
+    //     if($carts){
+    //         return response()->json([
+    //             'status' => 200,
+    //             'message' => 'Cart Returned Successfully',
+    //             'cart' => $carts,
+    //             'Order_Price' => $Order_Price,
+    //             'Coupon Discount' => $coupon->discount_percentage.'%',
+    //             'delivery_price' => $delivery_price,
+    //             'Order_Price_with_Coupon' => $Order_Price_with_Coupon,
+    //         ]);
+    //     }else{
+    //         return response()->json([
+    //             'status' => 200,
+    //             'message' => 'Cart is Empty',
+    //         ]);
+    //     }
+    // }
+
+
+
+
+    public function addProductToCart(Request $request, $id)
+    {
+        if(!ShopOrder::where('user_id', auth()->user()->id)->where('shop_product_id', $id)->exists())
+        {
+            $product = ShopOrder::findorfail($id);
+
+            if($product->coupon_id){
+                $coupon = Coupon::find($product->coupon_id);
+                $firstPrice = $product->price * $request->products_count;
+                $TotalPrice = $firstPrice - ($firstPrice * $coupon->discount_percentage / 100);
+            }else{
+                $TotalPrice = $product->price * $request->products_count;
+            }
+
+            $random_id = strtoupper('#'.substr(str_shuffle(uniqid()),0,4));
+            while(RestaurentProduct::where('random_id', $random_id )->exists()){
+                $random_id = strtoupper('#'.substr(str_shuffle(uniqid()),0,4));
+            }
+
+            $product = RestaurentOrder::create([
+                'random_id' => $random_id,
+                'user_id' => auth()->user()->id,
+                'branche_id' => $meal->branche_id,
+                'restaurent_product_id' => $meal->id,
+                'offer_id' => $meal->coupon_id,
+                'products_count' => $request->products_count,
+                'order_status' => 'جديد',
+                'total_price' => $TotalPrice,
+            ]);
+
+            return response()->json([
+                'status' => 200,
+                'message' => 'Meal Add to Cart Successfully',
+                'cart' => $product,
+            ]);
+        }else{
+            return response()->json([
+                'status' => 201,
+                'message' => 'Meal Already On Cart',
+            ]);
+        }
+    }
+
+
+
+
+
+    public function removeProductFromCart($id)
+    {
+        try{
+            if(RestaurentOrder::where('user_id', auth()->user()->id)->where('restaurent_product_id', $id)->exists())
+            {
+                RestaurentOrder::where('user_id', auth()->user()->id)->where('restaurent_product_id', $id)->delete();
+                return response()->json([
+                    'status' => 200,
+                    'message' => "Meal Deleted From Cart Successfully",
+                ]);
+            }else{
+                return response()->json([
+                    'status' => 400,
+                    'message' => "Meal Doesn't Exists In Cart",
+                ]);
+            }
+        }catch(\Exception $e){
+            echo $e;
+            return $this->returnError(400, 'Fail Delete From Cart');
         }
     }
 }
