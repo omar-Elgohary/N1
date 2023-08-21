@@ -24,6 +24,7 @@ return new class extends Migration
             $table->time('start_time')->nullable();
             $table->time('end_time')->nullable();
             $table->enum('delivery', [1, 0])->nullable();   // 1-delivery   // 2-pickup
+            $table->integer('delivery_price')->nullable();
             $table->timestamps();
         });
     }

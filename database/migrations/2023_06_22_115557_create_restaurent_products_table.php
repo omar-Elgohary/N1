@@ -27,6 +27,8 @@ return new class extends Migration
             $table->integer('quantity');
             $table->integer('sold_quantity')->default(0);
             $table->integer('remaining_quantity')->default(0);
+            $table->foreignId('coupon_id')->nullable()->constrained('coupons')->cascadeOnDelete();
+
             $table->timestamps();
         });
     }

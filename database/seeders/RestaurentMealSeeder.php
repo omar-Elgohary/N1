@@ -25,6 +25,7 @@ class RestaurentMealSeeder extends Seeder
             'quantity' => 500,
             'sold_quantity' => 300,
             'remaining_quantity' => 200,
+            'coupon_id' => 1,
         ]);
 
         RestaurentProduct::create([
@@ -44,6 +45,7 @@ class RestaurentMealSeeder extends Seeder
             'quantity' => 280,
             'sold_quantity' => 180,
             'remaining_quantity' => 100,
+            'coupon_id' => 2,
         ]);
 
         RestaurentProduct::create([

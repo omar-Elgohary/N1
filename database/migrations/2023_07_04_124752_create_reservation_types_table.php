@@ -10,6 +10,7 @@ return new class extends Migration
         Schema::create('reservation_types', function (Blueprint $table) {
             $table->id();
             $table->json('name');
+            $table->foreignId('department_id')->constrained('departments')->cascadeOnDelete();
             $table->timestamps();
         });
     }

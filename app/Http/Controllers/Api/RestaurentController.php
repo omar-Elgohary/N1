@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\BrancheRate;
 use Illuminate\Http\Request;
 use App\Models\RestaurentOrder;
+use App\Models\TableReservation;
 use App\Models\RestaurentProduct;
 use App\Http\Controllers\Controller;
 
@@ -139,15 +140,40 @@ class RestaurentController extends Controller
 
 
 
-    public function getMealsCart()
+    public function getMealsCart(Request $request, $branche_id)
     {
         $Order_Price = 0;
+        $delivery_price = 0;
+        $Order_Price_with_Coupon = 0;
         $currentDate = Carbon::now()->format('Y-m-d');
-        $carts = RestaurentOrder::whereDate('created_at', $currentDate)->where('user_id', auth()->user()->id)->get();
+        $carts = RestaurentOrder::whereDate('created_at', $currentDate)->where('user_id', auth()->user()->id)->where('branche_id', $branche_id)->get();
 
-        foreach ($carts as $cart) {
-            $cart['restaurent_product_id'] = RestaurentProduct::where('id', $cart->restaurent_product_id)->get();
-            $Order_Price += $cart['total_price'];
+
+        $branche = Branch::find($branche_id);
+        if($branche->delivery == 1){
+            $delivery_price = $branche->delivery_price;
+        }
+
+
+        if($request->offer_id){
+            $coupon = Coupon::find($request->offer_id);
+            if($coupon->status == 'غير مفعل'){
+                return response()->json([
+                    'status' => 404,
+                    'message' => 'Coupon Is Not Active',
+                ]);
+            }
+            foreach ($carts as $cart) {
+                $cart['restaurent_product_id'] = RestaurentProduct::where('id', $cart->restaurent_product_id)->get();
+                $Order_Price += $cart['total_price'] + $delivery_price;
+                $Order_Price_with_Coupon = $Order_Price - ($Order_Price * $coupon->discount_percentage /100) + $delivery_price;
+            }
+        }else{
+            foreach ($carts as $cart) {
+                $cart['restaurent_product_id'] = RestaurentProduct::where('id', $cart->restaurent_product_id)->get();
+                $Order_Price += $cart['total_price'] + $delivery_price;
+                $Order_Price_with_Coupon = 'There is no discount';
+            }
         }
 
 
@@ -157,6 +183,9 @@ class RestaurentController extends Controller
                 'message' => 'Cart Returned Successfully',
                 'cart' => $carts,
                 'Order_Price' => $Order_Price,
+                'Coupon Discount' => $coupon->discount_percentage.'%',
+                'delivery_price' => $delivery_price,
+                'Order_Price_with_Coupon' => $Order_Price_with_Coupon,
             ]);
         }else{
             return response()->json([
@@ -175,6 +204,14 @@ class RestaurentController extends Controller
         {
             $meal = RestaurentProduct::findorfail($id);
 
+            if($meal->coupon_id){
+                $coupon = Coupon::find($meal->coupon_id);
+                $firstPrice = $meal->price * $request->products_count;
+                $TotalPrice = $firstPrice - ($firstPrice * $coupon->discount_percentage / 100);
+            }else{
+                $TotalPrice = $meal->price * $request->products_count;
+            }
+
             $random_id = strtoupper('#'.substr(str_shuffle(uniqid()),0,4));
             while(RestaurentProduct::where('random_id', $random_id )->exists()){
                 $random_id = strtoupper('#'.substr(str_shuffle(uniqid()),0,4));
@@ -185,9 +222,10 @@ class RestaurentController extends Controller
                 'user_id' => auth()->user()->id,
                 'branche_id' => $meal->branche_id,
                 'restaurent_product_id' => $meal->id,
+                'offer_id' => $meal->coupon_id,
                 'products_count' => $request->products_count,
                 'order_status' => 'جديد',
-                'total_price' => $meal->price * $request->products_count,
+                'total_price' => $TotalPrice,
             ]);
 
             return response()->json([
@@ -227,5 +265,24 @@ class RestaurentController extends Controller
             echo $e;
             return $this->returnError(400, 'Fail Delete From Cart');
         }
+    }
+
+
+
+
+    public function table_reservation(Request $request)
+    {
+        TableReservation::create([
+            'user_id' => auth()->user()->id,
+            'clients_count' => $request->clients_count,
+            'table_type' => $request->table_type,
+            'reservation_date' => $request->reservation_date,
+            'reservation_time' => $request->reservation_time,
+        ]);
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'Table Reservation',
+        ]);
     }
 }

@@ -25,6 +25,7 @@ class BrancheSeeder extends Seeder
             'start_time' => '02:00',
             'end_time' => '02:00',
             'delivery' => '1',
+            'delivery_price' => 10,
         ]);
 
         Branch::create([
@@ -60,7 +61,8 @@ class BrancheSeeder extends Seeder
             'image' => '1691851099.jpg',
             'start_time' => '2:00',
             'end_time' => '2:00',
-            'delivery' => '0',
+            'delivery' => '1',
+            'delivery_price' => 15,
         ]);
 
         Branch::create([
@@ -96,7 +98,8 @@ class BrancheSeeder extends Seeder
             'image' => '1691851099.jpg',
             'start_time' => '1:00',
             'end_time' => '02:00',
-            'delivery' => '0',
+            'delivery' => '1',
+            'delivery_price' => 10,
         ]);
 
         Branch::create([

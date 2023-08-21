@@ -31,8 +31,8 @@ Route::middleware('auth:sanctum')->group(function(){
 
     Route::post('addMealToCart/{id}', [RestaurentController::class,'addMealToCart']);
     Route::get('removeMealFromCart/{id}',[RestaurentController::class,'removeMealFromCart']);
-    Route::get('getMealsCart', [RestaurentController::class, 'getMealsCart']);
-
+    Route::get('getMealsCart/{branche_id}', [RestaurentController::class, 'getMealsCart']);
+    Route::post('table_reservation', [RestaurentController::class, 'table_reservation']);
 
     // Shop
     Route::get('getShopBrancheById/{id}', [shopController::class, 'getShopBrancheById']);

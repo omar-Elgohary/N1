@@ -13,7 +13,7 @@ return new class extends Migration
             $table->foreignId('department_id')->constrained('departments')->cascadeOnDelete();
             $table->string('image');
             $table->string('discount_coupon');
-            $table->string('discount_percentage');
+            $table->integer('discount_percentage');
             $table->date('start_date');
             $table->date('end_date');
             $table->string('users_count');
