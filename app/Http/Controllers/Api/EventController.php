@@ -3,9 +3,15 @@ namespace App\Http\Controllers\Api;
 use App\Models\Like;
 use App\Models\Event;
 use App\Models\Branch;
+use App\Models\Coupon;
 use App\Models\EventRate;
+use App\Models\EventOrder;
 use App\Models\BrancheRate;
+use Illuminate\Http\Request;
 use App\Models\ReservationType;
+use App\Models\RestaurentOrder;
+use App\Models\TableReservation;
+use App\Models\RestaurentProduct;
 use App\Http\Controllers\Controller;
 
 class EventController extends Controller
@@ -135,6 +141,101 @@ class EventController extends Controller
                 'message' => 'Add Like Successfully',
             ]);
         }catch(\Exception $e){
+            return response()->json([
+                'status' => 200,
+                'message' => 'Event Not Found',
+            ]);
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+    public function EventReservations()
+    {
+        $reservations = EventOrder::where('user_id', auth()->user()->id)->get();
+
+        foreach ($reservations as $reservation) {
+            $reservation['branche_id'] = Branch::where('id', $reservation->branche_id)->get();
+        }
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'Event Reservations Returned Successfully',
+            'reservations' => $reservations,
+        ]);
+    }
+
+
+
+
+    public function reservationEvent(Request $request, $id)
+    {
+        $random_id = strtoupper('#'.substr(str_shuffle(uniqid()),0,4));
+        while(Event::where('random_id', $random_id )->exists()){
+            $random_id = strtoupper('#'.substr(str_shuffle(uniqid()),0,4));
+        }
+
+        $event = Event::find($id);
+        if($event){
+            if($event->coupon_id){
+                $coupon = Coupon::find($event->coupon_id);
+                $price_before_discount = $event->ticket_price * $request->tickets_count;
+                $price_after_discount = $price_before_discount - ($price_before_discount * $coupon->discount_percentage /100);
+
+                EventOrder::create([
+                    'random_id' => $random_id,
+                    'user_id' => auth()->user()->id,
+                    'department_id' => 3,
+                    'category_id' => $event->category_id,
+                    'event_id' => $id,
+                    'reservations_type_id' => $request->reservations_type_id,
+                    'tickets_count' => $request->tickets_count,
+                    'reservation_date' => $request->reservation_date,
+                    'reservation_time' => $request->reservation_time,
+                    'total_price' => $price_after_discount,
+                ]);
+
+                return response()->json([
+                    'status' => 200,
+                    'message' => 'Reservation Event Successfully',
+                    'Event' => $event,
+                    'price_before_discount' => $price_before_discount,
+                    'price_after_discount' => $price_after_discount,
+                ]);
+
+            }else{
+                $price_before_discount = $event->ticket_price * $request->tickets_count;
+                $price_after_discount = $event->ticket_price * $request->tickets_count;
+
+                EventOrder::create([
+                    'random_id' => $random_id,
+                    'user_id' => auth()->user()->id,
+                    'department_id' => 3,
+                    'category_id' => $event->category_id,
+                    'event_id' => $id,
+                    'reservations_type_id' => $request->reservations_type_id,
+                    'tickets_count' => $request->tickets_count,
+                    'reservation_date' => $request->reservation_date,
+                    'reservation_time' => $request->reservation_time,
+                    'total_price' => $price_after_discount,
+                ]);
+
+                return response()->json([
+                    'status' => 200,
+                    'message' => 'Reservation Event Successfully',
+                    'Event' => $event,
+                    'price_before_discount' => $price_before_discount . 'There is no discount',
+                    'price_after_discount' => $price_after_discount,
+                ]);
+            }
+        }else{
             return response()->json([
                 'status' => 200,
                 'message' => 'Event Not Found',

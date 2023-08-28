@@ -2,18 +2,20 @@
 namespace App\Http\Controllers\Api;
 use App\Models\Event;
 use App\Models\Branch;
+use App\Models\MealRate;
+use App\Models\EventRate;
 use App\Models\Department;
+use App\Models\EventOrder;
 use App\Models\BrancheRate;
+use App\Models\ProductRate;
 use App\Models\ShopProduct;
 use App\Models\ReservationType;
 use App\Models\RestaurentOrder;
+use App\Models\TableReservation;
 use App\Models\RestaurentProduct;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Api\ApiResponseTrait;
-use App\Models\EventRate;
-use App\Models\MealRate;
-use App\Models\ProductRate;
 
 class HomeController extends Controller
 {
@@ -179,5 +181,22 @@ class HomeController extends Controller
 
 
 
+    public function allReservations()
+    {
+        $restaurantReservations = TableReservation::where('user_id', auth()->user()->id)->get();
+        $eventReservations = EventOrder::where('user_id', auth()->user()->id)->get();
 
+        $mergedData = $restaurantReservations->concat($eventReservations);
+        $allReservations = $mergedData->all();
+
+        foreach($allReservations as $allReservation){
+            $allReservation['branche_id'] = Branch::where('id', $allReservation->branche_id)->get();
+        }
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'All Reservations Successfully',
+            'allReservations' => $allReservations,
+        ]);
+    }
 }

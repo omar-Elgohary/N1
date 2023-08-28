@@ -1,5 +1,6 @@
 <?php
 namespace App\Http\Controllers\Api;
+use Carbon\Carbon;
 use App\Models\Like;
 use App\Models\Branch;
 use App\Models\Coupon;
@@ -238,60 +239,75 @@ class shopController extends Controller
 
 
 
-    // public function getProductsCart(Request $request, $branche_id)
-    // {
-    //     $Order_Price = 0;
-    //     $delivery_price = 0;
-    //     $Order_Price_with_Coupon = 0;
-    //     $currentDate = Carbon::now()->format('Y-m-d');
-    //     $carts = RestaurentOrder::whereDate('created_at', $currentDate)->where('user_id', auth()->user()->id)->where('branche_id', $branche_id)->get();
+    public function getProductsCart(Request $request, $branche_id)
+    {
+        $Order_Price = 0;
+        $delivery_price = 0;
+        $Order_Price_with_Coupon = 0;
+        $currentDate = Carbon::now()->format('Y-m-d');
+        $carts = ShopOrder::whereDate('created_at', $currentDate)->where('user_id', auth()->user()->id)->where('branche_id', $branche_id)->get();
 
 
-    //     $branche = Branch::find($branche_id);
-    //     if($branche->delivery == 1){
-    //         $delivery_price = $branche->delivery_price;
-    //     }
+        $branche = Branch::find($branche_id);
+        if($branche->delivery == 1){
+            $delivery_price = $branche->delivery_price;
+        }
+
+        if($request->offer_id){
+            $coupon = Coupon::find($request->offer_id);
+            if($coupon->status == 'غير مفعل'){
+                return response()->json([
+                    'status' => 404,
+                    'message' => 'Coupon Is Not Active',
+                ]);
+            }else{
+                foreach ($carts as $cart) {
+                    $sizes = $cart->sizes();
+                    $cart['size_id'] = $sizes;
+
+                    $colors = $cart->colors();
+                    $cart['color_id'] = $colors;
+
+                    // $cart['shop_product_id'] = ShopProduct::where('id', $cart->shop_product_id)->get();
+                    $Order_Price += $cart['total_price'];
+                    $Coupon_Discount = $coupon->discount_percentage.'%';
+                    $Order_Price_with_Coupon = $Order_Price - ($Order_Price * $coupon->discount_percentage /100) + $delivery_price;
+                }
+            }
+        }else{
+            foreach ($carts as $cart) {
+                $sizes = $cart->sizes();
+                $cart['size_id'] = $sizes;
+
+                $colors = $cart->colors();
+                $cart['color_id'] = $colors;
+
+                // $cart['shop_product_id'] = ShopProduct::where('id', $cart->shop_product_id)->get();
+                $Order_Price += $cart['total_price'] ;
+                $Coupon_Discount = 'There is no Coupon';
+                $Order_Price_with_Coupon = 'There is no discount';
+            }
+        }
 
 
-    //     if($request->offer_id){
-    //         $coupon = Coupon::find($request->offer_id);
-    //         if($coupon->status == 'غير مفعل'){
-    //             return response()->json([
-    //                 'status' => 404,
-    //                 'message' => 'Coupon Is Not Active',
-    //             ]);
-    //         }
-    //         foreach ($carts as $cart) {
-    //             $cart['restaurent_product_id'] = RestaurentProduct::where('id', $cart->restaurent_product_id)->get();
-    //             $Order_Price += $cart['total_price'] + $delivery_price;
-    //             $Order_Price_with_Coupon = $Order_Price - ($Order_Price * $coupon->discount_percentage /100) + $delivery_price;
-    //         }
-    //     }else{
-    //         foreach ($carts as $cart) {
-    //             $cart['restaurent_product_id'] = RestaurentProduct::where('id', $cart->restaurent_product_id)->get();
-    //             $Order_Price += $cart['total_price'] + $delivery_price;
-    //             $Order_Price_with_Coupon = 'There is no discount';
-    //         }
-    //     }
 
-
-    //     if($carts){
-    //         return response()->json([
-    //             'status' => 200,
-    //             'message' => 'Cart Returned Successfully',
-    //             'cart' => $carts,
-    //             'Order_Price' => $Order_Price,
-    //             'Coupon Discount' => $coupon->discount_percentage.'%',
-    //             'delivery_price' => $delivery_price,
-    //             'Order_Price_with_Coupon' => $Order_Price_with_Coupon,
-    //         ]);
-    //     }else{
-    //         return response()->json([
-    //             'status' => 200,
-    //             'message' => 'Cart is Empty',
-    //         ]);
-    //     }
-    // }
+        if($carts){
+            return response()->json([
+                'status' => 200,
+                'message' => 'Cart Returned Successfully',
+                'cart' => $carts,
+                'delivery_price' => $delivery_price,
+                'Order_Price' => $Order_Price,
+                'Coupon Discount' => $Coupon_Discount,
+                'Order_Price_with_Coupon' => $Order_Price_with_Coupon,
+            ]);
+        }else{
+            return response()->json([
+                'status' => 200,
+                'message' => 'Cart is Empty',
+            ]);
+        }
+    }
 
 
 
@@ -300,7 +316,7 @@ class shopController extends Controller
     {
         if(!ShopOrder::where('user_id', auth()->user()->id)->where('shop_product_id', $id)->exists())
         {
-            $product = ShopOrder::findorfail($id);
+            $product = ShopProduct::findorfail($id);
 
             if($product->coupon_id){
                 $coupon = Coupon::find($product->coupon_id);
@@ -311,20 +327,31 @@ class shopController extends Controller
             }
 
             $random_id = strtoupper('#'.substr(str_shuffle(uniqid()),0,4));
-            while(RestaurentProduct::where('random_id', $random_id )->exists()){
+            while(ShopProduct::where('random_id', $random_id )->exists()){
                 $random_id = strtoupper('#'.substr(str_shuffle(uniqid()),0,4));
             }
 
-            $product = RestaurentOrder::create([
+            $product = ShopOrder::create([
                 'random_id' => $random_id,
+                'department_id' => 2,
                 'user_id' => auth()->user()->id,
-                'branche_id' => $meal->branche_id,
-                'restaurent_product_id' => $meal->id,
-                'offer_id' => $meal->coupon_id,
+                'branche_id' => $product->branche_id,
+                'shop_product_id' => $product->id,
+                'offer_id' => $product->coupon_id,
                 'products_count' => $request->products_count,
-                'order_status' => 'جديد',
+                'size_id' => $request->size_id,
+                'color_id' => $request->color_id,
                 'total_price' => $TotalPrice,
+                'order_status' => 'قيد التجهيز',
             ]);
+
+            $product['shop_product_id'] = ShopProduct::where('id', $id)->get();
+
+            $sizes = $product->sizes();
+            $product['size_id'] = $sizes;
+
+            $colors = $product->colors();
+            $product['color_id'] = $colors;
 
             return response()->json([
                 'status' => 200,
@@ -346,17 +373,17 @@ class shopController extends Controller
     public function removeProductFromCart($id)
     {
         try{
-            if(RestaurentOrder::where('user_id', auth()->user()->id)->where('restaurent_product_id', $id)->exists())
+            if(ShopOrder::where('user_id', auth()->user()->id)->where('shop_product_id', $id)->exists())
             {
-                RestaurentOrder::where('user_id', auth()->user()->id)->where('restaurent_product_id', $id)->delete();
+                ShopOrder::where('user_id', auth()->user()->id)->where('shop_product_id', $id)->delete();
                 return response()->json([
                     'status' => 200,
-                    'message' => "Meal Deleted From Cart Successfully",
+                    'message' => "Product Deleted From Cart Successfully",
                 ]);
             }else{
                 return response()->json([
                     'status' => 400,
-                    'message' => "Meal Doesn't Exists In Cart",
+                    'message' => "Product Doesn't Exists In Cart",
                 ]);
             }
         }catch(\Exception $e){

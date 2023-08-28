@@ -13,7 +13,7 @@ class ShopOrder extends Model
     {
         return $this->created_at->format('Y-m-d'); // Adjust the format as needed
     }
-    
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -27,5 +27,17 @@ class ShopOrder extends Model
     public function purchase()
     {
         return $this->hasOne(ShopPurchase::class);
+    }
+
+    public function sizes()
+    {
+        $ids = explode(',', $this->size_id);
+        return Size::select('size')->whereIn('id', $ids)->get();
+    }
+
+    public function colors()
+    {
+        $ids = explode(',', $this->color_id);
+        return Color::select('color', 'hex')->whereIn('id', $ids)->get();
     }
 }

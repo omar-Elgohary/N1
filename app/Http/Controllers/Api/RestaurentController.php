@@ -167,12 +167,14 @@ class RestaurentController extends Controller
             foreach ($carts as $cart) {
                 $cart['restaurent_product_id'] = RestaurentProduct::where('id', $cart->restaurent_product_id)->get();
                 $Order_Price += $cart['total_price'] + $delivery_price;
+                $Coupon_Discount = $coupon->discount_percentage.'%';
                 $Order_Price_with_Coupon = $Order_Price - ($Order_Price * $coupon->discount_percentage /100) + $delivery_price;
             }
         }else{
             foreach ($carts as $cart) {
                 $cart['restaurent_product_id'] = RestaurentProduct::where('id', $cart->restaurent_product_id)->get();
                 $Order_Price += $cart['total_price'] + $delivery_price;
+                $Coupon_Discount = 'There is no Coupon';
                 $Order_Price_with_Coupon = 'There is no discount';
             }
         }
@@ -184,7 +186,7 @@ class RestaurentController extends Controller
                 'message' => 'Cart Returned Successfully',
                 'cart' => $carts,
                 'Order_Price' => $Order_Price,
-                'Coupon Discount' => $coupon->discount_percentage.'%',
+                'Coupon Discount' => $Coupon_Discount,
                 'delivery_price' => $delivery_price,
                 'Order_Price_with_Coupon' => $Order_Price_with_Coupon,
             ]);
@@ -266,6 +268,24 @@ class RestaurentController extends Controller
             echo $e;
             return $this->returnError(400, 'Fail Delete From Cart');
         }
+    }
+
+
+
+
+    public function RestaurentReservations()
+    {
+        $reservations = TableReservation::where('user_id', auth()->user()->id)->get();
+
+        foreach ($reservations as $reservation) {
+            $reservation['branche_id'] = Branch::where('id', $reservation->branche_id)->get();
+        }
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'Restaurent Reservations Returned Successfully',
+            'reservations' => $reservations,
+        ]);
     }
 
 

@@ -15,6 +15,8 @@ return new class extends Migration
             $table->string('reservations_type_id')->constrained('reservation_types')->cascadeOnDelete();
             $table->date('reservation_date');
             $table->time('reservation_time');
+            $table->enum('reservation_status', ['جديد', 'قيد التجهيز', 'تم الاستلام', 'مكتمل'])->default('جديد');
+            $table->double('total_price');
             $table->timestamps();
         });
     }

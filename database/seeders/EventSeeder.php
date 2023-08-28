@@ -27,6 +27,7 @@ class EventSeeder extends Seeder
             'quantity' => 200,
             'sold_quantity' => 150,
             'remaining_quantity' => 50,
+            'coupon_id' => 2,
         ]);
 
 
@@ -49,6 +50,7 @@ class EventSeeder extends Seeder
             'quantity' => 500,
             'sold_quantity' => 400,
             'remaining_quantity' => 100,
+            'coupon_id' => 3,
         ]);
 
 
