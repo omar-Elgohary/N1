@@ -199,4 +199,26 @@ class HomeController extends Controller
             'allReservations' => $allReservations,
         ]);
     }
+
+
+
+
+    public function allInvoices()
+    {
+        $restaurantInvoices = TableReservation::where('user_id', auth()->user()->id)->where('reservation_status', 'مكتمل')->get();
+        $eventInvoices = EventOrder::where('user_id', auth()->user()->id)->where('order_status', 'تم تأكيد الحضور')->get();
+
+        $mergedData = $restaurantInvoices->concat($eventInvoices);
+        $allInvoices = $mergedData->all();
+
+        foreach($allInvoices as $allInvoice){
+            $allInvoice['branche_id'] = Branch::where('id', $allInvoice->branche_id)->get();
+        }
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'All Invoices Successfully',
+            'allInvoices' => $allInvoices,
+        ]);
+    }
 }

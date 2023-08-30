@@ -174,19 +174,19 @@ class shopController extends Controller
         $bestSelles = ShopProduct::where('branche_id', $branche_id)->where('category_id', $cat_id)->orderby('sold_quantity', 'desc')->get();
         foreach($bestSelles as $bestSelle){
             $bestSelle['product_image'] = asset('assets/images/products/'.$bestSelle->product_image);
-            $bestSelle['rate'] = Rate::where('shop_product_id', $bestSelle->id)->sum('rate');
+            $bestSelle['rate'] = ProductRate::where('shop_product_id', $bestSelle->id)->sum('rate');
         }
 
         $highRates = ShopProduct::where('branche_id', $branche_id)->where('category_id', $cat_id)->get();
         foreach($highRates as $highRate){
             $highRate['product_image'] = asset('assets/images/products/'.$highRate->product_image);
-            $highRate['rate'] = Rate::where('shop_product_id', $highRate->id)->sum('rate');
+            $highRate['rate'] = ProductRate::where('shop_product_id', $highRate->id)->sum('rate');
         }
 
         $allProducts = ShopProduct::where('branche_id', $branche_id)->where('category_id', $cat_id)->get();
         foreach($allProducts as $product){
             $product['product_image'] = asset('assets/images/products/'.$product->product_image);
-            $product['rate'] = Rate::where('shop_product_id', $highRate->id)->sum('rate');
+            $product['rate'] = ProductRate::where('shop_product_id', $highRate->id)->sum('rate');
         }
 
         return response()->json([
@@ -390,5 +390,75 @@ class shopController extends Controller
             echo $e;
             return $this->returnError(400, 'Fail Delete From Cart');
         }
+    }
+
+
+
+
+
+    public function allOrders()
+    {
+        $allOrders = ShopOrder::where('user_id', auth()->user()->id)->get();
+        foreach($allOrders as $allOrder){
+            $allOrder['product_image'] = asset('assets/images/products/'.ShopProduct::where('id', $allOrder->shop_product_id)->first()->product_image);
+        }
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'All Orders Returned Successfully',
+            'allOrders' => $allOrders,
+        ]);
+    }
+
+
+
+
+
+
+    public function processedOrder()
+    {
+        $allOrders = ShopOrder::where('user_id', auth()->user()->id)->where('order_status', 'قيد التجهيز')->get();
+        foreach($allOrders as $allOrder){
+            $allOrder['product_image'] = asset('assets/images/products/'.ShopProduct::where('id', $allOrder->shop_product_id)->first()->product_image);
+        }
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'All Processed Orders Returned Successfully',
+            'allOrders' => $allOrders,
+        ]);
+    }
+
+
+
+    public function chargedOrder()
+    {
+        $allOrders = ShopOrder::where('user_id', auth()->user()->id)->where('order_status', 'تم الشحن')->get();
+        foreach($allOrders as $allOrder){
+            $allOrder['product_image'] = asset('assets/images/products/'.ShopProduct::where('id', $allOrder->shop_product_id)->first()->product_image);
+        }
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'All Charged Orders Returned Successfully',
+            'allOrders' => $allOrders,
+        ]);
+    }
+
+
+
+
+    public function shopInvoices()
+    {
+        $allOrders = ShopOrder::where('user_id', auth()->user()->id)->where('order_status', 'تم الشحن')->get();
+        foreach($allOrders as $allOrder){
+            $allOrder['product_image'] = asset('assets/images/products/'.ShopProduct::where('id', $allOrder->shop_product_id)->first()->product_image);
+        }
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'All Shop Invoices Returned Successfully',
+            'allOrders' => $allOrders,
+        ]);
     }
 }

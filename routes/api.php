@@ -47,6 +47,12 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('removeProductFromCart/{id}',[shopController::class,'removeProductFromCart']);
     Route::get('getProductsCart/{branche_id}', [shopController::class, 'getProductsCart']);
 
+    Route::get('allOrders', [shopController::class, 'allOrders']);
+    Route::get('processedOrder', [shopController::class, 'processedOrder']);
+    Route::get('chargedOrder', [shopController::class, 'chargedOrder']);
+    Route::get('shopInvoices', [shopController::class, 'shopInvoices']);
+
+
     // Event
     Route::get('getEventById/{id}', [EventController::class, 'getEventById']);
     Route::get('getEventProductById/{id}', [EventController::class, 'getEventProductById']);
@@ -58,7 +64,9 @@ Route::middleware('auth:sanctum')->group(function(){
 
 
 
-    
+
     Route::get('allReservations', [HomeController::class, 'allReservations']);
+    Route::get('allInvoices', [HomeController::class, 'allInvoices']);
+
 });
 
