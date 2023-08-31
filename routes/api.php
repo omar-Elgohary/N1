@@ -64,7 +64,7 @@ Route::middleware('auth:sanctum')->group(function(){
 
 
 
-
+    Route::get('allBranches', [HomeController::class, 'allBranches']);
     Route::get('allReservations', [HomeController::class, 'allReservations']);
     Route::get('allInvoices', [HomeController::class, 'allInvoices']);
 

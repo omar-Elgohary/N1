@@ -181,6 +181,29 @@ class HomeController extends Controller
 
 
 
+
+
+
+    public function allBranches()
+    {
+        $branches = Branch::get();
+        foreach($branches as $branche){
+            $branche['image'] = asset('assets/images/branches/'.$branche->image);
+            $branche['rate'] = BrancheRate::where('branche_id', $branche->id)->avg('rate');
+        }
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'All Branches Returned Successfully',
+            'branches' => $branches,
+        ]);
+    }
+
+
+
+
+
+
     public function allReservations()
     {
         $restaurantReservations = TableReservation::where('user_id', auth()->user()->id)->get();
