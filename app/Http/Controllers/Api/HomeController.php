@@ -16,6 +16,8 @@ use App\Models\RestaurentProduct;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Api\ApiResponseTrait;
+use App\Models\Category;
+use App\Models\Coupon;
 
 class HomeController extends Controller
 {
@@ -178,7 +180,6 @@ class HomeController extends Controller
 
         return $this->returnData(200, 'Data Returned Successfully', compact('departments', 'nearests', 'newests', 'highRates', 'famoustes'));
     }
-
 
 
 

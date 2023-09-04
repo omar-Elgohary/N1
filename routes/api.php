@@ -34,6 +34,7 @@ Route::middleware('auth:sanctum')->group(function(){
 
     Route::get('RestaurentReservations', [RestaurentController::class, 'RestaurentReservations']);
     Route::post('table_reservation/{branche_id}', [RestaurentController::class, 'table_reservation']);
+    Route::get('mealsOfCategory/{cat_id}', [RestaurentController::class, 'mealsOfCategory']);
 
 
 
@@ -51,6 +52,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('processedOrder', [shopController::class, 'processedOrder']);
     Route::get('chargedOrder', [shopController::class, 'chargedOrder']);
     Route::get('shopInvoices', [shopController::class, 'shopInvoices']);
+    Route::get('productsOfCategory/{cat_id}', [shopController::class, 'productsOfCategory']);
 
 
     // Event
@@ -59,7 +61,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('addOrRemoveEventProductLikes/{id}', [EventController::class, 'addOrRemoveEventProductLikes']);
     Route::post('reservationEvent/{id}', [EventController::class, 'reservationEvent']);
     Route::get('EventReservations', [EventController::class, 'EventReservations']);
-
+    Route::get('eventsOfCategory/{cat_id}', [EventController::class, 'eventsOfCategory']);
 
 
 

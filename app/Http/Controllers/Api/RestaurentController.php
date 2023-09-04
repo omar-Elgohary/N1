@@ -4,10 +4,11 @@ use Carbon\Carbon;
 use App\Models\Branch;
 use App\Models\Coupon;
 use App\Models\Category;
+use App\Models\MealRate;
 use App\Models\BrancheRate;
 use Illuminate\Http\Request;
-use App\Models\RestaurentOrder;
 use App\Models\ReservationType;
+use App\Models\RestaurentOrder;
 use App\Models\TableReservation;
 use App\Models\RestaurentProduct;
 use App\Http\Controllers\Controller;
@@ -323,6 +324,41 @@ class RestaurentController extends Controller
             'status' => 200,
             'message' => 'Table Reservation',
             'reservation' => $reservation,
+        ]);
+    }
+
+
+
+
+
+    public function mealsOfCategory($cat_id)
+    {
+        $category = Category::find($cat_id);
+        if($category->department_id != 1){
+            return response()->json([
+                'status' => 201,
+                'message' => 'Category Not Found',
+            ]);
+        }
+        $meals = RestaurentProduct::where('category_id', $cat_id)->get();
+        foreach($meals as $meal){
+            $meal['product_image'] = asset('assets/images/products/'.$meal->product_image);
+            $meal['rate'] = MealRate::where('restaurent_product_id', $meal->id)->avg('rate');
+
+            if($meal->coupon_id){
+                $coupon = Coupon::where('id', $meal->coupon_id)->first();
+                $meal['coupon_id'] = Coupon::where('id', $meal->coupon_id)->select('discount_percentage', 'status')->first();
+                if($coupon->status == 'مفعل'){
+                    $meal['price_after_discount'] = $meal->price  - ($meal->price * $coupon->discount_percentage)/ 100;
+                }
+            }
+        }
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'All Meals Returned Successfully',
+            'category' => $category,
+            'meals' => $meals,
         ]);
     }
 }

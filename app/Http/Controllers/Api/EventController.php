@@ -4,6 +4,7 @@ use App\Models\Like;
 use App\Models\Event;
 use App\Models\Branch;
 use App\Models\Coupon;
+use App\Models\Category;
 use App\Models\EventRate;
 use App\Models\EventOrder;
 use App\Models\BrancheRate;
@@ -241,5 +242,38 @@ class EventController extends Controller
                 'message' => 'Event Not Found',
             ]);
         }
+    }
+
+
+
+    public function eventsOfCategory($cat_id)
+    {
+        $category = Category::find($cat_id);
+        if($category->department_id != 3){
+            return response()->json([
+                'status' => 201,
+                'message' => 'Category Not Found',
+            ]);
+        }
+        $events = Event::where('category_id', $cat_id)->get();
+        foreach($events as $event){
+            $event['product_image'] = asset('assets/images/products/'.$event->product_image);
+            $event['rate'] = EventRate::where('event_id', $event->id)->avg('rate');
+
+            if($event->coupon_id){
+                $coupon = Coupon::where('id', $event->coupon_id)->first();
+                $event['coupon_id'] = Coupon::where('id', $event->coupon_id)->select('discount_percentage', 'status')->first();
+                if($coupon->status == 'مفعل'){
+                    $event['price_after_discount'] = $event->ticket_price  - ($event->ticket_price * $coupon->discount_percentage)/ 100;
+                }
+            }
+        }
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'All Events Returned Successfully',
+            'category' => $category,
+            'events' => $events,
+        ]);
     }
 }

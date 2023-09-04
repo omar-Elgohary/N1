@@ -461,4 +461,39 @@ class shopController extends Controller
             'allOrders' => $allOrders,
         ]);
     }
+
+
+
+
+
+    public function productsOfCategory($cat_id)
+    {
+        $category = Category::find($cat_id);
+        if($category->department_id != 2){
+            return response()->json([
+                'status' => 201,
+                'message' => 'Category Not Found',
+            ]);
+        }
+        $products = ShopProduct::where('category_id', $cat_id)->get();
+        foreach($products as $product){
+            $product['product_image'] = asset('assets/images/products/'.$product->product_image);
+            $product['rate'] = ProductRate::where('shop_product_id', $product->id)->avg('rate');
+
+            if($product->coupon_id){
+                $coupon = Coupon::where('id', $product->coupon_id)->first();
+                $product['coupon_id'] = Coupon::where('id', $product->coupon_id)->select('discount_percentage', 'status')->first();
+                if($coupon->status == 'مفعل'){
+                    $product['price_after_discount'] = $product->price  - ($product->price * $coupon->discount_percentage)/ 100;
+                }
+            }
+        }
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'All Products Returned Successfully',
+            'category' => $category,
+            'products' => $products,
+        ]);
+    }
 }
