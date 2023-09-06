@@ -8,9 +8,10 @@ class PackageSeeder extends Seeder
 {
     public function run()
     {
-        $package = Package::create([
+        Package::create([
             'random_id' => '#DFSG48',
             'department_id' => 1,
+            'branche_id' => 1,
             'image' => '1686825194.jfif',
             'first_meal_id' => 1,
             'second_meal_id' => 2,
@@ -22,9 +23,10 @@ class PackageSeeder extends Seeder
             'status' => 'مفعل',
         ]);
 
-        $package = Package::create([
+        Package::create([
             'random_id' => '#DSG564',
             'department_id' => 1,
+            'branche_id' => 2,
             'image' => '1686825194.jfif',
             'first_meal_id' => 3,
             'second_meal_id' => 4,
@@ -36,9 +38,10 @@ class PackageSeeder extends Seeder
             'status' => 'مفعل',
         ]);
 
-        $package = Package::create([
+        Package::create([
             'random_id' => '#SDG647',
             'department_id' => 1,
+            'branche_id' => 1,
             'image' => '1686825194.jfif',
             'first_meal_id' => 5,
             'second_meal_id' => 6,
@@ -50,9 +53,10 @@ class PackageSeeder extends Seeder
             'status' => 'غير مفعل',
         ]);
 
-        $package = Package::create([
+        Package::create([
             'random_id' => '#FDSG12',
             'department_id' => 1,
+            'branche_id' => 2,
             'image' => '1686825194.jfif',
             'first_meal_id' => 2,
             'second_meal_id' => 4,

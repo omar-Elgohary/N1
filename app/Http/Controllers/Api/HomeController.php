@@ -1,7 +1,11 @@
 <?php
 namespace App\Http\Controllers\Api;
 use App\Models\Event;
+use App\Models\Offer;
 use App\Models\Branch;
+use App\Models\Coupon;
+use App\Models\Package;
+use App\Models\Category;
 use App\Models\MealRate;
 use App\Models\EventRate;
 use App\Models\Department;
@@ -16,8 +20,6 @@ use App\Models\RestaurentProduct;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Api\ApiResponseTrait;
-use App\Models\Category;
-use App\Models\Coupon;
 
 class HomeController extends Controller
 {
@@ -181,6 +183,46 @@ class HomeController extends Controller
         return $this->returnData(200, 'Data Returned Successfully', compact('departments', 'nearests', 'newests', 'highRates', 'famoustes'));
     }
 
+
+
+
+    public function allcoupons()
+    {
+        $offers = ['Coupons', 'Packages'];
+
+        $coupons = Coupon::select('id', 'image', 'discount_coupon', 'status')->get();
+        foreach($coupons as $coupon){
+            $coupon['image'] = asset('assets/images/offers/'.$coupon->image);
+        }
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'All Coupons Returned Successfully',
+            'offers' => $offers,
+            'coupons' => $coupons,
+        ]);
+    }
+
+
+
+
+    public function allPackages()
+    {
+        $offers = ['Coupons', 'Packages'];
+
+        $packages = Package::select('id', 'image', 'branche_id', 'status')->get();
+        foreach($packages as $package){
+            $package['image'] = asset('assets/images/offers/'.$package->image);
+            $package['branche_id'] = Branch::where('id', $package->branche_id)->first()->name;
+        }
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'All Packages Returned Successfully',
+            'offers' => $offers,
+            'packages' => $packages,
+        ]);
+    }
 
 
 

@@ -11,6 +11,7 @@ return new class extends Migration
             $table->id();
             $table->string('random_id');
             $table->foreignId('department_id')->constrained('departments')->cascadeOnDelete();
+            $table->foreignId('branche_id')->constrained('branches')->cascadeOnDelete();
             $table->string('image');
 
             $table->foreignId('first_meal_id')->constrained('meals');

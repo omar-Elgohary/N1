@@ -65,7 +65,8 @@ Route::middleware('auth:sanctum')->group(function(){
 
 
 
-
+    Route::get('allcoupons', [HomeController::class, 'allcoupons']);
+    Route::get('allPackages', [HomeController::class, 'allPackages']);
     Route::get('allBranches', [HomeController::class, 'allBranches']);
     Route::get('allReservations', [HomeController::class, 'allReservations']);
     Route::get('allInvoices', [HomeController::class, 'allInvoices']);
