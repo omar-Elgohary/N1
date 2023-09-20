@@ -34,6 +34,8 @@ class AboutUsController extends Controller
         return back();
     }
 
+
+    
     public function updateAboutUs(Request $request, $id)
     {
         $this->validate($request, [

@@ -41,7 +41,7 @@
                             <tr>
                                 <td>{{ $key+1 }}</td>
                                 <td>{{ $user->name }}</td>
-                                <td>{{ $user->email }}</td>
+                                <td class="fw-bold">{{ $user->email }}</td>
                                 <td>{{ $user->phone }} {{ $user->country_code }}</td>
 
                                 <td>

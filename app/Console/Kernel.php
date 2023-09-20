@@ -1,7 +1,6 @@
 <?php
-
 namespace App\Console;
-
+use App\Models\Offer;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 

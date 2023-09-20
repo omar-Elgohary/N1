@@ -56,15 +56,15 @@
                     <li><a class="nav-link text-black active" href="/">{{ __('homepage.home') }}</a></li>
                     <li><a class="nav-link text-black scrollto" href="{{ route('contact_us') }}">{{ __('homepage.contactus') }}</a></li>
                     <li><a class="nav-link text-black scrollto" href="/about">{{ __('homepage.aboutus') }}</a></li>
+
                     <li style="z-index: 100;">
                         <div class="dropdown d-inline-block language-switch">
-                            <button type="button" class="btn"
-                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <button type="button" class="btn" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="text-black">{{ __('staticpage.lang') }}</span>
                             </button>
 
                             <ul style="z-index: 9999">
-                                <li>
+                                    <li>
                                     @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
                                         <a data-turbo="false" class="dropdown-item dropdown-link" rel="alternate" hreflang="{{ $localeCode }}" href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}"
                                             wire:click="reloadPageContent">

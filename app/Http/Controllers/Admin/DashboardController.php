@@ -1,10 +1,12 @@
 <?php
 namespace App\Http\Controllers\Admin;
 use App\Models\User;
+use App\Models\Offer;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Console\Scheduling\Schedule;
 
 class DashboardController extends Controller
 {
@@ -73,10 +75,6 @@ class DashboardController extends Controller
 
 
 
-
-
-
-
     public function categories()
     {
         $categories = Category::paginate(5);
@@ -87,15 +85,20 @@ class DashboardController extends Controller
     public function addCategory(Request $request)
     {
         $request->validate([
-            'name' => 'required',
+            'name_en' => 'required',
+            'name_ar' => 'required',
             'department_id' => 'required',
         ],[
-            'name.required' => 'يجب ادخال اسم الفئة',
+            'name_en.required' => 'يجب ادخال اسم الفئة انجليزي',
+            'name_ar.required' => 'يجب ادخال اسم الفئة عربي',
             'department_id.required' => 'يجب اختيار القسم',
         ]);
 
         Category::create([
-            'name' => $request->name,
+            'name' => [
+                'en' => $request->name_en,
+                'ar' => $request->name_ar,
+            ],
             'department_id' => $request->department_id,
         ]);
 
@@ -109,17 +112,23 @@ class DashboardController extends Controller
     {
         $category = Category::find($id);
         $category->update([
-            'name' => $request->name,
+            'name' => [
+                'en' => $request->name_en,
+                'ar' => $request->name_ar,
+            ],
             'department_id' => $request->department_id,
         ]);
         session()->flash('updateCategory');
         return back();
     }
 
-    public function deleteCategory(Request $request, $id)
+
+
+    public function deleteCategory($id)
     {
         Category::find($id)->delete();
         session()->flash('deleteCategory');
         return back();
     }
+
 }

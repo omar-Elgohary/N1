@@ -7,7 +7,12 @@
     <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
     <meta content="Themesbrand" name="author" />
     <!-- App favicon -->
+    <link href="{{ asset('images/logo.png') }}" rel="icon">
+    <link href="{{ asset('assets/img/favicon.png') }}" rel="icon">
+    <link href="{{ asset('assets/img/apple-touch-icon.png') }}" rel="apple-touch-icon">
     <link rel="shortcut icon" href="assets/images/favicon.ico">
+    {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@5.2.3/font/bootstrap-icons.css" rel="stylesheet"> --}}
+
     {{-- notify --}}
     <link href="{{ URL::asset('assets/plugins/notify/css/notifIt.css') }}" rel="stylesheet" />
     <!-- Bootstrap Css -->

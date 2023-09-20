@@ -63,7 +63,8 @@
         <div class="row">
             <div class="col-md-4">
                 <div>
-                    <a class="btn btn-success waves-effect waves-light mb-3" data-bs-toggle="modal" href="#addInfo" role="button"><i class="mdi mdi-plus me-1"></i>اضافة معلومات</a>
+                    <a href="#addInfo" class="btn btn-success waves-effect waves-light mb-3" data-bs-toggle="modal"><i class="mdi mdi-plus me-1"></i>اضافة معلومات</a>
+
                 </div>
             </div>
         </div>
@@ -90,64 +91,13 @@
                                 <td class="fw-bold">{{ $info->paragraph_ar}}</td>
                                 <td class="fw-bold">{{ $info->paragraph_en }}</td>
                                 <td>
-                                    <a href="#editInfo" class="px-3 text-primary" data-bs-toggle="modal"><i class="uil uil-pen font-size-18"></i></a>
-                                    <a href="#deleteInfo" class="px-3 text-danger" data-bs-toggle="modal"><i class="uil uil-trash-alt font-size-18"></i></a>
+                                    <a href="#editInfo{{$info->id}}" class="px-3 text-primary" data-bs-toggle="modal"><i class="uil uil-pen font-size-18"></i></a>
+                                    <a href="#deleteInfo{{$info->id}}" class="px-3 text-danger" data-bs-toggle="modal"><i class="uil uil-trash-alt font-size-18"></i></a>
                                 </td>
                             </tr>
-                        </tbody>
-                            @empty
-                            <tr>
-                                <th class="text-danger" colspan="10">
-                                    لا يوجد بيانات
-                                </th>
-                            </tr>
-                        @endforelse
-                        </table>
-                        {{ $infos->links("pagination::bootstrap-4") }}
-                    </table>
-                </div>
-            </div>
-        </div><!-- end row -->
-    </div> <!-- container-fluid -->
-</div>
-
-
-
-{{-- Add Info --}}
-<div class="modal fade" id="addInfo" tabindex="-1" aria-labelledby="addInfoLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content modal-content-demo">
-            <div class="modal-header">
-            <h2 class="modal-title">اضافة معلومة</h2>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-
-                <div class="modal-body">
-                    <form action="{{ route('aboutUs.store') }}" method="post">
-                    @csrf
-                    <div class="form-group mb-3">
-                        <h4>معلومات الموقع بالعربية</h4>
-                        <textarea name="paragraph_ar" id="paragraph" pattern="[A-Za-z]{3}"  class="form-control text-end" rows="5"></textarea>
-                    </div>
-
-                    <div class="form-group mb-3">
-                        <h4>معلومات الموقع بالانجليزية</h4>
-                        <textarea name="paragraph_en" id="paragraph" class="form-control text-end" rows="5"></textarea>
-                    </div>
-
-                    <div class="modal-footer d-flex justify-content-between">
-                        <button type="submit" class="btn btn-success">اضافة</button>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">اغلاق</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div><!-- end-modal -->
-
 
 {{-- Edit Info --}}
-<div class="modal fade" id="editInfo" tabindex="-1" aria-labelledby="editInfoLabel" aria-hidden="true">
+<div class="modal fade" id="editInfo{{$info->id}}" tabindex="-1" aria-labelledby="editInfoLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content modal-content-demo">
             <div class="modal-header">
@@ -160,12 +110,14 @@
                     @method('PATCH')
                 <div class="form-group mb-3">
                     <label>معلومات الموقع بالعربية</label>
-                    <textarea name="paragraph_ar" id="paragraph" class="form-control text-end" rows="5">{{ $info->paragraph_ar }}</textarea>
+                    <textarea name="paragraph_ar" id="paragraphAr" class="form-control text-end @error('paragraph_ar') is-invalid @enderror" rows="5">{{ $info->paragraph_ar }}</textarea>
+                    <p id="errorParagraph_ar" class="text-danger"></p>
                 </div>
 
                 <div class="form-group mb-3">
                     <label>معلومات الموقع بالانجليزية</label>
-                    <textarea name="paragraph_en" id="paragraph" class="form-control text-end" rows="5">{{ $info->paragraph_en }}</textarea>
+                    <textarea name="paragraph_en" id="paragraphEn" class="form-control text-end @error('paragraph_en') is-invalid @enderror" rows="5">{{ $info->paragraph_en }}</textarea>
+                    <p id="errorParagraph_en" class="text-danger"></p>
                 </div>
 
                     <div class="modal-footer d-flex justify-content-between">
@@ -180,7 +132,7 @@
 
 
 {{-- Delete Info --}}
-<div class="modal fade" id="deleteInfo" tabindex="-1" aria-labelledby="deleteInfoLabel" aria-hidden="true">
+<div class="modal fade" id="deleteInfo{{$info->id}}" tabindex="-1" aria-labelledby="deleteInfoLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content modal-content-demo">
             <div class="modal-header">
@@ -198,6 +150,56 @@
 
                     <div class="modal-footer d-flex justify-content-between">
                         <button type="submit" class="btn btn-danger">حذف</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">اغلاق</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div><!-- end-modal -->
+                        </tbody>
+                            @empty
+                            <tr>
+                                <th class="text-danger" colspan="10">
+                                    لا يوجد بيانات
+                                </th>
+                            </tr>
+                        @endforelse
+                        </table>
+                        {{ $infos->links("pagination::bootstrap-4") }}
+                    </table>
+                </div>
+            </div>
+        </div><!-- end row -->
+    </div> <!-- container-fluid -->
+</div>
+
+{{-- Add Info --}}
+<div class="modal fade" id="addInfo" tabindex="-1" aria-labelledby="addInfoLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content modal-content-demo">
+            <div class="modal-header">
+            <h2 class="modal-title">اضافة معلومة</h2>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+                <div class="modal-body">
+                    <form action="{{ route('aboutUs.store') }}" method="post">
+                    @csrf
+                    <div class="form-group mb-3">
+                        <h4>معلومات الموقع بالعربية</h4>
+                        <textarea name="paragraph_ar" id="paragraphAr" class="form-control text-end @error('paragraph_ar') is-invalid @enderror" rows="5"></textarea>
+                        <p id="errorParagraph_ar" class="text-danger"></p>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <h4>معلومات الموقع بالانجليزية</h4>
+                        <textarea name="paragraph_en" id="paragraphEn" class="form-control text-end @error('paragraph_en') is-invalid @enderror" rows="5"></textarea>
+                        <p id="errorParagraph_en" class="text-danger"></p>
+                    </div>
+
+                    <div class="modal-footer d-flex justify-content-between">
+                        <button type="submit" class="btn btn-success">اضافة</button>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">اغلاق</button>
                     </div>
                 </form>

@@ -1,5 +1,6 @@
 <?php
 namespace App\Http\Controllers\Api;
+use App\Models\Like;
 use App\Models\Event;
 use App\Models\Offer;
 use App\Models\Branch;
@@ -285,6 +286,32 @@ class HomeController extends Controller
             'status' => 200,
             'message' => 'All Invoices Successfully',
             'allInvoices' => $allInvoices,
+        ]);
+    }
+
+
+
+
+    public function favourites()
+    {
+        $favourites = Like::where('user_id', auth()->user()->id)->get();
+
+        foreach($favourites as $favourite){
+            if($favourite->likesable_type == ShopProduct::class){
+                $favourite['likesable_id'] = ShopProduct::where('id', $favourite->likesable_id)->get();
+                $favourite['product_image'] = asset('assets/images/products/'.$favourite->likesable_id->first()->product_image);
+            }
+
+            if($favourite->likesable_type == Event::class){
+                $favourite['likesable_id'] = Event::where('id', $favourite->likesable_id)->get();
+            $favourite['product_image'] = asset('assets/images/products/'.$favourite->likesable_id->first()->product_image);
+            }
+        }
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'All Favourites Successfully',
+            'favourites' => $favourites,
         ]);
     }
 }

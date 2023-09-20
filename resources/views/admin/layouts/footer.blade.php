@@ -91,7 +91,7 @@ $(document).ready(function() {
             $(this).addClass('error');
             $('#errorText_en').text("{{__('messages.english_letters')}}");
             inputField.value = "";
-        } else {
+        } else{
             $(this).removeClass('error');
             $('#errorText_en').text('');
         }
@@ -179,7 +179,7 @@ $(document).ready(function() {
             }
         });
     });
-    </script>
+</script>
 
 
 <script>
@@ -280,12 +280,6 @@ function updateThumbnail(dropZoneElement, file) {
 	}
 }
 </script>
-
-
-
-
-
-
 
 
 

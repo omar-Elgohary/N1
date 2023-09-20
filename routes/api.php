@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\HomeController;
 use App\Http\Controllers\Api\shopController;
 use App\Http\Controllers\Api\EventController;
+use App\Http\Controllers\Api\PaymentController;
 use App\Http\Controllers\Api\RestaurentController;
 
 
@@ -70,6 +71,9 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('allBranches', [HomeController::class, 'allBranches']);
     Route::get('allReservations', [HomeController::class, 'allReservations']);
     Route::get('allInvoices', [HomeController::class, 'allInvoices']);
+    Route::get('favourites', [HomeController::class, 'favourites']);
 
+
+    Route::post('/make-payment', [PaymentController::class, 'makePayment']);
 });
 

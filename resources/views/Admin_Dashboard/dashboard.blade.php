@@ -119,8 +119,13 @@
                                     <td class="badge bg-soft-danger">{{ $offer->status }}</td>
                                 @endif
 
-                                <td>{{ $offer->start_date }}</td>
-                                <td>{{ $offer->end_date }}</td>
+                                @if($offer->end_date < now())
+                                    <td class="text-danger fw-bold">{{ $offer->start_date }}</td>
+                                    <td class="text-danger fw-bold">{{ $offer->end_date }}</td>
+                                @else
+                                    <td>{{ $offer->start_date }}</td>
+                                    <td>{{ $offer->end_date }}</td>
+                                @endif
                             </tr>
                         </tbody>
                         @empty

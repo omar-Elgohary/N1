@@ -312,6 +312,9 @@ Route::middleware(['CheckEntertainment'])->group(function () {
 
 }); // CheckEntertainment middleware
 
+
+
+
 }); // Middleware CheckUser
 
 }); // middleware authenticated

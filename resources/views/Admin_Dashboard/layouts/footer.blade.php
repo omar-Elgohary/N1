@@ -163,6 +163,70 @@
 <!-- App js -->
 <script src="{{ asset('dashboard/assets/js/app.js') }}"></script>
 
-</body>
 
+<script>
+    $(document).ready(function() {
+        $('#paragraphEn').on('input', function() {
+            var inputField = document.getElementById('paragraphEn');
+            var inputText = $(this).val();
+            if (/[\u0600-\u06FF]/.test(inputText)) {
+                $(this).addClass('error');
+                $('#errorParagraph_en').text("{{__('messages.english_letters')}}");
+                inputField.value = "";
+            } else {
+                $(this).removeClass('error');
+                $('#errorParagraph_en').text('');
+            }
+        });
+    });
+
+    $(document).ready(function() {
+        $('#paragraphAr').on('input', function() {
+            var inputField = document.getElementById('paragraphAr');
+            var inputText = $(this).val();
+            if (/^[A-Za-z\s]+$/.test(inputText)) {
+                $(this).addClass('error');
+                $('#errorParagraph_ar').text("{{__('messages.arabic_letters')}}");
+                inputField.value = "";
+            } else {
+                $(this).removeClass('error');
+                $('#errorParagraph_ar').text('');
+            }
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        $('#editParagraphEn').on('input', function() {
+            var inputField = document.getElementById('editParagraphEn');
+            var inputText = $(this).val();
+            if (/[\u0600-\u06FF]/.test(inputText)) {
+                $(this).addClass('error');
+                $('#errorEditParagraph_en').text("{{__('messages.english_letters')}}");
+                inputField.value = "";
+            } else {
+                $(this).removeClass('error');
+                $('#errorEditParagraph_en').text('');
+            }
+        });
+    });
+
+    $(document).ready(function() {
+        $('#editParagraphAr').on('input', function() {
+            var inputField = document.getElementById('editParagraphAr');
+            var inputText = $(this).val();
+            if (/^[A-Za-z\s]+$/.test(inputText)) {
+                $(this).addClass('error');
+                $('#errorEditParagraph_ar').text("{{__('messages.arabic_letters')}}");
+                inputField.value = "";
+            } else {
+                $(this).removeClass('error');
+                $('#errorEditParagraph_ar').text('');
+            }
+        });
+    });
+</script>
+
+</body>
 </html>

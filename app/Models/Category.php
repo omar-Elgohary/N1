@@ -18,7 +18,7 @@ class Category extends Model
     public function name(string $locale = null): Attribute {
         return Attribute::make(
             get: function ($value) {
-                if ($this->locale) {
+                if ($this->locale) {    
                     $loc = $this->locale;
                     $this->locale = null;
                     return json_decode($value, true)[$loc];

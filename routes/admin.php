@@ -24,7 +24,7 @@ Route::post('upgradeAccounts', [DashboardController::class, 'upgradeAccounts'])-
 Route::get('categories', [DashboardController::class, 'categories'])->name('categories');
 Route::post('addCategory', [DashboardController::class, 'addCategory'])->name('addCategory');
 Route::post('updateCategory/{id}', [DashboardController::class, 'updateCategory'])->name('updateCategory');
-Route::get('deleteCategory/{id}', [DashboardController::class, 'deleteCategory'])->name('admin.deleteCategory');
+Route::get('deleteCategory/{id}', [DashboardController::class, 'deleteCategory'])->name('deleteCategory');
 
 // AboutUs
 Route::get('aboutUs', [AboutUsController::class, 'aboutUs'])->name('aboutUs');
@@ -34,3 +34,5 @@ Route::delete('deleteAboutUs/{id}', [AboutUsController::class, 'deleteAboutUs'])
 
 // ContactUs
 Route::get('usersMessages', [AboutUsController::class, 'usersMessages'])->name('usersMessages');
+
+

@@ -40,7 +40,7 @@
 
 <div class="main-content">
 <div class="page-content">
-    
+
 @if ($errors->any())
     <div class="alert alert-danger">
         <ul>
@@ -127,8 +127,15 @@
             @csrf
             <div class="modal-body">
                 <div class="form-group mb-3">
-                    <label for="name">اسم الفئة</label>
-                    <input type="text" name="name" class="form-control" id="input">
+                    <label for="name">اسم الفئة انجليزي</label>
+                    <input type="text" name="name_en" id="paragraphEn" class="form-control @error('name_en') is-invalid @enderror" id="input">
+                    <p id="errorParagraph_en" class="text-danger"></p>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="name">اسم الفئة عربي</label>
+                    <input type="text" name="name_ar" id="paragraphAr" class="form-control @error('name_ar') is-invalid @enderror" id="input">
+                    <p id="errorParagraph_ar" class="text-danger"></p>
                 </div>
 
                 <div class="form-group">
@@ -165,15 +172,22 @@
             @csrf
             <div class="modal-body">
                 <div class="form-group mb-3">
-                    <label for="name">اسم الفئة</label>
-                    <input type="text" name="name" class="form-control" id="input" value="{{$category->name}}">
+                    <label for="name">اسم الفئة انجليزي</label>
+                    <input type="text" name="name_en" id="editParagraphEn" class="form-control @error('name_en') is-invalid @enderror" id="input" value="{{$category->nameLocale('en')}}">
+                    <p id="errorEditParagraph_en" class="text-danger"></p>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="name">اسم الفئة عربي</label>
+                    <input type="text" name="name_ar" id="editParagraphAr" class="form-control @error('name_ar') is-invalid @enderror" id="input" value="{{$category->nameLocale('ar')}}">
+                    <p id="errorEditParagraph_ar" class="text-danger"></p>
                 </div>
 
                 <div class="form-group">
                     <label>اسم القسم</label>
                     <select name="department_id" class="form-control">
                         <option value="{{ $category->department->id }}">{{ $category->department->name }}</option>
-                        @foreach (\App\Models\Department::all() as $department)
+                        @foreach (\App\Models\Department::where('id', '!=', $category->department->id)->get() as $department)
                             <option value="{{ $department->id }}">{{ $department->name }}</option>
                         @endforeach
                     </select>
