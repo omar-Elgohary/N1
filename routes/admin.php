@@ -18,7 +18,7 @@ Route::get('users', [DashboardController::class, 'users'])->name('users');
 Route::get('sellers', [DashboardController::class, 'sellers'])->name('sellers');
 
 Route::get('upgradeAccountsPage', [DashboardController::class, 'upgradeAccountsPage'])->name('upgradeAccountsPage');
-Route::post('upgradeAccounts', [DashboardController::class, 'upgradeAccounts'])->name('upgradeAccounts');
+Route::get('upgradeAccounts/{id}', [DashboardController::class, 'upgradeAccounts'])->name('upgradeAccounts');
 
 // Categories
 Route::get('categories', [DashboardController::class, 'categories'])->name('categories');

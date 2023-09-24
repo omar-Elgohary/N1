@@ -48,11 +48,11 @@
                 <hr>
 
                 <div class="form-group">
-                    <p class="text-black">{{ __('personalInfo.commercial_register') }} :<span class="text-danger fw-bold">{{ auth()->user()->commercial_registration_number }}</span></p>
+                    <p class="text-black">{{ __('personalInfo.commercial_register') }} :<span class="text-warning fw-bold">{{ auth()->user()->commercial_registration_number }}</span></p>
                 </div> <!-- 2 -->
 
                 <div class="form-group">
-                    <p class="text-black">{{ __('personalInfo.activity_type') }} :<span class="text-danger fw-bold">{{ auth()->user()->department->name }}</span></p>
+                    <p class="text-black">{{ __('personalInfo.activity_type') }} :<span class="text-warning fw-bold">{{ auth()->user()->department->name }}</span></p>
                 </div> <!-- 3 -->
             </form>
 

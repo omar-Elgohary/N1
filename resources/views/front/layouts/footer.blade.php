@@ -4,9 +4,9 @@
     <div class="container">
         <div class="row d-flex justify-content-between">
             <div class="col-lg-3 col-md-6 footer-contact">
-            <button type="submit" class="btn btn-dark px-4 mb-3"><i class="fa-brands fa-apple"></i> Download</button>
+            <button type="submit" class="btn btn-dark px-4 mb-3"><i class="fa-brands fa-apple"></i> Apple Store</button>
             <p>
-            <button type="submit" class="btn btn-dark px-4"><i class="fa fa-thin fa-play"></i> Download</button>
+            <button type="submit" class="btn btn-dark px-4"><i class="fa fa-thin fa-play"></i> Google Play</button>
             </p>
         </div>
 
@@ -125,7 +125,7 @@
         Phone = getElementById('phone').value;
         consle.log('asd');
         $('#exampleModalToggle3').modal('show');
-        // event.preventDefault();
+        event.preventDefault();
     });
 </script>
 

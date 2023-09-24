@@ -3,6 +3,17 @@
     ترقية الحسابات
 @endsection
 
+@if (session()->has('Upgrade Account Done'))
+    <script>
+        window.onload = function() {
+            notif({
+                msg: "Upgrade Account Done",
+                type: "success"
+            })
+        }
+    </script>
+@endif
+
 @section('content')
 <div class="main-content">
 
@@ -32,7 +43,7 @@
                                 <th>اسم العميل</th>
                                 <th>الايميل</th>
                                 <th>رقم الجوال</th>
-                                <th>التحكم</th>
+                                <th>ترقية الحساب</th>
                             </tr>
                         </thead>
 
@@ -45,13 +56,13 @@
                                 <td>{{ $user->phone }} {{ $user->country_code }}</td>
 
                                 <td>
-                                    <button type="button" class="btn btn-success waves-effect waves-light">
+                                    <a href="{{ route('upgradeAccounts', $user->id) }}" class="btn btn-success waves-effect waves-light">
                                         ترقية <i class="uil uil-check me-2"></i>
-                                    </button>
+                                    </a>
 
-                                    <button type="button" class="btn btn-danger waves-effect waves-light">
+                                    {{-- <button type="button" class="btn btn-danger waves-effect waves-light">
                                         رفض <i class="uil uil-exclamation-octagon me-2"></i>
-                                    </button>
+                                    </button> --}}
                                 </td>
                             </tr>
                         @empty

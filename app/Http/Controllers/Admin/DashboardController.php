@@ -66,9 +66,14 @@ class DashboardController extends Controller
 
 
 
-    public function upgradeAccounts()
+    public function upgradeAccounts($id)
     {
-
+        $user = User::find($id);
+        $user->update([
+            'type' => 'seller',
+        ]);
+        session()->flash('Upgrade Account Done');
+        return back();
     }
 
 
@@ -80,6 +85,8 @@ class DashboardController extends Controller
         $categories = Category::paginate(5);
         return view('Admin_Dashboard.categories.index', compact('categories'));
     }
+
+
 
 
     public function addCategory(Request $request)

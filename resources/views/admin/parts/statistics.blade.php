@@ -100,24 +100,24 @@
                         <h4 class="card-title text-black mb-3">{{ __('staticpage.title3') }}</h4>
 
                     @if(auth()->user()->department_id == 1)
-                        @foreach(\App\Models\Rate::groupBy('restaurent_product_id')->selectRaw('restaurent_product_id,avg(rate) as rate')->where('department_id', auth()->user()->department_id)->orderBy('rate', 'desc')->limit(5)->get() as $rate)
+                        @foreach(\App\Models\MealRate::groupBy('restaurent_product_id')->selectRaw('restaurent_product_id,avg(rate) as rate')->orderBy('rate', 'desc')->limit(5)->get() as $rate)
                             <div class="d-flex flex-row-reverse justify-content-between">
-                                <h5>{{ $rate->restaurent_product->name }}</h5>
-                                <p>{{ round($rate->rate, 1) }}<i class="fa fa-thin fa-star text-warning"></i></p>
+                                <h5>{{ \App\Models\RestaurentProduct::where('id', $rate->restaurent_product_id)->first()->name }}</h5>
+                                <p><i class="fa fa-thin fa-star text-warning"></i>{{ round($rate->rate, 1) }}</p>
                             </div>
                         @endforeach
                     @elseif(auth()->user()->department_id == 2)
                         @foreach(\App\Models\Rate::groupBy('shop_product_id')->selectRaw('shop_product_id,avg(rate) as rate')->where('department_id', auth()->user()->department_id)->orderBy('rate', 'desc')->limit(5)->get() as $rate)
                             <div class="d-flex flex-row-reverse justify-content-between">
-                                <h5>{{ $rate->shop_product->name }}</h5>
-                                <p>{{ round($rate->rate, 1) }}<i class="fa fa-thin fa-star text-warning"></i></p>
+                                <h5>{{ \App\Models\ShopProduct::where('id', $rate->shop_product_id)->first()->name }}</h5>
+                                <p><i class="fa fa-thin fa-star text-warning"></i>{{ round($rate->rate, 1) }}</p>
                             </div>
                         @endforeach
                     @elseif(auth()->user()->department_id == 3)
                         @foreach(\App\Models\Rate::groupBy('event_product_id')->selectRaw('event_product_id,avg(rate) as rate')->where('department_id', auth()->user()->department_id)->orderBy('rate', 'desc')->limit(5)->get() as $rate)
                             <div class="d-flex flex-row-reverse justify-content-between">
-                                <h5>{{ $rate->event_product->event_name }}</h5>
-                                <p>{{ round($rate->rate, 1) }}<i class="fa fa-thin fa-star text-warning"></i></p>
+                                <h5>{{ \App\Models\Event::where('id', $rate->event_id)->first()->name }}</h5>
+                                <p><i class="fa fa-thin fa-star text-warning"></i>{{ round($rate->rate, 1) }}</p>
                             </div>
                         @endforeach
                     @endif

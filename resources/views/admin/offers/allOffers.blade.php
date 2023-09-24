@@ -114,7 +114,7 @@
             <a id="login" class="btn px-4" data-bs-toggle="modal" href="#staticBackdrop" role="button">{{ __('offers.add_offer') }}</a>
         </div>
     </div> <!-- row -->
-    
+
         <div class="mt-4">
         <div class="mb-5 restable">
             <table class="table text-center" dir="rtl">
@@ -154,7 +154,13 @@
                             </td>
                         @endif
                         <td>{{ $offer->start_date }}</td>
-                        <td>{{ $offer->end_date }}</td>
+
+                        @if($offer->end_date < now())
+                            <td class="text-danger fw-bold">{{ $offer->end_date }}</td>
+                        @else
+                            <td>{{ $offer->end_date }}</td>
+                        @endif
+
                         <td>
                             @if ($offer->offer_type == 'coupon')
                                 <a href="{{ route('editCoupon', $offer->coupon_id) }}" class="btn bg-white text-success"><i class="fa fa-edit"></i></a>

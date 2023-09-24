@@ -8,7 +8,7 @@
         window.onload = function() {
             notif({
                 msg: "{{ __('messages.processing') }}",
-                type: "warining"
+                type: "success"
             })
         }
     </script>
