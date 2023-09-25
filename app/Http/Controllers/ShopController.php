@@ -78,8 +78,8 @@ class ShopController extends Controller
 
     public function filterShopPurchases($key)
     {
-        $orders = ShopOrder::whereMonth('created_at', $key)->get();
-        return view('admin.purchases.ShopPurchases.index', compact('orders'));
+        $purchases = ShopOrder::whereMonth('created_at', $key)->get();
+        return view('admin.purchases.ShopPurchases.index', compact('purchases'));
     }
 
 
@@ -425,8 +425,8 @@ class ShopController extends Controller
 
     public function shopPurchasesDetails($id)
     {
-        $purchase = ShopOrder::find($id);
-        return view('admin.purchases.ShopPurchases.details', compact('purchase'));
+        $purchases = ShopOrder::find($id);
+        return view('admin.purchases.ShopPurchases.details', compact('purchases'));
     }
 
 

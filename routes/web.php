@@ -262,7 +262,7 @@ Route::middleware(['CheckRestaurent'])->group(function () {
 ###############################################################################################################################
 
 // ShopPurchases
-Route::middleware(['CheckShop'])->group(function () {
+Route::middleware(['CheckShop'])->group(function () {   
 
     Route::get('shopPurchases', [ShopController::class, 'shopPurchases'])->name('shopPurchases');
     Route::get('shopPurchasesDetails/{id}', [ShopController::class, 'shopPurchasesDetails'])->name('shopPurchasesDetails');

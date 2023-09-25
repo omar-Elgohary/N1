@@ -26,12 +26,14 @@
 
 <section class="container col-lg-10 col-md-11">
     <div class="container">
-        <div class="col-12 p-0" id="rever">
-        <div class="col-6 section-title text-end p-0">
+        <div class="col-12 d-flex flex-row-reverse p-0">
+            <div class="col-6 section-title text-end p-0" id="headtitle">
+        {{-- <div class="col-12 p-0" id="rever"> --}}
+        {{-- <div class="col-6 section-title text-end p-0"> --}}
             <h2 class="text-black">{{ __('shop.purchases') }}</h2>
         </div>
 
-        <div class="col-6 mb-3" id="pdfs">
+        <div class="col-6 mb-3 text-start" id="pdfs">
             <a href="{{ route('ExportShopPurchasesPDF') }}" id="pdf" class="btn btn-success"><i class="fa fa-thin fa-print"></i><br><small>PDF</small> </a>
             {{-- <a href="#importData" id="pdf" data-bs-toggle="modal" class="btn btn-success"><i class="fa fa-thin fa-file-excel"></i><br><small>Excel</small> </a> --}}
         </div>
@@ -53,7 +55,7 @@
                     </tr>
                 </thead>
 
-                @forelse($orders as $order)
+                @forelse($purchases as $order)
                 <tbody>
                     <tr>
                         <th>{{$order->random_id}}</th>
