@@ -86,9 +86,10 @@ return [
     //create branch
     'name_required' => 'must enter branche title',
     'imageRequired' => 'must enter branche image',
-    'english_letters' => 'Please enter only English letters',
-    'arabic_letters' => 'Please enter only Arabic letters',
-
+    // 'english_letters' => 'Please enter only English letters',
+    // 'arabic_letters' => 'Please enter only Arabic letters',
+    'english_letters' => 'الرجاء إدخال الأحرف الإنجليزية فقط',
+    'arabic_letters' => 'الرجاء إدخال الأحرف العربية فقط',
 
     // purchases
     'processing' => 'Status changes successfully to processing',

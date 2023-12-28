@@ -79,7 +79,7 @@
                     </a>
                 </li>
 
-                <li>
+                {{-- <li>
                     <a href="file-manager.html" class=" waves-effect">
                         <i class="uil-comments-alt"></i>
                         <span class="badge rounded-pill bg-success float-end">New</span>
@@ -291,7 +291,7 @@
                             </ul>
                         </li>
                     </ul>
-                </li>
+                </li> --}}
 
             </ul>
         </div>
