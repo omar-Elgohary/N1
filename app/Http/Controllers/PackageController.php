@@ -16,6 +16,7 @@ class PackageController extends Controller
     public function getAllPackages()
     {
         $this->packageRepository->getAllPackages();
+        // $this->packageRepository->getAllPackages();
     }
 
 
